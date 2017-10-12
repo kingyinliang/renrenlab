@@ -1,0 +1,526 @@
+body, .wrapper {
+    background-color: #f3f6f9;
+
+}
+
+.ins_detail {
+    width: 1120px;
+    min-height: 200px;
+    margin: 0 auto;
+}
+
+.ins_detail .info {
+    margin-top: 20px;
+}
+
+/*仪器信息*/
+.ins_detail .info .ins_info {
+    background-color: #fff;
+    width: 850px;
+    height: 400px;
+    float: left;
+    padding: 0 25px 30px 25px;
+}
+
+.ins_detail .info .ins_info > p {
+    line-height: 40px;
+    height: 40px;
+    font-size: 12px;
+    color: #666;
+}
+
+.ins_info > p > span {
+    position: relative;
+    padding-left: 10px;
+}
+
+/*左侧图片轮播*/
+.ins_img {
+    float: left;
+    width: 326px;
+    height: 326px;
+    border: 1px solid #e6e7e8;
+    padding: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ins_img > ul {
+    overflow: hidden;
+    list-style: none;
+    height: 324px;
+    width: 2000px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.ins_img > ul > li {
+    float: left;
+    width: 324px;
+}
+
+.ins_img > ul > li img {
+    width: 100%;
+    height: 100%;
+}
+.ins_img .num {
+    height: 40px;
+    line-height: 40px;
+    padding-right: 25px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 6;
+    text-align: right;
+}
+.ins_img .num span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: #cccecf;
+    cursor: pointer;
+}
+.ins_img .num span.cur {
+    background: #fff;
+}
+
+.ins_txt {
+    width: 444px;
+    height: 328px;
+    float: right;
+    position: relative;
+    overflow: hidden;
+}
+
+.ins_txt > h4 {
+    font-size: 22px;
+    color: #508DF0;
+    line-height: 40px;
+}
+
+.ins_txt > div.p {
+    position: relative;
+    padding-left: 70px;
+    min-height: 28px;
+    line-height: 22px;
+    margin-bottom: 4px;
+}
+
+.ins_txt > div.p > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    color: #999;
+}
+
+.ins_txt > div.p div {
+    color: #4E4E4E;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+
+.ins_txt div.refer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 14px;
+    color: #999;
+    text-align: right;
+}
+
+.ins_txt div.refer span {
+    color: #d40c0c;
+    font-size: 22px;
+}
+
+.ins_txt div.refer > p {
+    font-size: 12px;
+    color: #999;
+}
+/*仪器特点*/
+.ins_feature{
+
+}
+.ins_feature i{
+    display: block;
+    float: left;
+    height: 22px;
+    line-height: 24px;
+    color: #fff;
+    padding:0 5px ;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+    margin-right: 8px;
+    text-align: center;
+}
+.ins_feature i.tp_1{
+    background-color: #718af3;
+}
+.ins_feature i.tp_2 {
+    background-color: #71a3f3;
+}
+.ins_feature i.tp_3 {
+    background-color: #7acbcf;
+}
+.ins_feature i.tp_4 {
+    background-color: #7acfb8;
+}
+.ins_feature i.tp_5 {
+    background-color: #7acfba;
+}
+.ins_feature i.tp_6 {
+    background-color: #9bd468;
+}
+.ins_feature i.tp_7 {
+    background-color: #8cc932;
+}
+.ins_feature i.tp_8 {
+    background-color: #0cbcef;
+}
+/*右侧机构详情*/
+/*.ins_info > p span.ins_num {*/
+/*float: left;*/
+/*}*/
+
+.ins_info p span i {
+    /*font-size: 12px;*/
+    position: absolute;
+    display: block;
+    left: 0;
+    line-height: 42px;
+}
+
+/*.ins_info p span.ins_service {*/
+/*float: right;*/
+/*}*/
+
+/*机构信息*/
+.ins_detail .info .org_info {
+    background-color: #fff;
+    width: 250px;
+    height: 400px;
+    float: right;
+}
+
+.ins_detail .org_info  .exponent {
+    width: 66px;
+    height: 58px;
+    background-color: #9bd468;
+    color: #fff;
+    margin-left: 12px;
+    text-align: center;
+    position: relative;
+    float: left;
+}
+.ins_detail  .exponent > img {
+    width: 66px;
+    position: absolute;
+    bottom: -11px;
+    left: 0;
+}
+.ins_detail  .exponent > .num {
+    font-size: 22px;
+    line-height: 38px;
+}
+
+.ins_detail  .exponent > .txt {
+        font-size: 12px;
+    line-height:14px;
+}
+.ins_detail .org_info > p {
+    padding: 0 26px;
+}
+
+.ins_detail .org_info > p > img {
+    width: 144px;
+    height: 144px;
+}
+
+.ins_detail .org_info .org_name {
+    color: #333;
+    text-align: center;
+    margin-top: 16px;
+}
+
+.ins_detail .org_info .org_name a{
+    color: #333;
+    font-size: 16px;
+}
+.ins_detail .org_info .org_name a:hover {
+    text-decoration: underline;
+}
+.ins_detail .org_info .org_status {
+    font-size: 12px;
+    color: #f4af71;
+    text-align: center;
+    line-height: 36px;
+}
+
+.ins_detail .org_info button {
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+}
+
+.ins_detail .org_info p.img {
+    height: 144px;
+    margin-top: 26px;
+    text-align: center;
+}
+
+.ins_detail .org_info .tip {
+    font-size: 12px;
+    line-height: 30px;
+    color: #b8b8b8;
+    text-align: center;
+}
+
+/*核心参数*/
+.ins_core {
+    overflow: hidden;
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 0 30px;
+    padding-bottom: 25px;
+}
+
+.ins_core > h4 {
+    font-size: 26px;
+    color: #508DF0;
+    height: 94px;
+    line-height: 94px;
+
+}
+
+.ins_core .tb {
+    width: 510px;
+    overflow: hidden;
+}
+.ins_core .tb p.tr {
+    height: 45px;
+    line-height: 45px;
+    padding-left: 216px;
+    position: relative;
+    border-bottom: 1px solid #eee;
+    background-color: #f9fbfc;
+}
+
+.ins_core .tb p.tr > span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #74a4f2;
+    display: block;
+    width: 190px;
+    height: 44px;
+    color: #fff;
+    padding-left: 15px;
+}
+
+.ins_core .tb p.tr > a {
+    color: #4e4e4e;
+    font-size: 16px;
+}
+
+/*=S 简介开始 [2017-08-17]*/
+ .goods_intro {
+    min-height: 266px;
+    margin-top: 20px;
+    padding:20px 32px;
+    padding-bottom:50px;
+    background: #fff;
+    border-top: 3px solid #508df0;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+.goods_intro .intro_title {
+     font-size: 30px;
+     height: 64px;
+     line-height:64px;
+     color: #508df0;
+ }
+
+.goods_intro .intro_title a{
+    float: right;
+    color: #508DF0;
+    font-size: 16px;
+}
+/*选项卡*/
+ .goods_intro .item {
+    margin-top:38px;
+    border-bottom: 1px solid #eee;
+}
+.goods_intro .last_item {
+    border: 0 none;
+}
+
+ .goods_intro .last_item {
+    border-bottom: 0 none;
+}
+.goods_intro .item .item_title {
+    border-left: 4px solid #508df0;
+    padding-left: 8px;
+    height:22px;
+    line-height:22px;
+    color: #535353;
+    font-size: 18px;
+
+}
+
+.goods_intro .item .item_txt {
+    line-height:26px;
+    padding:36px;
+    color: #535353;
+    font-size: 14px;
+}
+
+/*=E 简介结束 [2017-08-17]*/
+
+
+
+/*=S 查看机构信息弹窗 [2017-08-17]*/
+.company_info  {
+    width: 674px;
+    background: #fff;
+    /*padding: 0 50px;*/
+}
+
+.company_info .title {
+    position: relative;
+    overflow: hidden;
+
+}
+.company_info .title > div {
+    overflow: hidden;
+    position: relative;
+    margin-top:38px;
+}
+
+.company_info .title > div > h6{
+    font-size: 26px;
+    color: #508DF0;
+    float: left;
+}
+
+.company_info .title > div > span{
+    font-size: 12px;
+    color: #999;
+    float: left;
+    position: absolute;
+    bottom: 3px;
+    left: 118px;
+}
+
+.company_info .title > p {
+    font-size: 18px;
+    color: #666;
+    line-height: 58px;
+}
+
+.company_info .title > i {
+    position: absolute;
+    font-size: 29px;
+    color: #508DF0;
+    right: 0;
+    top: 41px;
+    cursor: pointer;
+}
+.company_info .title > i:active {
+    color:#3e72c0;
+}
+
+/*机构地址和电话*/
+.org_infos {
+    background-color: #f9fbfc;
+    padding:0 26px;
+}
+
+.org_infos p.org_add {
+    border-bottom: 2px dotted #eceded;
+    line-height: 32px;
+    padding: 15px 0;
+    padding-left:30px;
+    position: relative;
+}
+.org_infos p.org_add i {
+    color: #508DF0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 63px;
+}
+.org_infos p.org_add span {
+}
+.org_infos .org_phone {
+    padding: 15px 0;
+    padding-left: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.org_infos .org_phone i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    line-height:55px;
+    color: #508DF0;
+}
+.org_infos .org_phone s {
+    width: 73px;
+    display: inline-block;
+}
+.org_infos .org_phone span {
+    margin-right: 30px;
+    display: block;
+    margin-bottom: 14px;
+}
+/*百度地图*/
+.baidu_map{
+    height: 162px;
+    background: pink;
+}
+/*联系我们*/
+.compay_infos {
+    height: 94px;
+    background-color: #74a4f2;
+    position: relative;
+    padding: 15px 0;
+    padding-left: 173px;
+    line-height: 26px;
+    font-size: 16px;
+}
+
+.about_me {
+    width: 110px;
+    background-color: #74a4f2;
+    height: 110px;
+    text-align: center;
+    line-height: 110px;
+    position: absolute;
+    top: -26px;
+    left: 50px;
+}
+.about_me img{
+    width: 92px;
+    height: 92px;
+    vertical-align: middle;
+}
+.company_info_layer {
+    width: auto!important;
+    border-top: 4px solid #508DF0;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-radius:6px;
+    overflow: hidden;
+}
+/*=E 查看机构信息弹窗 [2017-08-17]*/

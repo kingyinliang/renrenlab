@@ -1,0 +1,259 @@
+/*start顶部状态审核tip*/
+.share_dtl_tip {
+    height: 50px;
+    line-height: 50px;
+    background: #fff;
+    padding: 0 22px;
+    float: left;
+    color: #7b8da0;
+    font-size: 18px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.share_dtl_tip > span:nth-child(1) {
+    margin-right: 28px;
+}
+
+.share_dtl_tip > span:nth-child(2) > i {
+    color: #fba45f;
+}
+
+/*end顶部状态审核tip*/
+
+/* start左侧详情内容页*/
+.share_main {
+    /*background: pink;*/
+    margin-top: 22px;
+}
+
+.share_main > div {
+    float: left;
+}
+
+.share_main .sre_lft {
+    width: 50%;
+    border-right: 2px solid #dde4eb;
+}
+
+/*end左侧详情内容页*/
+
+/* start右侧详情内容页*/
+.share_main .sre_rt {
+    width: 50%;
+    border-right: 2px solid #dde4eb;
+}
+
+/* start右侧详情内容页*/
+
+/*START详情公用模块*/
+
+.share_main .sre_base > div {
+    margin-bottom: 24px;
+}
+
+.share_main .sre_base > h4 {
+    margin-bottom: 24px;
+}
+
+.sre_base > h4 {
+    font-size: 24px;
+    color: #2c415a;
+
+}
+
+.sre_base .dt_1 {
+    padding-left: 106px;
+    position: relative;
+}
+
+.sre_base .dt_1 > h5 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 18px;
+    color: #7b8da0;
+}
+
+.sre_base .dt_1 > h5 span {
+    color: #fc8384;
+}
+
+.sre_base .dt_1 > .rt {
+    word-break:break-all;
+}
+
+.sre_base .dt_1 > .rt > em {
+    background: #fff;
+    padding: 0 10px;
+    line-height: 28px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.sre_base .dt_1 > .rt > em > s{
+        cursor: pointer;
+}
+
+.sre_base .dt_1 > .rt > em > s:active {
+    color: red;
+}
+
+.sre_base .dt_1 > .rt span{
+    color: #4c5e70;
+    font-size: 18px;
+    padding-right: 20px;
+    display: inline-block;
+}
+
+.sre_base .dt_1 > .rt img {
+    width: 110px;
+    height: 110px;
+    margin-right: 18px;
+    margin-bottom:10px;
+}
+
+.ins_img li {
+    float: left;
+}
+/*type2*/
+.sre_base .dt_2 {
+
+}
+
+.sre_base .dt_2 > h5 {
+    font-size: 18px;
+    color: #7b8da0;
+    line-height: 24px;
+}
+.sre_base .dt_2 > span {
+    color: #fc8384;
+}
+
+.sre_base .dt_2 > .btm {
+    margin-top: 10px;
+    padding: 0 20px 0 0;
+}
+
+/*START详情公用模块*/
+
+/*START参数表*/
+table.lab_table_param {
+    width: 100%;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+table.lab_table_param tbody {
+    width: 100%;
+}
+
+table.lab_table_param tr {
+    width: 100%;
+    margin-bottom: 5px;
+    line-height: 40px;
+    border-bottom: 4px solid #fff;
+}
+
+table.lab_table_param tr:last-child {
+    border-bottom: 0 none;
+}
+
+table.lab_table_param tr:nth-child(even) > td {
+    background: #fff;
+}
+
+table.lab_table_param tbody tr > td {
+    background: #eaf3fb;
+    padding-left: 10px;
+}
+
+table.lab_table_param tbody tr > td.tit {
+    background: #6693c8;
+    color: #fff;
+}
+
+/*END参数表*/
+
+/*START卡片样式*/
+.lab_cart {
+    background: #fff;
+    padding: 0 10px 20px 10px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.lab_cart h6 {
+    line-height: 70px;
+    font-size: 20px;
+    color: #4c5e70;
+}
+
+.lab_cart > p {
+    font-size: 16px;
+    color: #627587;
+    line-height: 30px;
+}
+/*END卡片样式*/
+
+
+/*START联系方式/添加联系方式表*/
+.lab_table_phone {
+    line-height:40px;
+    margin-top: 20px;
+}
+
+.lab_table_phone th,.lab_table_phone td {
+    padding: 0 10px;
+    border: 1px solid #eee;
+}
+
+.lab_table_phone thead tr{
+    background: #6693c8;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+}
+
+.lab_table_phone tbody tr{
+    background: #fff;
+    text-align: center;
+    font-size: 16px;
+    color: #4c5e70;
+
+}
+.lab_table_phone tbody td input {
+    line-height:40px;
+    border: 0 none;
+    background: #fff;
+
+}
+/*END联系方式表*/
+
+
+
+
+/*START标签*/
+.lab_tag {
+    display: inline-block;
+    padding: 0 8px;
+    line-height: 28px;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+}
+
+.lab_tag_blue {
+    background: #6693c8;
+}
+
+.lab_tag_green {
+    background: #5bcdd1;
+}
+/*END标签*/

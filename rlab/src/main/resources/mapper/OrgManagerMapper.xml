@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgManagerDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.OrgManager">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_mid" jdbcType="BIGINT" property="orgMid" />
+    <result column="org_oid" jdbcType="BIGINT" property="orgOid" />
+    <result column="u_uid" jdbcType="BIGINT" property="uUid" />
+    <result column="manager_type" jdbcType="INTEGER" property="managerType" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    om.id, om.org_mid, om.org_oid, om.u_uid, om.manager_type, ui.u_mobile, ui.u_name, ui.u_nickname, om.modify_time, om.create_time
+  </sql>
+
+  <select id="searchOrgManagerByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_manager om
+    LEFT JOIN rlab_user_info.t_user_base_info ui ON om.u_uid = ui.u_uid
+    WHERE
+    om.org_oid = #{orgOid,jdbcType=BIGINT}
+    ORDER BY
+    om.manager_type ASC
+  </select>
+
+  <select id="searchOrgCreatorByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_manager om
+    LEFT JOIN rlab_user_info.t_user_base_info ui ON om.u_uid = ui.u_uid
+    WHERE
+    om.org_oid = #{orgOid,jdbcType=BIGINT} AND manager_type =0
+  </select>
+
+
+
+  <select id="searchOrgOwnerByOrgMid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_manager om
+    WHERE
+    om.org_mid = #{orgMid,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertOrgManager" parameterType="com.renrenlab.rlab.vo.OrgManager">
+    insert into rlab_org_info.t_org_manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgOid != null">
+        org_oid,
+      </if>
+      <if test="uUid != null">
+        u_uid,
+      </if>
+      <if test="managerType != null">
+        manager_type,
+      </if>
+        modify_time,
+        create_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgOid != null">
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null">
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="managerType != null">
+        #{managerType,jdbcType=INTEGER},
+      </if>
+        now(),
+        now(),
+    </trim>
+  </insert>
+
+  <update id="updateOrgManager" parameterType="com.renrenlab.rlab.vo.OrgManager">
+    update rlab_org_info.t_org_manager
+    <set>
+      <if test="orgOid != null">
+        org_oid = #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null">
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="managerType != null">
+        manager_type = #{managerType,jdbcType=INTEGER},
+      </if>
+        modify_time = now(),
+    </set>
+    where org_mid = #{orgMid,jdbcType=BIGINT}
+  </update>
+
+</mapper>

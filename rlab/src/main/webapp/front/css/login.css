@@ -1,0 +1,60 @@
+
+#canvas {
+    display: inline-block;
+}
+
+/*表单私有样式*/
+form > div.to_register {
+    height: 14px;
+    line-height: 14px;
+    font-size: 12px;
+    color: #7a7a7a;
+    margin-top: 14px;
+}
+
+form > div.to_register > a {
+    color: #508df0;
+}
+form > div.to_register > a:hover{
+    text-decoration: underline;
+}
+
+/*忘记密码？记住密码？*/
+form > div.item_remember {
+    overflow: hidden;
+    margin-top:18px;
+    height: 22px;
+    line-height:22px;
+}
+
+form > div.item_remember > div.lft {
+    float: left;
+}
+
+form > div.item_remember > div.lft label{
+    float: left;
+    cursor: pointer;
+}
+
+form > div.item_remember > div.lft div{
+    float: left;
+    font-size: 12px;
+    color: #7a7a7a;
+    line-height: 21px;
+    margin-left: 8px;
+}
+
+form > div.item_remember > div.rt {
+    float: right;
+
+    line-height: 21px;
+}
+
+form > div.item_remember > div.rt a{
+    font-size: 12px;
+    color: #508df0;
+}
+
+form > div.item_remember > div.rt a:hover {
+    text-decoration: underline;
+}

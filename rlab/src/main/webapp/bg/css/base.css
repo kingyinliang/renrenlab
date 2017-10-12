@@ -1,0 +1,752 @@
+/* CSS Reset */
+html, body, div, span, object, h1, h2, h3,
+h4, h5, h6, p, a, em, font, img, s, samp, small, strong,
+dt, ol, ul, li, fieldset, form, label, table,
+tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: 'PingFang SC', '微软雅黑', '黑体' !important;
+    box-sizing: border-box !important;
+}
+
+html, body {
+    height: 100% !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    outline: none;
+    border: 0 none;
+}
+
+i {
+    font-style: normal;
+}
+
+i[class^="lab-"] {
+    vertical-align: middle;
+}
+
+s {
+    text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    text-decoration: none;
+    border: 0 none;
+}
+
+:focus {
+    outline: 0;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none !important;
+}
+
+/*清除浮动*/
+.clearfix:after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    clear: both;
+    display: block;
+    visibility: hidden
+}
+
+.clearfix {
+    zoom: 1; /*IE/7/6*/
+}
+
+/*START 全局公用样式 [2017-07-13 ]*/
+.wrapper {
+    width: 100% !important;
+    height: 100% !important;
+    box-sizing: content-box !important;
+    background: white;
+    overflow: hidden;
+    min-width: 1200px !important;
+    position: relative;
+}
+
+.hd {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background: #fff;
+}
+
+.comn {
+    position: relative;
+    height: 100%;
+    margin-top: 76px;
+}
+
+.sd {
+    float: left;
+    width: 240px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: scroll;
+    background: #2c415a;
+}
+
+.main {
+    background: #f2f5f8;
+    height: 100%;
+    /*float: left;*/
+    margin-left: 240px;
+    overflow-y: auto;
+    padding: 0 35px;
+    padding-bottom: 150px;
+}
+
+.slimScrollBar {
+    display: none !important;
+}
+
+.label_modal {
+    width: 600px !important;
+    height: 400px !important;
+}
+
+/*END 全局公用样式 [2017-07-13 ]*/
+
+/*START 头部公用部分样式 [2017-07-13 ]*/
+#head {
+    width: 100%;
+    height: 76px;
+}
+
+#head div {
+    height: 76px;
+    line-height: 76px;
+    text-align: center;
+}
+
+.icon {
+    float: left;
+    width: 240px;
+    font-size: 20px;
+    background: #192b41;
+    color: #fff;
+}
+
+.logout {
+    cursor: pointer;
+    float: right;
+    margin-right: 50px;
+}
+
+.u_info {
+    float: right;
+    margin-right: 50px;
+}
+
+.slimScrollRail {
+    display: none;
+}
+
+.u_info_img {
+    overflow: hidden;
+    height: 76px;
+    float: right;
+    margin-right: 10px;
+}
+
+.u_info_img p {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.u_info_img p img {
+    width: 100%;
+    height: 100%;
+}
+
+/*END 头部公用部分样式2017-07-13 ]*/
+
+/*START 侧边栏公用部分样式 [2017-07-13 ]*/
+.layui-input, .layui-select, .layui-textarea {
+    border: none !important;
+}
+
+.sd .layui-nav {
+    border-radius: 0 !important;
+}
+
+.sd .layui-nav-tree {
+    width: 100%;
+    background: #2c415a;
+    height: 100%;
+}
+
+.sd .layui-nav .layui-nav-child a {
+    padding: 0 45px;
+
+}
+
+.sd label {
+    font-size: 16px;
+    margin-right: 10px;
+    color: #fff;
+}
+
+.sd .layui-nav-itemed > a {
+    background-color: #192b41 !important;
+}
+
+.sd ul > li span {
+    color: #fff;
+}
+
+.sd .layui-nav-tree .layui-nav-item {
+    line-height: 56px;
+}
+
+.sd .layui-nav-tree .layui-nav-item a {
+    line-height: 56px;
+    height: 56px;
+}
+
+/*二级菜单未选中状态*/
+.layui-nav-child dd {
+    background-color: #203752 !important;
+}
+
+.layui-nav-child dd > a {
+    background-color: #203752 !important;
+}
+
+/*二级菜单选中状态*/
+.sd .layui-nav-child dd.layui-this {
+    background-color: #1c3049 !important;
+}
+
+.sd .layui-nav-child dd.layui-this > a {
+    background-color: #1c3049 !important;
+}
+
+.sd .layui-nav-child dd.layui-this > a > label {
+    color: #16b8be;
+}
+
+.sd .layui-nav-bar {
+    display: none !important;
+}
+
+/*一级目录选中样式*/
+.sd .layui-nav-tree li.layui-this {
+    background-color: #192b41 !important;
+    border-left: 4px solid #16b8be;
+}
+
+.sd .layui-nav-tree li.layui-this > a {
+    background-color: #192b41 !important;
+    text-decoration: none;
+}
+
+/*END 侧边栏公用部分样式 [2017-07-13 ]*/
+
+/*START 右侧内容公用样式[2017-07-13 ]*/
+/*头部面包屑指南*/
+.main .tp_guide {
+    color: #4c5e70;
+    font-size: 18px;
+    padding: 40px 0 36px 0;
+    border-bottom: 2px solid #dce3ea;
+}
+
+.hdNav {
+    margin: 40px 0 17px 0;
+    height: 45px;
+    border-bottom: 1px solid #dce3ea;
+    font-size: 18px;
+    color: #4c5e70;
+}
+
+.hdNav a:hover {
+    text-decoration: underline !important;
+}
+
+/*控制台*/
+.main .tp_panel {
+
+}
+
+/*END 右侧内容公用样式[2017-07-13 ]*/
+
+/*START 时间日期组件[2017-07-18 ]*/
+.lab_date {
+    position: relative;
+}
+
+.lab_date > button {
+    min-width: 94px;
+    padding-right: 48px;
+    padding-left: 20px;
+    height: 50px;
+    background: #fff;
+    color: #a3b6c9;
+    border: 0 none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    position: relative;
+    text-align: left;
+
+}
+
+.lab_date > button > i.date_icon {
+    font-size: 26px;
+    color: #a3b6c9;
+    font-weight: 700;
+    position: absolute;
+    right: 12px;
+    top: 0;
+    height: 100%;
+    line-height: 50px;
+    cursor: pointer;
+}
+
+.daterangepicker.dropdown-menu {
+    top: 255px !important;
+}
+
+/*END 时间日期组件[2017-07-18 ]*/
+
+/*START 列表组件[2017-07-18 ]*/
+thead tr th {
+    color: white !important;
+}
+
+/*END 列表组件[2017-07-18 ]*/
+
+/*START 富媒体编辑器组件[2017-07-18 ]*/
+
+/*END 富媒体编辑器组件[2017-07-18 ]*/
+
+/*START 分页组件[2017-07-18 ]*/
+.pages {
+    margin: 10px 0 90px 0;
+}
+
+.layui-laypage a, .layui-laypage span {
+    padding: 0 7px;
+    margin: 0 1px;
+    line-height: 20px;
+    height: 20px;
+    border: none;
+}
+
+.layui-laypage span {
+    margin: 0 4px;
+}
+
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background: white !important;
+}
+
+.layui-laypage .layui-laypage-curr em {
+    color: #81c2ff !important;
+}
+
+.layui-laypage-total {
+    height: 20px !important;
+    line-height: 20px !important;
+    background: none !important;
+}
+
+.layui-laypage-total input, .layui-laypage-total button {
+    height: 20px !important;
+}
+
+.layui-laypage-total button {
+    width: 35px;
+    line-height: 20px;
+    padding: 0;
+}
+
+.pageSize {
+    margin: 10px 7px 10px 0;
+    float: right;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.pageSize input {
+    height: 20px;
+    line-height: 20px;
+    width: 68px;
+    padding-right: 0px !important;
+    padding: 0 19px 0 4px;
+    border: none;
+    border-radius: 5px;
+}
+
+.pageSize dd {
+    line-height: 20px !important;
+    height: 20px;
+}
+
+.pageSize dl {
+    top: 22px;
+}
+
+.layui-this {
+    background: #49aaff !important;
+}
+
+.pageSize .layui-edge {
+    right: 5px;
+}
+
+.textinfo, .textinfo p {
+    font-size: 14px;
+    color: #7b8da0;
+    width: 270px;
+    line-height: 40px;
+    float: left;
+    height: 40px;
+}
+
+/*END 分页组件[2017-07-18 ]*/
+
+/*START 按钮组件[2017-07-20 ]*/
+.lab_btn_base {
+    border: 0 none;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+/*-type1*/
+.lab_btn_type1 {
+    line-height: 50px;
+    padding: 0 20px;
+    background-color: #49aaff;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    /*box-shadow: 0px 1px 18px 2px rgba(73, 170, 255, 0.42);*/
+}
+
+.lab_btn_type1:active {
+    background-color: #3886ca;
+}
+
+.lab_btn_type1 i {
+    margin-right: 5px;
+}
+
+/*-type1*/
+
+/*-type2*/
+.lab_btn_type2 {
+    line-height: 50px;
+    padding: 0 20px;
+    background-color: #16b8be;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.lab_btn_type2:active {
+    background-color: #1c8488;
+}
+
+.lab_btn_type2 i {
+    margin-right: 5px;
+}
+
+/*-type2*/
+
+.lab_btn_base_2 {
+    height: 38px;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+    padding: 0 25px;
+    background: #fff;
+}
+
+/*-type5*/
+.lab_btn_type5 {
+    line-height: 50px;
+    padding: 0 20px;
+    background-color: #ff737d;
+    color: #fff;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.lab_btn_type5:active {
+    background-color: #ea5b65;
+}
+
+.lab_btn_type1 i {
+    margin-right: 5px;
+}
+
+/*-type5*/
+
+/*-type3 */
+.lab_btn_base_2_blue {
+    border: 1px solid #49aaff;
+    color: #49aaff;
+}
+
+.lab_btn_base_2_blue:active {
+    background-color: #49aaff;
+    color: #fff;
+}
+
+/*-type3 */
+
+/*-type4 */
+.lab_btn_base_2_red {
+    border: 1px solid #ff737d;
+    color: #ff737d;
+}
+
+.lab_btn_base_2_red:active {
+    background-color: #ff737d;
+    color: #fff;
+}
+
+/*-type4 */
+/*基础元素*/
+/*淡蓝*/
+.bd_light_bl {
+    border: 1px solid #49aaff;
+}
+
+.bg_light_bl {
+    background-color: #49aaff;
+}
+
+.cl_light_bl {
+    color: #49aaff;
+}
+
+/*叶黄*/
+.bd_leaf_yl {
+    border: 1px solid #fba45f;
+}
+
+.bg_leaf_yl {
+    background-color: #fba45f;
+}
+
+.cl_leaf_yl {
+    color: #fba45f;
+}
+
+/*淡绿*/
+.bd_light_grn {
+    border: 1px solid #16b8be;
+}
+
+.bg_light_grn {
+    background-color: #16b8be;
+}
+
+.cl_light_grn {
+    color: #16b8be;
+}
+
+/*END 按钮组件[2017-07-20 ]*/
+
+/*START FROM表单组件[2017-07-20 ]*/
+
+/*搜索框*/
+.lab_search_type1 {
+    width: 456px;
+    height: 50px;
+    color: #abbccd;
+    background: #fff;
+}
+
+.lab_search_type1 label {
+    display: block;
+    float: left;
+    height: 50px;
+    width: 40px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.lab_search_type1 input {
+    width: 416px;
+    height: 50px;
+    color: #a3b6c9;
+
+}
+
+/*搜索框*/
+
+/*搜索下拉*/
+form.lab_sc_slect {
+
+}
+
+form.lab_sc_slect .layui-form-select .layui-input {
+    line-height: 50px;
+    height: 50px;
+    font-size: 14px;
+    color: #a3b6c9;
+    border: 0 none;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+form.lab_sc_slect .layui-form-select dl {
+    top: 49px;
+}
+
+/*搜索下拉*/
+
+/*-列表*/
+.lab_list_type1 .layui-table thead tr {
+    background-color: #6693c8;
+    height: 50px;
+}
+
+.lab_list_type1 .layui-table td {
+    min-height: 40px;
+    line-height: 32px;
+}
+
+/*-列表*/
+/*END FROM表单组件[2017-07-20 ]*/
+
+/*START 搜索[2017-07-18 ]*/
+.searchs {
+    float: left;
+    padding-left: 20px;
+    background: white;
+    width: 494px;
+    height: 50px;
+    font-size: 14px;
+}
+
+.seachInp {
+    line-height: 50px;
+    width: 80%;
+    margin-left: 7px;
+}
+
+.searchLab {
+    float: left;
+    font-size: 18px;
+    line-height: 50px;
+}
+
+.listNature {
+    width: 170px;
+    height: 50px;
+    float: left;
+    margin-left: 20px;
+}
+
+.listNature input {
+    height: 50px;
+}
+
+.listNature dl {
+    top: 50px;
+    z-index: 9999;
+}
+
+.main dd:hover {
+    background-color: #49aaff !important;
+}
+
+/*END 搜索[2017-07-18 ]*/
+
+/*START 按钮[2017-07-18 ]*/
+.time .btn {
+    float: right;
+    width: 140px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 36px;
+}
+
+button div {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.table {
+    margin-top: 60px;
+}
+
+.table tr th, .table tr td {
+    text-align: center;
+    color: #4c5e70;
+}
+
+.table tr th {
+    background: #6693c8;
+}
+
+/*thead tr th{*/
+/*border: none!important;*/
+/*color: white!important;*/
+/*}*/
+.table tbody tr td a {
+    color: #6693c8;
+    cursor: pointer;
+}
+
+.shade {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    display: none;
+}
+
+.shade .tit {
+    width: 350px;
+    height: 306px;
+    background: white;
+    position: absolute;
+    margin: auto;
+    margin-left: -175px;
+    margin-top: -153px;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}

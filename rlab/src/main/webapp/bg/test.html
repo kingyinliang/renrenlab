@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../common/assets/jquery-1.12.4/jquery.js"></script>
+
+    <link rel="stylesheet" href="../common/assets/layui/css/layui.css">
+    <script src="../common/assets/layui/layui.js"></script>
+    <style>
+        .label_modal {
+            width: auto!important;
+            height: auto!important;
+        }
+    </style>
+</head>
+<body>
+
+<!--<div style="padding:0 20px;width: 500px; height: 300px; margin:200px 200px;background-color: #fff; overflow: hidden;border-radius:6px;border:1px solid grey;">-->
+    <!--<p style=" margin-top: 10px">选择机构资质: (可多选)</p>-->
+    <!--<div id="ZiZhiList" style=" margin-top: 5px;overflow-y:auto;height: 120px;line-height:26px;background:#f4f5f5;">-->
+        <!--<div style="min-width: 20%; display: inline-block; margin-top: 5px;padding: 0 5px;">-->
+            <!--<input type="checkbox" name="ZiZhi" value="资质1" style="display: inline-block" checked>-->
+            <!--<p style="display: inline-block">资质1</p>-->
+        <!--</div>-->
+        <!--<div style="min-width: 20%; display: inline-block; margin-top: 5px; padding: 0 5px;">-->
+            <!--<input type="checkbox" name="ZiZhi" value="资质2" style="display: inline-block" checked>-->
+            <!--<p style="display: inline-block">资质2</p>-->
+        <!--</div>-->
+        <!--<div style="min-width: 20%; display: inline-block; margin-top: 5px;padding: 0 5px;">-->
+            <!--<input type="checkbox" name="ZiZhi" value="资质3" style="display: inline-block" checked>-->
+            <!--<p style="display: inline-block">资质3</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div style="padding: 20px 0;border-top:1px solid #eee;border-bottom:1px solid #eee">-->
+        <!--<p style="height: 30px; line-height: 30px; display: inline-block">添加机构: </p>-->
+        <!--<input id="ZiZhiInput" type="text" style="width: 100px; height: 30px; margin-left: 15px">-->
+        <!--<button id="addZiZhi" class="layui-btn layui-btn-small" onclick="addZiZhi(this)">添加</button>-->
+    <!--</div>-->
+    <!--<div style="margin: 0 auto;width: 200px;padding: 20px 0; overflow: hidden">-->
+        <!--<button class="layui-btn layui-btn-primary" id="ZiZhiCancal" style="margin-right: 10px">取消</button>-->
+        <!--<button class="layui-btn layui-btn-normal" id="ZiZhiSave">保存</button>-->
+    <!--</div>-->
+<!--</div>-->
+
+<button id="print">按钮</button>
+<script>
+
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        $("#print").on('click', function () {
+            layer.open({
+                title: false,
+                type: 1,
+                area: ['500px', '300px'],
+                skin:'label_modal',
+                content: '\
+                <div style="padding:0 20px;width: 500px; height: 300px; background-color: #fff; overflow: hidden;">\
+                <p style=" margin-top: 10px">选择机构资质: (可多选)</p>\
+            <div id="ZiZhiList" style=" margin-top: 5px;overflow-y:auto;height: 120px;line-height:26px;background:#f4f5f5;">\
+                <div style="min-width: 20%; display: inline-block; margin-top: 5px;padding: 0 5px;">\
+                <input type="checkbox" name="ZiZhi" value="资质1" style="display: inline-block" checked>\
+            <p style="display: inline-block">资质1</p>\
+                </div>\
+                <div style="min-width: 20%; display: inline-block; margin-top: 5px; padding: 0 5px;">\
+                <input type="checkbox" name="ZiZhi" value="资质2" style="display: inline-block" checked>\
+            <p style="display: inline-block">资质2</p>\
+                </div>\
+                <div style="min-width: 20%; display: inline-block; margin-top: 5px;padding: 0 5px;">\
+                <input type="checkbox" name="ZiZhi" value="资质3" style="display: inline-block" checked>\
+            <p style="display: inline-block">资质3</p>\
+                </div>\
+                </div>\
+                <div style="padding: 20px 0;border-top:1px solid #eee;border-bottom:1px solid #eee" >\
+                <p style="height: 30px; line-height: 30px; display: inline-block">添加机构: </p>\
+            <input id="ZiZhiInput" type="text" style="width: 100px; height: 30px; margin-left: 15px">\
+                <button id="addZiZhi" class="layui-btn layui-btn-small" onclick="addZiZhi(this)" style="margin-left: 5px;">添 加</button>\
+                </div>\
+                <div style="margin: 0 auto;width: 200px;padding: 20px 0; overflow: hidden">\
+                <button class="layui-btn layui-btn-primary" id="ZiZhiCancal" style="margin-right: 10px">取消</button>\
+                <button class="layui-btn layui-btn-normal" id="ZiZhiSave" >保存</button>\
+                </div>\
+                </div>\
+                '
+            });
+
+            $("#ZiZhiCancal").off().on("click", function () {
+                layer.closeAll();
+            });
+
+            $("#ZiZhiSave").off().on("click", function () {
+                getResultZZ();
+                layer.closeAll();
+            });
+
+        });
+    });
+
+
+    function getZiZhiCount() {
+        return $("input[name=ZiZhi]:checked").length;
+    }
+
+    function getResultZZ() {
+        var arr = $("input[name=ZiZhi]:checked");
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i]);
+        }
+        return $("input[name=ZiZhi]:checked");
+    }
+
+    function addZiZhi($this) {
+        if ($("#ZiZhiInput").val() == '') {
+            return;
+        }
+
+        $("#ZiZhiList").append('\
+                        <div style="min-width: 20%; display: inline-block; margin-top: 5px;padding: 0 5px;">\
+                            <input type="checkbox" name="ZiZhi" value=' + $("#ZiZhiInput").val() + ' style="display: inline-block" checked>\
+                            <p style="display: inline-block">' + $("#ZiZhiInput").val() + '</p>\
+                        </div>')
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.InstrumentScopeDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InstrumentScope" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="ins_scope_id" property="insScopeId" jdbcType="BIGINT" />
+    <result column="ins_scope_name" property="insScopeName" jdbcType="VARCHAR" />
+    <result column="ins_scope_des" property="insScopeDes" jdbcType="OTHER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, ins_scope_id, ins_scope_name,
+      ins_scope_des, create_time, modify_time
+  </sql>
+
+  <select id="listAll" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_instrument_info.t_instrument_scope
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_instrument_info.t_instrument_scope
+    WHERE ins_scope_id = #{scopeId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="com.renrenlab.rlab.model.InstrumentScope" >
+    insert into rlab_instrument_info.t_instrument_scope (id, ins_scope_id, ins_scope_name, 
+      ins_scope_des, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{insScopeId,jdbcType=BIGINT}, #{insScopeName,jdbcType=VARCHAR},
+      #{insScopeDes,jdbcType=OTHER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InstrumentScope" >
+    <selectKey keyProperty="insScopeId" resultType="java.lang.Long" order="AFTER">
+      select last_value as ins_scope_id from rlab_instrument_info.instrument_upid_seq;
+    </selectKey>
+    insert into rlab_instrument_info.t_instrument_scope
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="insScopeName != null">
+        ins_scope_name,
+      </if>
+      <if test="insScopeDes != null" >
+        ins_scope_des,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="insScopeName != null">
+        #{insScopeName,jdbcType=VARCHAR},
+      </if>
+      <if test="insScopeDes != null" >
+        #{insScopeDes,jdbcType=OTHER},
+      </if>
+      <if test="createTime != null" >
+        now(),
+      </if>
+      <if test="modifyTime != null" >
+        now()
+      </if>
+    </trim>
+  </insert>
+</mapper>

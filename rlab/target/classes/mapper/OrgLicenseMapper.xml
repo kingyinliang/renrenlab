@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgLicenseDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgLicense">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_oid" jdbcType="BIGINT" property="orgOid" />
+    <result column="org_reg_code" jdbcType="VARCHAR" property="orgRegCode" />
+    <result column="org_fullname" jdbcType="VARCHAR" property="orgFullname" />
+    <result column="org_type" jdbcType="VARCHAR" property="orgType" />
+    <result column="org_person" jdbcType="VARCHAR" property="orgPerson" />
+    <result column="org_address" jdbcType="VARCHAR" property="orgAddress" />
+    <result column="org_capital" jdbcType="VARCHAR" property="orgCapital" />
+    <result column="org_found_date" jdbcType="DATE" property="orgFoundDate" />
+    <result column="org_expiration" jdbcType="VARCHAR" property="orgExpiration" />
+    <result column="org_scope" jdbcType="VARCHAR" property="orgScope" />
+    <result column="org_issuance_date" jdbcType="DATE" property="orgIssuanceDate" />
+    <result column="org_issuer" jdbcType="VARCHAR" property="orgIssuer" />
+    <result column="org_license_pic" jdbcType="VARCHAR" property="orgLicensePic" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="legal_person_pic1" jdbcType="VARCHAR" property="legalPersonPic1" />
+    <result column="legal_person_pic2" jdbcType="VARCHAR" property="legalPersonPic2" />
+    <result column="identification_number" jdbcType="VARCHAR" property="identificationNumber" />
+    <result column="tax_enrol_certificate_pic" jdbcType="VARCHAR" property="taxEnrolCertificatePic" />
+    <result column="org_addr_province" jdbcType="VARCHAR" property="orgAddrProvince" />
+    <result column="org_addr_city" jdbcType="VARCHAR" property="orgAddrCity" />
+    <result column="org_addr_district" jdbcType="VARCHAR" property="orgAddrDistrict" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, org_oid, org_reg_code, org_fullname, org_type, org_person, org_address, org_capital,
+    org_found_date, org_expiration, org_scope, org_issuance_date, org_issuer, org_license_pic,
+    create_time, modify_time,legal_person_pic1,legal_person_pic2,identification_number,tax_enrol_certificate_pic,
+    org_addr_province, org_addr_city, org_addr_district
+  </sql>
+
+  <select id="searchOrgLicenseByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_org_info.t_org_license
+    where org_oid = #{orgOid,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertOrgLicense" parameterType="com.renrenlab.rlab.model.OrgLicense">
+    insert into rlab_org_info.t_org_license
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgOid != null">
+        org_oid,
+      </if>
+      <if test="orgRegCode != null">
+        org_reg_code,
+      </if>
+      <if test="orgFullname != null">
+        org_fullname,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+      <if test="orgPerson != null">
+        org_person,
+      </if>
+      <if test="orgAddress != null">
+        org_address,
+      </if>
+      <if test="orgCapital != null">
+        org_capital,
+      </if>
+      <if test="orgFoundDate != null">
+        org_found_date,
+      </if>
+      <if test="orgExpiration != null">
+        org_expiration,
+      </if>
+      <if test="orgScope != null">
+        org_scope,
+      </if>
+      <if test="orgIssuanceDate != null">
+        org_issuance_date,
+      </if>
+      <if test="orgIssuer != null">
+        org_issuer,
+      </if>
+      <if test="orgLicensePic != null">
+        org_license_pic,
+      </if>
+      <if test="legalPersonPic1 != null">
+        legal_person_pic1,
+      </if>
+      <if test="legalPersonPic2 != null">
+        legal_person_pic2,
+      </if>
+      <if test="identificationNumber != null">
+        identification_number,
+      </if>
+      <if test="taxEnrolCertificatePic != null">
+        tax_enrol_certificate_pic,
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province,
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city,
+      </if>
+      <if test="orgAddrDistrict != null">
+        org_addr_district,
+      </if>
+        create_time,
+        modify_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null">
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="orgRegCode != null">
+        #{orgRegCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullname != null">
+        #{orgFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPerson != null">
+        #{orgPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCapital != null">
+        #{orgCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFoundDate != null">
+        #{orgFoundDate,jdbcType=DATE},
+      </if>
+      <if test="orgExpiration != null">
+        #{orgExpiration,jdbcType=VARCHAR},
+      </if>
+      <if test="orgScope != null">
+        #{orgScope,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIssuanceDate != null">
+        #{orgIssuanceDate,jdbcType=DATE},
+      </if>
+      <if test="orgIssuer != null">
+        #{orgIssuer,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLicensePic != null">
+        #{orgLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPic1 != null">
+        #{legalPersonPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPic2 != null">
+        #{legalPersonPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationNumber != null">
+        #{identificationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxEnrolCertificatePic != null">
+        #{taxEnrolCertificatePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrProvince != null">
+        #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrDistrict != null">
+        #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+        now(),
+        now(),
+    </trim>
+  </insert>
+
+  <update id="updateOrgLicense" parameterType="com.renrenlab.rlab.model.OrgLicense">
+    update rlab_org_info.t_org_license
+    <set>
+      <if test="orgRegCode != null">
+        org_reg_code = #{orgRegCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullname != null">
+        org_fullname = #{orgFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPerson != null">
+        org_person = #{orgPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        org_address = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCapital != null">
+        org_capital = #{orgCapital,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFoundDate != null">
+        org_found_date = #{orgFoundDate,jdbcType=DATE},
+      </if>
+      <if test="orgExpiration != null">
+        org_expiration = #{orgExpiration,jdbcType=VARCHAR},
+      </if>
+      <if test="orgScope != null">
+        org_scope = #{orgScope,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIssuanceDate != null">
+        org_issuance_date = #{orgIssuanceDate,jdbcType=DATE},
+      </if>
+      <if test="orgIssuer != null">
+        org_issuer = #{orgIssuer,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLicensePic != null">
+        org_license_pic = #{orgLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPic1 != null">
+        legal_person_pic1 = #{legalPersonPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonPic2 != null">
+        legal_person_pic2 = #{legalPersonPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationNumber != null">
+        identification_number = #{identificationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taxEnrolCertificatePic != null">
+        tax_enrol_certificate_pic = #{taxEnrolCertificatePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province = #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city = #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrDistrict != null">
+        org_addr_district = #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+        modify_time = now(),
+    </set>
+    where org_oid = #{orgOid,jdbcType=BIGINT}
+  </update>
+
+</mapper>

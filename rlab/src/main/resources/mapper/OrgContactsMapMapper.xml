@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgContactsMapDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgContactsMap">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="con_id" jdbcType="BIGINT" property="conId" />
+    <result column="org_oid" jdbcType="BIGINT" property="orgOid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, con_id, org_oid, create_time, modify_time
+  </sql>
+
+  <insert id="insertOrgContactsMap" parameterType="com.renrenlab.rlab.model.OrgContactsMap">
+    insert into rlab_org_info.t_org_contacts_map
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="conId != null">
+        con_id,
+      </if>
+      <if test="orgOid != null">
+        org_oid,
+      </if>
+        create_time,
+        modify_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="conId != null">
+        #{conId,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null">
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+        now(),
+        now(),
+    </trim>
+  </insert>
+
+</mapper>

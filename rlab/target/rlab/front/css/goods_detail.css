@@ -1,0 +1,477 @@
+body {
+    background: #f3f6f9;
+}
+.detail {
+    width: 1120px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom:124px;
+}
+
+.detail .goods_info {
+}
+
+/*=S 商品图片展示区域开始 [徐志响，2017-05-17]*/
+.detail .goods_info .goods_imgs {
+    width: 366px;
+    height: 366px;
+    background: #fff;
+    float: left;
+    position: relative;
+}
+
+.detail .goods_info .imgs_box {
+    width: 288px;
+    height: 288px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -144px;
+    margin-top: -144px;
+    overflow: hidden;
+}
+
+.goods_info .imgs_box ul {
+    height: 288px;
+    width: 2400px;
+    z-index: 3;
+    position: relative;
+}
+
+.goods_info .imgs_box ul li {
+    float: left;
+    list-style: none;
+
+}
+
+.goods_info .imgs_box ul img {
+    width: 288px;
+    height: 288px;
+}
+
+/*切换图标*/
+.goods_info .imgs_box .num {
+    height: 40px;
+    line-height: 40px;
+    padding-right: 25px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 6;
+    text-align: right;
+}
+
+.goods_info .imgs_box .num span {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left:10px;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    background: #cccecf;
+    cursor: pointer;
+}
+
+.goods_info .imgs_box .num span.cur {
+    background: #fff;
+}
+/*背景*/
+.goods_info .imgs_box .bg{
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    left: 0;
+    /*background: darkred;*/
+    width: 288px;
+    height: 149px;
+    background: url("../imgs/icon/lb-shadow.png") no-repeat ;
+}
+
+/*放大镜*/
+.goods_info .imgs_box .magnifying{
+    width: 120px;
+    height: 120px;
+    background-color: #FEDE4F;
+    background: red;
+    opacity: 0.5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: move;
+    z-index: 5;
+    background: url("../imgs/icon/gridding-blue.png") no-repeat;
+    display: none;
+}
+
+
+/*大图*/
+.goods_info .goods_imgs .big_img{
+    width: 288px;
+    height: 288px;
+    float: left;
+    position: absolute;
+    z-index: 1999;
+    top: 39px;
+    left: 345px;
+    display:none;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+.goods_info .goods_imgs .big_img img{
+    position: absolute;
+    background:url("../imgs/1.JPG") no-repeat 400px 400px/1000px 1000px;
+    background-position: -100px 100px;
+    width:800px;
+    height: 800px;
+    left: -100px;
+    too: 100px;
+}
+
+
+/*=E 商品信息区域结束 [徐志响，2017-05-17]*/
+
+
+
+
+/*=S 商品信息区域开始[徐志响，2017-05-17]*/
+.detail .goods_info .goods_card {
+    width: 734px;
+    height: 366px;
+    float: right;
+}
+/*上半部分*/
+.goods_info .goods_card .top_info {
+    height: 268px;
+    background: #fff;
+    padding:0 26px;
+    overflow: hidden;
+}
+
+.goods_card .top_info h2{
+    margin-top: 40px;
+    margin-bottom:14px;
+    font-size: 24px;
+    color: #508df0;
+}
+
+.goods_card .top_info p {
+    color: #7a7a7a;
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.goods_card .top_info p > span{
+    color: #4e4e4e;
+}
+
+.goods_card .top_info .price {
+    float: right;
+    font-size: 16px;
+    color: #999;
+
+}
+.goods_card .top_info .price strong {
+    font-size: 24px;
+    color: #d40c04;
+}
+
+.goods_card .top_info .goods_remark {
+    overflow: hidden;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+}
+
+.goods_card .top_info .goods_remark span{
+    float: right;
+    font-size: 12px;
+    color: #999;
+}
+
+/*下半部分*/
+.goods_info .goods_card .btm_btn {
+    height: 98px;
+    background: #f9fbfc;
+    padding:0 26px;
+    line-height:98px;
+    position: relative;
+}
+
+.goods_card .btm_btn .lab-company {
+    height: 98px;
+    line-height: 98px;
+    font-size: 16px;
+    color: #7eadf3;
+    float: left;
+}
+
+.goods_card .btm_btn span{
+    font-size: 16px;
+    margin-left:18px;
+    color: #4e4e4e;
+    font-size: 16px;
+}
+
+.goods_card .btm_btn button {
+    height:44px;
+    width:190px;
+    border: 0 none;
+    margin-top: -22px;
+    outline: 0 none;
+    line-height:43px;
+    background: #508df0;
+    float: right;
+    color: #fff;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    right: 26px;
+    cursor: pointer;
+}
+
+.goods_card .btm_btn button:active {
+    background: #3e72c0;
+}
+
+.goods_card .btm_btn button.default_btn {
+    background: #bfbfbf;
+    color: #fff;
+}
+.goods_card .btm_btn button.default_btn > a{
+    color: #fff;
+    text-decoration: underline;
+}
+
+.goods_card .btm_btn button.default_btn:active {
+    background: #bfbfbf;
+}
+/*=E 商品信息区域结束 [徐志响，2017-05-17]*/
+
+
+/*=S 简介开始 [徐志响，2017-05-17]*/
+ .goods_intro {
+    min-height: 266px;
+    margin-top: 20px;
+    padding:20px 32px;
+    padding-bottom:50px;
+    background: #fff;
+    border-top: 3px solid #508df0;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+}
+ .goods_intro .intro_title {
+    font-size: 30px;
+    height: 64px;
+    line-height:64px;
+    color: #508df0;
+}
+/*选项卡*/
+.detail .goods_intro .item {
+    margin-top:38px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail .goods_intro .last_item {
+    border: 0 none;
+}
+
+.detail .goods_intro .last_item {
+    border-bottom: 0 none;
+}
+.goods_intro .item .item_title {
+    border-left: 4px solid #508df0;
+    padding-left: 8px;
+    height:22px;
+    line-height:22px;
+    color: #535353;
+    font-size: 18px;
+
+}
+
+.goods_intro .item .item_txt {
+    line-height:26px;
+    padding:36px;
+    color: #535353;
+    font-size: 14px;
+}
+
+/*=E 简介结束 [徐志响，2017-05-17]*/
+
+/*=S 查看信息弹窗 [徐志响，2017-05-17]*/
+.company_info {
+    width: 676px;
+    padding:0 40px;
+    background: #fff;
+    margin: 0 auto;
+    margin-bottom:200px;
+}
+
+.company_info .title {
+    height: 106px;
+    line-height: 106px;
+
+}
+
+.company_info .title span{
+    display: block;
+    float: left;
+}
+
+.company_info .title .strong{
+    font-size: 30px;
+    margin-right:40px;
+    color: #508df0;
+}
+
+.company_info .title .names{
+    font-size: 18px;
+    color: #666;
+}
+
+
+.company_info .title i{
+    font-size: 22px;
+    color: #508df0;
+    cursor: pointer;
+    float: right;
+    display: block;
+    line-height:106px;
+}
+
+/*信息*/
+.company_info .infos {
+    height: 214px;
+    overflow: hidden;
+}
+
+.company_info .info_card i{
+    color: #508df0;
+    font-size: 16px;
+    vertical-align:  middle;
+    margin-right:14px;
+}
+.company_info .info_card .phone_400 > i{
+    display: block;
+    float: left;
+    line-height:39px;
+}
+
+.company_info .principal .pc_phone  i {
+    display: block;
+    float: left;
+    line-height:24px;
+}
+
+.company_info .infos .info_card {
+    height: 214px;
+    width: 367px;
+    padding:0 30px;
+    float: left;
+    background: #f9fbfc;
+}
+
+.company_info .info_card .info_address {
+    height: 50px;
+    /*padding:26px 0 18px 0;*/
+    line-height: 50px;
+    border-bottom: 1px dashed #e6e6e6;
+}
+
+
+
+.company_info .info_card .info_address > p{
+    /*height: 40px;*/
+    /*line-height:40px;*/
+    font-size: 14px;
+    color: #4e4e4e;
+    overflow: hidden;
+}
+
+
+.company_info .info_card .principal {
+    height: 102px;
+}
+
+.company_info .principal h4 {
+    font-size: 14px;
+    color: #666;
+    height: 62px;
+    line-height: 62px;
+}
+
+.company_info .principal > div {
+    overflow: hidden;
+}
+.company_info .principal .pc_name {
+    float: left;
+    color: #4E4E4E;
+}
+
+.company_info .principal .pc_phone {
+    /*float: left;*/
+    margin-left:90px;
+}
+
+    /*百度地图*/
+.company_info .infos .baidu_map {
+    width: 216px;
+    height: 216px;
+    float: right;
+}
+.company_info_layer {
+    width: auto!important;
+}
+
+.company_info_layer .layui-layer-content{
+    height: auto!important;
+    max-height: 500px!important;
+    overflow: hidden;
+}
+
+.company_info .infos .baidumap {
+    height: 100%;
+}
+
+
+.compay_infos {
+    height: 176px;
+    width: 100%;
+}
+
+.adress_content {
+    float: right;
+}
+
+.compay_infos .txt {
+    float: left;
+    text-align: right;
+    line-height: 30px;
+    margin-top: 64px;
+    margin-right: 38px;
+    font-size: 14px;
+    color: #4e4e4e;
+}
+
+.compay_infos .about_me {
+    float: left;
+    height: 176px;
+    line-height: 176px;
+
+}
+
+.compay_infos .about_me img{
+    width: 90px;
+    height: 90px;
+    vertical-align: middle;
+}
+
+/*二维码*/
+.company_info .compay_infos {
+    height: 176px;
+}
+
+/*=E 查看信息弹窗 [徐志响，2017-05-17]*/

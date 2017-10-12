@@ -1,0 +1,421 @@
+body {
+    background: #f3f6f9;
+}
+
+.list_wrapper {
+    width: 1120px;
+    margin: 0 auto;
+    margin-bottom: 200px;
+}
+
+.list_wrapper .other_resault {
+    width: 1120px;
+    height: 130px;
+    margin-top:22px;
+    line-height: 130px;
+    text-align: center;
+    color: #a9a9a9;
+    font-size: 12px;
+    background: #fff;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+
+.list_wrapper .other_resault img {
+    vertical-align: middle;
+    width: 65px;
+    margin-right:20px;
+}
+
+/*卡片公用样式*/
+.cards {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.list_wrapper .resault_tip {
+    margin-top: 18px;
+    height: 42px;
+    line-height: 42px;
+    font-size: 12px;
+    color: #7a7a7a;
+}
+
+/*左侧提示*/
+.list_wrapper .resault_tip .lft_tip {
+    float: left;
+    width: 570px;
+    height: 42px;
+    background: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.resault_tip .lft_tip .lft_num {
+    float: left;
+    margin-left: 26px;
+}
+
+.resault_tip .lft_tip .lft_num > span {
+    color: #E57373;
+}
+
+.resault_tip .lft_tip .rt_tx {
+    float: left;
+    margin-left: 26px;
+
+}
+
+.resault_tip .lft_tip .rt_tx > span {
+    color: #508df0;
+}
+
+/*右侧提示*/
+.list_wrapper .resault_tip .rt_tip {
+    float: right;
+    width: 520px;
+    height: 42px;
+    background: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.resault_tip .rt_tip .lab-tip {
+    width: 54px;
+    height: 42px;
+    line-height: 42px;
+    font-size: 16px;
+    text-align: center;
+    color: #508df0;
+    float: left;
+    color:rgb(179, 0, 0);
+}
+
+.resault_tip .rt_tip .text {
+    float: left;
+}
+
+.resault_tip .rt_tip .text a {
+    /*color: #508df0;*/
+    /*深芽绿*/
+    /*color: rgb(115,155,6);*/
+
+    /*color: rgb(140,179,62);*/
+
+    /*color: rgb(204,255,153);*/
+
+    /*color: rgb(160,216,120);*/
+
+    /*color: rgb(138,206,87);*/
+
+    /*color: rgb(153,241,88);*/
+
+    /*银星海棠*/
+    /*color: rgb(245,36,67);*/
+
+    /*象牙红*/
+    color: rgb(179,0,0);
+
+    /*榴花红*/
+    /*color: rgb(176,37,2);*/
+
+    /*红扇贝*/
+    /*color: rgb(206,59,59);*/
+
+    /*color: rgb(255,68,26);*/
+
+
+}
+
+.resault_tip .rt_tip .text a:hover {
+    text-decoration: underline;
+}
+
+/*=S 列表卡片样式 [徐志响，2017-05-16]*/
+.list_wrapper .list {
+    margin-top: 14px;
+}
+
+.list_wrapper .list .item_card {
+    width: 1120px;
+    height: 150px;
+    padding: 20px 0px;
+    margin-bottom: 12px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.list_wrapper .list .item_card:hover {
+    -webkit-box-shadow: 0 6px 16px 0 #d6e0e8;
+    -moz-box-shadow: 0 6px 16px 0 #d6e0e8;
+    box-shadow: 0 6px 16px 0 #d6e0e8;
+}
+
+.list .item_card .goods_img {
+    height: 110px;
+    width: 180px;
+    text-align: center;
+    line-height: 110px;
+    float: left;
+}
+.item_card .goods_img > div {
+    /*border: 1px solid #eee;*/
+    /*width: 140px;*/
+}
+
+.item_card .goods_img img {
+    vertical-align: top;
+    width: 140px;
+    height: 110px;
+    cursor: pointer;
+    padding: 1px;
+    border: 1px solid #eee;
+}
+
+.item_card .goods_info {
+    float: left;
+    width: 580px;
+    height: 110px;
+    overflow: hidden;
+}
+
+/*标题*/
+.item_card .goods_info > .title {
+    height: 18px;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.item_card .title a {
+    font-size: 16px;
+    color: #4e91fe;
+    font-weight: 700;
+}
+
+.item_card .title a:hover {
+    text-decoration: underline;
+    color: #3e72c0;
+}
+
+/*品牌*/
+.item_card .goods_info > .info {
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: 12px;
+    color: #4e4e4e;
+
+}
+
+.item_card .info .types {
+    color: #7a7a7a;
+
+}
+
+.item_card .info .brand {
+    margin-left: 28px;
+    color: #7a7a7a;
+}
+
+.item_card .goods_info > .intro {
+    height: 16px;
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+
+/*简介*/
+.item_card .intro > a {
+    color: #4e4e4e;
+}
+
+.item_card .intro > a:hover {
+    color: #3e72c0;
+    text-decoration: underline;
+}
+
+.item_card .intro > a > span {
+    color: #999;
+}
+
+.item_card .intro > a:hover span {
+    color: #3e72c0;
+}
+
+/*地址*/
+.item_card .goods_info > .jg_adress {
+    /*height: 18px;*/
+    /*line-height: 18px;*/
+    margin-top: 16px;
+    height: 22px;
+}
+
+.item_card .goods_info > .jg_adress i {
+    margin-right: 15px;
+    font-size: 16px;
+    color: #508df0;
+}
+
+.item_card .goods_info > .jg_adress span {
+    font-size: 12px;
+    color: #4e4e4e;
+}
+
+.goods_info > .jg_adress .city {
+    width: 128px;
+    float: left;
+}
+
+.goods_info > .jg_adress .company {
+    float: left;
+
+}
+
+.item_card .goods_btn {
+    float: right;
+    height: 100px;
+    margin-right: 34px;
+    float: right;
+}
+
+.item_card .goods_btn .price {
+    height: 46px;
+    line-height: 46px;
+    font-size: 20px;
+    color: #d40c04;
+    text-align: center;
+
+}
+
+.item_card .goods_btn button {
+    width: 104px;
+    height: 40px;
+    background: #508df0;
+    outline: 0 none;
+    border: 1px solid #A6CAFC;
+    margin-top: 18px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+}
+
+.item_card .goods_btn button:active {
+    background: #3e72c0;
+}
+
+/*=E 列表卡片样式 [徐志响，2017-05-16]*/
+
+/*START 分页样式  [徐志响，2017-09-08]*/
+.paging {
+    margin-top: 88px;
+}
+
+.paging .page_list {
+    float: right;
+}
+
+.paging .page_list > li {
+    float: left;
+    list-style: none;
+    text-indent: 0;
+    /*width: 26px;*/
+    min-width: 26px;
+    max-width: 50px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.paging .page_list > li a {
+    color: #7a7a7a;
+}
+
+.paging .page_list > li.active a {
+    color: #508df0;
+}
+
+.paging .page_list > li:active a {
+    color: #508df0;
+}
+
+.paging .page_list > button {
+    float: left;
+    outline: 0 none;
+    border: 0 none;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    color: #508df0;
+    text-align: center;
+    line-height: 30px;
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.paging .page_list > button:active {
+    background: #508DF0;
+    color: #fff;
+}
+
+.paging .page_list > button.disabled:active {
+    background: #fff;
+    color: #b5b5b5;
+}
+
+.paging .page_list > button.disabled {
+    color: #b5b5b5;
+
+}
+/*END 分页样式  [徐志响，2017-09-08]*/
+
+/* 无搜索结果缺省页 */
+
+.list_default {
+    height: 362px;
+    background: #fff;
+    margin-top: 18px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.list_default > div.default_icon {
+    float: left;
+    height: 362px;
+    line-height: 362px;
+    margin-left: 185px;
+}
+
+.list_default > div.default_txt {
+    float: left;
+    height: 362px;
+    margin-left: 88px;
+    position: relative;
+}
+
+.list_default > div.default_txt > div {
+    margin-top: 122px;
+}
+
+.list_default > div.default_txt h3 {
+    font-size: 24px;
+    margin-bottom: 32px;
+    color: #666;
+}
+
+.list_default > div.default_txt p {
+    font-size: 14px;
+    color: #999;
+}

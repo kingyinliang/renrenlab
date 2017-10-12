@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgContactsDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.OrgContacts">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="con_id" jdbcType="BIGINT" property="conId" />
+    <result column="u_uid" jdbcType="BIGINT" property="uUid" />
+    <result column="con_name" jdbcType="VARCHAR" property="conName" />
+    <result column="con_phone" jdbcType="VARCHAR" property="conPhone" />
+    <result column="con_email" jdbcType="VARCHAR" property="conEmail" />
+    <result column="con_country" jdbcType="VARCHAR" property="conCountry" />
+    <result column="con_province" jdbcType="VARCHAR" property="conProvince" />
+    <result column="con_city" jdbcType="VARCHAR" property="conCity" />
+    <result column="con_street" jdbcType="VARCHAR" property="conStreet" />
+    <result column="con_zipcode" jdbcType="VARCHAR" property="conZipcode" />
+    <result column="con_fax" jdbcType="VARCHAR" property="conFax" />
+    <result column="con_state" jdbcType="INTEGER" property="conState" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    oc.id, oc.con_id, oc.u_uid, oc.con_name, oc.con_phone, oc.con_email, oc.con_country, oc.con_province, oc.con_city,
+    oc.con_street, oc.con_zipcode, oc.con_fax, oc.con_state, oc.create_time, oc.modify_time
+  </sql>
+
+  <select id="searchOrgContactsByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_org_info.t_org_contacts oc
+    WHERE
+    oc.con_state = '0' AND oc.con_id IN (
+    SELECT
+    ocm.con_id
+    FROM
+    rlab_org_info.t_org_contacts_map ocm
+    WHERE
+    ocm.org_oid = #{orgOid,jdbcType=BIGINT}
+    );
+  </select>
+
+  <select id="searchOrgContactsByConId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_org_info.t_org_contacts oc
+    WHERE
+    <choose>
+      <when test="conState != null">
+        oc.con_state = #{conState,jdbcType=INTEGER}
+      </when>
+      <otherwise>
+        oc.con_state = '1'
+      </otherwise>
+    </choose>
+    AND oc.con_id = #{conId,jdbcType=BIGINT};
+  </select>
+
+  <insert id="insertOrgContacts" parameterType="com.renrenlab.rlab.vo.OrgContacts" keyProperty="conId" keyColumn="con_id">
+    <selectKey keyProperty="conId" resultType="java.lang.Long" order="AFTER">
+      select last_value as con_id from rlab_org_info.org_contacts_cid_seq;
+    </selectKey>
+    insert into rlab_org_info.t_org_contacts
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="conId != null">
+        con_id,
+      </if>
+      <if test="uUid != null">
+        u_uid,
+      </if>
+      <if test="conName != null">
+        con_name,
+      </if>
+      <if test="conPhone != null">
+        con_phone,
+      </if>
+      <if test="conEmail != null">
+        con_email,
+      </if>
+      <if test="conCountry != null">
+        con_country,
+      </if>
+      <if test="conProvince != null">
+        con_province,
+      </if>
+      <if test="conCity != null">
+        con_city,
+      </if>
+      <if test="conStreet != null">
+        con_street,
+      </if>
+      <if test="conZipcode != null">
+        con_zipcode,
+      </if>
+      <if test="conFax != null">
+        con_fax,
+      </if>
+      <if test="conState != null">
+        con_state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="conId != null">
+        #{conId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null">
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="conName != null">
+        #{conName,jdbcType=VARCHAR},
+      </if>
+      <if test="conPhone != null">
+        #{conPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="conEmail != null">
+        #{conEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="conCountry != null">
+        #{conCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="conProvince != null">
+        #{conProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="conCity != null">
+        #{conCity,jdbcType=VARCHAR},
+      </if>
+      <if test="conStreet != null">
+        #{conStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="conZipcode != null">
+        #{conZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="conFax != null">
+        #{conFax,jdbcType=VARCHAR},
+      </if>
+      <if test="conState != null">
+        #{conState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateOrgContacts" parameterType="com.renrenlab.rlab.vo.OrgContacts">
+    update rlab_org_info.t_org_contacts
+    <set>
+      <if test="uUid != null">
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="conName != null">
+        con_name = #{conName,jdbcType=VARCHAR},
+      </if>
+      <if test="conPhone != null">
+        con_phone = #{conPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="conEmail != null">
+        con_email = #{conEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="conCountry != null">
+        con_country = #{conCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="conProvince != null">
+        con_province = #{conProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="conCity != null">
+        con_city = #{conCity,jdbcType=VARCHAR},
+      </if>
+      <if test="conStreet != null">
+        con_street = #{conStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="conZipcode != null">
+        con_zipcode = #{conZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="conFax != null">
+        con_fax = #{conFax,jdbcType=VARCHAR},
+      </if>
+      <if test="conState != null">
+        con_state = #{conState,jdbcType=INTEGER},
+      </if>
+        modify_time = now(),
+    </set>
+    where con_id = #{conId,jdbcType=BIGINT}
+  </update>
+
+  <select id="searchContactsByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    rlab_org_info.t_org_contacts oc
+    WHERE
+    <choose>
+      <when test="conState != null">
+        oc.con_state = #{conState,jdbcType=INTEGER}
+      </when>
+      <otherwise>
+        oc.con_state = '1'
+      </otherwise>
+    </choose>
+    AND oc.con_id IN (
+    SELECT
+    ocm.con_id
+    FROM
+    rlab_org_info.t_org_contacts_map ocm
+    WHERE
+    ocm.org_oid = #{orgOid,jdbcType=BIGINT}
+    );
+  </select>
+
+  <delete id="delOrgContactsByConId" parameterType="java.lang.Long">
+    DELETE  FROM  rlab_org_info.t_org_contacts
+    WHERE con_id = #{con_id,jdbcType=BIGINT}
+    ;
+    DELETE  FROM  rlab_org_info.t_org_contacts_map
+    WHERE con_id = #{con_id,jdbcType=BIGINT}
+    ;
+  </delete>
+
+</mapper>

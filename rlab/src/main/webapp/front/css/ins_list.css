@@ -1,0 +1,556 @@
+body, .wrapper {
+    background-color: #f3f6f9 !important;
+}
+
+.org_main {
+    margin-bottom: 80px;
+}
+
+/*START机构公用头部*/
+/*共享指数*/
+.org_title {
+    line-height: 104px;
+    background: #fff;
+    overflow: hidden;
+}
+
+.org_title > div {
+    height: 104px;
+    width: 1120px;
+    margin: 0 auto;
+}
+
+.org_title .org_info {
+    float: left;
+    position: relative;
+}
+
+.org_title .org_info img.logo {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.org_title .org_info span {
+    font-size: 20px;
+    color: #4E4E4E;
+    position: relative;
+}
+
+.org_title .org_info img.approve {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: -26px;
+    top: -6px;
+}
+
+.org_title .exponent {
+    float: right;
+    font-size: 12px;
+    color: #4E4E4E;
+}
+
+.org_title .exponent > div {
+    float: left;
+}
+
+.org_title .exponent > div.num {
+    font-size: 50px;
+    font-family: "779-CAI978";
+    color: #ed6a5f;
+}
+
+/*机构tab栏*/
+.org_tab {
+    border-bottom: 2px solid #508DF0;
+    line-height: 44px;
+    height: 46px;
+}
+
+.org_tab ul {
+    list-style: none;
+    width: 1120px;
+    margin: 0 auto;
+    line-height: 44px;
+}
+
+.org_tab li {
+    font-size: 16px;
+    float: left;
+    margin-right: 45px;
+}
+
+.org_tab li a {
+    color: #4E4E4E;
+
+}
+
+.org_tab li.actived a {
+    color: #508DF0;
+}
+
+/*结果记录*/
+.org_result {
+    font-size: 12px;
+    color: #4E4E4E;
+    line-height: 34px;
+    width: 1120px;
+    margin: 0 auto;
+}
+
+/*结果列表*/
+
+/*END机构公用头部*/
+.org_list {
+    width: 1120px;
+    margin: 0 auto;
+}
+
+/*SATART仪器列表公用部分*/
+/*item*/
+.org_list .item {
+    background: #fff;
+    overflow: hidden;
+    height: 150px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    padding: 20px 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.org_list .item:hover {
+    -webkit-box-shadow: 0 6px 16px 0 #d6e0e8;
+    -moz-box-shadow: 0 6px 16px 0 #d6e0e8;
+    box-shadow: 0 6px 16px 0 #d6e0e8;
+}
+
+/*左侧图片*/
+.ins_img {
+    width: 178px;
+    text-align: center;
+    float: left;
+}
+
+.ins_img img {
+    vertical-align: middle;
+    width: 140px;
+    height: 110px;
+    cursor: pointer;
+    padding: 1px;
+    border: 1px solid #eee;
+}
+
+/*右侧价格和操作按钮*/
+.ins_btn {
+    height: 100px;
+    margin-right: 34px;
+    float: right;
+    /*margin-top: 15px;*/
+}
+
+.ins_btn .price {
+    height: 46px;
+    line-height: 46px;
+    font-size: 20px;
+    color: #d40c04;
+    text-align: center;
+}
+
+.ins_btn button {
+    width: 104px;
+    height: 40px;
+    background: #508df0;
+    outline: 0 none;
+    border: 1px solid #A6CAFC;
+    margin-top: 18px;
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+}
+
+.ins_btn button:active {
+    background: #3e72c0;
+}
+
+/*END仪器列表公用部分*/
+
+/*列表仪器信息部分*/
+.ins_info {
+    float: left;
+    max-width: 750px;
+}
+
+.ins_info .title a {
+    font-size: 16px;
+    color: #4e91fe;
+    font-weight: 700;
+}
+
+.ins_info .info {
+    line-height: 32px;
+    font-size: 14px;
+    color: #4E4E4E;
+}
+
+.ins_info .info span {
+    margin-right: 40px;
+}
+.ins_info .info i {
+    color: #999;
+}
+.ins_info .intro {
+    line-height: 32px;
+
+}
+.ins_info .intro span {
+    margin-right: 36px;
+}
+
+.ins_info .intro  i{
+    font-size: 16px;
+    color: #4E4E4E;
+}
+
+.ins_info .intro  s{
+    font-size: 12px;
+    color: #4E4E4E;
+    margin-left: 10px;
+}
+
+.ins_info .label {
+    height: 24px;
+}
+
+.ins_info .label span {
+    display: inline-block;
+    line-height:22px;
+    background: #8cc932;
+    color: #fff;
+    padding: 0 4px;
+    font-size: 12px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 3px;
+}
+
+.ins_info .label span.tp1 {
+    background: #8cc932;
+}
+
+.ins_info .label span.tp2 {
+    background: #0cbcef;
+}
+
+.paging {
+    width: 1120px;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+/*分页样式*/
+.paging {
+    margin-top: 88px;
+}
+
+.paging .page_list {
+    float: right;
+}
+
+.paging .page_list > li {
+    float: left;
+    list-style: none;
+    text-indent: 0;
+    /*width: 26px;*/
+    min-width: 26px;
+    max-width: 50px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.paging .page_list > li a {
+    color: #7a7a7a;
+}
+
+.paging .page_list > li.active a {
+    color: #508df0;
+}
+
+.paging .page_list > li:active a {
+    color: #508df0;
+}
+
+.paging .page_list > button {
+    float: left;
+    outline: 0 none;
+    border: 0 none;
+    width: 30px;
+    height: 30px;
+    font-size: 10px;
+    color: #508df0;
+    text-align: center;
+    line-height: 30px;
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.paging .page_list > button:active {
+    background: #508DF0;
+    color: #fff;
+}
+
+.paging .page_list > button.disabled:active {
+    background: #fff;
+    color: #b5b5b5;
+}
+
+.paging .page_list > button.disabled {
+    color: #b5b5b5;
+}
+
+/*START条件筛选部分开始*/
+/*公共样式*/
+.filter {
+    width: 1120px;
+    background: #fff;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.filter > .p {
+    position: relative;
+    padding-left: 100px;
+    padding-right: 65px;
+    overflow: hidden;
+    min-height: 50px;
+    line-height: 20px;
+}
+
+.filter > .p > i {
+    position: absolute;
+    display: block;
+    line-height: 20px;
+    font-size: 12px;
+    color: #999;
+    left: 20px;
+    top: 0;
+}
+
+/*更多筛选*/
+.more_filter {
+    width: 1120px;
+    margin: 0 auto;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background-color: #f9fbfc;
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+}
+
+.more_filter span {
+    position: relative;
+}
+
+.more_filter span i {
+    position: absolute;
+    right: -15px;
+    top: 3px;
+}
+
+/*已选条件筛选*/
+.ins_filter {
+
+}
+
+.ins_filter .checked_label {
+    float: left;
+    line-height: 20px;
+    overflow: hidden;
+}
+.ins_filter .checked_label span {
+    margin-bottom: 12px;
+    display: block;
+    border: 1px solid #508DF0;
+    padding-right: 26px;
+    padding-left: 6px;
+    float: left;
+    position: relative;
+    margin-right: 14px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #508DF0;
+}
+.ins_filter .checked_label span i:active {
+    background: #3e72c0;
+}
+.ins_filter .checked_label span i {
+    position: absolute;
+    width: 22px;
+    height: 20px;
+    right: 0;
+    top: 0;
+    background: #508DF0;
+    color: #fff;
+    text-align: center;
+    display: block;
+    line-height: 20px;
+}
+
+.ins_filter .checked_label   s {
+    float: left;
+    display: block;
+    background: #508DF0;
+    color: #fff;
+    padding: 0 12px ;
+    padding-left: 30px;
+    line-height: 22px;
+    height: 22px;
+    font-size: 12px;
+    -webkit-border-radius:11px;
+    -moz-border-radius:11px;
+    border-radius:11px;
+    cursor: pointer;
+    position: relative;
+}
+.ins_filter .checked_label  s:active {
+    background-color: #3e72c0;
+}
+.ins_filter .checked_label  s i {
+    /*font-size: 16px;*/
+    vertical-align: top;
+    position: absolute;
+    left:13px;
+    top: 0px;
+    line-height: 24px;
+}
+
+.ins_filter .normal {
+
+}
+.ins_filter .normal > div {
+    overflow: hidden;
+}
+.ins_filter .normal > div > span {
+    float: left;
+    display: block;
+    line-height:20px;
+    height: 20px;
+    font-size: 12px;
+    padding: 0 10px;
+    margin-right: 10px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    color: #4E4E4E;
+    cursor: pointer;
+}
+
+.ins_filter .normal > div > span.actived {
+    background-color: #508DF0;
+    color: #fff;
+
+}
+
+.ins_filter .normal > div .range_price {
+    float: left;
+    overflow: hidden;
+}
+.ins_filter .normal > div .range_price i {
+    color: #4E4E4E;
+    font-size: 12px;
+}
+.ins_filter .normal > div .range_price input {
+    width: 62px;
+    height: 20px;
+    border:1px solid #ddd;
+    outline: 0 none;
+    padding-left: 5px;
+}
+
+.ins_filter .normal > div .range_price button {
+    width: 42px;
+    height: 20px;
+    line-height: 20px;
+}
+/*END条件筛选部分开始*/
+
+
+/* 无搜索结果缺省页 */
+
+.list_default {
+    height: 362px;
+    width:1120px;
+    margin: 0 auto;
+    background: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+.list_default > div.default_icon {
+    float: left;
+    height: 362px;
+    line-height: 362px;
+    margin-left: 185px;
+}
+
+.list_default > div.default_txt {
+    float: left;
+    height: 362px;
+    margin-left: 88px;
+    position: relative;
+}
+
+.list_default > div.default_txt > div {
+    margin-top: 122px;
+}
+
+.list_default > div.default_txt h3 {
+    font-size: 24px;
+    margin-bottom: 32px;
+    color: #666;
+}
+
+.list_default > div.default_txt p {
+    font-size: 14px;
+    color: #999;
+}
+
+/*其他地区搜索到了结果*/
+ .other_resault {
+    width: 1120px;
+    height: 130px;
+     margin: 0 auto;
+    margin-top:20px;
+    line-height: 130px;
+    text-align: center;
+    color: #a9a9a9;
+    font-size: 12px;
+    background: #fff;
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+}
+
+.other_resault img {
+    vertical-align: middle;
+    width: 65px;
+    margin-right:20px;
+}
+
+/*按钮禁用样式*/
+.ins_filter button.disables {
+    background: #ddd;
+}

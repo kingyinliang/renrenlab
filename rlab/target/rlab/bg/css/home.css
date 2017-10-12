@@ -1,0 +1,19 @@
+.chart_container{
+    width: 100%;
+    height: 350px;
+    margin-top: 25px;
+    /*background-color: white;*/
+}
+
+.main_head{
+    /*margin-left: 40px;*/
+    margin-top: 25px;
+}
+
+.main_head div{
+    width: 100%;
+    margin-top: 25px;
+    height: 2px;
+    background-color: #dce3ea;
+    /*margin-right: 40px;*/
+}

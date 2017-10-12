@@ -1,0 +1,240 @@
+/*.page,.page-group {*/
+/*display: block;*/
+/*}*/
+
+/*.headers {*/
+/*text-align: center;*/
+/*font-size: 1rem;*/
+/*}*/
+
+body, html {
+    height: 100%;
+    background: #f5f6fa;
+}
+
+.wrapper {
+}
+
+.header {
+    background: #fff;
+}
+
+/*头部搜索*/
+.header .search {
+    height: 1.175rem;
+    width: 100%;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+
+}
+
+.header .search > div {
+    /*float: left;*/
+}
+
+.header .search {
+    position: relative;
+}
+
+.header .search .lft {
+    position: absolute;
+    left:0;
+    top: 0;
+    width: 1.8rem;
+    height: 1.175rem;
+    text-align: center;
+    line-height: 1.1rem;
+    font-size: 0.38rem;
+    color: #4e4e4e;
+}
+
+.header .search .lft i {
+    font-size: 0.17rem;
+}
+
+.header .search .rt {
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 1.3rem;
+    height: 1.175rem;
+    text-align: center;
+    line-height: 1.1rem;
+    font-size: 0.38rem;
+    color: #4e4e4e;
+
+}
+
+
+.header .search .ipt {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.header .search .ipt_center {
+    height: 0.8rem;
+    width:100%;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.4rem;
+    padding-right: 1.1rem;
+    background: #f5f6fa;
+
+}
+
+.header .search .ipt input {
+    height: 0.8rem;
+    /*width: 4.88rem;*/
+    width: 100%;
+    /*width: 5.0rem;*/
+    outline: 0 none;
+    border: 0 none;
+    background: #f5f6fa;
+    box-sizing: border-box;
+    padding-left: 0.2rem;
+}
+
+
+.header .search .ipt i {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    float: right;
+    text-align: center;
+    font-size: 0.4rem;
+    color: #4e4e4e;
+}
+
+.header .address {
+    height: 0.8rem;
+}
+
+
+/*列表*/
+
+.list {
+    padding: 0 0.266rem;
+    /*height: 20rem;*/
+    background: #f5f6fa;
+    color: #4e4e4e;
+}
+
+/*搜索列表公用*/
+.list > div {
+
+}
+
+.list > div > p {
+    height: 1.1rem;
+    line-height: 1.1rem;
+    font-size: 0.32rem;
+}
+
+.list > div > ul {
+
+}
+
+.list > div > ul > li {
+    float: left;
+    display: block;
+    max-width: 9rem;
+    height: 0.75rem;
+    line-height: 0.75rem;
+    padding: 0 0.3rem;
+    -webkit-border-radius: 0.1rem;
+    -moz-border-radius: 0.1rem;
+    border-radius: 0.1rem;
+    background: #fff;
+    /*background: pink;*/
+    margin-right: 0.188rem;
+    margin-bottom: 0.16rem;
+    overflow: hidden;
+}
+
+/*历史搜索*/
+.list > div.history_sch {
+
+}
+
+
+.list > div.history_sch i{
+    float: right;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    opacity: 0.7;
+}
+
+
+/*热门搜索*/
+.list > div.hot_sch {
+
+}
+
+
+/*选择城市*/
+.ad_header {
+    height: 1.175rem;
+    background: #fff;
+    line-height: 1.175rem;
+    text-align: center;
+    color: #4e4e4e;
+}
+.ad_header i{
+    float: left;
+    display: block;
+    height: 1.175rem;
+    line-height: 1.175rem;
+    margin-left: 0.3rem;
+    color: #4e4e4e;
+}
+
+.ad_header div{
+    float: right;
+    vertical-align: middle;
+}
+
+.ad_header div > img{
+    width:0.9rem;
+    height:0.9rem;
+    vertical-align: middle;
+}
+
+/*城市选择列表*/
+.ad_list {
+    padding: 0 0.266rem;
+    /*height: 20rem;*/
+    background: #f5f6fa;
+    color: #4e4e4e;
+
+}
+.ad_list > div > p {
+    height: 1.1rem;
+    line-height: 1.1rem;
+    font-size: 0.32rem;
+}
+
+.ad_list > div > ul {
+
+}
+
+.ad_list > div > ul > li {
+    float: left;
+    display: block;
+    max-width: 9rem;
+    height: 0.75rem;
+    line-height: 0.75rem;
+    padding: 0 0.3rem;
+    -webkit-border-radius: 0.1rem;
+    -moz-border-radius: 0.1rem;
+    border-radius: 0.1rem;
+    background: #fff;
+    /*background: pink;*/
+    margin-right: 0.188rem;
+    margin-bottom: 0.16rem;
+    overflow: hidden;
+}

@@ -1,0 +1,38 @@
+.org_tab{
+    /*margin-left: 150px;*/
+    /*margin-right: 150px;*/
+    height: 150px;
+}
+
+p{
+    color: #4e4e4e;
+}
+
+.radius{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.org_info {
+
+}
+
+.org_info p {
+    margin-top: 10px;
+    position: relative;
+    padding-left: 80px;
+    font-size: 14px;
+    overflow: hidden;
+}
+.org_info p > i{
+    color: #999;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.org_info > p {
+    height: 24px;
+    line-height:24px;
+}

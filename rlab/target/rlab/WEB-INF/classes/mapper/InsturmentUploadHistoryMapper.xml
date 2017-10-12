@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.InstrumentUploadHistoryDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InstrumentUploadHistory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ins_ulhist_id" property="insUlhistId" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="org_oid" property="orgOid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="HistoryResultMap" type="com.renrenlab.rlab.vo.InsturmentUploadHistoryInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ins_ulhist_id" property="insUlhistId" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="org_oid" property="orgOid" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="u_mobile" property="uMobile" jdbcType="VARCHAR" />
+    <result column="u_nickname" property="uNickName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, ins_ulhist_id, u_uid, org_oid, create_time, modify_time
+  </sql>
+  <sql id="History_Column_List" >
+    t_instrument_upload_history.id, ins_ulhist_id, t_instrument_upload_history.u_uid, t_instrument_upload_history.org_oid,
+    t_org_base_info.org_name,t_user_base_info.u_mobile,t_user_base_info.u_nickname,
+     t_instrument_upload_history.create_time, t_instrument_upload_history.modify_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_instrument_info.t_instrument_upload_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="listAll" resultMap="HistoryResultMap"  >
+    select
+    <include refid="History_Column_List" />
+    from rlab_instrument_info.t_instrument_upload_history
+    JOIN rlab_org_info.t_org_base_info
+    ON t_instrument_upload_history.org_oid = t_org_base_info.org_oid
+    JOIN rlab_user_info.t_user_base_info
+    ON t_instrument_upload_history.u_uid = t_user_base_info.u_uid
+    ORDER BY t_instrument_upload_history.create_time DESC
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_instrument_info.t_instrument_upload_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.rlab.model.InstrumentUploadHistory" >
+    insert into rlab_instrument_info.t_instrument_upload_history (id, ins_ulhist_id, u_uid, 
+      org_oid, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{insUlhistId,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, 
+      #{orgOid,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InstrumentUploadHistory" >
+    insert into rlab_instrument_info.t_instrument_upload_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="insUlhistId != null" >
+        ins_ulhist_id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="orgOid != null" >
+        org_oid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="insUlhistId != null" >
+        #{insUlhistId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null" >
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.InstrumentUploadHistory" >
+    update rlab_instrument_info.t_instrument_upload_history
+    <set >
+      <if test="insUlhistId != null" >
+        ins_ulhist_id = #{insUlhistId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null" >
+        org_oid = #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.InstrumentUploadHistory" >
+    update rlab_instrument_info.t_instrument_upload_history
+    set ins_ulhist_id = #{insUlhistId,jdbcType=BIGINT},
+      u_uid = #{uUid,jdbcType=BIGINT},
+      org_oid = #{orgOid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

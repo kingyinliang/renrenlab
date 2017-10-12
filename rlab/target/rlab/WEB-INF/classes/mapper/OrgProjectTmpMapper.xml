@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.OrgProjectTmpDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgProjectTmp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_pro_id" property="orgProId" jdbcType="BIGINT" />
+    <result column="org_cer_id" property="orgCerId" jdbcType="BIGINT" />
+    <result column="org_pro_chk_uid" property="orgProChkUid" jdbcType="BIGINT" />
+    <result column="org_pro_name" property="orgProName" jdbcType="VARCHAR" />
+    <result column="org_pro_application" property="orgProApplication" jdbcType="VARCHAR" />
+    <result column="org_pro_contract" property="orgProContract" jdbcType="VARCHAR" />
+    <result column="org_pro_invoice" property="orgProInvoice" jdbcType="VARCHAR" />
+    <result column="org_pro_achievement" property="orgProAchievement" jdbcType="VARCHAR" />
+    <result column="org_pro_state" property="orgProState" jdbcType="INTEGER" />
+    <result column="org_pro_remark" property="orgProRemark" jdbcType="VARCHAR" />
+    <result column="org_pro_chk_time" property="orgProChkTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ProjectTmpListMap" type="com.renrenlab.rlab.vo.OrgProjectTmpInfo" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_pro_id" property="orgProId" jdbcType="BIGINT" />
+    <result column="u_mobile" property="uMobile" jdbcType="VARCHAR" />
+    <result column="org_cer_id" property="orgCerId" jdbcType="BIGINT" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="org_pro_chk_uid" property="orgProChkUid" jdbcType="BIGINT" />
+    <result column="org_pro_name" property="orgProName" jdbcType="VARCHAR" />
+    <result column="org_pro_application" property="orgProApplication" jdbcType="VARCHAR" />
+    <result column="org_pro_contract" property="orgProContract" jdbcType="VARCHAR" />
+    <result column="org_pro_invoice" property="orgProInvoice" jdbcType="VARCHAR" />
+    <result column="org_pro_achievement" property="orgProAchievement" jdbcType="VARCHAR" />
+    <result column="org_pro_state" property="orgProState" jdbcType="INTEGER" />
+    <result column="org_pro_remark" property="orgProRemark" jdbcType="VARCHAR" />
+    <result column="org_cer_source" property="orgCerSource" jdbcType="INTEGER" />
+    <result column="org_pro_chk_time" property="orgProChkTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, org_pro_id, org_cer_id, org_pro_chk_uid, org_pro_name, org_pro_application, org_pro_contract,
+    org_pro_invoice,org_pro_achievement, org_pro_state, org_pro_remark, org_pro_chk_time, create_time, modify_time
+  </sql>
+  <sql id="ProjectTmp_Column_List">
+    t_org_project_tmp.id, org_pro_id, u_mobile, t_org_project_tmp.org_cer_id,t_org_certify_tmp.org_name, org_pro_chk_uid, org_pro_name, org_pro_application, org_pro_contract,
+    org_pro_invoice, org_pro_achievement,org_pro_state, org_pro_remark,org_cer_source, org_pro_chk_time, t_org_project_tmp.create_time, t_org_project_tmp.modify_time
+  </sql>
+
+  <select id="selectByKeyword" resultMap="ProjectTmpListMap">
+    SELECT
+    <include refid="ProjectTmp_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_certify_tmp
+    JOIN rlab_org_info.t_org_project_tmp
+    ON t_org_project_tmp.org_cer_id = t_org_certify_tmp.org_cer_id
+    WHERE
+    1=1
+    <if test="keyword != null and keyword !=''" >
+      AND (position(#{keyword} in t_org_certify_tmp.u_mobile) > 0 or position(#{keyword} in t_org_certify_tmp.org_name) > 0)
+    </if>
+    <if test="state != null and state !='' " >
+      AND t_org_project_tmp.org_pro_state = #{state}::INTEGER 
+    </if>
+    <if test="startTime != null and startTime !=''" >
+      AND t_org_project_tmp.create_time &gt;= #{startTime}::date
+    </if>
+    <if test="endTime != null and endTime !='' " >
+      AND t_org_project_tmp.create_time &lt;= date'${endTime}'+INTEGER '1'
+    </if>
+
+    ORDER by t_org_project_tmp.create_time
+    <if test="order == null || order =='' ">
+      DESC
+    </if>
+  </select>
+  <select id="selectByProid" resultMap="ProjectTmpListMap">
+    SELECT
+    <include refid="ProjectTmp_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_certify_tmp
+    JOIN rlab_org_info.t_org_project_tmp
+    ON t_org_project_tmp.org_cer_id = t_org_certify_tmp.org_cer_id
+    WHERE
+    t_org_project_tmp.org_pro_id =#{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectBaseInfoByCerId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_project_tmp
+    WHERE
+    org_cer_id = #{orgCerId,jdbcType=BIGINT}
+    ORDER by t_org_project_tmp.create_time DESC
+  </select>
+  <insert id="insert" parameterType="com.renrenlab.rlab.model.OrgProjectTmp" >
+    insert into rlab_org_info.t_org_project_tmp (id, org_pro_id, org_cer_id,
+    org_pro_chk_uid, org_pro_name, org_pro_application,
+    org_pro_contract, org_pro_invoice, org_pro_achievement,
+    org_pro_state, org_pro_remark, org_pro_chk_time,
+    create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{orgProId,jdbcType=BIGINT}, #{orgCerId,jdbcType=BIGINT},
+    #{orgProChkUid,jdbcType=BIGINT}, #{orgProName,jdbcType=VARCHAR}, #{orgProApplication,jdbcType=VARCHAR},
+    #{orgProContract,jdbcType=VARCHAR}, #{orgProInvoice,jdbcType=VARCHAR}, #{orgProAchievement,jdbcType=VARCHAR},
+    #{orgProState,jdbcType=INTEGER}, #{orgProRemark,jdbcType=VARCHAR}, #{orgProChkTime,jdbcType=TIMESTAMP},
+    #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.OrgProjectTmp" >
+    <selectKey keyProperty="orgProId" resultType="java.lang.Long" order="AFTER">
+      select last_value as org_pro_id from rlab_org_info.org_project_pid_seq;
+    </selectKey>
+    insert into rlab_org_info.t_org_project_tmp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgProId != null" >
+        org_pro_id,
+      </if>
+      <if test="orgCerId != null" >
+        org_cer_id,
+      </if>
+      <if test="orgProChkUid != null" >
+        org_pro_chk_uid,
+      </if>
+      <if test="orgProName != null" >
+        org_pro_name,
+      </if>
+      <if test="orgProApplication != null" >
+        org_pro_application,
+      </if>
+      <if test="orgProContract != null" >
+        org_pro_contract,
+      </if>
+      <if test="orgProInvoice != null" >
+        org_pro_invoice,
+      </if>
+      <if test="orgProAchievement != null" >
+        org_pro_achievement,
+      </if>
+      <if test="orgProState != null" >
+        org_pro_state,
+      </if>
+      <if test="orgProRemark != null" >
+        org_pro_remark,
+      </if>
+      <if test="orgProChkTime != null" >
+        org_pro_chk_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgProId != null" >
+        #{orgProId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCerId != null" >
+        #{orgCerId,jdbcType=BIGINT},
+      </if>
+      <if test="orgProChkUid != null" >
+        #{orgProChkUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgProName != null" >
+        #{orgProName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProApplication != null" >
+        #{orgProApplication,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProContract != null" >
+        #{orgProContract,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProInvoice != null" >
+        #{orgProInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProAchievement != null" >
+        #{orgProAchievement,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProState != null" >
+        #{orgProState,jdbcType=INTEGER},
+      </if>
+      <if test="orgProRemark != null" >
+        #{orgProRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProChkTime != null" >
+        #{orgProChkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByProIdSelective" parameterType="com.renrenlab.rlab.model.OrgProjectTmp" >
+    update rlab_org_info.t_org_project_tmp
+    <set >
+      <if test="orgCerId != null" >
+        org_cer_id = #{orgCerId,jdbcType=BIGINT},
+      </if>
+      <if test="orgProChkUid != null" >
+        org_pro_chk_uid = #{orgProChkUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgProName != null" >
+        org_pro_name = #{orgProName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProApplication != null" >
+        org_pro_application = #{orgProApplication,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProContract != null" >
+        org_pro_contract = #{orgProContract,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProInvoice != null" >
+        org_pro_invoice = #{orgProInvoice,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProAchievement != null" >
+        org_pro_achievement = #{orgProAchievement,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProState != null" >
+        org_pro_state = #{orgProState,jdbcType=INTEGER},
+      </if>
+      <if test="orgProRemark != null" >
+        org_pro_remark = #{orgProRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgProChkTime != null" >
+        org_pro_chk_time = #{orgProChkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where org_pro_id = #{orgProId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

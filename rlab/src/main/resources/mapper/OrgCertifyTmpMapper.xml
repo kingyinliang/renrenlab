@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.OrgCertifyTmpDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgCertifyTmp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_cer_id" property="orgCerId" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="org_id" property="orgId" jdbcType="BIGINT" />
+    <result column="org_cer_chk_uid" property="orgCerChkUid" jdbcType="BIGINT" />
+    <result column="u_mobile" property="uMobile" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="org_person_front_pic" property="orgPersonFrontPic" jdbcType="VARCHAR" />
+    <result column="org_person_back_pic" property="orgPersonBackPic" jdbcType="VARCHAR" />
+    <result column="org_license_pic" property="orgLicensePic" jdbcType="VARCHAR" />
+    <result column="org_report" property="orgReport" jdbcType="OTHER" />
+    <result column="org_base_report" property="orgBaseReport" jdbcType="VARCHAR" />
+    <result column="org_other_report" property="orgOtherReport" jdbcType="OTHER" />
+    <result column="org_cer_state" property="orgCerState" jdbcType="INTEGER" />
+    <result column="org_cer_remark" property="orgCerRemark" jdbcType="VARCHAR" />
+    <result column="org_cer_source" property="orgCerSource" jdbcType="INTEGER" />
+    <result column="org_cer_chk_time" property="orgCerChkTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_cer_id, u_uid, org_id, org_cer_chk_uid, u_mobile, org_name, org_person_front_pic,
+    org_person_back_pic, org_license_pic, org_report, org_base_report, org_other_report,
+    org_cer_state, org_cer_remark, org_cer_source, org_cer_chk_time, create_time, modify_time
+  </sql>
+
+  <select id="selectByKeyword" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_certify_tmp
+    WHERE
+    1=1
+    <if test="keyword != null and keyword !='' " >
+      AND (position(#{keyword} in u_mobile) > 0 or position(#{keyword} in org_name) > 0)
+    </if>
+    <if test="state != null and state !=''" >
+      AND org_cer_state = #{state}::INTEGER
+    </if>
+    <if test="startTime != null and startTime !=''" >
+      AND modify_time &gt;= #{startTime}::date
+    </if>
+    <if test="endTime != null and endTime !=''" >
+      AND modify_time &lt;= date'${endTime}'+INTEGER '1'
+    </if>
+    ORDER by modify_time
+    <if test="order == null || order =='' ">
+      DESC
+    </if>
+  </select>
+
+  <select id="selectByCerId" parameterType="java.lang.Long" resultType="com.renrenlab.rlab.model.OrgCertifyTmp">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_certify_tmp
+    WHERE
+    org_cer_id=#{cerId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUId" parameterType="java.lang.Long" resultType="com.renrenlab.rlab.model.OrgCertifyTmp">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_certify_tmp
+    WHERE
+    u_uid = #{uId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.OrgCertifyTmp" >
+    <selectKey keyProperty="orgCerId" resultType="java.lang.Long" order="AFTER">
+      select last_value as org_cer_id from rlab_org_info.org_certify_cid_seq;
+    </selectKey>
+    insert into rlab_org_info.t_org_certify_tmp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgCerId != null" >
+        org_cer_id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="orgId != null" >
+        org_id,
+      </if>
+      <if test="orgCerChkUid != null" >
+        org_cer_chk_uid,
+      </if>
+      <if test="uMobile != null" >
+        u_mobile,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="orgPersonFrontPic != null" >
+        org_person_front_pic,
+      </if>
+      <if test="orgPersonBackPic != null" >
+        org_person_back_pic,
+      </if>
+      <if test="orgLicensePic != null" >
+        org_license_pic,
+      </if>
+      <if test="orgReport != null" >
+        org_report,
+      </if>
+      <if test="orgBaseReport != null" >
+        org_base_report,
+      </if>
+      <if test="orgOtherReport != null" >
+        org_other_report,
+      </if>
+      <if test="orgCerState != null" >
+        org_cer_state,
+      </if>
+      <if test="orgCerRemark != null" >
+        org_cer_remark,
+      </if>
+      <if test="orgCerSource != null" >
+        org_cer_source,
+      </if>
+      <if test="orgCerChkTime != null" >
+        org_cer_chk_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgCerId != null" >
+        #{orgCerId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCerChkUid != null" >
+        #{orgCerChkUid,jdbcType=BIGINT},
+      </if>
+      <if test="uMobile != null" >
+        #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonFrontPic != null" >
+        #{orgPersonFrontPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonBackPic != null" >
+        #{orgPersonBackPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLicensePic != null" >
+        #{orgLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgReport != null" >
+        #{orgReport,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="orgBaseReport != null" >
+        #{orgBaseReport,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOtherReport != null" >
+        #{orgOtherReport,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="orgCerState != null" >
+        #{orgCerState,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerRemark != null" >
+        #{orgCerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCerSource != null" >
+        #{orgCerSource,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerChkTime != null" >
+        #{orgCerChkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByUIdSelective" parameterType="com.renrenlab.rlab.model.OrgCertifyTmp" >
+    update rlab_org_info.t_org_certify_tmp
+    <set >
+      <if test="orgCerId != null" >
+        org_cer_id = #{orgCerId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCerChkUid != null" >
+        org_cer_chk_uid = #{orgCerChkUid,jdbcType=BIGINT},
+      </if>
+      <if test="uMobile != null" >
+        u_mobile = #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonFrontPic != null" >
+        org_person_front_pic = #{orgPersonFrontPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonBackPic != null" >
+        org_person_back_pic = #{orgPersonBackPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLicensePic != null" >
+        org_license_pic = #{orgLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgReport != null" >
+        org_report = #{orgReport,jdbcType=OTHER}::jsonb::jsonb,
+      </if>
+      <if test="orgBaseReport != null" >
+        org_base_report = #{orgBaseReport,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOtherReport != null" >
+        org_other_report = #{orgOtherReport,jdbcType=OTHER}::jsonb::jsonb,
+      </if>
+      <if test="orgCerState != null" >
+        org_cer_state = #{orgCerState,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerRemark != null" >
+        org_cer_remark = #{orgCerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCerSource != null" >
+        org_cer_source = #{orgCerSource,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerChkTime != null" >
+        org_cer_chk_time = #{orgCerChkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where u_uid = #{uUid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByCIdSelective" parameterType="com.renrenlab.rlab.model.OrgCertifyTmp" >
+    update rlab_org_info.t_org_certify_tmp
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        org_id = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgCerChkUid != null" >
+        org_cer_chk_uid = #{orgCerChkUid,jdbcType=BIGINT},
+      </if>
+      <if test="uMobile != null" >
+        u_mobile = #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonFrontPic != null" >
+        org_person_front_pic = #{orgPersonFrontPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgPersonBackPic != null" >
+        org_person_back_pic = #{orgPersonBackPic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLicensePic != null" >
+        org_license_pic = #{orgLicensePic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgReport != null" >
+        org_report = #{orgReport,jdbcType=OTHER}::jsonb::jsonb,
+      </if>
+      <if test="orgBaseReport != null" >
+        org_base_report = #{orgBaseReport,jdbcType=VARCHAR},
+      </if>
+      <if test="orgOtherReport != null" >
+        org_other_report = #{orgOtherReport,jdbcType=OTHER}::jsonb::jsonb,
+      </if>
+      <if test="orgCerState != null" >
+        org_cer_state = #{orgCerState,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerRemark != null" >
+        org_cer_remark = #{orgCerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCerSource != null" >
+        org_cer_source = #{orgCerSource,jdbcType=INTEGER},
+      </if>
+      <if test="orgCerChkTime != null" >
+        org_cer_chk_time = #{orgCerChkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where org_cer_id = #{orgCerId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

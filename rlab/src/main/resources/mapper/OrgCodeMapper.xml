@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgCodeDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgCode">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_oid" jdbcType="BIGINT" property="orgOid" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="org_fullname" jdbcType="VARCHAR" property="orgFullname" />
+    <result column="org_type" jdbcType="VARCHAR" property="orgType" />
+    <result column="org_address" jdbcType="VARCHAR" property="orgAddress" />
+    <result column="org_expiration" jdbcType="VARCHAR" property="orgExpiration" />
+    <result column="org_issuer" jdbcType="VARCHAR" property="orgIssuer" />
+    <result column="org_reg_no" jdbcType="VARCHAR" property="orgRegNo" />
+    <result column="org_code_pic" jdbcType="VARCHAR" property="orgCodePic" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, org_oid, org_code, org_fullname, org_type, org_address, org_expiration, org_issuer, 
+    org_reg_no, org_code_pic, create_time, modify_time
+  </sql>
+
+  <insert id="addOrgCode">
+    INSERT INTO rlab_org_info.t_org_code (org_oid, org_code, create_time, modify_time)
+    VALUES (
+    #{orgOid,jdbcType=BIGINT},
+    #{orgCode,jdbcType=VARCHAR},
+    now(),
+    now());
+  </insert>
+
+  <select id="searchOrgCodeByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    rlab_org_info.t_org_code
+    WHERE
+    org_oid = #{orgOid,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertOrgCode" parameterType="com.renrenlab.rlab.model.OrgCode">
+    insert into rlab_org_info.t_org_code
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgOid != null">
+        org_oid,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="orgFullname != null">
+        org_fullname,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+      <if test="orgAddress != null">
+        org_address,
+      </if>
+      <if test="orgExpiration != null">
+        org_expiration,
+      </if>
+      <if test="orgIssuer != null">
+        org_issuer,
+      </if>
+      <if test="orgRegNo != null">
+        org_reg_no,
+      </if>
+      <if test="orgCodePic != null">
+        org_code_pic,
+      </if>
+        create_time,
+        modify_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null">
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullname != null">
+        #{orgFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgExpiration != null">
+        #{orgExpiration,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIssuer != null">
+        #{orgIssuer,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRegNo != null">
+        #{orgRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCodePic != null">
+        #{orgCodePic,jdbcType=VARCHAR},
+      </if>
+        now(),
+        now(),
+    </trim>
+  </insert>
+
+  <update id="updateOrgCode" parameterType="com.renrenlab.rlab.model.OrgCode">
+    update rlab_org_info.t_org_code
+    <set>
+      <if test="orgCode != null">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgFullname != null">
+        org_fullname = #{orgFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddress != null">
+        org_address = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgExpiration != null">
+        org_expiration = #{orgExpiration,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIssuer != null">
+        org_issuer = #{orgIssuer,jdbcType=VARCHAR},
+      </if>
+      <if test="orgRegNo != null">
+        org_reg_no = #{orgRegNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCodePic != null">
+        org_code_pic = #{orgCodePic,jdbcType=VARCHAR},
+      </if>
+        modify_time = now(),
+    </set>
+    where org_oid = #{orgOid,jdbcType=BIGINT}
+  </update>
+
+</mapper>

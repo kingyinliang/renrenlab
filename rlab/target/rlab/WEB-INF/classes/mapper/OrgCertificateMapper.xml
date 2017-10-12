@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgCertificateDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.OrgCertificate">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="org_certificate_id" jdbcType="BIGINT" property="orgCertificateId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_certificate_no" jdbcType="VARCHAR" property="orgCertificateNo"/>
+        <result column="org_certificate_expr" jdbcType="VARCHAR" property="orgCertificateExpr"/>
+        <result column="org_certificate_pic" jdbcType="VARCHAR" property="orgCertificatePic"/>
+        <result column="org_certificate_name" jdbcType="VARCHAR" property="orgCertificateName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="OrgCertificateTmpMap" type="com.renrenlab.rlab.model.OrgCertificateTmp">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="org_certificate_name" jdbcType="VARCHAR" property="orgCertificateName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, org_certificate_id, org_oid, org_certificate_no, org_certificate_expr, org_certificate_pic, 
+    org_certificate_name, create_time, modify_time
+  </sql>
+
+    <sql id="OrgCertificateTmp">
+    id, org_certificate_name, create_time, modify_time
+  </sql>
+
+    <select id="searchOrgCertificateByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_org_info.t_org_certificate
+        where org_oid = #{orgOid,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insertOrgCertificate" parameterType="com.renrenlab.rlab.vo.OrgCertificate"
+            keyProperty="orgCertificateId" keyColumn="org_certificate_id">
+        <selectKey keyProperty="orgCertificateId" resultType="java.lang.Long" order="AFTER">
+            select last_value as org_certificate_id from rlab_org_info.org_certificate_cid_seq;
+        </selectKey>
+        insert into rlab_org_info.t_org_certificate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orgCertificateId != null">
+                org_certificate_id,
+            </if>
+            <if test="orgOid != null">
+                org_oid,
+            </if>
+            <if test="orgCertificateNo != null">
+                org_certificate_no,
+            </if>
+            <if test="orgCertificateExpr != null">
+                org_certificate_expr,
+            </if>
+            <if test="orgCertificatePic != null">
+                org_certificate_pic,
+            </if>
+            <if test="orgCertificateName != null">
+                org_certificate_name,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orgCertificateId != null">
+                #{orgCertificateId,jdbcType=BIGINT},
+            </if>
+            <if test="orgOid != null">
+                #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="orgCertificateNo != null">
+                #{orgCertificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificateExpr != null">
+                #{orgCertificateExpr,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificatePic != null">
+                #{orgCertificatePic,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificateName != null">
+                #{orgCertificateName,jdbcType=VARCHAR},
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+
+    <update id="updateOrgCertificate" parameterType="com.renrenlab.rlab.vo.OrgCertificate">
+        update rlab_org_info.t_org_certificate
+        <set>
+            <if test="orgCertificateNo != null">
+                org_certificate_no = #{orgCertificateNo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificateExpr != null">
+                org_certificate_expr = #{orgCertificateExpr,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificatePic != null">
+                org_certificate_pic = #{orgCertificatePic,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCertificateName != null">
+                org_certificate_name = #{orgCertificateName,jdbcType=VARCHAR},
+            </if>
+            modify_time = now(),
+        </set>
+        where org_certificate_id = #{orgCertificateId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertOrgCertificateTmp" parameterType="java.lang.String">
+    INSERT INTO rlab_org_info.t_org_certificate_tmp (org_certificate_name)
+    VALUES
+	(#{name,jdbcType=VARCHAR});
+  </insert>
+
+    <select id="selectOrgCertificateTmp" resultMap="OrgCertificateTmpMap">
+        SELECT
+        <include refid="OrgCertificateTmp"/>
+        FROM rlab_org_info.t_org_certificate_tmp
+    </select>
+
+    <delete id="delOrgCertificateByCerId">
+    DELETE  FROM  rlab_org_info.t_org_certificate
+    WHERE org_certificate_id = #{orgCertificateId,jdbcType = BIGINT}
+  </delete>
+</mapper>

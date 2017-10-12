@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.OrgDao">
+
+    <resultMap id="OrgBaseInfo" type="com.renrenlab.rlab.model.OrgBaseInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="org_category_id" jdbcType="INTEGER" property="orgCategoryId"/>
+        <result column="org_parent_id" jdbcType="VARCHAR" property="orgParentId"/>
+        <result column="org_identification" jdbcType="VARCHAR" property="orgIdentification"/>
+        <result column="org_description" jdbcType="VARCHAR" property="orgDescription"/>
+        <result column="org_logo" jdbcType="VARCHAR" property="orgLogo"/>
+        <result column="org_web" jdbcType="VARCHAR" property="orgWeb"/>
+        <result column="org_state" jdbcType="INTEGER" property="orgState"/>
+        <result column="org_share_index" jdbcType="FLOAT" property="orgShareIndex"/>
+        <result column="org_rank" jdbcType="INTEGER" property="orgRank"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="OrgInfo" type="com.renrenlab.rlab.vo.OrgInfo">
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="org_category_id" jdbcType="INTEGER" property="orgCategoryId"/>
+        <result column="org_parent_id" jdbcType="VARCHAR" property="orgParentId"/>
+        <result column="org_identification" jdbcType="VARCHAR" property="orgIdentification"/>
+        <result column="org_description" jdbcType="VARCHAR" property="orgDescription"/>
+        <result column="org_web" jdbcType="VARCHAR" property="orgWeb"/>
+        <result column="org_logo" jdbcType="VARCHAR" property="orgLogo"/>
+        <result column="org_position" jdbcType="VARCHAR" property="orgPosition"/>
+        <result column="org_code" jdbcType="VARCHAR" property="orgCode"/>
+        <result column="org_state" jdbcType="INTEGER" property="orgState"/>
+        <result column="org_ins_count" jdbcType="BIGINT" property="orgInsCount"/>
+        <result column="org_share_index" jdbcType="FLOAT" property="orgShareIndex"/>
+        <result column="org_rank" jdbcType="INTEGER" property="orgRank"/>
+        <result column="org_type" jdbcType="SMALLINT" property="orgType" />
+        <result column="org_source" jdbcType="SMALLINT" property="orgSource" />
+        <result column="org_biz_uid" jdbcType="BIGINT" property="orgBizUid" />
+        <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+        <result column="audit_person" jdbcType="VARCHAR" property="auditPerson" />
+        <result column="application_time" jdbcType="TIMESTAMP" property="applicationTime" />
+        <result column="reject_reason" jdbcType="VARCHAR" property="rejectReason" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="CityDictInfo" type="com.renrenlab.rlab.vo.Location">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="city_name" jdbcType="VARCHAR" property="name"/>
+        <result column="parentId" jdbcType="INTEGER" property="parentId"/>
+    </resultMap>
+
+
+    <resultMap id="OrgProviderInfo" type="com.renrenlab.rlab.vo.ProviderInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="org_oid" property="orgOid" jdbcType="BIGINT" />
+        <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+        <result column="org_identification" property="orgIdentification" jdbcType="INTEGER" />
+        <result column="org_state" property="orgState" jdbcType="INTEGER" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="org_rank" property="orgRank" jdbcType="INTEGER" />
+        <result column="org_type" property="orgType" jdbcType="SMALLINT" />
+        <result column="org_source" property="orgSource" jdbcType="SMALLINT" />
+        <result column="org_biz_uid" property="orgBizUid" jdbcType="BIGINT" />
+        <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+        <result column="audit_person" property="auditPerson" jdbcType="VARCHAR" />
+        <result column="application_time" property="applicationTime" jdbcType="TIMESTAMP" />
+        <result column="u_name" property="orgBizName" jdbcType="VARCHAR" />
+        <result column="org_person" property="orgPersonName" jdbcType="VARCHAR" />
+        <result column="con_phone" property="contact" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        obi.org_oid, obi.org_name, obi.org_category_id, obi.org_parent_id, obi.org_identification, obi.org_logo,
+        obi.org_position,obi.org_share_index,obi.org_rank,
+        obi.org_description, obi.org_web, obi.org_state, obi.org_ins_count, obi.create_time, obi.modify_time,
+        obi.org_type,obi.org_source,obi.org_biz_uid,obi.audit_time,obi.audit_person,obi.application_time,obi.reject_reason
+    </sql>
+
+    <sql id="All_Column_List">
+        org_oid, org_name, org_category_id, org_parent_id, org_identification, org_logo,
+        org_description, org_state, obi.org_ins_count, obi.create_time, obi.modify_time,org_code
+    </sql>
+
+    <sql id="provider_Column_List">
+        obi.id,obi.org_oid, org_name, org_identification,org_state, obi.modify_time, obi.create_time,org_rank,
+         obi.org_type, org_source, org_biz_uid, audit_time, audit_person, application_time,u_name,
+         org_person,con_phone
+    </sql>
+
+    <select id="searchOrgBaseInfoByOid" parameterType="java.lang.Long" resultMap="OrgBaseInfo">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_org_info.t_org_base_info obi
+        where org_oid = #{oid,jdbcType=BIGINT}
+    </select>
+
+    <select id="searchOrgInfoByOid" parameterType="java.lang.Long" resultMap="OrgInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rlab_org_info.t_org_base_info AS obi
+        WHERE obi.org_oid = #{oid,jdbcType=BIGINT}
+    </select>
+
+    <select id="searchOrgCountByOrgName" parameterType="java.lang.String"
+            resultType="com.renrenlab.rlab.model.OrgBaseInfo">
+        SELECT
+        org_oid
+        FROM
+        rlab_org_info.t_org_base_info AS obi
+        WHERE obi.org_name = #{orgName, jdbcType=VARCHAR}
+    </select>
+
+    <select id="searchCityName" parameterType="java.lang.Integer" resultMap="CityDictInfo">
+        SELECT
+	    tcd.id, tcd.city_name, tcd."parentId"
+        FROM
+	    rlab_common_info.t_city_dict AS  tcd where tcd."parentId" = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="searchMunicipalityName" parameterType="java.lang.Integer" resultMap="CityDictInfo">
+        SELECT tcd.city_name, tcd.id, tcd."parentId"
+        FROM rlab_common_info.t_city_dict AS tcd
+        WHERE tcd."parentId"
+        IN (
+        SELECT a.id
+        FROM
+        rlab_common_info.t_city_dict AS a
+        WHERE
+        a."parentId" = #{id, jdbcType=INTEGER}
+        )
+    </select>
+
+    <select id="searchOrgBaseInfoListByOrgName" resultType="com.renrenlab.rlab.vo.OrgInfo">
+        SELECT
+        obi.org_oid,
+        obi.org_name,
+        obi.org_category_id,
+        obi.org_parent_id,
+        obi.org_identification,
+        obi.org_logo,
+        obi.org_position,
+        obi.org_description,
+        obi.org_web,
+        obi.org_state,
+        ocode.org_code AS org_code,
+        obi.org_ins_count,
+        obi.org_share_index,
+        obi.org_rank,
+        obi.create_time,
+        obi.modify_time
+        FROM
+        rlab_org_info.t_org_base_info AS obi
+        LEFT JOIN rlab_org_info.t_org_code AS ocode ON obi.org_oid = ocode.org_oid
+        WHERE
+        1 = 1
+        <if test="keyword != null">
+            AND POSITION (#{keyword,jdbcType=VARCHAR} IN obi.org_name) > 0
+        </if>
+        <if test="oci != null">
+            AND obi.org_category_id = '${oci}'
+        </if>
+        ORDER BY obi.create_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+        ,
+        obi.org_oid
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+    </select>
+
+    <select id="searchOrgBaseInfoListByOrgNameByContacts" resultType="com.renrenlab.rlab.vo.OrgInfo">
+        SELECT DISTINCT
+        obi.org_oid,
+        obi.org_name,
+        obi.org_category_id,
+        obi.org_parent_id,
+        obi.org_identification,
+        obi.org_logo,
+        obi.org_position,
+        obi.org_description,
+        obi.org_web,
+        obi.org_state,
+        ocode.org_code AS org_code,
+        obi.org_ins_count,
+        obi.org_share_index,
+        obi.org_rank,
+        obi.create_time,
+        obi.modify_time
+        FROM
+        rlab_org_info.t_org_contacts_map ocm
+        LEFT JOIN rlab_org_info.t_org_base_info obi ON ocm.org_oid = obi.org_oid
+        LEFT JOIN rlab_org_info.t_org_code AS ocode ON obi.org_oid = ocode.org_oid
+        LEFT JOIN rlab_org_info.t_org_contacts oc ON ocm.con_id = oc.con_id
+        LEFT JOIN rlab_org_info.t_org_manager om ON om.org_oid = obi.org_oid
+        LEFT JOIN rlab_user_info.t_user_base_info ubi ON om.u_uid = ubi.u_uid
+        WHERE
+        1 = 1
+        <if test="keyword != null">
+        AND
+        (
+        POSITION (#{keyword,jdbcType=VARCHAR} IN oc.con_name) > 0
+        OR POSITION (#{keyword,jdbcType=VARCHAR} IN oc.con_phone) > 0
+        OR POSITION (#{keyword,jdbcType=VARCHAR} IN ubi.u_nickname) > 0
+        OR POSITION (#{keyword,jdbcType=VARCHAR} IN ubi.u_mobile) > 0
+        )
+        </if>
+        <if test="oci != null">
+            AND obi.org_category_id = '${oci}'
+        </if>
+        ORDER BY obi.create_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+        ,
+        obi.org_oid
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+    </select>
+
+    <select id="searchOrgBaseInfoList" resultType="com.renrenlab.rlab.vo.OrgInfo">
+        SELECT
+        obi.org_oid,
+        obi.org_name,
+        obi.org_category_id,
+        obi.org_parent_id,
+        obi.org_identification,
+        obi.org_logo,
+        obi.org_position,
+        obi.org_description,
+        obi.org_web,
+        obi.org_state,
+        ocode.org_code AS org_code,
+        obi.org_ins_count,
+        obi.org_share_index,
+        obi.org_rank,
+        obi.create_time,
+        obi.modify_time
+        FROM
+        rlab_org_info.t_org_base_info AS obi
+        LEFT JOIN rlab_org_info.t_org_code AS ocode
+        ON
+        obi.org_oid = ocode.org_oid
+        WHERE
+        1 = 1
+        <if test="oci != null">
+            AND obi.org_category_id = '${oci}'
+        </if>
+        ORDER BY obi.create_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+        ,
+        obi.org_oid
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+    </select>
+
+    <select id="searchOrgBaseInfoListTopK" resultType="com.renrenlab.rlab.vo.OrgInfo">
+        SELECT
+            obi.org_oid,
+            tmp.num AS insCount,
+            obi.org_name,
+            obi.org_share_index,
+            obi.org_rank,
+            obi.org_identification,
+            obi.org_logo
+        FROM
+            (
+                SELECT
+                    COUNT (ii.org_oid) AS num,
+                    ii.org_oid AS oid
+                FROM
+                    rlab_common_info.t_instrument_index ii
+                GROUP BY
+                    ii.org_oid
+                ORDER BY
+                    num DESC
+                LIMIT #{k, jdbcType=INTEGER}
+            ) tmp
+        JOIN rlab_org_info.t_org_base_info obi ON (tmp.oid = obi.org_oid) ORDER BY tmp.num DESC;
+    </select>
+
+    <select id="searchInsCountByOrgId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+	    COUNT (*)
+        FROM
+	      rlab_common_info.t_instrument_index ii
+        WHERE
+	      ii.org_oid =  #{orgId,jdbcType=BIGINT};
+    </select>
+
+    <update id="updateOrgInfo" parameterType="com.renrenlab.rlab.vo.OrgInfo">
+        update rlab_org_info.t_org_base_info
+        <set>
+            <if test="orgName != null">
+                org_name = #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCategoryId != null">
+                org_category_id = #{orgCategoryId,jdbcType=INTEGER},
+            </if>
+            <if test="orgParentId != null">
+                org_parent_id = #{orgParentId,jdbcType=BIGINT},
+            </if>
+            <if test="orgIdentification != null">
+                org_identification = #{orgIdentification,jdbcType=INTEGER},
+            </if>
+            <if test="orgPosition != null">
+                org_position = #{orgPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="orgLogo != null">
+                org_logo = #{orgLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgWeb != null">
+                org_web = #{orgWeb,jdbcType=VARCHAR},
+            </if>
+            <if test="orgDescription != null">
+                org_description = #{orgDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="orgState != null">
+                org_state = #{orgState,jdbcType=INTEGER},
+            </if>
+            <if test="orgType != null" >
+                org_type = #{orgType,jdbcType=SMALLINT},
+            </if>
+            <if test="orgBizUid != null" >
+                org_biz_uid = #{orgBizUid,jdbcType=BIGINT},
+            </if>
+            <if test="auditTime != null" >
+                audit_time = #{auditTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="auditPerson != null" >
+                audit_person = #{auditPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationTime != null" >
+                application_time = #{applicationTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orgSource != null" >
+                org_source = #{orgSource,jdbcType=INTEGER},
+            </if>
+            modify_time = now(),
+        </set>
+        where org_oid = #{orgOid,jdbcType=BIGINT}
+    </update>
+
+    <update id="closeOrg" parameterType="java.lang.Long">
+        UPDATE rlab_org_info.t_org_base_info
+        SET org_state =  #{os,jdbcType=INTEGER}, modify_time = now()
+        WHERE org_oid = #{orgOid,jdbcType=BIGINT} ;
+    </update>
+
+    <insert id="insertOrgInfo" parameterType="com.renrenlab.rlab.model.OrgBaseInfo" keyProperty="orgOid"
+            keyColumn="org_oid">
+        <selectKey keyProperty="orgOid" resultType="java.lang.Long" order="AFTER">
+            select last_value as org_oid from rlab_org_info.org_info_oid_seq;
+        </selectKey>
+        insert into rlab_org_info.t_org_base_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="orgOid != null" >
+                org_oid,
+            </if>
+            <if test="orgName != null" >
+                org_name,
+            </if>
+            <if test="orgCategoryId != null" >
+                org_category_id,
+            </if>
+            <if test="orgParentId != null" >
+                org_parent_id,
+            </if>
+            <if test="orgIdentification != null" >
+                org_identification,
+            </if>
+            <if test="orgLogo != null" >
+                org_logo,
+            </if>
+            <if test="orgWeb != null" >
+                org_web,
+            </if>
+            <if test="orgDescription != null" >
+                org_description,
+            </if>
+            <if test="orgState != null" >
+                org_state,
+            </if>
+                modify_time,
+                create_time,
+            <if test="orgPosition != null" >
+                org_position,
+            </if>
+            <if test="orgInsCount != null" >
+                org_ins_count,
+            </if>
+            <if test="orgShareIndex != null" >
+                org_share_index,
+            </if>
+            <if test="orgRank != null" >
+                org_rank,
+            </if>
+            <if test="orgType != null" >
+                org_type,
+            </if>
+            <if test="orgSource != null" >
+                org_source,
+            </if>
+            <if test="orgBizUid != null" >
+                org_biz_uid,
+            </if>
+            <if test="auditTime != null" >
+                audit_time,
+            </if>
+            <if test="auditPerson != null" >
+                audit_person,
+            </if>
+            <if test="applicationTime != null" >
+                application_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="orgOid != null" >
+                #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="orgName != null" >
+                #{orgName,jdbcType=VARCHAR},
+            </if>
+            <if test="orgCategoryId != null" >
+                #{orgCategoryId,jdbcType=INTEGER},
+            </if>
+            <if test="orgParentId != null" >
+                #{orgParentId,jdbcType=BIGINT},
+            </if>
+            <if test="orgIdentification != null" >
+                #{orgIdentification,jdbcType=INTEGER},
+            </if>
+            <if test="orgLogo != null" >
+                #{orgLogo,jdbcType=VARCHAR},
+            </if>
+            <if test="orgWeb != null" >
+                #{orgWeb,jdbcType=VARCHAR},
+            </if>
+            <if test="orgDescription != null" >
+                #{orgDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="orgState != null" >
+                #{orgState,jdbcType=INTEGER},
+            </if>
+                now(),
+                now(),
+            <if test="orgPosition != null" >
+                #{orgPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="orgInsCount != null" >
+                #{orgInsCount,jdbcType=BIGINT},
+            </if>
+            <if test="orgShareIndex != null" >
+                #{orgShareIndex,jdbcType=REAL},
+            </if>
+            <if test="orgRank != null" >
+                #{orgRank,jdbcType=INTEGER},
+            </if>
+            <if test="orgType != null" >
+                #{orgType,jdbcType=SMALLINT},
+            </if>
+            <if test="orgSource != null" >
+                #{orgSource,jdbcType=SMALLINT},
+            </if>
+            <if test="orgBizUid != null" >
+                #{orgBizUid,jdbcType=BIGINT},
+            </if>
+            <if test="auditTime != null" >
+                now(),
+            </if>
+            <if test="auditPerson != null" >
+                #{auditPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationTime != null" >
+                now(),
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectInsByOid" parameterType="java.lang.Long" resultType="java.util.HashMap">
+        SELECT
+        org_oid,map_id
+        FROM
+        rlab_instrument_info.t_instrument_org_map iom
+        WHERE
+        iom.org_oid = #{oid,jdbcType=BIGINT}
+        AND map_state = '[0,0,0]'::jsonb;
+    </select>
+
+    <select id="searchAuthInfoList" resultMap="OrgProviderInfo">
+        SELECT DISTINCT id,org_oid, org_name, org_identification,org_state, modify_time, create_time,org_rank,
+        org_type, org_source, org_biz_uid, audit_time, audit_person, application_time,u_name,con_phone
+            FROM (
+            SELECT
+            obi.id,obi.org_oid, org_name, org_identification,org_state, obi.modify_time, obi.create_time,org_rank,
+            obi.org_type, org_source, org_biz_uid, audit_time, audit_person, application_time,u_name,con_phone,row_number() over(PARTITION BY obi.org_oid ORDER BY con_phone) rn
+            FROM
+            rlab_org_info.t_org_base_info obi
+            left JOIN rlab_user_info.t_user_base_info AS ubi ON obi.org_biz_uid = ubi.u_uid
+            JOIN rlab_org_info.t_org_contacts_map AS ocm ON obi.org_oid = ocm.org_oid
+            JOIN rlab_org_info.t_org_contacts AS oc ON oc.con_id = ocm.con_id
+            WHERE
+                oc.con_state = '2'
+                AND obi.org_state = '0'
+             AND org_identification =2
+            <if test="orgName != null">
+                AND POSITION (#{orgName,jdbcType=VARCHAR} IN obi.org_name) > 0
+            </if>
+            <if test="rankLow != null">
+                AND org_rank &gt;= #{rankLow,jdbcType=INTEGER}
+            </if>
+            <if test="rankHigh != null">
+                AND org_rank &lt;= #{rankHigh,jdbcType=INTEGER}
+            </if>
+            <if test="bizName != null">
+                <if test="isCommon == 1">
+                    AND( (POSITION (#{bizName,jdbcType=VARCHAR} IN u_name) > 0 )OR org_biz_uid =0)
+                </if>
+                <if test="isCommon == 0">
+                    AND POSITION (#{bizName,jdbcType=VARCHAR} IN u_name) > 0
+                </if>
+            </if>
+            <if test="orgSource != null">
+                AND org_source = #{orgSource,jdbcType=INTEGER}
+            </if>
+            <if test="state != null">
+              <if test="state == 0 ">
+                  AND org_biz_uid =0
+              </if>
+                <if test="state == 1 ">
+                  AND org_biz_uid !=0
+                </if>
+            </if>
+            <if test="startTime != null">
+                AND audit_time &gt;= #{startTime}::date
+            </if>
+            <if test="uId != null">
+                AND (org_biz_uid =0  or org_biz_uid = #{uId,jdbcType=BIGINT})
+            </if>
+            ) tmp
+         WHERE rn=1
+        ORDER BY
+        tmp.audit_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+    </select>
+
+    <select id="searchNotAuthInfoList" resultMap="OrgProviderInfo">
+        SELECT DISTINCT id,org_oid, org_name, org_identification,org_state, modify_time, create_time,org_rank,
+        org_type, org_source, org_biz_uid, audit_time, audit_person, application_time,u_name,con_phone,org_person
+            FROM (
+            SELECT
+            <include refid="provider_Column_List"/>,row_number() over(PARTITION BY obi.org_oid ORDER BY con_phone) rn
+            FROM
+            rlab_org_info.t_org_base_info obi
+            LEFT JOIN rlab_user_info.t_user_base_info AS ubi ON obi.org_biz_uid = ubi.u_uid
+            JOIN rlab_org_info.t_org_license AS ol ON ol.org_oid = obi.org_oid
+            JOIN rlab_org_info.t_org_contacts_map AS ocm ON obi.org_oid = ocm.org_oid
+            JOIN rlab_org_info.t_org_contacts AS oc ON oc.con_id = ocm.con_id
+            WHERE
+            oc.con_state = '2'
+            AND obi.org_state = '0'
+            <if test="orgName != null">
+                AND (POSITION (#{orgName,jdbcType=VARCHAR} IN obi.org_name) > 0 OR  POSITION (#{orgName,jdbcType=VARCHAR} IN org_person)> 0  )
+            </if>
+            <if test="bizName != null">
+                <if test="isCommon == 1">
+                    AND( (POSITION (#{bizName,jdbcType=VARCHAR} IN u_name) > 0 )OR org_biz_uid =0)
+                </if>
+                <if test="isCommon == 0">
+                    AND POSITION (#{bizName,jdbcType=VARCHAR} IN u_name) > 0
+                </if>
+            </if>
+            <if test="orgSource != null">
+                AND org_source = #{orgSource,jdbcType=INTEGER}
+            </if>
+            <if test="orgIdentifications != null">
+                AND org_identification IN
+                <foreach  collection="orgIdentifications" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach >
+            </if>
+            <if test="startTime != null">
+                AND obi.application_time &gt;= #{startTime}::date
+            </if>
+            <if test="uId != null">
+                AND (org_biz_uid =0 or org_biz_uid = #{uId,jdbcType=BIGINT})
+            </if>
+            ) tmp
+        WHERE rn=1
+        ORDER BY
+        tmp.application_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            DESC
+        </if>
+    </select>
+
+    <select id="selectFrontProviderInfoByUid" resultType="com.renrenlab.rlab.vo.FrontProviderInfo">
+        SELECT
+            obi.org_oid,
+            obi.org_name,
+            obi.org_identification,
+            obi.application_time,
+        CASE
+        WHEN ubi.u_name IS NULL THEN
+            '人人实验'
+        ELSE
+            ubi.u_name
+        END
+        AS orgBizName
+        FROM
+            rlab_org_info.t_org_manager om
+        LEFT JOIN rlab_org_info.t_org_base_info obi ON om.org_oid = obi.org_oid
+        LEFT JOIN rlab_user_info.t_user_base_info ubi ON ubi.u_uid = obi.org_biz_uid
+        WHERE
+            om.u_uid = #{uid,jdbcType=BIGINT}
+        AND om.manager_type = '0'
+        ORDER BY obi.application_time DESC
+    </select>
+
+    <update id="backoutProvider">
+        UPDATE rlab_org_info.t_org_base_info
+        SET org_identification = 3, audit_time = now(),org_type=1,
+        <if test="uId != null" >
+            audit_person = #{uId,jdbcType=BIGINT},
+        </if>
+        <if test="reason != null" >
+            reject_reason = #{reason,jdbcType=VARCHAR}
+        </if>
+        WHERE 1=1
+        <foreach collection="oids" item="item" open="AND org_oid IN(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getProviderByName" resultType="com.renrenlab.rlab.model.OrgBaseInfo">
+        SELECT
+        obi.org_oid,
+        obi.org_name
+        FROM
+        rlab_org_info.t_org_base_info AS obi
+
+        WHERE obi.org_type !=2
+        <if test="key != null">
+            AND POSITION (#{key,jdbcType=VARCHAR} IN obi.org_name) > 0
+        </if>
+    </select>
+
+    <update id="modifyState">
+        UPDATE rlab_org_info.t_org_base_info
+        <set>
+            <if test="uId != null" >
+                org_biz_uid = #{uId,jdbcType=BIGINT},
+                application_time = now(),
+            </if>
+            <if test="reason != null" >
+                reject_reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null" >
+                org_identification = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="state == 2 " >
+                org_type=2,
+            </if>
+            <if test="auditUid != null" >
+                audit_person = #{auditUid,jdbcType=BIGINT},
+                audit_time=now(),
+
+            </if>
+        </set>
+        WHERE  org_oid = #{oid,jdbcType=BIGINT}
+
+    </update>
+
+</mapper>

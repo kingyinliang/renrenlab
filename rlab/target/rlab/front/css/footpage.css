@@ -1,0 +1,137 @@
+body{
+    background: #f3f6f9;
+}
+.main{
+    width: 1120px;
+    padding-top: 100px;
+    margin: auto;
+}
+.lef{
+    float: left;
+    width: 152px;
+}
+.tab{
+    width: 152px;
+    height: 367px;
+    border-top: 3px solid #508df0;
+    border-radius: 5px;
+    background: white;
+}
+.protocol{
+    height: 229px;
+    margin-top: 15px;
+}
+.content{
+    float: left;
+    width: 948px;
+    background: white;
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 40px;
+    margin-bottom: 100px;
+}
+.lef p{
+    line-height: 70px;
+    text-align: center;
+    font-size: 16px;
+    color: #4e4e4e;
+}
+.lef p a{
+    color: #4e4e4e;
+}
+.lef p a:hover{
+    color: #508df0;
+}
+.lef .select a{
+    color: #508df0;
+}
+.bigtit{
+    font-size: 26px;
+    color: #508df0;
+}
+.littletit{
+    font-size: 18px;
+    border-left: 2px solid #508df0;
+    color: #535353;
+    padding-left: 12px;
+    line-height: 22px;
+    margin: 40px 0 36px 0;
+}
+.text{
+    padding-left: 40px;
+    padding-right: 50px;
+    position: relative;
+}
+.text p{
+    font-size: 14px;
+    color: #535353;
+    line-height: 28px;
+}
+.textP{
+    width: 366px;
+    margin-bottom: 41px;
+}
+.aboutimg{
+    width: 350px;
+    height: 234px;
+    position: absolute;
+    top:5px;
+    right: 50px;
+}
+.textP2{
+    width: 100%;
+}
+.two{
+    float: right;
+    text-align: center;
+    margin-top: 30px;
+}
+.two p{
+    line-height: 50px;
+    font-size: 16px;
+    color: #333333;
+}
+.two img{
+    width: 130px;
+    height: 130px;
+}
+.littleTit{
+    margin: 40px 0 36px 0;
+    color: #508df0;
+    font-size: 18px;
+}
+.intro{
+    font-size: 14px;
+    line-height: 27px;
+    color: #666666;
+    margin-bottom: 20px;
+}
+.newsLi{
+    background: #f3f6f9;
+    padding: 13px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+.newsLi img{
+    background: white;
+    width: 151px;
+    height: 86px;
+    float: left;
+    margin-right: 20px;
+}
+.righttext{
+    float: left;
+}
+.righttext a{
+    color: #333333;
+}
+.newsTit{
+    font-size: 18px;
+    color: #333333;
+    line-height: 45px;
+}
+.newsTime{
+    font-size: 14px;
+    color: #333333;
+    line-height: 35px;
+}

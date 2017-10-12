@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.RequirementDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.Requirement">
+        <result column="u_req_id" jdbcType="BIGINT" property="uReqId"/>
+        <result column="u_uid" jdbcType="BIGINT" property="uUid"/>
+        <result column="u_nickname" jdbcType="VARCHAR" property="uName"/>
+        <result column="u_mobile" jdbcType="VARCHAR" property="uMobile"/>
+        <result column="u_req_description" jdbcType="VARCHAR" property="uReqDescription"/>
+        <result column="u_req_state" jdbcType="INTEGER" property="uReqState"/>
+        <result column="u_has_notice" jdbcType="INTEGER" property="uHasNotice"/>
+        <result column="u_req_reason" jdbcType="VARCHAR" property="uReqReason"/>
+        <result column="u_has_delay" jdbcType="SMALLINT" property="uHasDelay"/>
+        <result column="u_chk_count" jdbcType="INTEGER" property="uChkCount"/>
+        <result column="u_req_end_time" jdbcType="TIMESTAMP" property="uReqEndTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        u_req_id, req.u_uid, base.u_nickname, base.u_mobile, u_req_description, u_req_state, u_req_reason,
+        u_has_delay, u_chk_count, u_req_end_time, req.modify_time, req.create_time, u_has_notice
+    </sql>
+
+    <select id="selectByKeyword" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        where
+        TRUE
+        <if test="keyword != null">
+            AND (POSITION (#{keyword,jdbcType = VARCHAR} IN u_nickname)>0
+            OR POSITION (#{keyword,jdbcType = VARCHAR} IN u_mobile)>0)
+        </if>
+        <if test="state != null">
+            AND (u_req_state = 3 OR u_req_state = 4)
+        </if>
+        <if test="beginTime != null and endTime != null">
+            AND req.create_time BETWEEN DATE '${beginTime}' AND DATE '${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY req.create_time
+        <choose>
+            <when test="sort != null">ASC</when>
+            <otherwise>DESC</otherwise>
+        </choose>
+    </select>
+    <select id="selectByUreqId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE u_req_id = #{uReqId,jdbcType=BIGINT}
+    </select>
+    <select id="getListByUid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE req.u_uid = #{uUid,jdbcType=BIGINT}
+        <if test="state != null">
+            AND u_req_state =#{state,jdbcType=INTEGER}
+        </if>
+        ORDER BY req.create_time DESC
+    </select>
+    <select id="getOutDate" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE date(now())+INTEGER '3'>=u_req_end_time AND u_req_state = '4' AND u_has_notice = '0'
+    </select>
+    <select id="getCount" resultType="java.util.Map">
+        SELECT
+            u_req_state,
+            COUNT(0)
+        FROM rlab_user_info.t_user_requirement req
+        WHERE req.u_uid = #{uUid,jdbcType=BIGINT}
+        GROUP BY u_req_state
+    </select>
+    <select id="getAllCount" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM rlab_user_info.t_user_requirement req
+        WHERE req.u_uid = #{uUid,jdbcType=BIGINT}
+    </select>
+    <select id="getTop10" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE u_req_state = 4
+        ORDER BY req.create_time
+        LIMIT 10
+    </select>
+
+    <delete id="deleteByUReqId" parameterType="java.lang.Long">
+        DELETE FROM rlab_user_info.t_user_requirement
+        WHERE u_req_id = #{uReqId,jdbcType=BIGINT}
+    </delete>
+    <insert id="publish" parameterType="com.renrenlab.rlab.model.Requirement">
+        insert into rlab_user_info.t_user_requirement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uReqId != null">
+                u_req_id,
+            </if>
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="uChkCount != null">
+                u_chk_count,
+            </if>
+            <if test="uReqDescription != null">
+                u_req_description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uReqId != null">
+                #{uReqId,jdbcType=BIGINT},
+            </if>
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="uChkCount != null">
+                #{uChkCount,jdbcType=BIGINT},
+            </if>
+            <if test="uReqDescription != null">
+                #{uReqDescription,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="modify" parameterType="com.renrenlab.rlab.model.Requirement">
+        update rlab_user_info.t_user_requirement
+        <set>
+            <if test="uReqId != null">
+                u_req_id = #{uReqId,jdbcType=BIGINT},
+            </if>
+            <if test="uUid != null">
+                u_uid = #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="uReqDescription != null">
+                u_req_description = #{uReqDescription,jdbcType=VARCHAR},
+                u_req_state = 0,
+            </if>
+            <if test="uReqState != null">
+                u_req_state = #{uReqState,jdbcType=INTEGER},
+            </if>
+            modify_time = now(),
+            u_req_end_time= date_trunc('day'::text, ((date(now()) + 11))::timestamp with time zone),
+        </set>
+        where u_req_id = #{uReqId,jdbcType=BIGINT}
+    </update>
+    <update id="delay">
+        UPDATE rlab_user_info.t_user_requirement
+        <set>
+            u_has_delay = 1,
+            u_has_notice = 0,
+            u_req_end_time= DATE(u_req_end_time)+ INTEGER '5',
+            modify_time = now(),
+        </set>
+        WHERE u_req_id = #{uReqId,jdbcType=BIGINT} AND u_has_delay =0
+    </update>
+    <update id="addCount">
+        UPDATE rlab_user_info.t_user_requirement
+        <set>
+            u_chk_count = u_chk_count+1,
+        </set>
+        WHERE u_req_id = #{uReqId,jdbcType=BIGINT}
+    </update>
+    <update id="auditing" parameterType="com.renrenlab.rlab.model.Requirement">
+        update rlab_user_info.t_user_requirement
+        <set>
+            <if test="uReqReason != null">
+                u_req_reason =#{uReqReason,jdbcType=VARCHAR},
+            </if>
+            <if test="uReqState != null">
+                u_req_state = #{uReqState,jdbcType=INTEGER},
+            </if>
+            <if test="uHasNotice != null">
+                u_has_notice=#{uHasNotice,jdbcType=INTEGER},
+            </if>
+            modify_time = now()
+        </set>
+        WHERE u_req_id = #{uReqId,jdbcType=BIGINT}
+    </update>
+</mapper>

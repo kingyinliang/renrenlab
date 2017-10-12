@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.InstrumentUploadTmpDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InstrumentUploadTmp" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="ins_iid" property="insIid" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="org_oid" property="orgOid" jdbcType="BIGINT" />
+    <result column="ins_category" property="insCategory" jdbcType="OTHER" />
+    <result column="ins_name" property="insName" jdbcType="VARCHAR" />
+    <result column="ins_service_method" property="insServiceMethod" jdbcType="VARCHAR" />
+    <result column="ins_mode" property="insMode" jdbcType="VARCHAR" />
+    <result column="ins_brand" property="insBrand" jdbcType="VARCHAR" />
+    <result column="ins_origin" property="insOrigin" jdbcType="VARCHAR" />
+    <result column="ins_maker" property="insMaker" jdbcType="VARCHAR" />
+    <result column="ins_description" property="insDescription" jdbcType="OTHER" />
+    <result column="ins_feature" property="insFeature" jdbcType="OTHER" />
+    <result column="ins_scope" property="insScope" jdbcType="OTHER" />
+    <result column="ins_contacts" property="insContacts" jdbcType="OTHER" />
+    <result column="ins_org_price_list" property="insOrgPriceList" jdbcType="OTHER" />
+    <result column="org_addr_country" property="orgAddrCountry" jdbcType="VARCHAR" />
+    <result column="org_addr_province" property="orgAddrProvince" jdbcType="VARCHAR" />
+    <result column="org_addr_city" property="orgAddrCity" jdbcType="VARCHAR" />
+    <result column="org_addr_district" property="orgAddrDistrict" jdbcType="VARCHAR" />
+    <result column="org_addr_street" property="orgAddrStreet" jdbcType="VARCHAR" />
+    <result column="ins_pic" property="insPic" jdbcType="OTHER" />
+    <result column="ins_core_param" property="insCoreParam" jdbcType="OTHER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.renrenlab.rlab.model.InstrumentUploadTmp" >
+    insert into rlab_instrument_info.t_instrument_upload_tmp (id, ins_iid, u_uid, 
+      org_oid, ins_category, ins_name, 
+      ins_service_method, ins_mode, ins_brand, 
+      ins_origin, ins_maker, ins_description, 
+      ins_feature, ins_scope, ins_contacts, 
+      ins_org_price_list, org_addr_country, org_addr_province, 
+      org_addr_city, org_addr_district, org_addr_street, 
+      ins_pic, ins_core_param, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{insIid,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, 
+      #{orgOid,jdbcType=BIGINT}, #{insCategory,jdbcType=OTHER}::jsonb, #{insName,jdbcType=VARCHAR}, 
+      #{insServiceMethod,jdbcType=VARCHAR}, #{insMode,jdbcType=VARCHAR}, #{insBrand,jdbcType=VARCHAR}, 
+      #{insOrigin,jdbcType=VARCHAR}, #{insMaker,jdbcType=VARCHAR}, #{insDescription,jdbcType=OTHER}::jsonb, 
+      #{insFeature,jdbcType=OTHER}::jsonb, #{insScope,jdbcType=OTHER}::jsonb, #{insContacts,jdbcType=OTHER}::jsonb, 
+      #{insOrgPriceList,jdbcType=OTHER}::jsonb, #{orgAddrCountry,jdbcType=VARCHAR}, #{orgAddrProvince,jdbcType=VARCHAR}, 
+      #{orgAddrCity,jdbcType=VARCHAR}, #{orgAddrDistrict,jdbcType=VARCHAR}, #{orgAddrStreet,jdbcType=VARCHAR}, 
+      #{insPic,jdbcType=OTHER}::jsonb, #{insCoreParam,jdbcType=OTHER}::jsonb, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InstrumentUploadTmp" >
+    insert into rlab_instrument_info.t_instrument_upload_tmp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="insIid != null" >
+        ins_iid,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="orgOid != null" >
+        org_oid,
+      </if>
+      <if test="insCategory != null" >
+        ins_category,
+      </if>
+      <if test="insName != null" >
+        ins_name,
+      </if>
+      <if test="insServiceMethod != null" >
+        ins_service_method,
+      </if>
+      <if test="insMode != null" >
+        ins_mode,
+      </if>
+      <if test="insBrand != null" >
+        ins_brand,
+      </if>
+      <if test="insOrigin != null" >
+        ins_origin,
+      </if>
+      <if test="insMaker != null" >
+        ins_maker,
+      </if>
+      <if test="insDescription != null" >
+        ins_description,
+      </if>
+      <if test="insFeature != null" >
+        ins_feature,
+      </if>
+      <if test="insScope != null" >
+        ins_scope,
+      </if>
+      <if test="insContacts != null" >
+        ins_contacts,
+      </if>
+      <if test="insOrgPriceList != null" >
+        ins_org_price_list,
+      </if>
+      <if test="orgAddrCountry != null" >
+        org_addr_country,
+      </if>
+      <if test="orgAddrProvince != null" >
+        org_addr_province,
+      </if>
+      <if test="orgAddrCity != null" >
+        org_addr_city,
+      </if>
+      <if test="orgAddrDistrict != null" >
+        org_addr_district,
+      </if>
+      <if test="orgAddrStreet != null" >
+        org_addr_street,
+      </if>
+      <if test="insPic != null" >
+        ins_pic,
+      </if>
+      <if test="insCoreParam != null" >
+        ins_core_param,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="insIid != null" >
+        #{insIid,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null" >
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="insCategory != null" >
+        #{insCategory,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insName != null" >
+        #{insName,jdbcType=VARCHAR},
+      </if>
+      <if test="insServiceMethod != null" >
+        #{insServiceMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="insMode != null" >
+        #{insMode,jdbcType=VARCHAR},
+      </if>
+      <if test="insBrand != null" >
+        #{insBrand,jdbcType=VARCHAR},
+      </if>
+      <if test="insOrigin != null" >
+        #{insOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="insMaker != null" >
+        #{insMaker,jdbcType=VARCHAR},
+      </if>
+      <if test="insDescription != null" >
+        #{insDescription,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insFeature != null" >
+        #{insFeature,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insScope != null" >
+        #{insScope,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insContacts != null" >
+        #{insContacts,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insOrgPriceList != null" >
+        #{insOrgPriceList,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="orgAddrCountry != null" >
+        #{orgAddrCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrProvince != null" >
+        #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null" >
+        #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrDistrict != null" >
+        #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrStreet != null" >
+        #{orgAddrStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="insPic != null" >
+        #{insPic,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="insCoreParam != null" >
+        #{insCoreParam,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.ShareInsDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.ShareInsListInfo">
+        <result column="map_id" jdbcType="BIGINT" property="mapId"/>
+        <result column="ins_scope" jdbcType="BIGINT" property="insScope"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="ins_org_price_list" jdbcType="OTHER" property="insOrgPriceList"/>
+        <result column="map_new_ins" jdbcType="VARCHAR" property="mapNewIns"/>
+        <result column="map_state" jdbcType="OTHER" property="mapState"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        map_id, map_state, iom.ins_scope, ins_name, org_name, iom.org_oid, ins_org_price_list, iom.modify_time,
+        map_new_ins
+    </sql>
+
+    <select id="getList" resultType="com.renrenlab.rlab.model.ShareInsListInfo">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_org_map iom,
+        rlab_instrument_info.t_instrument_base_info binfo,
+        rlab_org_info.t_org_base_info oinfo
+        WHERE
+        iom.org_oid = oinfo.org_oid
+        AND iom.ins_iid = binfo.ins_iid
+        <if test="mapId != null">
+            AND (map_id = #{mapId,jdbcType=BIGINT} OR (
+            POSITION (#{keyword,jdbcType=VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN oinfo.org_name) >0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN map_new_ins::json->>'insMode')>0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN map_new_ins::json->>'insName')>0
+            ))
+        </if>
+        <if test="keyword != null and mapId == null">
+            AND (
+            POSITION (#{keyword,jdbcType=VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN oinfo.org_name) >0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN map_new_ins::json->>'insMode')>0
+            OR POSITION (#{keyword,jdbcType=VARCHAR} IN map_new_ins::json->>'insName')>0
+            )
+        </if>
+        <if test="mapState != null">
+            AND (iom.map_state::jsonb->2) :: TEXT = #{mapState,jdbcType=INTEGER}
+        </if>
+        <if test="beginTime != null">
+            AND iom.modify_time >= '${beginTime}'
+        </if>
+        <if test="endTime != null">
+            AND iom.modify_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY iom.modify_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+        ,iom.map_id
+    </select>
+
+    <resultMap id="DetailResultMap" type="com.renrenlab.rlab.model.ShareInsDetailInfo">
+        <result column="map_id" jdbcType="BIGINT" property="mapId"/>
+        <result column="map_state" jdbcType="OTHER" property="mapState"/>
+        <result column="map_description" jdbcType="OTHER" property="mapDescription"/>
+        <result column="map_new_ins" jdbcType="OTHER" property="mapNewIns"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+        <result column="ins_origin" jdbcType="VARCHAR" property="insOrigin"/>
+        <result column="ins_pic" jdbcType="OTHER" property="insPic"/>
+        <result column="ins_category" jdbcType="OTHER" property="insCategory"/>
+        <result column="ins_scope" jdbcType="OTHER" property="insScope"/>
+        <result column="ins_core_param" jdbcType="OTHER" property="insCoreParam"/>
+        <result column="ins_feature" jdbcType="OTHER" property="insFeature"/>
+        <result column="ins_description" jdbcType="OTHER" property="insDescription"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ins_org_priceList" jdbcType="OTHER" property="insOrgPriceList"/>
+
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_addr_province_id" jdbcType="BIGINT" property="orgAddrId"/>
+        <result column="org_addr_province" jdbcType="VARCHAR" property="orgAddrProvince"/>
+        <result column="org_addr_city" jdbcType="VARCHAR" property="orgAddrCity"/>
+        <result column="org_addr_district" jdbcType="VARCHAR" property="orgAddrDistrict"/>
+        <result column="org_addr_street" jdbcType="VARCHAR" property="orgAddrStreet"/>
+
+        <result column="con_id" jdbcType="OTHER" property="conId"/>
+        <result column="con_phone" jdbcType="VARCHAR" property="conPhone"/>
+        <result column="con_name" jdbcType="VARCHAR" property="conName"/>
+        <result column="con_province" jdbcType="VARCHAR" property="conProvince"/>
+        <result column="con_city" jdbcType="VARCHAR" property="conCity"/>
+        <result column="con_street" jdbcType="VARCHAR" property="conStreet"/>
+        <result column="org_addr_longitude" jdbcType="NUMERIC" property="orgAddrLongitude"/>
+        <result column="org_addr_latitude" jdbcType="NUMERIC" property="orgAddrLatitude"/>
+
+        <result column="ins_service_type" jdbcType="BIGINT" property="insServiceType"/>
+        <result column="ins_service_name" jdbcType="VARCHAR" property="insServiceName"/>
+    </resultMap>
+
+    <sql id="Detail_Column_List">
+        map_id,
+        map_state,
+        map_description,
+        map_new_ins,
+        ins_name,
+        ins_mode,
+        ins_brand,
+        ins_origin,
+        ins_pic,
+        ins_category,
+        ins_feature,
+        ins_scope,
+        ins_core_param,
+        ins_description,
+        org_name,
+        ins_org_price_list,
+        con_id,
+        iom.org_oid,
+        iom.org_addr_id,
+        org_addr_province,
+        org_addr_city,
+        org_addr_district,
+        org_addr_street,
+        org_addr_longitude,
+        org_addr_latitude,
+        st.ins_service_id,
+        ins_service_name
+    </sql>
+
+    <select id="getDetail" resultType="com.renrenlab.rlab.model.ShareInsDetailInfo">
+        SELECT
+        <include refid="Detail_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_org_map iom,
+        rlab_instrument_info.t_instrument_base_info ba,
+        rlab_org_info.t_org_base_info obi,
+        rlab_org_info.t_org_address oa,
+        rlab_instrument_info.t_instrument_service_type st
+        WHERE
+        iom.ins_iid = ba.ins_iid
+        AND iom.org_oid = obi.org_oid
+        AND iom.org_addr_id = oa.org_addr_id
+        AND iom.service_type = st.ins_service_id
+        AND iom.map_id = #{mapId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="getContactInfo" resultType="com.renrenlab.rlab.vo.OrgContacts">
+        SELECT
+        con_id,con_name,con_phone
+        FROM
+        rlab_org_info.t_org_contacts
+        WHERE
+        1=1
+        <if test="conId != null">
+            AND con_id = #{conId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+
+    <!--    <update id="updateShareInsParam" parameterType="com.renrenlab.rlab.model.ShareInsDetailInfo">
+            update rlab_instrument_info.t_instrument_org_map
+            <set>
+                <if test="mapDescription != null">
+                    map_description = #{mapDescription,jdbcType=VARCHAR}::jsonb,
+                    modify_time = now()
+                </if>
+            </set>
+            where map_id = #{mapId,jdbcType=BIGINT};
+        </update>-->
+    <!--修改仪器状态-->
+    <update id="turn">
+        update rlab_instrument_info.t_instrument_org_map
+        <set>
+            map_state =json_build_array(map_state::json->0,map_state::json->1,#{state,jdbcType=INTEGER}),
+            modify_time = now()
+        </set>
+        where map_id = #{mapId,jdbcType=BIGINT};
+
+    </update>
+    <!--插入联系人表数据-->
+    <insert id="insertContacts" parameterType="com.renrenlab.rlab.vo.OrgContacts">
+        <selectKey keyProperty="conId" resultType="java.lang.Long" order="AFTER">
+            select last_value as con_id from rlab_org_info.org_contacts_cid_seq
+        </selectKey>
+        insert into rlab_org_info.t_org_contacts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="conPhone != null">
+                con_phone,
+            </if>
+            <if test="conName != null">
+                con_name,
+            </if>
+            con_state
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="conPhone != null">
+                #{conPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="conName != null">
+                #{conName,jdbcType=VARCHAR},
+            </if>
+            '1'
+        </trim>
+
+    </insert>
+    <!--   /* RETURNING con_id;*/-->
+
+    <!--插入机构地址表数据-->
+    <insert id="insertOrgAddr" parameterType="com.renrenlab.rlab.model.OrgAddress">
+        insert into rlab_org_info.t_org_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgAddrId != null">
+                org_addr_id,
+            </if>
+            <if test="orgAddrProvince != null">
+                org_addr_province,
+            </if>
+            <if test="orgAddrCity != null">
+                org_addr_city,
+            </if>
+            <if test="orgAddrDistrict != null">
+                org_addr_district,
+            </if>
+            <if test="orgAddrStreet != null">
+                orga_addr_street,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgAddrId != null">
+                #{orgAddrId,jdbcType=BIGINT},
+            </if>
+            <if test="orgAddrProvince != null">
+                #{orgAddrProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAddrCity != null">
+                #{orgAddrCity,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAddrDistrict != null">
+                #{orgAddrDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="orgAddrStreet != null">
+                #{orgAddrStreet,jdbcType=VARCHAR},
+            </if>
+
+            <if test="createTime != null">
+                now(),
+            </if>
+            <if test="modifyTime != null">
+                now(),
+            </if>
+        </trim>
+        RETURNING org_addr_id;
+    </insert>
+
+    <update id="updateShareIns" parameterType="com.renrenlab.rlab.model.ShareInsDetailInfo">
+        update rlab_instrument_info.t_instrument_org_map
+        <set>
+            <if test="orgOid != null">
+                org_oid = #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="insOrgPriceList != null">
+                ins_org_price_list = #{insOrgPriceList,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insScope != null">
+                ins_scope = #{insScope,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="objInsFeatureList != null">
+                ins_feature = #{objInsFeatureList,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="mapDescription != null">
+                map_description = #{mapDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="mapNewIns != null">
+                map_new_ins = #{mapNewIns,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="conId != null">
+                con_id = #{conId,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="orgAddrId != null">
+                org_addr_id = #{orgAddrId,jdbcType=BIGINT},
+            </if>
+            map_state =json_build_array(map_state::json->0,map_state::json->1,1),
+            modify_time = now()
+        </set>
+        where map_id = #{mapId,jdbcType=BIGINT};
+    </update>
+
+    <!--ajax根据机构名称 得到机构id和名称-->
+    <select id="getOrgNameAndId" parameterType="java.lang.String" resultType="com.renrenlab.rlab.model.OrgBaseInfo">
+        SELECT
+        org_oid,
+        org_name
+        FROM rlab_org_info.t_org_base_info
+        <if test="key != null">
+            WHERE POSITION(#{key,jdbcType=VARCHAR} IN org_name) > 0
+        </if>
+    </select>
+
+    <!--    <select id="getAddr" resultMap="com.renrenlab.rlab.model.OrgAddress">
+            SELECT
+            org_addr_id,org_addr_province,org_addr_country,org_addr_district,
+            org_addr_street,org_addr_latitude,org_addr_longitude
+            FROM
+            rlab_org_info.t_org_address
+            WHERE
+            org_addr_id = #{orgAddrId,jdbcType=CARCHAR}
+        </select>-->
+    <select id="getServiceType" resultType="com.renrenlab.rlab.model.InsServiceType">
+        SELECT
+        ins_service_id,
+        ins_service_name
+        FROM rlab_instrument_info.t_instrument_service_type
+    </select>
+
+</mapper>

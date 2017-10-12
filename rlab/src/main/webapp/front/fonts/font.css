@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'lab_icon';
+  src:  url('fonts/lab_icon.eot?wp8xbt');
+  src:  url('fonts/lab_icon.eot?wp8xbt#iefix') format('embedded-opentype'),
+    url('fonts/lab_icon.ttf?wp8xbt') format('truetype'),
+    url('fonts/lab_icon.woff?wp8xbt') format('woff'),
+    url('fonts/lab_icon.svg?wp8xbt#lab_icon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="lab-"], [class*=" lab-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'lab_icon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lab-addicon:before {
+  content: "\e900";
+}
+.lab-adress:before {
+  content: "\e901";
+}
+.lab-alter:before {
+  content: "\e902";
+}
+.lab-await:before {
+  content: "\e903";
+}
+.lab-checked-1:before {
+  content: "\e904";
+}
+.lab-checked-2:before {
+  content: "\e905";
+}
+.lab-checked-3:before {
+  content: "\e906";
+}
+.lab-close-1:before {
+  content: "\e907";
+}
+.lab-close-2:before {
+  content: "\e908";
+}
+.lab-commont:before {
+  content: "\e909";
+}
+.lab-company:before {
+  content: "\e90a";
+}
+.lab-coupon:before {
+  content: "\e90b";
+}
+.lab-data:before {
+  content: "\e90c";
+}
+.lab-del:before {
+  content: "\e90d";
+}
+.lab-down:before {
+  content: "\e90e";
+}
+.lab-exit:before {
+  content: "\e90f";
+}
+.lab-godAdress:before {
+  content: "\e910";
+}
+.lab-godPrice:before {
+  content: "\e911";
+}
+.lab-godScheme:before {
+  content: "\e912";
+}
+.lab-godTime:before {
+  content: "\e913";
+}
+.lab-history:before {
+  content: "\e914";
+}
+.lab-im:before {
+  content: "\e915";
+}
+.lab-instrument:before {
+  content: "\e916";
+}
+.lab-lock:before {
+  content: "\e917";
+}
+.lab-order:before {
+  content: "\e918";
+}
+.lab-phone:before {
+  content: "\e919";
+}
+.lab-scheme:before {
+  content: "\e91a";
+}
+.lab-search:before {
+  content: "\e91b";
+}
+.lab-service:before {
+  content: "\e91c";
+}
+.lab-set:before {
+  content: "\e91d";
+}
+.lab-share-1:before {
+  content: "\e91e";
+}
+.lab-tip:before {
+  content: "\e91f";
+}
+.lab-top:before {
+  content: "\e920";
+}
+.lab-user:before {
+  content: "\e921";
+}
+

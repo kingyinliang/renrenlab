@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.rlab.dao.UserBaseInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.UserBaseInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="u_uid" property="uUid" jdbcType="BIGINT"/>
+        <result column="r_rid" property="rRid" jdbcType="BIGINT"/>
+        <result column="u_name" property="uName" jdbcType="VARCHAR"/>
+        <result column="u_nickname" property="uNickname" jdbcType="VARCHAR"/>
+        <result column="u_password" property="uPassword" jdbcType="VARCHAR"/>
+        <result column="u_sex" property="uSex" jdbcType="BIT"/>
+        <result column="u_age" property="uAge" jdbcType="INTEGER"/>
+        <result column="u_birthday" property="uBirthday" jdbcType="DATE"/>
+        <result column="u_mobile" property="uMobile" jdbcType="VARCHAR"/>
+        <result column="u_email" property="uEmail" jdbcType="VARCHAR"/>
+        <result column="u_avatar" property="uAvatar" jdbcType="VARCHAR"/>
+        <result column="u_level" property="uLevel" jdbcType="INTEGER"/>
+        <result column="u_type" property="uType" jdbcType="OTHER"/>
+        <result column="u_source" property="uSource" jdbcType="INTEGER"/>
+        <result column="u_state" property="uState" jdbcType="INTEGER"/>
+        <result column="u_login_count" property="uLoginCount" jdbcType="INTEGER"/>
+        <result column="u_last_login_time" property="uLastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        <result column="u_identify_no" property="identifyNo" jdbcType="VARCHAR"/>
+        <result column="u_identify_fullname" property="identifyFullname" jdbcType="VARCHAR"/>
+        <result column="u_identify_pic1" property="identifyPic1" jdbcType="VARCHAR"/>
+        <result column="u_identify_pic2" property="identifyPic2" jdbcType="VARCHAR"/>
+        <result column="u_identify_pic3" property="identifyPic3" jdbcType="VARCHAR"/>
+        <result column="u_job_number" property="uJobNumber" jdbcType="VARCHAR"/>
+        <result column="r_name" property="rName" jdbcType="VARCHAR"/>
+        <result column="u_department" property="uDepartment" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        u.id, u.u_uid, u_name, u_nickname, u_password, u_sex, u_age,
+        u_birthday, u_mobile, u_email,
+        u_avatar, u_level, u_type, u_source,
+        u_state, u_login_count, u_last_login_time,
+        u.create_time,
+        u.modify_time
+    </sql>
+    <sql id="Role_Column_List">
+        u.id, u.u_uid, u_name, u_nickname, u_password, u_sex, u_age,
+        u_birthday, u_mobile, u_email,
+        role.r_rid,
+        role.r_permisssion,
+        u_avatar, u_level, u_type, u_source,
+        u_state, u_login_count, u_last_login_time,
+        u.create_time,
+        u.modify_time,
+        state,
+        (u_job_number:: INT ):: text,
+        r_name,
+        u_department
+    </sql>
+
+    <sql id="Detail_Column_List">
+        u.id, u.u_uid, u.u_name, u.u_nickname, u.u_password, u.u_sex, u_age,
+        u.u_birthday, u.u_mobile, u.u_email,
+        u.u_avatar, u.u_level, u.u_type, u.u_source,
+        u.u_state, u.u_login_count, u.u_last_login_time,
+        u.create_time,
+        u.modify_time,
+        iden.u_identify_no,
+        iden.u_identify_fullname,
+        iden.u_identify_pic1,
+        iden.u_identify_pic2,
+        iden.u_identify_pic3
+    </sql>
+
+    <select id="selectByMobileAndPassword" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_base_info u
+        where u_mobile = #{mobile,jdbcType=VARCHAR}
+        AND u_password = #{password, jdbcType=VARCHAR}
+        AND
+        u_state != '2';
+    </select>
+
+    <select id="selectUserCountByMobile" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM rlab_user_info.t_user_base_info
+        WHERE u_mobile =
+              #{mobile, jdbcType=VARCHAR}
+              AND u_state != '2';
+    </select>
+
+    <select id="selectUserBaseInfoByMobile" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_base_info u
+        where u_mobile = #{mobile,
+		jdbcType=VARCHAR}
+        AND u_state != '2';
+    </select>
+
+    <select id="selectUserBaseInfoByUUid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_base_info u
+        where u_uid = #{uuid, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectUserDetailInfoByUUid" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Detail_Column_List"/>
+        FROM
+        rlab_user_info.t_user_base_info u
+        LEFT JOIN rlab_user_info.t_user_identify_info iden ON u.u_uid = iden.u_uid
+        WHERE u.u_uid =#{uuid, jdbcType=BIGINT}
+    </select>
+
+    <select id="selectUserDetailInfoByMobile" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rlab_user_info.t_user_base_info u
+        WHERE u.u_mobile =#{mobile, jdbcType=VARCHAR} AND u_state != 2
+    </select>
+
+    <update id="updateUserBaseInfo" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        update rlab_user_info.t_user_base_info
+        <set>
+            <if test="uName != null">
+                u_name = #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uNickname != null">
+                u_nickname = #{uNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                u_password = #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uSex != null">
+                u_sex = #{uSex,jdbcType=BIT},
+            </if>
+            <if test="uAge != null">
+                u_age = #{uAge,jdbcType=INTEGER},
+            </if>
+            <if test="uBirthday != null">
+                u_birthday = #{uBirthday,jdbcType=DATE},
+            </if>
+            <if test="uMobile != null">
+                u_mobile = #{uMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="uEmail != null">
+                u_email = #{uEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="uAvatar != null">
+                u_avatar = #{uAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="uLevel != null">
+                u_level = #{uLevel,jdbcType=INTEGER},
+            </if>
+            <if test="uType != null">
+                u_type = #{uType,jdbcType=INTEGER},
+            </if>
+            <if test="uSource != null">
+                u_source = #{uSource,jdbcType=INTEGER},
+            </if>
+            <if test="uState != null">
+                u_state = #{uState,jdbcType=INTEGER},
+            </if>
+            <if test="uLoginCount != null">
+                u_login_count = #{uLoginCount,jdbcType=INTEGER},
+            </if>
+            <if test="uLastLoginTime != null">
+                u_last_login_time = #{uLastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            modify_time = now(),
+        </set>
+        where u_uid = #{uUid,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertUserBaseInfo" parameterType="com.renrenlab.rlab.model.UserBaseInfo"
+            keyProperty="uUid" keyColumn="uUid">
+        <selectKey keyProperty="uUid" order="AFTER" resultType="java.lang.Long">
+            select last_value as u_uid from rlab_user_info.user_uid_seq;
+        </selectKey>
+        insert into rlab_user_info.t_user_base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="uName != null">
+                u_name,
+            </if>
+            <if test="uNickname != null">
+                u_nickname,
+            </if>
+            <if test="uPassword != null">
+                u_password,
+            </if>
+            <if test="uSex != null">
+                u_sex,
+            </if>
+            <if test="uAge != null">
+                u_age,
+            </if>
+            <if test="uBirthday != null">
+                u_birthday,
+            </if>
+            <if test="uMobile != null">
+                u_mobile,
+            </if>
+            <if test="uEmail != null">
+                u_email,
+            </if>
+            <if test="uAvatar != null">
+                u_avatar,
+            </if>
+            <if test="uLevel != null">
+                u_level,
+            </if>
+            <if test="uType != null">
+                u_type,
+            </if>
+            <if test="uSource != null">
+                u_source,
+            </if>
+            <if test="uState != null">
+                u_state,
+            </if>
+            <if test="uLoginCount != null">
+                u_login_count,
+            </if>
+            <if test="uLastLoginTime != null">
+                u_last_login_time,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="uName != null">
+                #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uNickname != null">
+                #{uNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uSex != null">
+                #{uSex,jdbcType=BIT},
+            </if>
+            <if test="uAge != null">
+                #{uAge,jdbcType=INTEGER},
+            </if>
+            <if test="uBirthday != null">
+                #{uBirthday,jdbcType=DATE},
+            </if>
+            <if test="uMobile != null">
+                #{uMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="uEmail != null">
+                #{uEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="uAvatar != null">
+                #{uAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="uLevel != null">
+                #{uLevel,jdbcType=INTEGER},
+            </if>
+            <if test="uType != null">
+                #{uType,jdbcType=INTEGER},
+            </if>
+            <if test="uSource != null">
+                #{uSource,jdbcType=INTEGER},
+            </if>
+            <if test="uState != null">
+                #{uState,jdbcType=INTEGER},
+            </if>
+            <if test="uLoginCount != null">
+                #{uLoginCount,jdbcType=INTEGER},
+            </if>
+            <if test="uLastLoginTime != null">
+                #{uLastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+
+    <select id="selectUserCountByUUidAndPassword" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM rlab_user_info.t_user_base_info
+        WHERE u_uid =
+              #{uuid, jdbcType=BIGINT}
+              AND u_password = #{password,
+		jdbcType=VARCHAR};
+    </select>
+
+    <insert id="insertUserInfoForWx">
+        INSERT INTO
+            rlab_user_info.t_user_wx (
+                wx_open_id,
+                wx_union_id,
+                create_time,
+                modify_time,
+                wx_source
+            )
+        VALUES
+            (#{openId, jdbcType=VARCHAR}, #{unionid, jdbcType=VARCHAR}, now(), now(), 1);
+    </insert>
+
+    <select id="selectUserByUnionId" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM rlab_user_info.t_user_wx
+        WHERE wx_union_id =
+              #{wx_union_id, jdbcType=VARCHAR}
+              AND wx_source = #{wx_source,
+		jdbcType=VARCHAR};
+    </select>
+
+    <!-- 根据条件筛选用户 -->
+    <select id="searchUserList" resultType="com.renrenlab.rlab.model.UserBaseInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rlab_user_info.t_user_base_info u
+        WHERE
+        1=1
+        <if test="keyword != null">
+            AND
+            (
+            POSITION (#{keyword, jdbcType=VARCHAR} in u.u_nickname) > 0
+            OR POSITION (#{keyword, jdbcType=VARCHAR} in u.u_mobile) > 0
+            )
+        </if>
+        <if test="type != null">
+            AND (u.u_type::jsonb ->0)::TEXT = #{type, jdbcType=VARCHAR}
+        </if>
+        <if test="source != null">
+            AND u.u_source = #{source, jdbcType=VARCHAR}
+        </if>
+        <if test="beginTime != null">
+            AND u.create_time &gt;= #{beginTime, jdbcType=VARCHAR}::TIMESTAMP
+        </if>
+        <if test="endTime != null">
+            AND u.create_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        AND u.u_state != '2'
+        ORDER BY u.create_time
+        <choose>
+            <when test="order == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+        ,u.u_uid
+        <choose>
+            <when test="order == 'DESC'">
+                DESC
+            </when>
+            <otherwise>
+                ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <update id="updateUserState" parameterType="java.lang.Integer">
+        UPDATE rlab_user_info.t_user_base_info
+        SET u_state = #{state, jdbcType=INTEGER}, modify_time = now()
+        WHERE
+        u_uid = #{uuid, jdbcType=BIGINT};
+        <if test="state == 2">
+            DELETE FROM rlab_user_info.t_user_wx WHERE u_uid = #{uuid, jdbcType=BIGINT};
+            UPDATE rlab_session_info.t_session_base_info SET s_state = '5', modify_time = now() WHERE u_uid =
+            #{uuid, jdbcType=BIGINT};
+        </if>
+    </update>
+    <!-- 根据条件筛选管理员列表 -->
+    <select id="getRoleList" resultType="com.renrenlab.rlab.model.UserBaseInfo">
+        SELECT
+        <include refid="Role_Column_List"/>
+        FROM
+        rlab_user_info.t_user_base_info u
+        JOIN rlab_user_info.t_user_role_map map ON u.u_uid = map.u_uid
+        JOIN rlab_user_info.t_user_role role ON role.r_rid = map.r_rid
+        JOIN rlab_user_info.t_user_department department ON department.u_uid = u.u_uid
+        <where>
+            AND map.r_type = 0
+            <if test="keyword != null">
+                AND
+                (
+                POSITION (#{keyword, jdbcType=VARCHAR} in u.u_nickname) > 0
+                OR POSITION (#{keyword, jdbcType=VARCHAR} in u.u_mobile) > 0
+                OR POSITION (#{keyword, jdbcType=VARCHAR} in u.u_email) >0
+                OR POSITION (#{keyword, jdbcType=VARCHAR} in department.u_job_number) >0
+                )
+            </if>
+            <if test="rName != null">
+                AND #{rName,jdbcType=VARCHAR} = role.r_name
+            </if>
+            <if test="uUid != null">
+                AND #{uUid,jdbcType=BIGINT} = u.u_uid
+            </if>
+            <if test=" uPermisssion != null">
+                AND #{uPermisssion,jdbcType = VARCHAR}::INT > role.r_permisssion::INT
+            </if>
+        </where>
+        ORDER BY department.u_job_number::INT DESC
+    </select>
+    <!--新增管理员 begin-->
+    <insert id="addManager" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        <selectKey keyProperty="uUid" order="AFTER" resultType="java.lang.Long">
+            select last_value as u_uid from rlab_user_info.user_uid_seq;
+        </selectKey>
+        insert into rlab_user_info.t_user_base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uName != null">
+                u_name,
+            </if>
+            <if test="uNickname != null">
+                u_nickname,
+            </if>
+            <if test="uPassword != null">
+                u_password,
+            </if>
+            <if test="uMobile != null">
+                u_mobile,
+            </if>
+            <if test="uEmail != null">
+                u_email,
+            </if>
+            u_type,
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uName != null">
+                #{uName,jdbcType=VARCHAR},
+            </if>
+            <if test="uNickname != null">
+                #{uNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uMobile != null">
+                #{uMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="uEmail != null">
+                #{uEmail,jdbcType=VARCHAR},
+            </if>
+            jsonb_build_array(0,0,1),
+            now(),
+            now(),
+        </trim>
+    </insert>
+
+    <insert id="insertRoleMap" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        /*插入角色map表*/
+        INSERT INTO rlab_user_info.t_user_role_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="rRid != null">
+                r_rid,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="rRid != null">
+                #{rRid,jdbcType=BIGINT},
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+    <!--插入部门表-->
+    <insert id="insertDepartment" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        INSERT INTO rlab_user_info.t_user_department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="uDepartment != null">
+                u_department,
+            </if>
+            <if test="uJobNumber != null">
+                u_job_number,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="uDepartment != null">
+                #{uDepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="uJobNumber != null">
+                #{uJobNumber,jdbcType=VARCHAR},
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+    <!--新增管理员 end-->
+
+    <delete id="deleteManager">
+        UPDATE rlab_user_info.t_user_base_info
+        SET u_type = json_build_array((u_type :: JSON ->> 0) :: INT, (u_type :: JSON ->> 1) :: INT, 0)
+        WHERE u_uid = #{uUid};
+        DELETE FROM rlab_user_info.t_user_role_map
+        WHERE u_uid = #{uUid} AND r_type = 0;
+        DELETE FROM rlab_user_info.t_user_department
+        WHERE u_uid = #{uUid};
+    </delete>
+
+    <update id="updateManager" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        UPDATE rlab_user_info.t_user_base_info
+        <set>
+            <if test="uNickname != null">
+                u_nickname = #{uNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="uPassword != null">
+                u_password = #{uPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="uMobile != null">
+                u_mobile = #{uMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="uEmail != null">
+                u_email = #{uEmail,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE u_uid = #{uUid,jdbcType = BIGINT};
+
+        UPDATE rlab_user_info.t_user_role_map
+        <set>
+            <if test="rRid != null">
+                r_rid = #{rRid,jdbcType=BIGINT}
+            </if>
+        </set>
+        WHERE u_uid = #{uUid,jdbcType = BIGINT} and r_type = 0;
+
+        UPDATE rlab_user_info.t_user_department
+        <set>
+            <if test="uDepartment != null">
+                u_department = #{uDepartment,jdbcType = VARCHAR}
+            </if>
+        </set>
+        WHERE u_uid = #{uUid,jdbcType = BIGINT};
+    </update>
+
+    <update id="disableManager" parameterType="long">
+        /*停用管理员，用户失去进入后台权利，role_map的state状态改为1*/
+        UPDATE rlab_user_info.t_user_base_info
+        SET u_type = json_build_array((u_type :: JSON ->> 0 ) :: INT, (u_type :: JSON ->> 1 )::INT, 0)
+        WHERE
+        u_uid in
+        <foreach collection="uUids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ;
+        UPDATE rlab_user_info.t_user_role_map
+        SET state = 1
+        WHERE r_type = 0 AND u_uid in
+        <foreach collection="uUids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ;
+    </update>
+    <update id="enableManager" parameterType="long">
+        /*启用管理员*/
+        UPDATE rlab_user_info.t_user_base_info u
+        SET u_type = json_build_array((u_type :: JSON ->> 0 ) :: INT, (u_type :: JSON ->> 1 )::INT, 1)
+        WHERE
+        u_uid in
+        <foreach collection="uUids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+        UPDATE rlab_user_info.t_user_role_map
+        SET state = 0
+        WHERE r_type = 0 AND u_uid in
+        <foreach collection="uUids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </update>
+
+    <update id="updateRolePermission" parameterType="com.renrenlab.rlab.model.UserRole">
+        UPDATE rlab_user_info.t_user_role
+        <set>
+            <if test="rPermisssion != null">
+                r_permisssion = #{rPermisssion,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE r_rid = #{rRid,jdbcType=BIGINT};
+    </update>
+
+</mapper>

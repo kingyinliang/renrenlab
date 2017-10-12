@@ -1,0 +1,325 @@
+
+html, body {
+    height: 100%;
+    /*width: 100%;*/
+    /*overflow: hidden;*/
+    overflow: auto;
+    box-sizing: content-box;
+}
+
+.wapper {
+    width: 100%;
+    height: 100%;
+    background: pink;
+    box-sizing: content-box;
+    display: block;
+    /*height: auto;*/
+    /*width: 100%;*/
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    min-height: 520px;
+}
+
+/*背景容器*/
+.bg_content {
+    width: 100%;
+    height:100%;
+    min-height:  520px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #508df0;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+}
+
+.main {
+    width: 1200px;
+    height: 100%;
+    min-height: 520px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.main > img {
+    position: absolute;
+    top: 80px;
+    left: 100px;
+    cursor: pointer;
+}
+
+/*=S 表单公用样式 [徐志响，2017-05-19]*/
+
+/*表单公用样式*/
+.main form {
+    width: 350px;
+    /*不能固定高度，一会要去掉todo*/
+    /*height: 451px;*/
+    padding: 0 43px;
+    background: #fff;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    margin-top: -250px;
+    margin-top: -277px;
+    left: 50%;
+    margin-left: -150px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow:  1px 1px 50px rgba(0,0,0,.3);
+    -moz-box-shadow:  1px 1px 50px rgba(0,0,0,.3);
+    box-shadow: 1px 1px 50px rgba(0,0,0,.3);
+}
+
+form > h3 {
+    height: 84px;
+    line-height: 84px;
+    font-size: 18px;
+    color: #4e4e4e;
+}
+
+form > h3 > span {
+    font-size: 12px;
+    float: right;
+    cursor: pointer;
+    color: #7a7a7a;
+}
+form > h3 > span a{
+    color: #508df0;
+}
+
+form > h3 > span a:link{
+    color: #508df0;
+}
+form > h3 > span a:hover{
+    text-decoration: underline;
+    color: #508df0;
+}
+
+form > p label {
+    float: left;
+    display: block;
+    width: 38px;
+    font-size: 16px;
+    line-height: 38px!important;
+    height: 38px;
+    text-align: center;
+    color: #7a7a7a;
+    vertical-align: middle;
+    background: #f3f6f9;
+}
+
+
+form > p.item {
+    position: relative;
+    height: 38px;
+    line-height: 38px;
+    margin-top: 18px;
+    overflow: hidden;
+}
+
+form > p.item input {
+    height: 22px;
+
+
+    color: #7a7a7a;
+    font-size: 12px;
+    outline: 0 none;
+    overflow: hidden;
+    border:0 none;
+    background: #f3f6f9;
+}
+
+
+/*=E 表单公用样式 [徐志响，2017-05-19]*/
+
+/*=S 通栏表单样式 [徐志响，2017-05-19]*/
+form > p.item_nomal {
+    background: #f3f6f9;
+    width: 100%;
+    height: 38px;
+    line-height:38px;
+}
+form > p.item_nomal > input{
+    width: 195px;
+    background: #f3f6f9;
+}
+/*=E 通栏表单样式 [徐志响，2017-05-19]*/
+
+
+/*=S 图片验证码表单样式 [徐志响，2017-05-19]*/
+form > p.item_img {
+
+}
+form > p.item_img >span{
+    display: block;
+    height: 38px;
+    float: left;
+    width: 110px;
+    background: #f3f6f9;
+}
+
+form > p.item_img  input{
+    width: 110px;
+    background: #f3f6f9;
+}
+
+form > p.item_img > img{
+    float: right;
+    width: 95px;
+    height: 38px;
+    cursor: pointer;
+}
+/*=E 图片验证码表单样式 [徐志响，2017-05-19]*/
+
+
+/*=S 短信验证码表单样式 [徐志响，2017-05-19]*/
+form > p.item_msg{
+    background: #f3f6f9;
+}
+
+
+form > p.item_msg > input{
+    width: 125px;
+    border-right: 1px solid #e5e5e5;
+    background: #f3f6f9;
+}
+
+form > p.item_msg > button{
+    float: right;
+    width: 95px;
+    height: 38px;
+    padding:0;
+    line-height: 38px;
+    color: #508df0;
+    outline: 0 none;
+    border: 0 none;
+    background: #f3f6f9;
+    cursor: pointer;
+}
+form > p.item_msg > button.disable {
+    color: #7a7a7a;
+}
+form > p.item_msg > button:active {
+    color: #3e72c0;
+}
+
+/*=E 短信验证码表单样式 [徐志响，2017-05-19]*/
+
+
+/*=S 提示栏样式 [徐志响，2017-05-19]*/
+form > p.item_tip {
+    line-height:22px;
+    text-align: left;
+    font-size: 12px;
+    color: #a94442;
+}
+/*=E 提示栏样式 [徐志响，2017-05-19]*/
+
+/*=S 签协议 [徐志响，2017-05-19]*/
+.protocol {
+    height: 18px;
+    line-height: 18px;
+    margin-top: 12px;
+}
+
+.protocol > label{
+    float: left;
+}
+.protocol > label > input{
+    font-size: 12px;
+    width: 12px;
+    height: 12px;
+}
+
+.protocol > span{
+    float: left;
+    color: #7a7a7a;
+    font-size: 12px;
+}
+.protocol > span a{
+    color: #508df0;
+}
+
+.protocol > span a:hover{
+    text-decoration: underline;
+}
+/*=E 签协议 [徐志响，2017-05-19]*/
+
+/*=S 按钮 [徐志响，2017-05-19]*/
+form > button {
+    width: 100%;
+    height: 38px;
+    margin-top:12px;
+    line-height: 38px;
+    font-size: 16px;
+    color: #fff;
+    background: #508df0;
+    border: 0 none;
+    outline: 0 none;
+    cursor: pointer;
+}
+
+form > button:active {
+    background: #3e72c0;
+}
+
+form > button.disable {
+    background: #C3C3C3;
+}
+/*=E 按钮 [徐志响，2017-05-19]*/
+
+
+/*=S 第三方登录样式 [徐志响，2017-05-19]*/
+form > div.other_login {
+    border-top: 1px solid #e7e7e7;
+    margin-top:40px;
+    position: relative;
+    height: 80px;
+}
+
+form > div.other_login > .top_line {
+    width: 54px;
+    height: 14px;
+    line-height: 14px;
+    background: #fff;
+    position: absolute;
+    top: -7px;
+    text-align: center;
+    left: 50%;
+    margin-left: -27px;
+    color: #7a7a7a;
+}
+
+form > div.other_login > .btm_login {
+    line-height: 80px;
+    text-align: center;
+    font-size: 26px;
+    color: #508df0;
+    cursor: pointer;
+}
+
+form > div.other_login > .i {
+    line-height: 80px;
+    text-align: center;
+    font-size: 26px;
+    color: #508df0;
+    cursor: pointer;
+}
+/*=E 第三方登录样式[徐志响，2017-05-19]*/
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f3f6f9 inset !important;//关于解决输入框背景颜色
+    -webkit-text-fill-color: #7a7a7a!important;/
+    background-color: #f3f6f9!important;
+    background-image: none;
+    color: #7a7a7a;
+}

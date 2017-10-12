@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgAddressDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.OrgAddress">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_addr_id" jdbcType="BIGINT" property="orgAddrId" />
+    <result column="org_id" jdbcType="BIGINT" property="orgId" />
+    <result column="org_addr_country" jdbcType="VARCHAR" property="orgAddrCountry" />
+    <result column="org_addr_province" jdbcType="VARCHAR" property="orgAddrProvince" />
+    <result column="org_addr_city" jdbcType="VARCHAR" property="orgAddrCity" />
+    <result column="org_addr_district" jdbcType="VARCHAR" property="orgAddrDistrict" />
+    <result column="org_addr_street" jdbcType="VARCHAR" property="orgAddrStreet" />
+    <result column="org_zipcode" jdbcType="VARCHAR" property="orgZipcode" />
+    <result column="org_addr_state" jdbcType="INTEGER" property="orgAddrState" />
+    <result column="org_addr_longitude" jdbcType="NUMERIC" property="orgAddrLongitude" />
+    <result column="org_addr_latitude" jdbcType="NUMERIC" property="orgAddrLatitude" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, org_addr_id, org_id, org_addr_country, org_addr_province, org_addr_city, org_addr_district, org_addr_street,
+    org_zipcode, org_addr_state, org_addr_longitude, org_addr_latitude, create_time, 
+    modify_time
+  </sql>
+
+  <select id="searchOrgAddressByOrgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_org_info.t_org_address
+    where org_id = #{orgOid,jdbcType=BIGINT} AND org_addr_state = '0'
+  </select>
+
+  <select id="searchOrgAddressByOrgAddrId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_org_info.t_org_address
+    where org_addr_id = #{orgAddrId,jdbcType=BIGINT} AND org_addr_state = '1'
+  </select>
+
+  <insert id="insertOrgAddress" parameterType="com.renrenlab.rlab.vo.OrgAddress">
+    insert into rlab_org_info.t_org_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="orgAddrCountry != null">
+        org_addr_country,
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province,
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city,
+      </if>
+      <if test="orgAddrStreet != null">
+        org_addr_street,
+      </if>
+      <if test="orgZipcode != null">
+        org_zipcode,
+      </if>
+      <if test="orgAddrState != null">
+        org_addr_state,
+      </if>
+      <if test="orgAddrLongitude != null">
+        org_addr_longitude,
+      </if>
+      <if test="orgAddrLatitude != null">
+        org_addr_latitude,
+      </if>
+        create_time,
+        modify_time,
+      <if test="orgAddrDistrict != null">
+        org_addr_district,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="orgAddrCountry != null">
+        #{orgAddrCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrProvince != null">
+        #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrStreet != null">
+        #{orgAddrStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="orgZipcode != null">
+        #{orgZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrState != null">
+        #{orgAddrState,jdbcType=INTEGER},
+      </if>
+      <if test="orgAddrLongitude != null">
+        #{orgAddrLongitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgAddrLatitude != null">
+        #{orgAddrLatitude,jdbcType=NUMERIC},
+      </if>
+        now(),
+        now(),
+      <if test="orgAddrDistrict != null">
+        #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateOrgAddress" parameterType="com.renrenlab.rlab.vo.OrgAddress">
+    update rlab_org_info.t_org_address
+    <set>
+      <if test="orgAddrCountry != null">
+        org_addr_country = #{orgAddrCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province = #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city = #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrStreet != null">
+        org_addr_street = #{orgAddrStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="orgZipcode != null">
+        org_zipcode = #{orgZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrState != null">
+        org_addr_state = #{orgAddrState,jdbcType=INTEGER},
+      </if>
+      <if test="orgAddrLongitude != null">
+        org_addr_longitude = #{orgAddrLongitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgAddrLatitude != null">
+        org_addr_latitude = #{orgAddrLatitude,jdbcType=NUMERIC},
+      </if>
+        modify_time = now(),
+      <if test="orgAddrDistrict != null">
+        org_addr_district = #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where org_addr_id = #{orgAddrId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

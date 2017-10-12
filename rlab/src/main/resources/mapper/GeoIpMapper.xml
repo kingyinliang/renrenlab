@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.GeoIpDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.GeoIp">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="ip_id" jdbcType="BIGINT" property="ipId" />
+    <result column="ip_from" jdbcType="VARCHAR" property="ipFrom" />
+    <result column="ip_to" jdbcType="VARCHAR" property="ipTo" />
+    <result column="ip_from_stamp" jdbcType="BIGINT" property="ipFromStamp" />
+    <result column="ip_to_stamp" jdbcType="BIGINT" property="ipToStamp" />
+    <result column="country_short" jdbcType="VARCHAR" property="countryShort" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, ip_id, ip_from, ip_to, ip_from_stamp, ip_to_stamp, country_short, country, create_time
+  </sql>
+
+  <select id="selectGeoIpByIp" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select
+    count(*)
+    from rlab_common_info.t_geo_ip
+    where #{ip, jdbcType=BIGINT} between ip_from_stamp and ip_to_stamp ;
+  </select>
+
+</mapper>

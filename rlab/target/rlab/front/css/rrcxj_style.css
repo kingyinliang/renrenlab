@@ -1,0 +1,402 @@
+
+
+.user_main{
+    margin-bottom: 50px;
+}
+.rrcxj_notImg{
+    display: block;
+    margin: auto;
+    margin-top: 135px;
+    width: 169px;
+    height:99px;
+}
+.rrcxj_notTit{
+    text-align: center;
+    font-size: 16px;
+    color: #767676;
+    line-height: 70px;
+}
+.rrcxj_Tit{
+    text-align: center;
+    font-size: 16px;
+    color: #767676;
+    line-height: 30px;
+    margin: 30px 0;
+}
+.redtext{
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}
+
+.goapply{
+    display: block;
+    margin: auto;
+    width: 92px;
+    height: 35px;
+    text-align: center;
+    color: white;
+    background: #508df0;
+    line-height: 35px;
+}
+.flow{
+    margin-top: 95px;
+    padding: 28px 52px;
+    background: #f9fbfc;
+}
+.flow_tit{
+    color: #999999;
+    font-size: 14px;
+}
+.flowMain{
+    padding: 27px 10px;
+    position: relative;
+}
+.flowMain img{
+    width: 131px;
+    height: 38px;
+}
+.flowMain div{
+    float: left;
+    width: 277px;
+    text-align: center;
+}
+.flow_text{
+    color: #666666;
+    font-size: 14px;
+    line-height: 26px;
+}
+.flow_text2{
+    font-size: 12px;
+    color: #999999;
+}
+.flowMain .dowm{
+    width: 5px;
+    height: 24px;
+}
+.flowMain .goright{
+    width: 146px;
+    line-height: 38px;
+    font-size: 12px;
+    color: #508df0;
+    position: absolute;
+    left: 214px;
+}
+.goright img{
+    width: 12px;
+    height: 12px;
+    margin: 0 10px;
+}
+.winimg{
+    margin-top: 135px;
+    color: #7acbcf;
+    font-size: 20px;
+    text-align: center;
+}
+.list{
+    background-color: white;
+}
+.listli{
+    padding: 26px 0 26px 25px;
+    margin: 0 25px;
+    border-top: 1px solid #f5f7f9;
+    position: relative;
+}
+.listli p{
+    float: left;
+    font-size: 16px;
+    color: #666;
+    text-align: center;
+    line-height: 35px;
+}
+.times{
+    width: 165px;
+    margin-right: 34px;
+}
+.projectName{
+    width: 350px;
+    text-align: center;
+}
+.listli .result{
+    color: #7acbcf;
+    cursor: pointer;
+    margin: 0 23px 0 30px;
+    width: 101px;
+}
+.listli .result label{
+    line-height: 35px;
+    float: left;
+}
+.resultBtn{
+    margin-left: 23px;
+    width: 101px;
+    height: 35px;
+}
+.resultBtn button{
+    border: none;
+    background-color: #508df0;
+    font-size: 14px;
+    width: 100px;
+    height: 35px;
+    color: white;
+    cursor: pointer;
+    line-height: 35px;
+}
+.resultBtn button label{
+    margin-top: 8px;
+    display: block;
+    float: left;
+    font-size: 16px;
+}
+.listli .notgo{
+    color: #ed7979;
+}
+.listli .win{
+    color: #666666;
+    line-height: 16px;
+}
+.result span{
+    line-height: 18px;
+}
+.pop{
+    display: none;
+    width: 874px;
+    height: 107px;
+    background: white;
+    padding: 20px 17px;
+    border: 1px solid #e0dfe0;
+    border-radius: 9px;
+    box-shadow: 1px 1px 30px rgba(0,0,0,.3);
+    -webkit-box-shadow: 1px 1px 30px rgba(0,0,0,.3);
+    -o-box-shadow: 1px 1px 30px rgba(0,0,0,.3);
+    -moz-box-shadow: 1px 1px 30px rgba(0,0,0,.3);
+    position: absolute;
+    top:-77px;
+}
+.pop p{
+    font-size: 14px;
+    color: #b4b4b4;
+}
+.pop .popTit{
+    color: #999999;
+    line-height: 18px;
+    float: none;
+    text-align: left;
+}
+.listli .popflowdiv{
+    padding: 20px 16px;
+}
+.listli .popflow{
+    line-height: 18px;
+    font-size: 14px;
+}
+.num{
+    background: #c1c1c1;
+    color: white;
+    width: 17px;
+    height: 17px;
+    text-align: center;
+    line-height: 17px;
+    border-radius: 50%;
+    float: left;
+    margin-right: 8px;
+}
+.pop .selects{
+    color: #508df0;
+}
+.selects .num{
+    background: #508df0;
+}
+.selects .imIne{
+    border-color: #508df0;
+}
+.popflow span{
+    float: left;
+}
+.imIne{
+    width: 80px;
+    border-top:1px dashed #c1c1c1;
+    margin-top: 8px;
+    margin: 8px 20px;
+}
+.shade,.shade2{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000,endColorstr=#7f000000);
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+.cause{
+    width: 525px;
+    height: 250px;
+    background: white;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-top: -125px;
+    margin-left: -262.5px;
+    font-size: 16px;
+    line-height: 35px;
+}
+.causetext{
+    font-size: 12px;
+    padding: 0 10px;
+    background: #f9fbfc;
+    color: #b1b1b1;
+}
+.causetit{
+    font-size: 20px;
+    color: #f15238;
+    text-align: center;
+    margin-top: 40px;
+}
+.causemain{
+    font-size: 14px;
+    color: #f15238;
+    text-align: center;
+}
+.closecause{
+    text-align: center;
+}
+.closecause a{
+    text-align: center;
+    width: 120px;
+    height: 35px;
+    line-height: 35px;
+    background: #508df0;
+    color: white;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+.uploading{
+    width: 525px;
+    height: 654px;
+    background: white;
+    padding: 40px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-top: -327px;
+    margin-left: -262.5px;
+    font-size: 16px;
+}
+.shade p span{
+    color: #333333;
+}
+.shade .tt{
+    margin-top: 20px;
+    line-height: 39px;
+}
+.shade p b{
+    color: #f84141;
+}
+.shade p .titname{
+    color: #999999;
+}
+.shade .shadetit{
+    color: #508df0;
+    font-size: 20px;
+    margin: 0;
+}
+.put{
+    margin-top: 20px;
+    line-height: 39px;
+}
+.put a label{
+    font-size: 17px;
+    float: left;
+    margin-top: 11px;
+    margin-left: 15px;
+}
+.put span{
+    float: left;
+    height: 39px;
+    line-height: 39px;
+}
+.put a span{
+    color: #508df0;
+}
+.put .filebut{
+    float: left;
+    cursor: pointer;
+    width: 115px;
+    height: 39px;
+    border: 1px solid #508df0;
+    background: white;
+    color: #508df0;
+    display: block;
+    line-height: 39px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 32px;
+}
+.course{
+    display: none;
+    margin: 11px 0 0 127px;
+    font-size: 12px;
+    color: #666666;
+    width: 245px;
+    line-height: 18px;
+}
+.course .close{
+    float: right;
+    cursor: pointer;
+    font-size: 16px;
+}
+.icon{
+    margin-right: 5px;
+    font-size: 14px;
+}
+.probar{
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d7dbe1;
+    margin-top: 8px;
+}
+.probar .probarbul{
+    height: 10px;
+    background: #508df0;
+    border-radius: 5px;
+    width: 0%;
+}
+.contract,.invoice,.achievement{
+    height: 51px;
+    overflow: hidden;
+}
+.closeshade,.sub{
+    display: inline-block;
+    width: 88px;
+    height: 35px;
+    text-align: center;
+    color: white;
+    background: #508df0;
+    line-height: 35px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+.closeshade{
+    background: white;
+    color: #666666;
+    border: 1px solid #f3f3f3;
+    margin-right: 57px;
+}
+.course span{
+    width: 200px;
+    display: inline-block;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap;
+}
+form input{
+    position: absolute;
+    z-index: -200;
+}

@@ -1,0 +1,57 @@
+*{margin: 0;padding: 0;}html,body{width: 100%;height: 100%;background: #f5f6fa;}
+a:hover{text-decoration: none !important;}a:link{text-decoration: none !important;}
+.headers {
+    height: 1.173rem;
+    width: 100%;
+    background: #F5F6FA;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+}
+
+.users {
+    float: right;
+    color: #4E4E4E;
+    font-size: 0.56rem;
+    line-height: 1.173rem;
+    margin-right: 0.3067rem;
+}
+
+.homelogo {
+    height: 0.56rem;
+    display: block;
+    margin: 0.3067rem;
+    text-align: center;
+}
+
+.homelogo img {
+    height: 100%;
+}
+.headers .lft_back {
+    width: 1rem;
+    line-height: 1.173rem;
+    text-align: center;
+    font-size: 0.45rem;
+    float: left;
+    position: absolute;
+    top:0;
+    left: 0;
+}
+#searchs{
+    float: right;
+    color: #4E4E4E;
+    font-size: 0.56rem;
+    line-height: 1.173rem;
+    margin-right: 0.3067rem;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+.main{margin-top: 1.173rem;overflow: hidden;}.names{text-align: center;font-size: 0.48rem;color: #333546;line-height: 0.8rem;}
+.main img{display: block;margin: auto;margin-top: 1.69rem;width: 2.667rem;height: 2.667rem;border-radius: 50%;}
+#phone,.quit{width: 8.813rem;height: 1.28rem;margin: auto;margin-top: 0.9rem;background: white;padding: 0 0.4267rem 0 0.6267rem;}
+#phone span{font-size: 0.5rem;line-height: 1.28rem;float: left;color: #7A7A7A;}#phone p{line-height: 1.28rem;font-size: 0.35rem;color: #333333;border: 0;width: 5.5rem;height: 100%;float: left;margin-left: 0.3467rem;}
+#bind{float: right;color: #4e4e4e;font-size: 0.37rem;line-height: 1.28rem;}
+.foot{margin-top: 0.73rem;text-align: center;font-size: 0.32rem;color: #B5B5B5;}
+.quit{background: #398df8;height: 1rem;width: 100%}.quit p{line-height: 1rem;text-align: center;font-size: 0.4rem;color: white;}

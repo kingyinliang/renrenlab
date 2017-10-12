@@ -1,0 +1,86 @@
+/*START下拉搜索框模块*/
+form.lab_select_search {
+    width: 100%;
+}
+form.lab_select_search > div,form.lab_select_search > div > div{
+    width: 100%;
+} {
+    width: 100%;
+}
+form.lab_select_search .layui-form-select .layui-input {
+    width: 100%;
+}
+/*END下拉搜索框模块*/
+
+
+
+/*START价格填写组件[价格组件]*/
+.cm_price_btn label{
+    margin-right: 30px;
+}
+
+.cm_price_down  input.price {
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+    border-radius:6px;
+}
+
+.cm_price_down  input.unit {
+    width: 60px;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 10px;
+    border-radius:6px;
+}
+
+.cm_price_down  {
+    margin-top: 20px;
+}
+/*START价格填写组件[价格组件]*/
+
+
+/*START添加联系人*/
+
+/*END添加联系人*/
+
+
+
+
+/*START输入框而已*/
+.lab_input_base {
+    height: 50px;
+    line-height: 50px;
+    background: #fff;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    padding-left: 10px;
+}
+
+.lab_input_small {
+    width: 114px;
+}
+
+.lab_input_middle {
+    width: 316px;
+
+}
+.lab_input_big {
+    width: 518px;
+}
+
+/*END输入框而已*/
+
+/*START省市区三级联动*/
+.layui-form-item .layui-input-inline {
+    margin-bottom: 10px!important;
+}
+
+.layui-form-item .layui-input-inline input {
+    border: 0 none;
+    line-height: 50px;
+    height: 50px;
+}
+/*END省市区三级联动*/

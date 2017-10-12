@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	http://www.springframework.org/schema/task
+	http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <!-- 配置SpringMVC -->
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
+        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
+    -->
+    <mvc:annotation-driven/>
+    <!-- 2.静态资源默认servlet配置
+        (1)加入对静态资源的处理：js,gif,png
+        (2)允许使用"/"做整体映射
+     -->
+
+    <mvc:default-servlet-handler/>
+
+    <mvc:interceptors>
+        <bean class="com.renrenlab.rlab.common.interceptor.IPInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/bg/**"/>
+            <mvc:mapping path="/front/user/modify/**"/>
+            <mvc:mapping path="/front/user/center"/>
+            <mvc:mapping path="/front/user/req/*"/>
+            <mvc:mapping path="/front/org/search"/>
+            <mvc:mapping path="/front/org/upload"/>
+            <mvc:mapping path="/front/provider/**"/>
+            <mvc:mapping path="/page/req/pubpage"/>
+            <mvc:mapping path="/page/hdxtcxj"/>
+            <mvc:mapping path="/page/sdkjcxj"/>
+            <mvc:mapping path="/front/coupon/**"/>
+            <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/query"/>
+            <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/add"/>
+            <mvc:exclude-mapping path="/bg/org/city"/>
+            <bean class="com.renrenlab.rlab.common.interceptor.AuthenticationInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/page/**"/>
+            <mvc:mapping path="/front/user/**"/>
+            <mvc:mapping path="/front/instrument/search/**"/>
+            <mvc:mapping path="/front/superSearch/search"/>
+            <mvc:mapping path="/front/org"/>
+            <mvc:mapping path="/front/org/**"/>
+            <mvc:mapping path="/front/user/req/tinylist"/>
+            <mvc:exclude-mapping path="/page/req/detail/ajax"/>
+            <mvc:exclude-mapping path="/page/req/listinfo"/>
+            <mvc:exclude-mapping path="/page/req/top"/>
+            <bean class="com.renrenlab.rlab.common.interceptor.UrlCallbackInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!-- 3.配置jsp 显示ViewResolver -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 4.扫描controller相关的bean -->
+    <context:component-scan base-package="com.renrenlab.rlab.controller"/>
+
+    <!--全局异常捕捉 -->
+    <bean class="com.renrenlab.rlab.common.exception.DefaultExceptionHandler"/>
+
+    <!--自定义异常处理器-->
+    <bean class="com.renrenlab.rlab.common.exception.RlabExceptionResolver"/>
+
+    <!--上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <!--定时器-->
+    <task:annotation-driven scheduler="reqScheduler" mode="proxy"/>
+    <task:scheduler id="reqScheduler" pool-size="10"/>
+
+</beans>

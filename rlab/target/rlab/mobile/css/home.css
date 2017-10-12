@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+a:link{
+    text-decoration: none !important;
+}
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.headers {
+    height: 1.173rem;
+    width: 100%;
+    background: #F5F6FA;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+}
+
+.users {
+    float: right;
+    color: #4E4E4E;
+    font-size: 0.56rem;
+    line-height: 1.173rem;
+    margin-right: 0.3067rem;
+}
+
+.homelogo {
+    float: left;
+    height: 0.56rem;
+    margin: 0.3067rem;
+}
+
+.homelogo img {
+    width: 100%;
+    height: 100%;
+}
+
+#slider {
+    width: 100%;
+    height: 100%;
+    margin-top: 1.173rem;
+}
+
+#slider img {
+    width: 100%;
+    height: 100%;
+}
+
+#slider .mui-indicator {
+    width: 0.15rem;
+    height: 0.15rem;
+}
+
+.searchBox {
+    position: absolute;
+    z-index: 99999;
+    top: 0;
+    width: 7.3867rem;
+    left: 50%;
+    margin-left: -3.693rem;
+    margin-top: 1.3467rem;
+}
+
+.searchBox h1 {
+    color: white;
+    font-size: 0.56rem;
+    text-align: center;
+    letter-spacing: 0.1rem;
+}
+
+.search {
+    width: 100%;
+    height: 0.96rem;
+    border-radius: 0.48rem;
+    background: #ededed;
+    display: block;
+    margin-top: 0.5867rem;
+}
+
+.search span {
+    float: right;
+    font-size: 0.4267rem;
+    line-height: 0.96rem;
+    margin-right: 0.44rem;
+    color: #4E4E4E;
+}
+
+#tab {
+    padding-top: 0.64rem;
+    background: #F5F6FA;
+}
+
+#tabHeard {
+    height: 0.4rem;
+    line-height: 0.4rem;
+    margin-bottom: 0.267rem;
+}
+
+#tabHeard a {
+    padding: 0;
+    line-height: 0.5rem;
+    font-size: 0.373rem;
+    color: #B5B5B5;
+}
+
+#tabHeard .mui-active {
+    color: #007aff;
+    background: 0 0;
+    color: #4f8df0;
+}
+
+.boder {
+    border-left: 0.03rem solid #e5e5e5 !important;
+    border-right: 0.03rem solid #e5e5e5 !important;
+}
+
+#sliderProgressBar {
+    background-color: #4F8DF0;
+    height: 0.05rem;
+}
+
+#tabBox {
+    margin-top: 0.3067rem;
+    padding-bottom: 0.3rem;
+}
+
+.tabLi {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: none !important;
+}
+
+.mui-slider-item ul {
+    background: #F5F6FA;
+}
+
+.mui-slider-item li {
+    font-size: 0.32rem;
+    padding: 0.333rem;
+    margin-top: 0.18rem;
+    background: white;
+    border-radius: 0.2rem;
+}
+
+.tabLi li .liImg {
+    width: 2.0667rem !important;
+    height: 2.0667rem !important;
+    float: left;
+    margin-right: 0.333rem;
+}
+
+.tit {
+    float: left;
+}
+
+.tabLi li a {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+/*#sliderProgressBar{width: 0.42rem;}.mui-slider-progress-bar{margin-left: 1.4rem;}*/
+
+.tabLi h2 {
+    margin: 0;
+    line-height: 0.5rem;
+    font-size: 0.373rem;
+    color: #4E4E4E;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 5.9rem;
+}
+
+.tabLi h3 {
+    font-size: 0.32rem;
+    color: #7A7A7A;
+    margin-top: 0.28rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
+}
+
+.tabLi p {
+    width: 5.9rem;
+    font-size: 0.32rem;
+    margin-top: 0.4rem;
+    line-height: 0.6rem;
+    overflow: hidden;
+}
+
+.tit_address {
+    float: left;
+}
+
+.tit_money {
+    float: right;
+    color: #db3636;
+}
+
+.tit_unit {
+    float: right;
+}
+
+#org {
+    background: #F5F6FA;
+    overflow: hidden;
+}
+
+#org h1 {
+    font-size: 0.373rem;
+    margin-left: 0.5rem;
+    margin-top: 0.5rem;
+    color: #666666;
+    border-left: 0.06rem solid #4F8DF0;
+    padding-left: 0.13rem;
+}
+
+#orglist a {
+    width: 1.463rem;
+    height: 1.463rem;
+    float: left;
+    margin: 0 0.26rem;
+}
+
+#orglist {
+    padding: 0.2267rem 0;
+    background: white;
+    margin-top: 0.4rem;
+    text-align: center;
+}
+
+#footer {
+    text-align: center;
+    line-height: 1rem;
+    background: #F5F6FA;
+    padding-top: 0.89rem;
+}
+
+#footer p {
+    margin: 0;
+    font-size: 0.267rem;
+    line-height: 0.6rem;
+}
+
+#footer img {
+    width: 2.13rem;
+    height: 0.56rem;
+    margin-bottom: 0.2rem;
+}
+#footer p img{
+    margin-top: 0.3rem;
+    width:2.6rem;
+    height: 2.6rem;
+    margin-bottom: 0.5rem;
+}
+.item2mobile-item{
+    font-size: 0.35rem;
+    width: 33%;
+    float: left;
+    display: inline-block;
+    text-align: center;
+    text-decoration: underline!important;
+    color: #4F8DF0;
+}
+.item2mobile-tab{
+    height: 1.1rem;
+    line-height: 1.1rem;background: #edeff4;
+}
+#item2mobile{
+    padding: 0;
+}
+.mui-table-view-cell a{
+    overflow: initial!important;
+}
+#item1mobile .tit{
+    width: 5.9rem;
+    padding: 0.3rem 0;
+}
+#item1mobile h2{
+    width: 4.7rem;
+    float: left;
+}
+#item1mobile h3{
+    float: left;
+    color: #8ad656;
+    display: inline-block;
+    line-height: 0.6rem;
+    height: 0.6rem;
+    padding: 0 0.2rem;
+    border: solid 0.03rem rgba(137, 213, 86, 1);
+    border-radius: 0.3rem;
+}
+#item1mobile p img{
+    width: 100%;
+}
+#item1mobile p{
+    text-align: center;
+    position: relative;
+    width: 1.2rem;
+    margin: 0;
+    float: right;
+}
+#item1mobile p span{
+    width: 1.2rem;
+    line-height: 0.54rem;
+    position: absolute;
+    left: 0;
+    top:0;
+    text-align: center;
+    color: white;
+    font-size: 0.3rem;
+}
+#item3mobile p span{
+    color: #4f8df0;
+}
+#item3mobile a{
+    white-space: inherit;
+}
+#item3mobile p{
+    width: 100%;
+    margin: 0;
+    overflow: initial;
+    font-size: 0.37rem;
+    color: #4e4e4e;
+    line-height: 0.4rem;
+    margin-bottom: 0.3rem;
+}
+.homelogo .weixin{
+    font-size: 0.5rem;
+    margin-right: 0.2rem;
+}
+.homelogo a{
+    color: #4e4e4e;
+    font-size: 0.37rem;
+    line-height: 0.56rem;
+}
+.homelogo{
+    font-size: 0.37rem;
+    line-height: 0.56rem;
+}
+.user-img{
+    width: 0.8267rem;
+    height: 1.173rem;
+    line-height:1.173rem;
+    text-align: center;
+    position: absolute;
+    top:0;
+    right: 0.3rem;
+}
+.user-img img{
+    overflow: hidden;
+    border-radius: 50%;
+    width: 0.8267rem;
+    height: 0.8267rem;
+}
+
+#codes{
+    width: 6.93rem;
+    height: 6.77rem;
+    position: fixed;
+    top:50%;
+    left: 50%;
+    margin-left: -3.465rem;
+    margin-top: -3.385rem;
+    background: white;
+    border-radius: 0.27rem;
+    z-index: 999;
+    display: none;
+}
+#codes p img{
+    width: 4.27rem;
+}
+#codes p{
+    font-size: 0.37rem;
+    color: #333333;
+    line-height: 0.5rem;
+    text-align: center;
+}
+#codes i{
+    color: #e1e1e1;
+    position: absolute;
+    top:0.3rem;
+    right: 0.3rem;
+    font-size: 0.6rem
+}

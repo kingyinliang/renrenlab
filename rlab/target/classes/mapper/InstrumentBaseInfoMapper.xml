@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.InstrumentBaseInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InstrumentBaseInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="ins_iid" jdbcType="BIGINT" property="insIid"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+        <result column="ins_origin" jdbcType="VARCHAR" property="insOrigin"/>
+        <result column="ins_maker" jdbcType="VARCHAR" property="insMaker"/>
+        <result column="ins_description" jdbcType="OTHER" property="insDescription"/>
+        <result column="ins_pic" jdbcType="OTHER" property="insPic"/>
+        <result column="ins_core_param" jdbcType="OTHER" property="insCoreParam"/>
+        <result column="ins_state" jdbcType="INTEGER" property="insState"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <resultMap id="InstrumentListMap" type="com.renrenlab.rlab.vo.InstrumentInfo">
+        <result column="ins_iid" jdbcType="BIGINT" property="insIid"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+
+
+        <result column="map_id" jdbcType="BIGINT" property="mapId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="ins_org_price_list" jdbcType="OTHER" property="insOrgPriceList"/>
+
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="ins_pic" jdbcType="OTHER" property="insPic"/>
+        <result column="ins_origin" jdbcType="VARCHAR" property="insOrigin"/>
+        <result column="ins_description" jdbcType="OTHER" property="insDescription"/>
+    </resultMap>
+
+    <!--返回仪器机构关联表 insId-->
+    <resultMap id="InsIdList" type="java.lang.Long">
+        <result column="ins_iid" jdbcType="BIGINT" property="insIid"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, ins_iid, ins_name, ins_mode, ins_brand, ins_origin, ins_maker, ins_description, 
+    ins_pic, ins_core_param, ins_state, create_time, modify_time
+    </sql>
+
+    <sql id="Instrument_Column_List">
+        t_instrument_base_info.ins_iid, ins_name, ins_mode, ins_maker,ins_brand,ins_state,
+        map_id,t_instrument_org_map.org_oid, ins_org_price_list,
+        org_name,ins_pic,ins_origin,ins_description
+    </sql>
+
+    <select id="selectByInsIid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_instrument_info.t_instrument_base_info
+        where ins_iid = #{insIid,jdbcType=BIGINT}
+    </select>
+
+    <select id="searchInstrumentInfoByOrgName" parameterType="java.lang.String"
+            resultType="com.renrenlab.rlab.vo.InstrumentInfo">
+        SELECT
+        <include refid="Instrument_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info,
+        rlab_instrument_info.t_instrument_org_map,
+        rlab_org_info.t_org_base_info
+        WHERE
+        (
+        t_org_base_info.org_name LIKE '%${keyword}%'
+        AND t_org_base_info.org_oid = t_instrument_org_map.org_oid
+        AND t_instrument_org_map.ins_iid = t_instrument_base_info.ins_iid
+        )
+    </select>
+    <!--根据仪器型号查询-->
+    <select id="searchInstrumentByMode" parameterType="java.lang.String"
+            resultType="com.renrenlab.rlab.vo.InstrumentInfo">
+        SELECT
+        <include refid="Instrument_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info,
+        rlab_instrument_info.t_instrument_org_map,
+        rlab_org_info.t_org_base_info
+        WHERE
+        (
+        ins_mode LIKE '%${keyword}%'
+        AND rlab_instrument_info.t_instrument_base_info.ins_iid = rlab_instrument_info.t_instrument_org_map.ins_iid
+        AND rlab_org_info.t_org_base_info.org_oid = rlab_instrument_info.t_instrument_org_map.org_oid
+        )
+    </select>
+    <!--根据仪器名称查询-->
+    <select id="searchInstrumentByInsName" parameterType="java.lang.String"
+            resultType="com.renrenlab.rlab.vo.InstrumentInfo">
+        SELECT
+        <include refid="Instrument_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info,
+        rlab_instrument_info.t_instrument_org_map,
+        rlab_org_info.t_org_base_info
+        WHERE
+        (
+        ins_name LIKE '%${keyword}%'
+        AND rlab_instrument_info.t_instrument_base_info.ins_iid = rlab_instrument_info.t_instrument_org_map.ins_iid
+        AND rlab_org_info.t_org_base_info.org_oid = rlab_instrument_info.t_instrument_org_map.org_oid
+        )
+        ORDER BY rlab_instrument_info.t_instrument_base_info.ins_iid desc
+    </select>
+
+    <select id="searchInstrumentById" parameterType="java.lang.Long"
+            resultType="com.renrenlab.rlab.vo.InstrumentInfo">
+        SELECT
+        <include refid="Instrument_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info,
+        rlab_instrument_info.t_instrument_org_map,
+        rlab_org_info.t_org_base_info
+        WHERE
+        (
+        rlab_instrument_info.t_instrument_base_info.ins_iid = '${insIid}'
+        AND t_instrument_org_map.map_id = '${mapId}'
+        AND rlab_org_info.t_org_base_info.org_oid = rlab_instrument_info.t_instrument_org_map.org_oid
+        )
+    </select>
+
+    <select id="searchInstrumentByMapId" parameterType="java.lang.Long"
+            resultType="com.renrenlab.rlab.vo.InstrumentInfo">
+        SELECT
+        <include refid="Instrument_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info,
+        rlab_org_info.t_org_base_info,
+        rlab_instrument_info.t_instrument_org_map
+        WHERE
+        rlab_org_info.t_org_base_info.org_oid= (
+        SELECT
+        rlab_instrument_info.t_instrument_org_map.org_oid
+        FROM
+        rlab_instrument_info.t_instrument_org_map
+        WHERE
+        rlab_instrument_info.t_instrument_org_map.map_id = '${mapId}'
+        )
+        AND rlab_instrument_info.t_instrument_base_info.ins_iid = (
+        SELECT
+        rlab_instrument_info.t_instrument_org_map.ins_iid
+        FROM
+        rlab_instrument_info.t_instrument_org_map
+        WHERE
+        rlab_instrument_info.t_instrument_org_map.map_id = '${mapId}'
+        )
+        AND map_id = '${mapId}'
+    </select>
+
+    <!--插入仪器详情-->
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.vo.InstrumentInfo"
+            keyProperty="insIid" keyColumn="ins_iid">
+        <selectKey keyProperty="insIid" resultType="java.lang.Long" order="AFTER">
+            SELECT last_value as ins_iid
+            FROM rlab_instrument_info.instrument_iid_seq
+        </selectKey>
+        insert into rlab_instrument_info.t_instrument_base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="insName != null">
+                ins_name,
+            </if>
+            <if test="insMode != null">
+                ins_mode,
+            </if>
+            <if test="insBrand != null">
+                ins_brand,
+            </if>
+            <if test="insMaker != null">
+                ins_maker,
+            </if>
+            <if test="insOrigin != null">
+                ins_origin,
+            </if>
+            <if test="insDescription != null">
+                ins_description,
+            </if>
+            <if test="insPic != null">
+                ins_pic,
+            </if>
+            <if test="insState != null">
+                ins_state,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="insName != null">
+                #{insName,jdbcType=VARCHAR},
+            </if>
+            <if test="insMode != null">
+                #{insMode,jdbcType=VARCHAR},
+            </if>
+            <if test="insBrand != null">
+                #{insBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="insMaker != null">
+                #{insMaker,jdbcType=VARCHAR},
+            </if>
+            <if test="insOrigin != null">
+                #{insOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="insDescription != null">
+                #{insDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insPic != null">
+                #{insPic,jdbcType=OTHER}::jsonb,
+            </if>
+
+            <if test="insState != null">
+                #{insState,jdbcType=INTEGER},
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+
+    <insert id="inserOrgInstrumentMap" parameterType="com.renrenlab.rlab.vo.InstrumentInfo"
+            keyProperty="mapId" keyColumn="ins_iid">
+        <selectKey keyProperty="mapId" resultType="java.lang.Long" order="AFTER">
+            SELECT last_value as map_id
+            FROM rlab_instrument_info.instrument_org_map_id_seq
+        </selectKey>
+        insert into rlab_instrument_info.t_instrument_org_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgOid != null">
+                org_oid,
+            </if>
+            <if test="insIid != null">
+                ins_iid,
+            </if>
+            <if test="insOrgPriceList != null">
+                ins_org_price_list,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgOid != null">
+                #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="insIid != null">
+                #{insIid,jdbcType=BIGINT},
+            </if>
+            <if test="insMode != null">
+                #{insOrgPriceList,jdbcType=OTHER}::jsonb,
+            </if>
+            now(),
+            now(),
+        </trim>
+    </insert>
+    <!--开启或关闭仪器-->
+    <update id="updateByInsIid" parameterType="java.lang.Long">
+        update rlab_instrument_info.t_instrument_base_info
+        <set>
+            <if test="insState != null">
+                ins_state = #{insState,jdbcType=INTEGER},
+                modify_time = now()
+            </if>
+        </set>
+        where ins_iid = #{insIid,jdbcType=BIGINT}
+    </update>
+    <!--更新 仪器信息表and仪器机构关联表-->
+    <update id="updateInstrumentBaseInfo" parameterType="com.renrenlab.rlab.vo.InstrumentInfo">
+        update rlab_instrument_info.t_instrument_base_info
+        <set>
+            <if test="insName != null">
+                ins_name = #{insName,jdbcType=VARCHAR},
+            </if>
+            <if test="insMode != null">
+                ins_mode = #{insMode,jdbcType=VARCHAR},
+            </if>
+            <if test="insBrand != null">
+                ins_brand = #{insBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="insMaker != null">
+                ins_maker = #{insMaker,jdbcType=VARCHAR},
+            </if>
+            <if test="insOrigin != null">
+                ins_origin = #{insOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="insDescription != null">
+                ins_description = #{insDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insPic != null">
+                ins_pic =#{insPic,jdbcType=OTHER}::jsonb,
+            </if>
+            modify_time = now(),
+        </set>
+        where ins_iid = #{insIid,jdbcType=BIGINT};
+
+        update rlab_instrument_info.t_instrument_org_map
+        <set>
+            <if test="orgOid != null">
+                org_oid = #{newOrgOid,jdbcType=BIGINT},
+            </if>
+
+            <if test="insOrgPriceList != null">
+                ins_org_price_list = #{insOrgPriceList,jdbcType=OTHER}::jsonb,
+            </if>
+            modify_time = now(),
+        </set>
+        where map_id = #{mapId,jdbcType=BIGINT}
+    </update>
+
+    <!--ajax检索仪器品牌名称-->
+    <select id="getBrandName" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT ins_brand_name
+        FROM rlab_instrument_info.t_instrument_brand_info
+        WHERE ins_brand_name LIKE '%${key}%';
+    </select>
+    <!--添加仪器品牌-->
+    <insert id="addBrand" parameterType="java.lang.String">
+        insert into rlab_instrument_info.t_instrument_brand_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="brandName != null">
+                ins_brand_name,
+            </if>
+            create_time,
+            modify_time,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            '${brandName}',
+            now(),
+            now(),
+        </trim>
+    </insert>
+
+    <!--ajax根据机构名称 得到机构id和名称-->
+    <select id="getOrgNameAndId" parameterType="java.lang.String" resultType="com.renrenlab.rlab.model.OrgBaseInfo">
+        SELECT org_oid,org_name
+        FROM rlab_org_info.t_org_base_info
+        WHERE org_name LIKE '${key}%';
+    </select>
+
+    <select id="getOrgName" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT org_name
+        FROM rlab_org_info.t_org_base_info
+        WHERE org_oid = '${orgId}';
+    </select>
+
+    <insert id="updateIndex" parameterType="java.lang.Long">
+        INSERT INTO rlab_common_info.t_instrument_index (
+	        map_id,
+	        ins_name,
+	        ins_mode,
+	        ins_brand,
+	        ins_description,
+	        ins_keyword,
+	        org_name,
+	        org_province,
+	        org_city,
+	        org_street,
+	        ins_org_price_list,
+	        ins_pic
+              )  SELECT
+            	t_instrument_org_map.map_id,
+            	t_instrument_base_info.ins_name,
+            	t_instrument_base_info.ins_mode,
+            	t_instrument_base_info.ins_brand,
+            	SUBSTRING (
+            		COALESCE (
+            			(
+            				CASE
+            				WHEN t_instrument_base_info.ins_description -> 0 IS NOT NULL
+            				AND t_instrument_base_info.ins_description -> 0 -> 'content' IS NOT NULL THEN
+            					t_instrument_base_info.ins_description -> 0 -> 'content' ->> 0
+            				END
+            			),
+            			'暂无'
+            		)
+            		FROM
+            			0 FOR 50
+            	) AS ins_description,
+            	setweight(
+            		to_tsvector(
+        'jiebacfg',
+            			COALESCE (
+            				t_instrument_base_info.ins_name,
+            				''
+            			)
+            		),
+            		'A'
+            	) || setweight(
+            		to_tsvector(
+        'jiebacfg',
+            			COALESCE (
+            				t_instrument_base_info.ins_mode,
+            				''
+            			)
+            		),
+            		'B'
+            	) || setweight(
+            		to_tsvector(
+        'jiebacfg',
+            			COALESCE (
+            				t_instrument_base_info.ins_brand,
+            				''
+            			)
+            		),
+            		'C'
+            	) || setweight(
+            		to_tsvector(
+        'jiebacfg',
+            			COALESCE (
+            				(
+            					CASE
+            					WHEN t_instrument_base_info.ins_description -> 0 IS NOT NULL
+            					AND t_instrument_base_info.ins_description -> 0 -> 'content' IS NOT NULL THEN
+            						t_instrument_base_info.ins_description -> 0 -> 'content' ->> 0
+            					END
+            				),
+            				' '
+            			) || COALESCE (
+            				(
+            					CASE
+            					WHEN t_instrument_base_info.ins_description -> 1 IS NOT NULL
+            					AND t_instrument_base_info.ins_description -> 1 -> 'content' IS NOT NULL THEN
+            						t_instrument_base_info.ins_description -> 1 -> 'content' ->> 0
+            					END
+            				),
+            				' '
+            			) || COALESCE (
+            				(
+            					CASE
+            					WHEN t_instrument_base_info.ins_description -> 2 IS NOT NULL
+            					AND t_instrument_base_info.ins_description -> 2 -> 'content' IS NOT NULL THEN
+            						t_instrument_base_info.ins_description -> 2 -> 'content' ->> 0
+            					END
+            				),
+            				' '
+            			) || COALESCE (
+            				(
+            					CASE
+            					WHEN t_instrument_base_info.ins_description -> 3 IS NOT NULL
+            					AND t_instrument_base_info.ins_description -> 3 -> 'content' IS NOT NULL THEN
+            						t_instrument_base_info.ins_description -> 3 -> 'content' ->> 0
+            					END
+            				),
+            				' '
+            			)
+            		),
+            		'D'
+            	) AS ins_description_key,
+            	t_org_base_info.org_name,
+            	t_org_base_info.org_province,
+            	t_org_base_info.org_city,
+            	t_org_base_info.org_street,
+            	t_instrument_org_map.ins_org_price_list,
+            	(
+            		CASE
+            		WHEN t_instrument_base_info.ins_pic IS NOT NULL
+            		AND t_instrument_base_info.ins_pic -> 0 IS NOT NULL THEN
+            			t_instrument_base_info.ins_pic ->> 0
+            		END
+            	) AS ins_pic
+            FROM
+            	rlab_instrument_info.t_instrument_base_info
+            JOIN rlab_instrument_info.t_instrument_org_map ON rlab_instrument_info.t_instrument_base_info.ins_iid = rlab_instrument_info.t_instrument_org_map.ins_iid
+            JOIN rlab_org_info.t_org_base_info ON t_instrument_org_map.org_oid = rlab_org_info.t_org_base_info.org_oid
+            AND t_instrument_org_map.map_id = '${mapId}'
+    </insert>
+
+    <delete id="delIndex" parameterType="java.lang.Long">
+        delete from rlab_common_info.t_instrument_index
+        where map_id = #{mapId,jdbcType=BIGINT}
+    </delete>
+</mapper>

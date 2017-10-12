@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.BaseInsDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.BaseInsInfo">
+        <result column="ins_iid" jdbcType="BIGINT" property="insIid"/>
+        <result column="ins_category" jdbcType="OTHER" property="insCategory"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+        <result column="ins_origin" jdbcType="VARCHAR" property="insOrigin"/>
+        <result column="ins_maker" jdbcType="VARCHAR" property="insMaker"/>
+        <result column="ins_description" jdbcType="OTHER" property="insDescription"/>
+        <result column="ins_pic" jdbcType="OTHER" property="insPic"/>
+        <result column="ins_core_param" jdbcType="OTHER" property="insCoreParam"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+         ins_iid, ba.ins_category,ins_name, ins_mode, ins_brand, ins_origin,
+        ins_maker, ins_description, ins_pic, ins_core_param,ba.modify_time
+    </sql>
+
+    <select id="getList" resultType="com.renrenlab.rlab.model.BaseInsInfo">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info ba
+        WHERE
+        1=1
+        <if test="insId != null">
+            AND (ins_iid = #{insId,jdbcType = BIGINT} OR (
+            POSITION (#{keyword,jdbcType = VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType = VARCHAR} IN ins_mode) >0
+            ))
+        </if>
+        <if test="keyword != null and insId == null">
+            AND (
+            POSITION (#{keyword,jdbcType = VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType = VARCHAR} IN ins_mode) >0
+            )
+        </if>
+        <if test="beginTime != null">
+            AND ba.modify_time >= '${beginTime}'
+        </if>
+        <if test="endTime != null">
+            AND ba.modify_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY ba.modify_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+        ,ba.ins_iid
+    </select>
+
+    <select id="getListWithCate" resultType="com.renrenlab.rlab.model.BaseInsInfo">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info ba,
+        rlab_instrument_info.t_instrument_category ca
+        WHERE
+        (ba.ins_category::jsonb->0)::TEXT = '${insCategory2}'
+        AND ca.ins_category = #{insCategory,jdbcType = VARCHAR}
+        <if test="insId != null">
+            AND (ins_iid = #{insId,jdbcType = BIGINT} OR (
+            POSITION (#{keyword,jdbcType = VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType = VARCHAR} IN ins_mode) >0
+            ))
+        </if>
+        <if test="keyword != null and insId == null">
+            AND (
+            POSITION (#{keyword,jdbcType = VARCHAR} IN ins_name) >0
+            OR POSITION (#{keyword,jdbcType = VARCHAR} IN ins_mode) >0
+            )
+        </if>
+        <if test="beginTime != null">
+            AND ba.modify_time >= '${beginTime}'
+        </if>
+        <if test="endTime != null">
+            AND ba.modify_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY ba.modify_time,ba.ins_iid
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+    </select>
+
+
+    <select id="getDetail" resultType="com.renrenlab.rlab.model.BaseInsInfo">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info ba
+        WHERE
+        ins_iid = '${insId}'
+    </select>
+
+    <update id="updateBaseInfo" parameterType="com.renrenlab.rlab.model.BaseInsInfo">
+        update rlab_instrument_info.t_instrument_base_info
+        <set>
+            <if test="insName != null">
+                ins_name = #{insName,jdbcType=VARCHAR},
+            </if>
+            <if test="insCategory != null">
+                ins_category = #{insCategory,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insMode != null">
+                ins_mode = #{insMode,jdbcType=VARCHAR},
+            </if>
+            <if test="insBrand != null">
+                ins_brand = #{insBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="insMaker != null">
+                ins_maker = #{insMaker,jdbcType=VARCHAR},
+            </if>
+            <if test="insOrigin != null">
+                ins_origin = #{insOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="insDescription != null">
+                ins_description = #{insDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insCoreParam != null">
+                ins_core_param = #{insCoreParam,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insPic != null">
+                ins_pic =#{insPic,jdbcType=OTHER}::jsonb,
+            </if>
+            modify_time = now(),
+        </set>
+        where ins_iid = #{insIid,jdbcType=BIGINT};
+
+    </update>
+
+</mapper>

@@ -1,0 +1,248 @@
+		.scientificSearch{
+			width: 1120px;
+			margin: auto;
+			overflow: hidden;
+		}
+		.scientificSearch .last{
+			border: none!important;
+		}
+		.mainLeft {
+			width: 770px;
+			float: left;
+		}
+		.mainRight{
+			width: 319px;
+			float: right;
+		}
+		#Interest{
+			height: 242px;
+			background: white;
+			margin-top: 18px;
+			
+		}
+		#thesis{
+			background: white;
+			margin-top: 18px;
+		}
+		#echarts{
+			height: 416px;
+			background: white;
+			margin-top: 20px;
+			
+		}
+		#echartsView{
+			width: 100%;
+			height: 362px;
+		}
+		#message{
+			
+			margin-top: 20px;
+			background: white;
+			margin-bottom: 30px;
+		}
+		#project{
+			background: white;
+			margin-top: 17px;
+			
+		}
+		#organization{
+			margin-top: 20px;
+			background: white;
+			height: 248px;
+			
+		}
+		.tit{
+			height: 54px;
+			padding: 0 20px 0 20px;
+			background: #F9FBFC;
+			font-size: 16px;
+			color: #7A7A7A;
+			line-height: 54px;
+		}
+		.tit p,#message .tit p{
+			font-size: 16px;
+			float: left;
+		}
+		.tit span{
+			float: right;line-height: 54px;
+			color: #508DF0;
+			font-size: 16px;
+		}
+		#correlation{
+			padding: 20px 14px;
+		}
+		#correlation a{
+			margin: 6px;
+			border-radius: 3px;
+			font-size: 14px;
+			color: #4E4E4E;
+			display: inline-block;
+			padding: 0 17px;
+			line-height: 34px;
+			border: 1px solid #e9e9e9;
+		}
+		#correlation a:hover{
+			color: #508DF0;
+			border: 1px solid #508DF0;
+		}
+		#correlationMessage{
+			padding: 0 18px;
+		}
+		#message ul li{
+			list-style: none;
+			border-bottom: 1px solid #f3f3f3;
+			padding-bottom: 20px;
+		}
+		#message ul .last{border: none;}
+		#message a{
+			font-size: 12px;
+			color: #508DF0;
+		}
+		#message p{
+			font-size: 12px;
+			color: #7A7A7A;
+		}
+		#message em{
+			color:red;
+		}
+		#message .messageTit{
+			line-height: 44px;
+			font-size: 14px;
+		}
+		
+		#list,.list{
+			padding: 0 20px;
+			font-size: 12px;
+			color: #7A7A7A;
+		}
+		#list a,.list a{
+			font-size: 12px;
+			color: #508DF0;
+		}
+		#list ul li,.list li{
+			list-style: none;
+			border-bottom: 1px solid #f3f3f3;
+			padding-bottom: 24px;
+			overflow: hidden;
+		}
+		#list .messageTit{
+			font-size: 14px;
+			
+			display: block;
+			line-height: 48px;
+		}
+		.writer{
+			line-height: 18px;
+			color: #4E4E4E;
+			margin: 10px 0;
+		}
+		.writer span{
+			float:left;
+		}
+		.line{
+			margin: 0 6px;
+		}
+		.thOrg{
+			width:130px;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			-o-text-overflow:ellipsis;
+			white-space:nowrap;
+		}
+		.list a{
+			font-size: 14px;
+			line-height: 46px;
+		}
+		.list li{
+			margin: 2px 0;
+			padding-bottom: 17px;
+		}
+		.mark{
+			color: #4E4E4E;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			-o-text-overflow:ellipsis;
+			white-space:nowrap;
+			float: right;
+		}
+		.rightMark{
+			float: right;
+		}
+		#orgList {
+			padding: 10px 20px;
+			line-height: 30px;
+			overflow: hidden;
+		}
+		#orgList li{
+			list-style: none;
+		}
+
+		#orgList a{
+			color: #508DF0;
+			font-size: 14px;
+		}
+
+		.listLeft{
+			width: 132px;
+			float: left;
+		}
+
+		.listRight{
+			width: 132px;
+			float: right;
+		}
+		
+		.projectTit p,.listLeft p,.listRight p,.messageTit,#list .writer{
+			overflow:hidden;
+			text-overflow:ellipsis;
+			-o-text-overflow:ellipsis;
+			white-space:nowrap;
+			width:100%;
+		}
+
+		.thesisText{
+			overflow: hidden;
+		 	text-overflow: ellipsis;
+		 	display: -webkit-box;
+		 	-webkit-line-clamp: 2;
+		 	-webkit-box-orient: vertical;
+		}
+
+		#pages a{cursor: pointer;}
+		#top,#next{
+			width: 94px;
+		    height: 38px;
+		    line-height: 38px;
+		    text-align: center;
+		    background: #508df0;
+		    color: white!important;
+		    display: block;
+		    float: right;
+		    /* margin-left: 22px; */
+		    margin-bottom: 30px;
+		    margin-top: 30px;
+		    margin-right: 24px;
+		}
+		.sortTit{
+			color: #7a7a7a;
+			line-height: 12px;
+		}
+		.sortName{
+			width: 140px;
+			color: #4e4e4e;
+			display: inline-block;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			-o-text-overflow:ellipsis;
+			white-space:nowrap;
+		}
+		.sortP{
+			float: left;
+			font-size: 12px;
+			line-height: 12px;
+		}
+		.projectMain{
+			color: #7a7a7a;
+			font-size: 12px;
+			margin: 10px 0;
+		}

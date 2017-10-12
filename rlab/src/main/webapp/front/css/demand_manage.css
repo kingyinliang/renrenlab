@@ -1,0 +1,149 @@
+.demand {
+    padding: 25px 30px 0 22px;
+}
+
+.demand h2 {
+    font-size: 22px;
+    color: #508df0;
+    line-height: 50px;
+}
+
+/*START需求筛选bar*/
+ul.filter_tab {
+    list-style: none;
+    overflow: hidden;
+}
+
+ul.filter_tab li {
+    float: left;
+    margin-right: 35px;
+    line-height: 54px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+ul.filter_tab li.cur {
+    color: #508df0;
+}
+
+/*END需求筛选bar*/
+
+/*START需求列表*/
+.demand_list {
+    /*min-height: 380px;*/
+}
+
+.demand_list .demand_item {
+    margin-bottom: 20px;
+    background: #f9fbfc;
+    padding: 0 28px 28px 34px;
+    overflow: hidden;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.demand_list .demand_item .title {
+    overflow: hidden;
+}
+
+.demand_item .title > p {
+    line-height: 64px;
+}
+
+.demand_item .title > p.lft {
+    float: left;
+    font-size: 14px;
+    color: #999;
+    margin-right: 38px;
+}
+.demand_item .title > p.lft span{
+    color: #666;
+}
+
+.demand_item .title > p.rt {
+    float: right;
+    font-size: 14px;
+    color: #666;
+}
+.demand_item .title > p.rt s{
+    color: #508df0;
+}
+
+/*需求内容*/
+.demand_item  .desc {
+    font-size: 16px;
+    color: #333;
+    line-height: 26px;
+}
+
+/*需求当前状态*/
+.demand_item  .status {
+    font-size: 16px;
+    color: #e8443e;
+    line-height: 22px;
+    margin-top: 14px;
+}
+
+/*状态描述原因*/
+.demand_item .status_desc {
+    font-size: 14px;
+    color: #e8442e;
+    margin-top: 6px;
+    padding-left: 68px;
+    position: relative;
+}
+.demand_item .status_desc span{
+    position: absolute;
+    left: 0;
+    top:0;
+}
+
+/*需求操作按钮*/
+.demand_item .btns {
+    overflow: hidden;
+    float: right;
+    margin-top: 10px;
+}
+.demand_item .btns button {
+    line-height: 40px;
+    height:40px;
+    outline: 0 none;
+    border:0 none;
+    padding:0 30px;
+    float: left;
+    margin-left: 22px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.demand_item .btns button:active {
+
+}
+
+.demand_item .btns button.whites {
+    border: 1px solid #eff2f3;
+    background-color: #fff;
+    color: #666;
+}
+.demand_item .btns button.whites:active {
+    background: #ebeff6;
+}
+
+.demand_item .btns button.lightGreens {
+    background-color: #7acbcf;
+    color: #fff;
+}
+.demand_item .btns button.lightGreens:active {
+    background: #5cb9be;
+}
+
+.demand_item .btns button.blues {
+    background-color: #508df0;
+    color: #fff;
+}
+.demand_item .btns button.blues:active {
+    background: #3e72c0;
+}
+/*END需求列表*/

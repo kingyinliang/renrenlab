@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:util="http://www.springframework.org/schema/util" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util  
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    <!-- <context:property-placeholder location="classpath:redis.properties" /> -->
+    <bean id="jedisPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig">
+        <!--最大连接数-->
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <!--最大空闲连接数-->
+        <property name="maxIdle" value="5"/>
+        <!--最小空闲连接数-->
+        <property name="minIdle" value="1"/>
+        <!--连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true-->
+        <property name="blockWhenExhausted" value="false"/>
+        <!--设置的逐出策略类名-->
+        <property name="evictionPolicyClassName" value="org.apache.commons.pool2.impl.DefaultEvictionPolicy"/>
+        <!--逐出连接的最小空闲时间 10分钟-->
+        <property name="minEvictableIdleTimeMillis" value="600000"/>
+        <!--每次逐出检查时 逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3-->
+        <property name="numTestsPerEvictionRun" value="3"/>
+    </bean> 
+    <!-- redis的连接池pool，不是必选项：timeout/password  -->
+    <bean id = "jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.host}"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
+        <constructor-arg index="4" value="${redis.password}"/>
+    </bean> 
+</beans>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.UserUploadTmpDao">
+
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.UserUploadTmp">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="upload_id" jdbcType="BIGINT" property="uploadId" />
+    <result column="u_uid" jdbcType="BIGINT" property="uUid" />
+    <result column="u_mobile" jdbcType="VARCHAR" property="uMobile" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, upload_id, u_uid, u_mobile, org_name, file_url, state, create_time, modify_time
+  </sql>
+
+  <select id="searchUserUploadTmpList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_user_info.t_user_upload_tmp
+    WHERE
+    1 = 1
+    <if test="keyword != null">
+      AND (
+      POSITION (#{keyword, jdbcType=VARCHAR} IN org_name) > 0
+      OR POSITION (#{keyword, jdbcType=VARCHAR} IN u_mobile) > 0
+      )
+    </if>
+    <if test="beginTime != null">
+      AND create_time &gt;= #{beginTime, jdbcType=VARCHAR}::TIMESTAMP
+    </if>
+    <if test="endTime != null">
+      AND create_time &lt;= date'${endTime}'+INTEGER '1'
+    </if>
+    AND state != '2'
+    ORDER BY create_time
+    <choose>
+      <when test="order == 'DESC'">
+        DESC
+      </when>
+      <otherwise>
+        ASC
+      </otherwise>
+    </choose>
+     , upload_id
+    <choose>
+      <when test="order == 'DESC'">
+        DESC
+      </when>
+      <otherwise>
+        ASC
+      </otherwise>
+    </choose>
+  </select>
+
+  <select id="searchUserUploadTmpByUploadId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_user_info.t_user_upload_tmp
+    WHERE
+    upload_id = #{uploadId,jdbcType=BIGINT}
+  </select>
+
+  <select id="searchUserUploadTmpListByUid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_user_info.t_user_upload_tmp
+    WHERE
+    u_uid = #{uid,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertUserUploadTmp" parameterType="com.renrenlab.rlab.model.UserUploadTmp">
+    insert into rlab_user_info.t_user_upload_tmp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uUid != null">
+        u_uid,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="uMobile != null">
+        u_mobile,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+        create_time,
+        modify_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uUid != null">
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="uMobile != null">
+        #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+        now(),
+        now()
+    </trim>
+  </insert>
+
+  <update id="updateUserUploadTmp" parameterType="com.renrenlab.rlab.model.UserUploadTmp">
+    update rlab_user_info.t_user_upload_tmp
+    <set>
+      <if test="uUid != null">
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=OTHER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+        modify_time = now(),
+    </set>
+    where upload_id = #{uploadId,jdbcType=BIGINT}
+  </update>
+
+
+</mapper>

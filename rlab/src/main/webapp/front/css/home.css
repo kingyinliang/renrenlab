@@ -1,0 +1,569 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.headNav {
+    width: 100%;
+    background: rgba(0, 0, 0, 0);
+    line-height: 87px;
+    position: absolute;
+    font-size: 18px;
+    top: 0;
+    z-index: 9999;
+}
+
+.gopage1 {
+    float: right;
+    width: 80px;
+    height: 100%;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.gopage1 a {
+    color: white;
+}
+
+.navHead {
+    width: 1120px;
+    height: 87px;
+    margin: auto;
+    font-size: 16px
+}
+
+.logoHome {
+    float: left;
+    width: 126px;
+}
+
+.logoHome img {
+    vertical-align: middle;
+    width: 126px;
+}
+
+.btnHead {
+    float: right;
+    color: white;
+}
+
+.btnHead a {
+    color: white;
+}
+
+.btnHeadBlack a {
+    color: #4E4E4E;
+}
+
+.btnHeadBlack {
+    color: #4E4E4E
+}
+
+.wechat {
+    float: right;
+    color: white;
+    cursor: pointer;
+    width: 170px;
+}
+
+.wechat p {
+    padding: 0 40px;
+}
+
+.weixin {
+    width: 170px;
+    height: 176px;
+    padding: 24px 19px 21px 20px;
+    background: white;
+    border-radius: 5px;
+    display: none;
+    box-sizing: border-box;
+}
+
+.weixin img {
+    width: 100%;
+    height: 100%;
+}
+
+.page1Text {
+    width: 308px;
+    position: absolute;
+    top: 37.5%;
+    left: 50%;
+    margin-left: -154px;
+    z-index: 9999;
+    letter-spacing: 2px;
+    text-align: center
+}
+#page1{
+    padding-bottom: 50.75%;
+    position: relative;
+    z-index: 999;
+}
+
+#page1 h1 {
+    color: white;
+    font-size: 42px;
+    line-height: 42px;
+}
+
+#page1 h3 {
+    color: #b5b5b5;
+    font-size: 24px;
+    z-index: 9999;
+    margin-top: 21px;
+    line-height: 24px;
+}
+
+#search {
+    width: 361px;
+    height: 56px;
+    background: #f5f7fa;
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    margin-left: -180.5px;
+    border-radius: 34px;
+    overflow: hidden;
+    line-height: 56px;
+    z-index: 9999;
+    font-size: 18px;
+}
+
+#search input {
+    height: 100%;
+    background: #f5f7fa;
+    padding-left: 33px;
+    border: none;
+    font-size: 18px;
+    color: #4E4E4E;
+    width: 305px;
+    box-sizing: border-box;
+}
+
+#search div {
+    width: 305px;
+    float: left
+}
+
+#search #goSearch {
+    font-size: 22px;
+    color: #508DF0;
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+}
+
+.freestyle {
+    width: 63%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+}
+#page3 .freestyle {
+    width: 631px;
+    height: 240px;
+    position: absolute;
+    top:50%;
+    left:47%;
+    margin-top: -120px;
+}
+
+.freestyle img {
+    width: 100%;
+    height: 100%;
+}
+
+.freeText {
+    float: left;
+    width: 499px;
+    height: 99px;
+    position: absolute;
+    top: 50%;
+    margin-top: -49px;
+    left: 28%;
+}
+
+#page2Text, #page4Text {
+    position: absolute;
+    left: 50%;
+    top: 37.5%;
+}
+
+.texts h1 {
+    font-size: 36px;
+    color: #4E4E4E;
+    line-height: 59px;
+    font-weight: normal;
+    letter-spacing: 5px
+}
+
+.texts p {
+    color: #7A7A7A;
+    font-size: 18px;
+    line-height: 31px;
+    margin-top: 10px;
+}
+
+.texts h3 {
+    line-height: 45px;
+    color: #7A7A7A;
+    font-size: 18px;
+}
+
+#page3Text {
+    position: absolute;
+    left: 50%;
+    top: 32.6%;
+    margin-left: -468px
+}
+
+#page3Text h1 {
+    color: white;
+}
+
+#page3Text h3 {
+    color: #B5B5B5;
+}
+
+#page3Text p {
+    color: white;
+}
+
+.page5s {
+    width: 328px;
+    float: left;
+    margin-left: 45px;
+}
+
+#page5Text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -497.5px;
+    margin-top: -103px
+}
+
+.orgImg {
+    width: 522px;
+    height: 206px;
+    margin-left: 100px;
+    float: left
+}
+
+.footOrg img {
+    border: 0;
+}
+
+.footOrg {
+    width: 100%;
+    height: 158px;
+    background: #eff2f5;
+    position: absolute;
+    top: 0;
+}
+
+#footOrg {
+    width: 1120px;
+    margin: auto;
+    height: 100%;
+}
+
+.footOrg a {
+    float: left;
+    height: 100%;
+    margin-left: 34px;
+    line-height: 158px;
+}
+
+.foots {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 67.6%;
+}
+
+#foots {
+    width: 1120px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.footItem {
+    width: 210px;
+    float: left;
+    color: white;
+}
+
+.footItem h4 {
+    font-size: 18px;
+}
+
+.footItem p {
+    font-size: 12px;
+    line-height: 36px;
+}
+
+.footItem p a {
+    color: white;
+}
+
+.footItem p a:hover {
+    text-decoration: underline
+}
+
+.lft_img img {
+    width: 138px;
+    height: 138px;
+}
+
+.lft {
+    width: 138px;
+    float: left;
+}
+
+.lft p {
+    width: 138px;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+
+.ft_wechat, .rt {
+    float: left;
+}
+
+.rt p {
+    color: white;
+    font-size: 14px;
+    margin-left: 24px;
+    line-height: 30px;
+}
+
+.footer-btm {
+    background: #3c3f4b;
+    text-align: center;
+    line-height: 45px;
+    height: 45px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    color: white;
+    font-size: 14px;
+}
+
+#banner {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+}
+
+#banner ul {
+    width: 100%;
+    height: 100%;
+}
+
+#banner li {
+    display: none;
+    width: 100%;
+    padding-bottom: 42%;
+    min-width: 1200px;
+    position: relative;
+    height: 100%;
+}
+
+#banner .focus {
+    display: block;
+}
+
+.banner-modal {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+#banner img {
+    height: 100%;
+    width: 110%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.user {
+    float: right;
+    position: relative;
+    height: 87px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.user img {
+    width: 34px;
+    height: 34px;
+    border-radius: 17px;
+}
+
+.user span {
+    display: inline-block;
+    line-height: 87px;
+    margin-left: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.user i {
+    color: white;
+}
+
+.userSelect {
+    background: white;
+    position: absolute;
+    top: 87px;
+    z-index: 9999;
+}
+
+.user_down {
+    display: none;
+    position: absolute;
+    padding: 12px 0;
+    top: 85px;
+    left: 20px;
+    width: 110px;
+    background: #fff;
+    z-index: 111;
+    border: 1px solid #eee;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+    box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+}
+
+.user_down li {
+    list-style: none;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+}
+
+.user_down li a {
+    color: #4E4E4E;
+}
+
+.user_down li a:hover {
+    color: #508DF0;
+}
+
+.rt i {
+    display: block;
+    height: 3px;
+    width: 20px;
+    background: #fff;
+    margin-bottom: 14px;
+    margin-left: 24px
+}
+
+
+.bgpic{
+
+    height:100%;
+
+}
+#page2Text{
+    left: 50%;
+    margin-left: -557px;
+}
+/*#page3 img{
+    height: 100%;
+}*/
+#page3Text{
+    left: 55%;
+    margin-left: 0;
+}
+.pageimg{
+    position: absolute;
+    top: 50%;
+    margin-top: -254px;
+    left: 50%;
+    margin-left: -587px;
+    width: 587px;
+    height: 508px;
+}
+#page4Text{
+    left: 45%;
+    margin-left: -451px;
+
+}
+.page4img{
+    position: absolute;
+    top:50%;
+    margin-top: -186px;
+    left: 50%;
+}
+#page1,#page2,#page3,#page4,#page5,#page6{
+    position: relative;
+}
+.bannerpage2{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.banner_cxq{
+    list-style: none;
+    width: 400%;
+    height: 100%;
+    position: absolute;
+}
+.banner_cxq li{
+    position: relative;
+    float: left;
+    width: 25%;
+    height: 100%;
+}
+
+.banner_cxq img{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.banner_cxq .undergraduateimg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -560px;
+    margin-top: -239px;
+    z-index: 99;
+}
+.banner_cxq .cxqimg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -547.5px;
+    margin-top: -215px;
+    z-index: 99;
+}
+.banner_cxq .cxqimg img{
+    width: 1095px;
+}
+.banner_cxq .undergraduateimg img{
+    width: 1120px;
+}
+
+.footOrg img{
+    width: 100%;
+}

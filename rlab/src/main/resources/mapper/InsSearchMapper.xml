@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.InsSearchDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InsListInfo">
+        <result column="map_id" jdbcType="BIGINT" property="mapId"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+        <result column="ins_category" jdbcType="OTHER" property="insCategory"/>
+        <result column="ins_scope_name" jdbcType="VARCHAR" property="insScopeName"/>
+        <result column="ins_feature_name" jdbcType="VARCHAR" property="insFeatureName"/>
+        <result column="ins_service_type" jdbcType="VARCHAR" property="insServiceType"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_addr_province" jdbcType="VARCHAR" property="orgAddrProvince"/>
+        <result column="org_addr_city" jdbcType="VARCHAR" property="orgAddrCity"/>
+        <result column="org_addr_district" jdbcType="VARCHAR" property="orgAddrDistrict"/>
+        <result column="org_addr_street" jdbcType="VARCHAR" property="orgAddrStreet"/>
+        <result column="org_addr_longitude" jdbcType="NUMERIC" property="orgAddrLongitude"/>
+        <result column="org_addr_latitude" jdbcType="NUMERIC" property="orgAddrLatitude"/>
+        <result column="ins_org_price_list" jdbcType="OTHER" property="insOrgPriceList"/>
+        <result column="ins_pic" jdbcType="VARCHAR" property="insPic"/>
+        <result column="index_state" jdbcType="INTEGER" property="indexState"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+    <resultMap id="DetailResultMap" type="com.renrenlab.rlab.model.InsDetailInfo">
+        <result column="map_id" jdbcType="BIGINT" property="mapId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="ins_name" jdbcType="VARCHAR" property="insName"/>
+        <result column="ins_mode" jdbcType="VARCHAR" property="insMode"/>
+        <result column="ins_brand" jdbcType="VARCHAR" property="insBrand"/>
+        <result column="ins_origin" jdbcType="VARCHAR" property="insOrigin"/>
+        <result column="ins_description" jdbcType="OTHER" property="insDescription"/>
+        <result column="map_description" jdbcType="OTHER" property="mapDescription"/>
+        <result column="ins_pic" jdbcType="VARCHAR" property="insPic"/>
+        <result column="ins_core_param" jdbcType="VARCHAR" property="insCoreParam"/>
+        <result column="ins_org_price_list" jdbcType="VARCHAR" property="insOrgPriceList"/>
+        <result column="ins_category" jdbcType="OTHER" property="insCategory"/>
+        <result column="map_new_ins" jdbcType="OTHER" property="mapNewIns"/>
+        <result column="ins_feature" jdbcType="OTHER" property="insFeature"/>
+        <result column="ins_service_name" jdbcType="VARCHAR" property="insServiceName"/>
+        <result column="ins_scope" jdbcType="VARCHAR" property="insScope"/>
+        <result column="link_page" jdbcType="VARCHAR" property="linkPage"/>
+        <result column="con_id" jdbcType="OTHER" property="conId"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        map_id, ins_name, ins_mode, ins_brand,
+        ins_category, ins_scope_name, ins_feature_name,
+        ins_service_type, org_name, org_addr_province,
+        org_addr_city, org_addr_district, org_addr_street,
+        org_addr_longitude, org_addr_latitude, ins_org_price_list,
+        ins_pic, index_state, create_time,
+        modify_time, org_oid
+        <if test="isDis and longitude!=null and latitude!=null">
+            ,earth_distance (
+            ll_to_earth (
+            ('${latitude}'),
+            ('${longitude}')
+            ),
+            ll_to_earth (
+            idx.org_addr_latitude,
+            idx.org_addr_longitude
+            )
+            ) AS dis
+        </if>
+        <if test="keyword != null">
+            , ts_rank_cd(ins_keyword, query) as org_rank,
+            (
+            CASE
+            WHEN ins_pic IS NULL THEN
+            ts_rank_cd(ins_keyword, query) - 2.0
+            ELSE
+            ts_rank_cd(ins_keyword, query)
+            END
+            ) AS RANK
+        </if>
+    </sql>
+    <sql id="Simple_Base_Column_List">
+        map_id, ins_name, ins_mode, ins_brand,
+        ins_category, ins_scope_name, ins_feature_name,
+        ins_service_type, org_name, org_addr_province,
+        org_addr_city, org_addr_district, org_addr_street,
+        org_addr_longitude, org_addr_latitude, ins_org_price_list,
+        ins_pic, index_state, create_time,
+        modify_time, org_oid
+    </sql>
+    <sql id="Detail_Column_List">
+        map_id,
+        map.org_oid,
+        ins_name,
+        ins_mode,
+        ins_brand,
+        ins_origin,
+        ins_pic,
+        org_name,
+        ins_org_price_list,
+        ins_description,
+        ins_core_param,
+        map_description,
+        ins_org_price_list,
+        ins_category,
+        ins_service_name,
+        map_new_ins,
+        ins_scope,
+        ins_feature,
+        link_page,
+        con_id
+    </sql>
+
+    <select id="selectBykeyword" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        rlab_common_info.t_instrument_index idx
+        <if test="keyword !=null ">
+            , to_tsquery('rlab_common_info.jiebacfg', #{keyword,jdbcType=VARCHAR} ) query
+        </if>
+        WHERE
+        TRUE
+        <if test="keyword != null">
+            AND numnode(query) > 0 and ins_keyword @@ query
+        </if>
+        <if test="insServiceType !=null ">
+            AND ins_service_type = #{insServiceType,jdbcType=VARCHAR}
+        </if>
+        <choose>
+            <when test="scopeLowPrice !=null and scopeHighPrice !=null">
+                AND (
+                ((ins_org_price_list::json->>'scopeLowPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'scopeLowPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} )
+                OR ((ins_org_price_list::json->>'scopeHighPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC != 0)
+                OR ((ins_org_price_list::json->>'scopeLowPrice')::NUMERIC &lt;= #{scopeLowPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC >=#{scopeHighPrice,jdbcType=BIGINT} )
+                OR ((ins_org_price_list::json->>'accPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'accPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT})
+                OR ( (ins_org_price_list :: json ->> 'flag') :: INTEGER = 3)
+                )
+            </when>
+            <when test="scopeLowPrice != null and scopeHighPrice == null">
+                AND ( (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT}
+                OR (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC =0
+                OR (ins_org_price_list::json->>'accPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT}
+                OR (ins_org_price_list :: json ->> 'flag') :: INTEGER = 3
+                )
+            </when>
+            <when test="scopeLowPrice == null and scopeHighPrice != null">
+                AND (
+                ((ins_org_price_list::json->>'scopeLowPrice')::NUMERIC >= 0 AND
+                (ins_org_price_list::json->>'scopeLowPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} )
+                OR ((ins_org_price_list::json->>'scopeHighPrice')::NUMERIC >= 0 AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC != 0)
+                OR ((ins_org_price_list::json->>'scopeLowPrice')::NUMERIC &lt;= 0 AND
+                (ins_org_price_list::json->>'scopeHighPrice')::NUMERIC >=#{scopeHighPrice,jdbcType=BIGINT} )
+                OR ((ins_org_price_list::json->>'accPrice')::NUMERIC >= 0 AND
+                (ins_org_price_list::json->>'accPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT})
+                OR ( (ins_org_price_list :: json ->> 'flag') :: INTEGER = 3)
+                )
+            </when>
+        </choose>
+        <if test="category1 != null">
+            AND POSITION (#{category1,jdbcType=VARCHAR} IN ins_category->>0)>0
+        </if>
+        <if test="category2 != null">
+            AND POSITION (#{category2,jdbcType=VARCHAR} IN ins_category->>1)>0
+        </if>
+
+        <if test="province != null">
+            AND POSITION (#{province,jdbcType=VARCHAR} IN org_addr_province)>0
+        </if>
+        <if test="city !=null">
+            AND POSITION (#{city,jdbcType=VARCHAR} IN org_addr_city)>0
+        </if>
+        <if test="district !=null">
+            AND POSITION (#{district,jdbcType=VARCHAR} IN org_addr_district)>0
+        </if>
+        ORDER BY
+        <if test="keyword !=null ">
+            RANK DESC ,
+        </if>
+        <if test="keyword  == null">
+            ins_pic DESC nulls LAST,
+        </if>
+        <if test="isDis and longitude!=null and latitude!=null">
+            dis ASC,
+        </if>
+        <if test="scopeLowPrice !=null ||  scopeHighPrice !=null">
+            (ins_org_price_list->>'flag')::INT ASC , (ins_org_price_list::json->>'accPrice')::NUMERIC ASC,
+            (ins_org_price_list::json->>'scopeLowPrice')::NUMERIC ASC ,
+        </if>
+        map_id ASC
+    </select>
+    <select id="getDistrict" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        DISTINCT
+        idx.org_addr_district
+        FROM
+        rlab_common_info.t_instrument_index idx
+        WHERE
+        TRUE
+        <if test="province != null">
+            AND POSITION (#{province,jdbcType=VARCHAR} IN org_addr_province)>0
+        </if>
+        <if test="city != null">
+            AND POSITION (#{city,jdbcType=VARCHAR} IN org_addr_city)>0
+        </if>
+        AND idx.org_addr_district is not null
+        ORDER BY
+        org_addr_district ASC
+    </select>
+    <select id="selectInsByOid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Simple_Base_Column_List"></include>
+        FROM
+        rlab_common_info.t_instrument_index idx
+        WHERE
+        idx.org_oid = #{oid,jdbcType=BIGINT}
+        ORDER BY
+        map_id DESC
+    </select>
+    <select id="searchDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
+        SELECT
+        <include refid="Detail_Column_List"></include>
+        FROM
+        rlab_instrument_info.t_instrument_base_info base
+        JOIN rlab_instrument_info.t_instrument_org_map map ON map.ins_iid = base.ins_iid
+        JOIN rlab_org_info.t_org_base_info org ON map.org_oid = org.org_oid
+        JOIN rlab_instrument_info.t_instrument_service_type type ON type.ins_service_id = map.service_type
+        WHERE map.map_id = #{mapId,jdbcType=BIGINT}
+    </select>
+    <select id="IsExistedInstrument" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        rlab_common_info.t_instrument_index AS tii
+        <choose>
+            <when test="isCity">
+                WHERE tii.org_addr_city = #{location, jdbcType=VARCHAR}
+            </when>
+            <otherwise>
+                WHERE tii.org_addr_province = #{location, jdbcType=VARCHAR}
+            </otherwise>
+        </choose>
+    </select>
+    <select id="selectOrgRankByKeyword" resultType="java.util.Map">
+        SELECT
+            COUNT(*),
+            org_oid  AS oid,
+            org_name AS orgName
+        FROM rlab_common_info.t_instrument_index, to_tsquery('rlab_common_info.jiebacfg', '${keyword}') query
+        WHERE
+            numnode(query) > 0 AND ins_keyword @@ query
+        GROUP BY org_oid, org_name
+        ORDER BY "count"(*) DESC
+        LIMIT 10
+    </select>
+
+    <delete id="deleteByMapId" parameterType="java.lang.Long">
+        DELETE FROM rlab_common_info.t_instrument_index idx
+        WHERE idx.map_id = #{mapId,jdbcType=BIGINT};
+    </delete>
+
+    <delete id="deleteByMapIds">
+        DELETE FROM rlab_common_info.t_instrument_index idx
+        WHERE idx.map_id IN
+        <foreach collection="mapIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </delete>
+
+    <insert id="insertIndexs">
+        INSERT INTO rlab_common_info.t_instrument_index (
+        map_id,
+        ins_name,
+        ins_mode,
+        ins_brand,
+        ins_keyword,
+        org_name,
+        org_oid,
+        ins_org_price_list,
+        ins_pic,
+        org_addr_province,
+        org_addr_city,
+        org_addr_district,
+        org_addr_street,
+        org_addr_longitude,
+        org_addr_latitude
+        ) SELECT
+        insmap.map_id,
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insName'
+        ELSE
+        insbase.ins_name
+        END AS ins_name,
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insMode'
+        ELSE
+        insbase.ins_mode
+        END AS ins_mode,
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insBrand'
+        ELSE
+        insbase.ins_brand
+        END AS ins_brand,
+        setweight(
+        to_tsvector(
+        'rlab_common_info.jiebacfg',
+        COALESCE(
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insName'
+        ELSE
+        insbase.ins_name
+        END,
+        ''
+        )
+        ),
+        'A'
+        ) || setweight(
+        to_tsvector(
+        'rlab_common_info.jiebacfg',
+        COALESCE(
+        CASE
+        WHEN orgbase.org_name IS NOT NULL
+        THEN
+        orgbase.org_name
+        END,
+        ''
+        )
+        ),
+        'B'
+        ) || setweight(
+        to_tsvector(
+        'rlab_common_info.jiebacfg',
+        COALESCE(
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insMode'
+        ELSE
+        insbase.ins_mode
+        END,
+        ''
+        )
+        ),
+        'B'
+        ) || setweight(
+        to_tsvector(
+        'rlab_common_info.jiebacfg',
+        COALESCE(
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        insmap.map_new_ins :: JSON ->> 'insBrand'
+        ELSE
+        insbase.ins_brand
+        END,
+        ''
+        )
+        ),
+        'C'
+        ) || setweight(
+        to_tsvector(
+        'rlab_common_info.jiebacfg',
+        COALESCE(
+        (
+        CASE
+        WHEN insbase.ins_description -> 0 IS NOT NULL
+        AND insbase.ins_description -> 0 -> 'content' IS NOT NULL
+        THEN
+        insbase.ins_description -> 0 -> 'content' ->> 0
+        WHEN insmap.map_new_ins IS NOT NULL
+        AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 0 IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 0 -> 'content' IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 0 -> 'content' ->> 0
+        END
+        ),
+        ' '
+        ) || COALESCE(
+        (
+        CASE
+        WHEN insbase.ins_description -> 1 IS NOT NULL
+        AND insbase.ins_description -> 1 -> 'content' IS NOT NULL
+        THEN
+        insbase.ins_description -> 1 -> 'content' ->> 0
+        WHEN insmap.map_new_ins IS NOT NULL
+        AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 1 IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 1 -> 'content' IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 1 -> 'content' ->> 0
+        END
+        ),
+        ' '
+        ) || COALESCE(
+        (
+        CASE
+        WHEN insbase.ins_description -> 2 IS NOT NULL
+        AND insbase.ins_description -> 2 -> 'content' IS NOT NULL
+        THEN
+        insbase.ins_description -> 2 -> 'content' ->> 0
+        WHEN insmap.map_new_ins IS NOT NULL
+        AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 2 IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 2 -> 'content' IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 2 -> 'content' ->> 0
+        END
+        ),
+        ' '
+        ) || COALESCE(
+        (
+        CASE
+        WHEN insbase.ins_description -> 3 IS NOT NULL
+        AND insbase.ins_description -> 3 -> 'content' IS NOT NULL
+        THEN
+        insbase.ins_description -> 3 -> 'content' ->> 0
+        WHEN insmap.map_new_ins IS NOT NULL
+        AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 3 IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 3 -> 'content' IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insDescription'
+        ) :: JSON -> 3 -> 'content' ->> 0
+        END
+        ),
+        ' '
+        )
+        ),
+        'D'
+        ) AS ins_keyword,
+        orgbase.org_name,
+        orgbase.org_oid,
+        insmap.ins_org_price_list,
+        (
+        CASE
+        WHEN insbase.ins_pic IS NOT NULL
+        AND insbase.ins_pic -> 0 IS NOT NULL
+        THEN
+        insbase.ins_pic ->> 0
+        WHEN insmap.map_new_ins :: JSON ->> 'insPic' IS NOT NULL
+        AND (
+        insmap.map_new_ins :: JSON ->> 'insPic'
+        ) :: JSON -> 0 IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insPic'
+        ) :: JSON ->> 0
+        END
+        ) AS ins_pic,
+        addr.org_addr_province,
+        addr.org_addr_city,
+        addr.org_addr_district,
+        addr.org_addr_street,
+        addr.org_addr_longitude,
+        addr.org_addr_latitude
+        FROM
+        rlab_instrument_info.t_instrument_base_info AS insbase
+        JOIN rlab_instrument_info.t_instrument_org_map AS insmap ON insbase.ins_iid = insmap.ins_iid
+        JOIN rlab_org_info.t_org_base_info AS orgbase ON insmap.org_oid = orgbase.org_oid
+        JOIN rlab_org_info.t_org_address AS addr ON insmap.org_addr_id = addr.org_addr_id
+        AND insmap.map_id IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category = ins.ins_category,
+        ins_feature_name = ins.ins_feature,
+        ins_service_type = ins.ins_service_name
+        FROM
+        (
+        SELECT
+        insmap.map_id,
+        CASE
+        WHEN insmap.map_new_ins IS NOT NULL
+        THEN
+        (
+        insmap.map_new_ins :: JSON ->> 'insCategory'
+        ) :: JSONB
+        WHEN insbase.ins_category IS NOT NULL
+        THEN
+        insbase.ins_category
+        ELSE
+        NULL
+        END AS ins_category,
+        sertype.ins_service_name,
+        insmap.ins_feature
+        FROM
+        rlab_instrument_info.t_instrument_org_map insmap
+        JOIN rlab_instrument_info.t_instrument_base_info insbase ON insmap.ins_iid = insbase.ins_iid
+        JOIN rlab_instrument_info.t_instrument_service_type sertype
+        ON insmap.service_type = sertype.ins_service_id
+        ) AS ins
+        WHERE
+        rlab_common_info.t_instrument_index.map_id = ins.map_id
+        AND ins.map_id IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category = json_build_array(
+        T.name1,
+        ins_category :: JSON ->> 1
+        )
+        FROM
+        (
+        SELECT
+        ic.category_name AS name1,
+        i.map_id
+        FROM
+        rlab_common_info.t_instrument_index i
+        JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 0 = ic.ins_category
+        AND ic.LEVEL = 1
+        ) T
+        WHERE rlab_common_info.t_instrument_index.map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category = json_build_array(
+        ins_category :: JSON ->> 0,
+        T.name1
+        )
+        FROM
+        (
+        SELECT
+        ic.category_name AS name1,
+        i.map_id
+        FROM
+        rlab_common_info.t_instrument_index i
+        JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 1 = ic.ins_category
+        AND ic.LEVEL = 2
+        ) T
+        WHERE rlab_common_info.t_instrument_index.map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+        ins_feature_name :: JSON ->> 0,
+        ins_feature_name :: JSON ->> 1,
+        re.name
+        ) FROM (
+        SELECT
+        fe.ins_feature_name AS name,
+        idx.map_id
+        FROM rlab_instrument_info.t_instrument_feature fe
+        JOIN rlab_instrument_info.t_instrument_org_map idx
+        ON (idx.ins_feature :: JSON ->> 2) :: INT = fe.ins_feature_id
+        ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+        rlab_common_info.t_instrument_index.map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+        re.name,
+        ins_feature_name :: JSON ->> 1,
+        ins_feature_name :: JSON ->> 2
+        ) FROM (
+        SELECT
+        fe.ins_feature_name AS name,
+        idx.map_id
+        FROM rlab_instrument_info.t_instrument_feature fe
+        JOIN rlab_instrument_info.t_instrument_org_map idx
+        ON (idx.ins_feature :: JSON ->> 0) :: INT = fe.ins_feature_id
+        ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+        rlab_common_info.t_instrument_index.map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+        ins_feature_name :: JSON ->> 0,
+        re.name,
+        ins_feature_name :: JSON ->> 2
+        ) FROM (
+        SELECT
+        fe.ins_feature_name AS name,
+        idx.map_id
+        FROM rlab_instrument_info.t_instrument_feature fe
+        JOIN rlab_instrument_info.t_instrument_org_map idx
+        ON (idx.ins_feature :: JSON ->> 1) :: INT = fe.ins_feature_id
+        ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+        rlab_common_info.t_instrument_index.map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_scope_name = '综合'
+        WHERE map_id  IN
+        <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>;
+    </insert>
+
+    <insert id="insertIndex" parameterType="java.lang.Long">
+        INSERT INTO rlab_common_info.t_instrument_index (
+            map_id,
+            ins_name,
+            ins_mode,
+            ins_brand,
+            ins_keyword,
+            org_name,
+            org_oid,
+            ins_org_price_list,
+            ins_pic,
+            --机构信息
+            org_addr_province,
+            org_addr_city,
+            org_addr_district,
+            org_addr_street,
+            org_addr_longitude,
+            org_addr_latitude
+        ) SELECT
+              insmap.map_id,
+              CASE
+              WHEN insmap.map_new_ins IS NOT NULL
+                  THEN
+                      insmap.map_new_ins :: JSON ->> 'insName'
+              ELSE
+                  insbase.ins_name
+              END AS ins_name,
+              CASE
+              WHEN insmap.map_new_ins IS NOT NULL
+                  THEN
+                      insmap.map_new_ins :: JSON ->> 'insMode'
+              ELSE
+                  insbase.ins_mode
+              END AS ins_mode,
+              CASE
+              WHEN insmap.map_new_ins IS NOT NULL
+                  THEN
+                      insmap.map_new_ins :: JSON ->> 'insBrand'
+              ELSE
+                  insbase.ins_brand
+              END AS ins_brand,
+              setweight(
+                      to_tsvector(
+                              'rlab_common_info.jiebacfg',
+                              COALESCE(
+                                      CASE
+                                      WHEN insmap.map_new_ins IS NOT NULL
+                                          THEN
+                                              insmap.map_new_ins :: JSON ->> 'insName'
+                                      ELSE
+                                          insbase.ins_name
+                                      END,
+                                      ''
+                              )
+                      ),
+                      'A'
+              ) || setweight(
+                      to_tsvector(
+                              'rlab_common_info.jiebacfg',
+                              COALESCE(
+                                      CASE
+                                      WHEN orgbase.org_name IS NOT NULL
+                                          THEN
+                                              orgbase.org_name
+                                      END,
+                                      ''
+                              )
+                      ),
+                      'B'
+              ) || setweight(
+                      to_tsvector(
+                              'rlab_common_info.jiebacfg',
+                              COALESCE(
+                                      CASE
+                                      WHEN insmap.map_new_ins IS NOT NULL
+                                          THEN
+                                              insmap.map_new_ins :: JSON ->> 'insMode'
+                                      ELSE
+                                          insbase.ins_mode
+                                      END,
+                                      ''
+                              )
+                      ),
+                      'B'
+              ) || setweight(
+                      to_tsvector(
+                              'rlab_common_info.jiebacfg',
+                              COALESCE(
+                                      CASE
+                                      WHEN insmap.map_new_ins IS NOT NULL
+                                          THEN
+                                              insmap.map_new_ins :: JSON ->> 'insBrand'
+                                      ELSE
+                                          insbase.ins_brand
+                                      END,
+                                      ''
+                              )
+                      ),
+                      'C'
+              ) || setweight(
+                      to_tsvector(
+                              'rlab_common_info.jiebacfg',
+                              COALESCE(
+                                      (
+                                          CASE
+                                          WHEN insbase.ins_description -> 0 IS NOT NULL
+                                               AND insbase.ins_description -> 0 -> 'content' IS NOT NULL
+                                              THEN
+                                                  insbase.ins_description -> 0 -> 'content' ->> 0
+                                          WHEN insmap.map_new_ins IS NOT NULL
+                                               AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 0 IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 0 -> 'content' IS NOT NULL
+                                              THEN
+                                                  (
+                                                      insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                  ) :: JSON -> 0 -> 'content' ->> 0
+                                          END
+                                      ),
+                                      ' '
+                              ) || COALESCE(
+                                      (
+                                          CASE
+                                          WHEN insbase.ins_description -> 1 IS NOT NULL
+                                               AND insbase.ins_description -> 1 -> 'content' IS NOT NULL
+                                              THEN
+                                                  insbase.ins_description -> 1 -> 'content' ->> 0
+                                          WHEN insmap.map_new_ins IS NOT NULL
+                                               AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 1 IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 1 -> 'content' IS NOT NULL
+                                              THEN
+                                                  (
+                                                      insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                  ) :: JSON -> 1 -> 'content' ->> 0
+                                          END
+                                      ),
+                                      ' '
+                              ) || COALESCE(
+                                      (
+                                          CASE
+                                          WHEN insbase.ins_description -> 2 IS NOT NULL
+                                               AND insbase.ins_description -> 2 -> 'content' IS NOT NULL
+                                              THEN
+                                                  insbase.ins_description -> 2 -> 'content' ->> 0
+                                          WHEN insmap.map_new_ins IS NOT NULL
+                                               AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 2 IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 2 -> 'content' IS NOT NULL
+                                              THEN
+                                                  (
+                                                      insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                  ) :: JSON -> 2 -> 'content' ->> 0
+                                          END
+                                      ),
+                                      ' '
+                              ) || COALESCE(
+                                      (
+                                          CASE
+                                          WHEN insbase.ins_description -> 3 IS NOT NULL
+                                               AND insbase.ins_description -> 3 -> 'content' IS NOT NULL
+                                              THEN
+                                                  insbase.ins_description -> 3 -> 'content' ->> 0
+                                          WHEN insmap.map_new_ins IS NOT NULL
+                                               AND insmap.map_new_ins :: JSON ->> 'insDescription' IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 3 IS NOT NULL
+                                               AND (
+                                                       insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                   ) :: JSON -> 3 -> 'content' IS NOT NULL
+                                              THEN
+                                                  (
+                                                      insmap.map_new_ins :: JSON ->> 'insDescription'
+                                                  ) :: JSON -> 3 -> 'content' ->> 0
+                                          END
+                                      ),
+                                      ' '
+                              )
+                      ),
+                      'D'
+              )   AS ins_keyword,
+              orgbase.org_name,
+              orgbase.org_oid,
+              insmap.ins_org_price_list,
+              (
+                  CASE
+                  WHEN insbase.ins_pic IS NOT NULL
+                       AND insbase.ins_pic -> 0 IS NOT NULL
+                      THEN
+                          insbase.ins_pic ->> 0
+                  WHEN insmap.map_new_ins :: JSON ->> 'insPic' IS NOT NULL
+                       AND (
+                               insmap.map_new_ins :: JSON ->> 'insPic'
+                           ) :: JSON -> 0 IS NOT NULL
+                      THEN
+                          (
+                              insmap.map_new_ins :: JSON ->> 'insPic'
+                          ) :: JSON ->> 0
+                  END
+              )   AS ins_pic,
+              addr.org_addr_province,
+              addr.org_addr_city,
+              addr.org_addr_district,
+              addr.org_addr_street,
+              addr.org_addr_longitude,
+              addr.org_addr_latitude
+          FROM
+              rlab_instrument_info.t_instrument_base_info AS insbase
+              JOIN rlab_instrument_info.t_instrument_org_map AS insmap ON insbase.ins_iid = insmap.ins_iid
+              JOIN rlab_org_info.t_org_base_info AS orgbase ON insmap.org_oid = orgbase.org_oid
+              JOIN rlab_org_info.t_org_address AS addr ON insmap.org_addr_id = addr.org_addr_id
+                                                          AND insmap.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category     = ins.ins_category,
+            --仪器适用领域
+            --ins_scope_name = ins.ins_scope_name,
+            --仪器特点
+            ins_feature_name = ins.ins_feature,
+            ins_service_type = ins.ins_service_name
+        FROM
+            (
+                SELECT
+                    insmap.map_id,
+                    CASE
+                    WHEN insmap.map_new_ins IS NOT NULL
+                        THEN
+                            (
+                                insmap.map_new_ins :: JSON ->> 'insCategory'
+                            ) :: JSONB
+                    WHEN insbase.ins_category IS NOT NULL
+                        THEN
+                            insbase.ins_category
+                    ELSE
+                        NULL
+                    END AS ins_category,
+                    sertype.ins_service_name,
+                    insmap.ins_feature
+                FROM
+                    -- rlab_common_info.t_instrument_index idx
+                    rlab_instrument_info.t_instrument_org_map insmap
+                    JOIN rlab_instrument_info.t_instrument_base_info insbase ON insmap.ins_iid = insbase.ins_iid
+                    JOIN rlab_instrument_info.t_instrument_service_type sertype
+                        ON insmap.service_type = sertype.ins_service_id --rlab_instrument_info.t_instrument_scope sco,
+                --LIMIT 10
+            ) AS ins
+        WHERE
+            rlab_common_info.t_instrument_index.map_id = ins.map_id
+            AND ins.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category = json_build_array(
+                T.name1,
+                ins_category :: JSON ->> 1
+        )
+        FROM
+            (
+                SELECT
+                    ic.category_name AS name1,
+                    i.map_id
+                FROM
+                    rlab_common_info.t_instrument_index i
+                    JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 0 = ic.ins_category
+                                                                          AND ic.LEVEL = 1
+            ) T
+        WHERE rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_category = json_build_array(
+                ins_category :: JSON ->> 0,
+                T.name1
+        )
+        FROM
+            (
+                SELECT
+                    ic.category_name AS name1,
+                    i.map_id
+                FROM
+                    rlab_common_info.t_instrument_index i
+                    JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 1 = ic.ins_category
+                                                                          AND ic.LEVEL = 2
+            ) T
+        WHERE rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+                ins_feature_name :: JSON ->> 0,
+                ins_feature_name :: JSON ->> 1,
+                re.name
+        ) FROM (
+                   SELECT
+                       fe.ins_feature_name AS name,
+                       idx.map_id
+                   FROM rlab_instrument_info.t_instrument_feature fe
+                       JOIN rlab_instrument_info.t_instrument_org_map idx
+                           ON (idx.ins_feature :: JSON ->> 2) :: INT = fe.ins_feature_id
+               ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+              rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+                re.name,
+                ins_feature_name :: JSON ->> 1,
+                ins_feature_name :: JSON ->> 2
+        ) FROM (
+                   SELECT
+                       fe.ins_feature_name AS name,
+                       idx.map_id
+                   FROM rlab_instrument_info.t_instrument_feature fe
+                       JOIN rlab_instrument_info.t_instrument_org_map idx
+                           ON (idx.ins_feature :: JSON ->> 0) :: INT = fe.ins_feature_id
+               ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+              rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_feature_name = json_build_array(
+                ins_feature_name :: JSON ->> 0,
+                re.name,
+                ins_feature_name :: JSON ->> 2
+        ) FROM (
+                   SELECT
+                       fe.ins_feature_name AS name,
+                       idx.map_id
+                   FROM rlab_instrument_info.t_instrument_feature fe
+                       JOIN rlab_instrument_info.t_instrument_org_map idx
+                           ON (idx.ins_feature :: JSON ->> 1) :: INT = fe.ins_feature_id
+               ) AS re
+        WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
+              rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+
+        UPDATE rlab_common_info.t_instrument_index
+        SET ins_scope_name = '综合'
+        WHERE map_id = #{mapId,jdbcType=BIGINT};
+    </insert>
+</mapper>
