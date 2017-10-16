@@ -143,6 +143,7 @@ public class OrgUtil {
      * @return
      */
     public static boolean compareString(String a, String b){
+        if (StringUtils.isBlank(a) && StringUtils.isBlank(b)) return true;
         return a == b ? true : (a == null ? false : (b == null ? false : (a.compareTo(b) == 0 ? true : false)));
     }
 

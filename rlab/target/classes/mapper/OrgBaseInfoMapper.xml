@@ -573,7 +573,7 @@
             ) tmp
          WHERE rn=1
         ORDER BY
-        tmp.audit_time
+        tmp.org_oid
         <if test="order != null">
             ASC
         </if>
@@ -626,7 +626,7 @@
             ) tmp
         WHERE rn=1
         ORDER BY
-        tmp.application_time
+        tmp.org_oid
         <if test="order != null">
             ASC
         </if>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserBaseInfoDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserBaseInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
+    <result column="u_nickname" property="uNickname" jdbcType="VARCHAR" />
+    <result column="u_password" property="uPassword" jdbcType="VARCHAR" />
+    <result column="u_sex" property="uSex" jdbcType="BIT" />
+    <result column="u_age" property="uAge" jdbcType="INTEGER" />
+    <result column="u_birthday" property="uBirthday" jdbcType="DATE" />
+    <result column="u_mobile" property="uMobile" jdbcType="VARCHAR" />
+    <result column="u_email" property="uEmail" jdbcType="VARCHAR" />
+    <result column="u_avatar" property="uAvatar" jdbcType="VARCHAR" />
+    <result column="u_level" property="uLevel" jdbcType="INTEGER" />
+    <result column="u_type" property="uType" jdbcType="OTHER" />
+    <result column="u_source" property="uSource" jdbcType="INTEGER" />
+    <result column="u_state" property="uState" jdbcType="INTEGER" />
+    <result column="u_login_count" property="uLoginCount" jdbcType="INTEGER" />
+    <result column="u_last_login_time" property="uLastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_uid, u_name, u_nickname, u_password, u_sex, u_age, u_birthday, u_mobile, u_email, 
+    u_avatar, u_level, u_type, u_source, u_state, u_login_count, u_last_login_time, create_time, 
+    modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_base_info
+    where id = #{id,jdbcType=BIGINT} and u_state !=2
+  </select>
+  <select id="selectByPhoneAndPassword" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_base_info
+    where (u_password is null or u_password = '') and (u_mobile is not null or u_mobile!='') and u_state !=2
+  </select>
+
+  <!-- 根据用户名查询登录信息 -->
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM rlab_user_info.t_user_base_info
+    WHERE u_name = #{cs_name,jdbcType=VARCHAR} and u_state !=2
+  </select>
+
+  <!--检索客服列表-->
+  <select id="getCSList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM rlab_user_info.t_user_base_info
+    WHERE u_type::json->>1='1' and u_state !=2
+  </select>
+
+  <update id="updateByCsIdSelective" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo">
+    update rlab_user_info.t_user_base_info
+    <set>
+      <if test="uName != null">
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uAvatar != null">
+        u_avatar = #{uAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null">
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uType != null">
+        u_type = #{uType,jdbcType=OTHER}::jsonb,
+      </if>
+      modify_time = now(),
+    </set>
+    where u_uid = #{uUid,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_base_info
+    where u_uid = #{uid,jdbcType=BIGINT} and u_state !=2
+  </select>
+  <select id="selectByPhone" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_base_info
+    where u_mobile = #{phone,jdbcType=BIGINT} and u_state !=2
+  </select>
+  <select id="selectByuPhoneOruName" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_base_info
+    where (position(#{searchMsg} in u_nickname) > 0
+    or position(#{searchMsg} in u_phone) > 0
+    or position(#{searchMsg} in u_name) > 0 )and u_state !=2
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_base_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 根据用户Id删除客服 -->
+  <delete id="deleteByCsId" parameterType="java.lang.Long">
+    UPDATE rlab_user_info.t_user_base_info set u_type=json_build_array(u_type::json->0,0,u_type::json->2)
+ WHERE u_uid = #{cs_id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo" >
+    insert into rlab_user_info.t_user_base_info (id, u_uid, u_name, 
+      u_nickname, u_password, u_sex, 
+      u_age, u_birthday, u_mobile, 
+      u_email, u_avatar, u_level, 
+      u_type, u_source, u_state, 
+      u_login_count, u_last_login_time, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, #{uName,jdbcType=VARCHAR}, 
+      #{uNickname,jdbcType=VARCHAR}, #{uPassword,jdbcType=VARCHAR}, #{uSex,jdbcType=BIT}, 
+      #{uAge,jdbcType=INTEGER}, #{uBirthday,jdbcType=DATE}, #{uMobile,jdbcType=VARCHAR}, 
+      #{uEmail,jdbcType=VARCHAR}, #{uAvatar,jdbcType=VARCHAR}, #{uLevel,jdbcType=INTEGER}, 
+      #{uType,jdbcType=OTHER}::jsonb, #{uSource,jdbcType=INTEGER}, #{uState,jdbcType=INTEGER},
+      #{uLoginCount,jdbcType=INTEGER}, #{uLastLoginTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo" >
+  	<selectKey keyProperty="uUid" resultType="java.lang.Long" order="AFTER">
+            select last_value as u_uid from rlab_user_info.user_uid_seq;
+        </selectKey>
+    insert into rlab_user_info.t_user_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="uName != null" >
+        u_name,
+      </if>
+      <if test="uNickname != null" >
+        u_nickname,
+      </if>
+      <if test="uPassword != null" >
+        u_password,
+      </if>
+      <if test="uSex != null" >
+        u_sex,
+      </if>
+      <if test="uAge != null" >
+        u_age,
+      </if>
+      <if test="uBirthday != null" >
+        u_birthday,
+      </if>
+      <if test="uMobile != null" >
+        u_mobile,
+      </if>
+      <if test="uEmail != null" >
+        u_email,
+      </if>
+      <if test="uAvatar != null" >
+        u_avatar,
+      </if>
+      <if test="uLevel != null" >
+        u_level,
+      </if>
+      <if test="uType != null" >
+        u_type,
+      </if>
+      <if test="uSource != null" >
+        u_source,
+      </if>
+      <if test="uState != null" >
+        u_state,
+      </if>
+      <if test="uLoginCount != null" >
+        u_login_count,
+      </if>
+      <if test="uLastLoginTime != null" >
+        u_last_login_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uName != null" >
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null" >
+        #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        #{uSex,jdbcType=BIT},
+      </if>
+      <if test="uAge != null" >
+        #{uAge,jdbcType=INTEGER},
+      </if>
+      <if test="uBirthday != null" >
+        #{uBirthday,jdbcType=DATE},
+      </if>
+      <if test="uMobile != null" >
+        #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null" >
+        #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uAvatar != null" >
+        #{uAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="uLevel != null" >
+        #{uLevel,jdbcType=INTEGER},
+      </if>
+      <if test="uType != null" >
+        #{uType,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="uSource != null" >
+        #{uSource,jdbcType=INTEGER},
+      </if>
+      <if test="uState != null" >
+        #{uState,jdbcType=INTEGER},
+      </if>
+      <if test="uLoginCount != null" >
+        #{uLoginCount,jdbcType=INTEGER},
+      </if>
+      <if test="uLastLoginTime != null" >
+        #{uLastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo" >
+    update rlab_user_info.t_user_base_info
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uName != null" >
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null" >
+        u_nickname = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        u_sex = #{uSex,jdbcType=BIT},
+      </if>
+      <if test="uAge != null" >
+        u_age = #{uAge,jdbcType=INTEGER},
+      </if>
+      <if test="uBirthday != null" >
+        u_birthday = #{uBirthday,jdbcType=DATE},
+      </if>
+      <if test="uMobile != null" >
+        u_mobile = #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null" >
+        u_email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uAvatar != null" >
+        u_avatar = #{uAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="uLevel != null" >
+        u_level = #{uLevel,jdbcType=INTEGER},
+      </if>
+      <if test="uType != null" >
+        u_type = #{uType,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="uSource != null" >
+        u_source = #{uSource,jdbcType=INTEGER},
+      </if>
+      <if test="uState != null" >
+        u_state = #{uState,jdbcType=INTEGER},
+      </if>
+      <if test="uLoginCount != null" >
+        u_login_count = #{uLoginCount,jdbcType=INTEGER},
+      </if>
+      <if test="uLastLoginTime != null" >
+        u_last_login_time = #{uLastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        modify_time = now(),
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByUIdSelective" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo" >
+    update rlab_user_info.t_user_base_info
+    <set >
+      <if test="uName != null" >
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickname != null" >
+        u_nickname = #{uNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="uPassword != null" >
+        u_password = #{uPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uSex != null" >
+        u_sex = #{uSex,jdbcType=BIT},
+      </if>
+      <if test="uAge != null" >
+        u_age = #{uAge,jdbcType=INTEGER},
+      </if>
+      <if test="uBirthday != null" >
+        u_birthday = #{uBirthday,jdbcType=DATE},
+      </if>
+      <if test="uMobile != null" >
+        u_mobile = #{uMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="uEmail != null" >
+        u_email = #{uEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="uAvatar != null" >
+        u_avatar = #{uAvatar,jdbcType=VARCHAR},
+      </if>
+      <if test="uLevel != null" >
+        u_level = #{uLevel,jdbcType=INTEGER},
+      </if>
+      <if test="uType != null" >
+        u_type = #{uType,jdbcType=OTHER}::jsonb,
+      </if>
+      <if test="uSource != null" >
+        u_source = #{uSource,jdbcType=INTEGER},
+      </if>
+      <if test="uState != null" >
+        u_state = #{uState,jdbcType=INTEGER},
+      </if>
+      <if test="uLoginCount != null" >
+        u_login_count = #{uLoginCount,jdbcType=INTEGER},
+      </if>
+      <if test="uLastLoginTime != null" >
+        u_last_login_time = #{uLastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        modify_time = now(),
+    </set>
+    where u_uid = #{uUid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserBaseInfo" >
+    update rlab_user_info.t_user_base_info
+    set u_uid = #{uUid,jdbcType=BIGINT},
+      u_name = #{uName,jdbcType=VARCHAR},
+      u_nickname = #{uNickname,jdbcType=VARCHAR},
+      u_password = #{uPassword,jdbcType=VARCHAR},
+      u_sex = #{uSex,jdbcType=BIT},
+      u_age = #{uAge,jdbcType=INTEGER},
+      u_birthday = #{uBirthday,jdbcType=DATE},
+      u_mobile = #{uMobile,jdbcType=VARCHAR},
+      u_email = #{uEmail,jdbcType=VARCHAR},
+      u_avatar = #{uAvatar,jdbcType=VARCHAR},
+      u_level = #{uLevel,jdbcType=INTEGER},
+      u_type = #{uType,jdbcType=OTHER}::jsonb,
+      u_source = #{uSource,jdbcType=INTEGER},
+      u_state = #{uState,jdbcType=INTEGER},
+      u_login_count = #{uLoginCount,jdbcType=INTEGER},
+      u_last_login_time = #{uLastLoginTime,jdbcType=TIMESTAMP},
+      create_time = now(),
+      modify_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

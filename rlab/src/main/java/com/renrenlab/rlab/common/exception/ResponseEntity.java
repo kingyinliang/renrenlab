@@ -24,6 +24,7 @@ public enum ResponseEntity {
     PERMISSSION_ERROR(1018, "权限不够"),
 
     REPEAT_U_JOB_NUMBER(2000,"工号重复"),
+    REPEAT_ORG_CODE(2001,"组织机构代码重复"),
 
     //    需求管理
     REQUIREMENT_HAS_CHANGE(3001, "该需求已经被修改，请管理员刷新页面重新审核"),

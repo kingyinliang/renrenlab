@@ -415,7 +415,7 @@
             </div>
             <div class="orgCorporation">
                     <p class="tit">机构法人信息：</p>
-                    <p><span class="titinp">真实姓名<em>**</em>：</span><input type="text" placeholder="请输入真实姓名" id="userName" maxlength="5"></p>
+                    <p><span class="titinp">真实姓名<em>**</em>：</span><input type="text" placeholder="请输入真实姓名" id="userName" maxlength="10"></p>
                     <p><span class="titinp">身份证号码<em>**</em>：</span><input type="text" placeholder="请输入身份证号码" id="userNum" maxlength="20"></p>
                     <div class="lab_p clearfix identity">
                         <p style="float: left;margin: 0"><span class="titinp">身份证照片<em>**</em>：</span></p>
@@ -1030,8 +1030,8 @@
                 return false;
             }
 
-            $("#longitude").val(poi.point.lng);// 更新视图
-            $("#latitude").val(poi.point.lat);// 更新视图
+            $("#longitude").val(poi.point.lng.toFixed(2));// 更新视图
+            $("#latitude").val(poi.point.lat.toFixed(2));// 更新视图
 
             map.centerAndZoom(poi.point, 13);// 配置：更新地图位置
             var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 配置：创建标注，为要查询的地方对应的经纬度
@@ -1095,7 +1095,7 @@
 
         for (var j = 0; j < orgPhoneIpts.length; j++) {
             if ($.trim($(orgPhoneIpts[j]).val()) !== "") {
-                if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(orgPhoneIpts[j]).val())){
+                if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(orgPhoneIpts[j]).val())){
                     alert("机构固话格式错误，请填写11位手机号或座机号!");
                     return false;
                 }
@@ -1121,17 +1121,21 @@
                 alert("请填写完整联系人");
                 return;
             }
+            if(!/^[\u4e00-\u9fa5]{2,11}$/.test(userNames)){
+                alert("联系人姓名格式错误");
+                return;
+            }
             var userPhone="";
             for (var j=0;j<$(".rowphone ").eq(i).find(".userPhone").length;j++) {
                 if (j==0) {
-                    if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
+                    if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
                         alert("请输入正确联系人手机号");
                         return;
                     }else {
                         userPhone=$(".rowphone ").eq(i).find(".userPhone").eq(j).val();
                     }
                 }else {
-                    if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
+                    if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
                         alert("请输入正确联系人手机号");
                         return;
                     }else {
@@ -1244,33 +1248,38 @@
         if (formData.orgName.length == 0) {
             alert("机构名称不能为空");
             return false;
-
         } else if (formData.orgCategoryId == "") {
             alert("机构性质不能为空");
             return false;
-
         } else if (formData.orgAddress.orgAddrProvince.length == 0 || formData.orgAddress.orgAddrCity.length == 0 || formData.orgAddress.orgAddrDistrict.length == 0 || formData.orgAddress.orgAddrStreet.length == 0) {
             alert("机构地址不能为空");
             return false;
-
-        } else if (formData.orgAddress.orgAddrLongitude.length == 0 || formData.orgAddress.orgAddrLatitude.length == 0) {
+        } else if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(formData.orgAddress.orgAddrLongitude) || /^[0-9]{1,3}$/.test(formData.orgAddress.orgAddrLongitude))) {
+            alert("经度格式错误");
+            return false;
+        } else if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(formData.orgAddress.orgAddrLatitude) || /^[0-9]{1,3}$/.test(formData.orgAddress.orgAddrLatitude))) {
+            alert("纬度格式错误");
+            return false;
+        }else if (formData.orgAddress.orgAddrLongitude.length == 0 || formData.orgAddress.orgAddrLatitude.length == 0) {
             alert("经纬度不能为空");
             return false;
-
-        }else if(formData.orgLicense.orgPerson.length == 0){
-            alert("真实姓名不能为空");
+        }else if(!/^[\u4e00-\u9fa5]{2,11}$/.test(formData.orgLicense.orgPerson)){
+            alert("请输入正确的姓名");
             return false;
         }else if(formData.orgLicense.identificationNumber.length == 0){
-            alert("身份证号码不能为空");
+            alert("请输入身份证号");
             return false;
         }else if(formData.orgCodeObject.orgCode.length == 0){
             alert("组织机构代码不能为空");
             return false;
-        }else if(formData.orgLicense.orgAddress.length == 0){
-            alert("机构注册地详细地址不能为空");
+        }else if(!/^[\d|a-zA-Z|\-|_|—]{10,20}$/.test(formData.orgCodeObject.orgCode)){
+            alert("组织机构代码格式不正确");
             return false;
-        }else if(formData.orgAddress.orgAddrStreet.length == 0){
-            alert("机构所在地详细地址不能为空");
+        }else if(formData.orgLicense.orgAddress.length < 5){
+            alert("机构注册地详细地址不能为空最少为5个字符");
+            return false;
+        }else if(formData.orgAddress.orgAddrStreet.length < 5){
+            alert("机构所在地详细地址不能为空最少为5个字符");
             return false;
         }else if(formData.orgSource.length == 0){
             alert("机构来源不能为空");
@@ -1296,7 +1305,7 @@
         }else if(formData.orgLicense.identificationNumber.length == 0){
             alert("法人身份证号码不能为空");
             return false;
-        }else if(!/^\d{15}$|^\d{18}$/.test(formData.orgLicense.identificationNumber)){
+        }else if(!/^\d{15}$|^\d{17}(\d|x|X)$/.test(formData.orgLicense.identificationNumber)){
             alert("法人身份证号码格式错误");
             return false;
         }
@@ -1325,20 +1334,20 @@
 
 
         if (formData.orgAddress.orgZipcode.length != 0) {
-            if (!/^[1-9]\d{5}(?!\d)$/.test(formData.orgAddress.orgZipcode)) {
+            if (!/^[0-9]\d{4,5}$/.test(formData.orgAddress.orgZipcode)) {
                 alert("机构邮编格式错误");
                 return false;
             }
         }
 
         if (formData.orgContacts.conEmail.length != 0) {
-            if (!/[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/.test(formData.orgContacts.conEmail)) {
+            if (!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(formData.orgContacts.conEmail)) {
                 alert("机构邮箱格式错误");
                 return false;
             }
         }
         if (formData.orgContacts.conFax.length != 0) {
-            if (!/^(\d{3,4}-)?\d{7,8}$/.test(formData.orgContacts.conFax)) {
+            if (/^[0-9]{3,4}-[0-9]{7,8}$/.test(formData.orgContacts.conFax)) {
                 alert("机构传真格式错误");
                 return false;
             }
@@ -1366,6 +1375,12 @@
                 } else if (data.code === 1013) {
                     //墨绿深蓝风
                     layer.alert('机构名已存在，请更换', {
+                        skin: 'layui-layer-molv' //样式类名
+                        , closeBtn: 0
+                    });
+                }else if (data.code === 2001) {
+                    //墨绿深蓝风
+                    layer.alert('组织机构代码重复，请更换', {
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });

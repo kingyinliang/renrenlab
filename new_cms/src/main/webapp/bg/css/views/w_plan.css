@@ -1,0 +1,467 @@
+/*-----------------------------------弹窗相关样式----------------------------------*/
+
+/***********添加/修改方案弹窗开始***********/
+
+/*添加方案弹窗自定义*/
+
+.add_xq_modal_contant {
+    /*width: 420px;*/
+    width: 378px;
+    margin: 100px auto;
+    margin-top: 15px;
+    height: 0px;
+    background-color: #fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    overflow: hidden;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -210px;
+    z-index: 100;
+}
+
+.add_xq_modal_contant .layui-input-block {
+    margin-left: 86px;
+}
+
+.add_xq_modal_contant .layui-form-item {
+    margin-bottom: 10px;
+}
+
+/*覆盖layUI样式*/
+.plan_layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 10px;
+    font-weight: 400;
+    text-align: right;
+    font-size: 14px;
+
+}
+
+.plan_layui-input {
+    display: block;
+    padding-left: 10px;
+}
+
+#container {
+    background-color: #fff;
+    height: 600px;
+    margin: 0 auto;
+    /*margin-top: 50px;*/
+}
+
+#container .title {
+    width: 100%;
+    background-color: #2fcba8;
+    position: relative;
+}
+
+#container .title p {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    line-height: 44px;
+    font-family: "PingFang SC", "微软雅黑";
+}
+
+#container .title i {
+    position: absolute;
+    right: 24px;
+}
+
+#container .content p {
+    margin-left: 24px;
+    margin-top: 25px;
+    font-size: 14px;
+    color: #4e4e4e;
+    line-height: 35px;
+    font-family: "PingFang SC", "微软雅黑";
+}
+
+.solution_form {
+    width: 400px;
+}
+
+.solution_form .slt_select {
+    margin-top: 15px;
+}
+
+.solution_form .slt_select i {
+    border-top-color: #2fcba8;
+}
+
+.solution_form .slt_input input {
+    width: 215px;
+    display: inline-block;
+}
+
+.solution_form .slt_input label {
+    display: inline-block;
+    font-size: 14px;
+    color: #4e4e4e;
+    font-family: "PingFang SC", "微软雅黑";
+}
+
+.solution_form .slt_radio {
+    width: 150px;
+}
+
+.solution_form .slt_price {
+    /*width: 115px;*/
+    text-align: center;
+    line-height: 36px;
+}
+
+.solution_form .slt_price .slt_price_input {
+    display: inline-block;
+    float: left;
+}
+
+.solution_form .slt_price > div.layui-form-radio {
+    margin: 0;
+}
+
+.solution_form .slt_price input {
+    width: 115px;
+    /*display: inline-block;*/
+}
+
+.solution_form .slt_price label {
+    display: inline-block;
+    font-size: 14px;
+    color: #4e4e4e;
+    font-family: "PingFang SC", "微软雅黑";
+    float: left;
+    margin-left: 14px;
+}
+
+.add_slt .layui-form-select dl dd.layui-this {
+    background: #2fcba8;
+}
+
+.add_slt .layui-form-radio i:hover, .add_slt .layui-form-radioed i {
+    color: #2fcba8;
+}
+
+.add_slt .layui-input:hover {
+
+    border-color: #2fcba8 !important;
+
+}
+
+.submit {
+    width: 195px;
+    background-color: #2fcba8;
+    margin: 0 auto;
+}
+
+/*弹窗默认样式*/
+.xq_modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+/*点击后弹窗添加样式in*/
+
+/*------------遮照----------*/
+/*初始样式*/
+.xq_modal_back {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+
+/*弹窗内容样式（可替换）*/
+.xq_modal > .xq_modal_contant {
+    width: 420px;
+    margin: 100px auto;
+    margin-top: 15px;
+    height: 0px;
+    background-color: #fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    overflow: hidden;
+}
+
+.xq_modal .lab_select {
+    /*padding-right:10px;*/
+    font-size: 14px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: #2FCBA8;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    float: right;
+    width: 280px;
+    /*display: none;*/
+}
+
+.xq_modal .lab_select i {
+    position: absolute;
+    right: 20px;
+    /*float: right;*/
+    font-size: 16px;
+    line-height: 42px;
+}
+
+.xq_modal .lab_select .select_ul {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    background: #fff;
+    left: 0;
+    bottom: -1px;
+    -webkit-transform: translateY(100%);
+    -moz-transform: translateY(100%);
+    -ms-transform: translateY(100%);
+    -o-transform: translateY(100%);
+    transform: translateY(100%);
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+    border-radius: 2px;
+    box-sizing: border-box;
+    /*margin:-100%;*/
+}
+
+.xq_modal .lab_select .select_ul ul {
+    display: block;
+}
+
+.xq_modal .lab_select .select_ul li {
+
+    display: block;
+    height: 36px;
+    width: 100%;
+    line-height: 36px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    color: #333;
+
+}
+
+.xq_modal .lab_select .select_ul li:hover {
+    background-color: #f2f2f2;
+}
+
+.xq_modal .lab_select .select_ul li.activated {
+    background-color: #5FB878;
+    color: #fff;
+}
+
+.starts {
+    /*margin-top: 50px;*/
+    height: 38px;
+    line-height: 38px;
+    /*background-color: #2fcba8;*/
+    margin-left: 15px;
+    /*margin-right: 50px;*/
+}
+
+.start {
+    text-align: center;
+    float: left;
+    width: 40px;
+    height: 100%;
+    /*margin-top: 5px;*/
+}
+
+.start img {
+    width: 30px;
+}
+
+.yangpin {
+    height: 38px;
+    line-height: 38px;
+}
+
+.mianyi {
+    display: block;
+    float: left;
+    margin-left: 16px;
+}
+
+/***********添加/修改方案弹窗结束***********/
+
+/**************弹窗 2、3：添加客服/修改客服信息 弹窗开始 ***************/
+.addwaiter_layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    font-weight: 400;
+    text-align: right;
+}
+
+.adwaiter_layui-input-block {
+    margin-left: 110px;
+    height: 38px;
+}
+
+/*.addwaiter_layui-input {*/
+/*display: block;*/
+/*padding-left: 10px;*/
+/*}*/
+
+#addWaiter .container {
+    background-color: #fff;
+    width: 420px;
+    height: 330px;
+    margin: 0 auto;
+    /*margin-top: 200px;*/
+}
+
+#addWaiter .container .title {
+    width: 100%;
+    height: 58px;
+    background-color: #2fcba8;
+    position: relative;
+}
+
+#addWaiter .container .title p {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    line-height: 58px;
+    font-family: "PingFang SC", "微软雅黑";
+}
+
+#addWaiter .container .title i {
+    position: absolute;
+    right: 24px;
+}
+
+#addWaiter .close {
+    cursor: pointer;
+}
+
+#addWaiter .slt_name {
+    margin-top: 25px;
+}
+
+#addWaiter .submit {
+    width: 216px;
+    background-color: #2fcba8;
+    margin-top: 5px;
+}
+
+#addWaiter .layui-input:hover {
+    border-color: #2fcba8 !important;
+}
+
+/*编辑客服*/
+#editWaiter .container {
+    background-color: #fff;
+    width: 420px;
+    height: 330px;
+    margin: 0 auto;
+    /*margin-top: 200px;*/
+}
+
+#editWaiter .container .title {
+    width: 100%;
+    height: 58px;
+    background-color: #2fcba8;
+    position: relative;
+}
+
+#editWaiter .container .title p {
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    line-height: 58px;
+    font-family: "PingFang SC", "微软雅黑";
+}
+
+#editWaiter .container .title i {
+    position: absolute;
+    right: 24px;
+}
+
+#editWaiter .close {
+    cursor: pointer;
+}
+
+#editWaiter .slt_name {
+    margin-top: 25px;
+}
+
+#editWaiter .submit {
+    width: 216px;
+    background-color: #2fcba8;
+    margin-top: 5px;
+}
+
+#editWaiter .layui-input:hover {
+    border-color: #2fcba8 !important;
+}
+
+/*弹窗默认样式*/
+.xq_modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+/*点击后弹窗添加样式in*/
+
+/*------------遮照----------*/
+/*初始样式*/
+.xq_modal_back {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+    opacity: 0;
+    z-index: 1040;
+    background-color: #000;
+}
+
+/*弹窗内容样式（可替换）*/
+/*.xq_modal > .xq_modal_contant{*/
+/*width: 420px;*/
+/*margin: 100px auto;*/
+/*height: 0px;*/
+/*border: 1px solid #fff;*/
+/*background-color: #fff;*/
+/*border-radius: 3px;*/
+/*-webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);*/
+/*-moz-box-shadow: 0 5px 15px rgba(0,0,0,.5);*/
+/*box-shadow: 0 5px 15px rgba(0,0,0,.5);*/
+/*overflow: hidden;*/
+/*}*/
+
+/**************弹窗 2、3：添加客服/修改客服信息 弹窗结束 ***************/

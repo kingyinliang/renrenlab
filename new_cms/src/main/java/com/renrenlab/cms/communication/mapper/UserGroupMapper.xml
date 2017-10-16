@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserGroupDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserGroup" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_gid" property="uGid" jdbcType="BIGINT" />
+    <result column="u_group_name" property="uGroupName" jdbcType="VARCHAR" />
+    <result column="u_group_description" property="uGroupDescription" jdbcType="VARCHAR" />
+    <result column="u_group_state" property="uGroupState" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_gid, u_group_name, u_group_description, u_group_state, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_group
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_group
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserGroup" >
+    insert into rlab_user_info.t_user_group (id, u_gid, u_group_name, 
+      u_group_description, u_group_state, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uGid,jdbcType=BIGINT}, #{uGroupName,jdbcType=VARCHAR}, 
+      #{uGroupDescription,jdbcType=VARCHAR}, #{uGroupState,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserGroup" >
+    insert into rlab_user_info.t_user_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uGid != null" >
+        u_gid,
+      </if>
+      <if test="uGroupName != null" >
+        u_group_name,
+      </if>
+      <if test="uGroupDescription != null" >
+        u_group_description,
+      </if>
+      <if test="uGroupState != null" >
+        u_group_state,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uGid != null" >
+        #{uGid,jdbcType=BIGINT},
+      </if>
+      <if test="uGroupName != null" >
+        #{uGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="uGroupDescription != null" >
+        #{uGroupDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="uGroupState != null" >
+        #{uGroupState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserGroup" >
+    update rlab_user_info.t_user_group
+    <set >
+      <if test="uGid != null" >
+        u_gid = #{uGid,jdbcType=BIGINT},
+      </if>
+      <if test="uGroupName != null" >
+        u_group_name = #{uGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="uGroupDescription != null" >
+        u_group_description = #{uGroupDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="uGroupState != null" >
+        u_group_state = #{uGroupState,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserGroup" >
+    update rlab_user_info.t_user_group
+    set u_gid = #{uGid,jdbcType=BIGINT},
+      u_group_name = #{uGroupName,jdbcType=VARCHAR},
+      u_group_description = #{uGroupDescription,jdbcType=VARCHAR},
+      u_group_state = #{uGroupState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

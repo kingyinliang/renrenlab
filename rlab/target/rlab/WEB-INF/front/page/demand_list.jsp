@@ -595,12 +595,17 @@
      * @param data 传入单个卡片的数据
      */
     function createItem(data) {
-
+        var tipText;
+        if(data.uReqState === 3) {
+            tipText = "已解决";
+        }else{
+            tipText = data.remainTime + '天后需求过期';
+        }
         var html =
             '<li   onmouseover="showPhoneBtn(this)" onmouseleave="hidePhoneBtn(this)">\
                 <p class="tip">\
                     <span class="date">' + data.beginTime + '</span>\
-                <span class="status">' + data.remainTime + '天后需求过期' + '</span>\
+                <span class="status">' + tipText + '</span>\
                 </p>\
                 <p class="txt">'
             + data.uReqDescription +
@@ -720,12 +725,12 @@
                         var newArr = [];
                         for (var i = 0; i < data.payload.length; i++) {
 //                            var time = Math.floor((((new Date()).getTime() - data.payload[i].modifyTime) / 1000) / 60);
-                            if (data.payload[i].uReqState === 3) {
-                                newArr.push('用户' + data.payload[i].uName + '在  ' + data.payload[i].modifyTimeStr + ' 解决了需求');
-                            }
-                            else if (data.payload[i].uReqState === 0) {
+                            // if (data.payload[i].uReqState === 3) {
                                 newArr.push('用户' + data.payload[i].uName + '在  ' + data.payload[i].modifyTimeStr + ' 发布了需求');
-                            }
+                            // }
+                            // else if (data.payload[i].uReqState === 0) {
+                            //     newArr.push('用户' + data.payload[i].uName + '在  ' + data.payload[i].modifyTimeStr + ' 发布了需求');
+                            // }
                         }
                         cb(newArr);
                     } else {

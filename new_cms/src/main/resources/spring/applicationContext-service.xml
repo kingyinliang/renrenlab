@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!--扫描service包(包含子包)下所有使用注解的类型 -->
+	<context:component-scan base-package="com.renrenlab.cms.*"/>
+	<!-- 刷新access_token定时 -->
+	<bean name="refreshAccessTokenJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass"
+				  value="com.renrenlab.cms.wechat.quartz.RefreshAccessTokenJob"/>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="refreshAccessTokenTask" value-ref="refreshAccessTokenTask"/>
+			</map>
+		</property>
+		<property name="durability" value="true"/>
+	</bean>
+	<bean id="refreshAccessTokenTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="refreshAccessTokenJob"/>
+		<property name="repeatInterval" value="5400000"/>
+		<property name="startDelay" value="10000"/>
+	</bean>
+	<!-- 消息去重定时 -->
+	<bean name="clearDuplicateMessageJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass"
+				  value="com.renrenlab.cms.wechat.quartz.ClearDuplicateMessageJob"/>
+		<property name="durability" value="true"/>
+	</bean>
+	<bean id="clearDuplicateMessageTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="clearDuplicateMessageJob"/>
+		<property name="repeatInterval" value="60000"/>
+		<property name="startDelay" value="60000"/>
+	</bean>
+
+	<!-- 定时更新会话状态 -->
+ 	<bean name="refreshSessionStatusJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+		<property name="jobClass"
+				  value="com.renrenlab.cms.communication.quartz.RefreshSessionStatusJob"/>
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="refreshSessionStatusTask" value-ref="refreshSessionStatusTask"/>
+			</map>
+		</property>
+		<property name="durability" value="true"/>
+	</bean>
+	<bean id="refreshSessionStatusTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="refreshSessionStatusJob"/>
+		<property name="repeatInterval" value="60000"/>
+		<property name="startDelay" value="1000"/>
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		autowire="no">
+		<property name="jobDetails">
+			<list>
+				<ref bean="refreshAccessTokenJob"/>
+				<ref bean="clearDuplicateMessageJob"/>
+				<ref bean="refreshSessionStatusJob"/>
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="refreshAccessTokenTrigger"/>
+				<ref bean="clearDuplicateMessageTrigger"/>
+				<ref bean="refreshSessionStatusTrigger"/>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

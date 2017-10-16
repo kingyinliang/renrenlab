@@ -488,7 +488,7 @@ public class UserBaseInfoServiceImpl implements UserBaseInfoService {
         PageHelper.startPage(pageNo, pageSize);
         //剔除权限高于用户的记录
         String u_permisssion = String.valueOf(session.getAttribute("u_permisssion"));
-        List<UserBaseInfo> list = userBaseInfoDao.getRoleList(null, keyword, rName,u_permisssion);
+        List<UserBaseInfo> list = userBaseInfoDao.getRoleList(null, keyword, rName, u_permisssion);
 
         return new PageInfo<>(list);
     }
@@ -522,6 +522,11 @@ public class UserBaseInfoServiceImpl implements UserBaseInfoService {
                 }
                 //更新
                 userRoleDao.updateDepartment(userBaseInfo);
+
+                UserBaseInfo baseInfo = new UserBaseInfo();
+                if (userBaseInfo.getuEmail() != null) baseInfo.setuEmail(userBaseInfo.getuEmail());
+                baseInfo.setuUid(userBaseInfo.getuUid());
+                userBaseInfoDao.updateMana(baseInfo);
             } else {
                 //  否则添加角色
                 userBaseInfoDao.insertRoleMap(userBaseInfo);
@@ -530,6 +535,11 @@ public class UserBaseInfoServiceImpl implements UserBaseInfoService {
                     throw new BusinessException(ResponseEntity.REPEAT_U_JOB_NUMBER);
                 }
                 userBaseInfoDao.insertDepartment(userBaseInfo);
+
+                UserBaseInfo baseInfo = new UserBaseInfo();
+                if (userBaseInfo.getuEmail() != null) baseInfo.setuEmail(userBaseInfo.getuEmail());
+                baseInfo.setuUid(userBaseInfo.getuUid());
+                userBaseInfoDao.updateMana(baseInfo);
             }
         } else {
             userBaseInfo.setuPassword(PasswordUtils.md5(userBaseInfo.getuPassword()));

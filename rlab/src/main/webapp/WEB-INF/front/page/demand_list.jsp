@@ -595,12 +595,17 @@
      * @param data 传入单个卡片的数据
      */
     function createItem(data) {
-
+        var tipText;
+        if(data.uReqState === 3) {
+            tipText = "已解决";
+        }else{
+            tipText = data.remainTime + '天后需求过期';
+        }
         var html =
             '<li   onmouseover="showPhoneBtn(this)" onmouseleave="hidePhoneBtn(this)">\
                 <p class="tip">\
                     <span class="date">' + data.beginTime + '</span>\
-                <span class="status">' + data.remainTime + '天后需求过期' + '</span>\
+                <span class="status">' + tipText + '</span>\
                 </p>\
                 <p class="txt">'
             + data.uReqDescription +

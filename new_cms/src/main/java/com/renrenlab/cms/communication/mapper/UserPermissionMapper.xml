@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserPermissionDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserPermission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_pm_id" property="uPmId" jdbcType="INTEGER" />
+    <result column="u_pm_name" property="uPmName" jdbcType="VARCHAR" />
+    <result column="u_pm_description" property="uPmDescription" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_pm_id, u_pm_name, u_pm_description, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserPermission" >
+    insert into rlab_user_info.t_user_permission (id, u_pm_id, u_pm_name, 
+      u_pm_description, create_time, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{uPmId,jdbcType=INTEGER}, #{uPmName,jdbcType=VARCHAR}, 
+      #{uPmDescription,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserPermission" >
+    insert into rlab_user_info.t_user_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uPmId != null" >
+        u_pm_id,
+      </if>
+      <if test="uPmName != null" >
+        u_pm_name,
+      </if>
+      <if test="uPmDescription != null" >
+        u_pm_description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uPmId != null" >
+        #{uPmId,jdbcType=INTEGER},
+      </if>
+      <if test="uPmName != null" >
+        #{uPmName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPmDescription != null" >
+        #{uPmDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserPermission" >
+    update rlab_user_info.t_user_permission
+    <set >
+      <if test="uPmId != null" >
+        u_pm_id = #{uPmId,jdbcType=INTEGER},
+      </if>
+      <if test="uPmName != null" >
+        u_pm_name = #{uPmName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPmDescription != null" >
+        u_pm_description = #{uPmDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserPermission" >
+    update rlab_user_info.t_user_permission
+    set u_pm_id = #{uPmId,jdbcType=INTEGER},
+      u_pm_name = #{uPmName,jdbcType=VARCHAR},
+      u_pm_description = #{uPmDescription,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.OrderSchemeDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.OrderScheme" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sch_id" property="schId" jdbcType="BIGINT" />
+    <result column="pj_id" property="pjId" jdbcType="BIGINT" />
+    <result column="sch_project" property="schProject" jdbcType="VARCHAR" />
+    <result column="sch_organization" property="schOrganization" jdbcType="VARCHAR" />
+    <result column="sch_standard" property="schStandard" jdbcType="VARCHAR" />
+    <result column="sch_instrument" property="schInstrument" jdbcType="VARCHAR" />
+    <result column="sch_qualifications" property="schQualifications" jdbcType="VARCHAR" />
+    <result column="sch_period" property="schPeriod" jdbcType="VARCHAR" />
+    <result column="sch_offer_service" property="schOfferService" jdbcType="VARCHAR" />
+    <result column="sch_price" property="schPrice" jdbcType="VARCHAR" />
+    <result column="sch_distance" property="schDistance" jdbcType="INTEGER" />
+    <result column="sch_praise" property="schPraise" jdbcType="VARCHAR" />
+    <result column="sch_feature" property="schFeature" jdbcType="INTEGER" />
+    <result column="sch_version" property="schVersion" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="SchemeInfo" type="com.renrenlab.cms.communication.vo.SchemeInfo">
+    <result column="sch_id" property="schId" jdbcType="BIGINT"/>
+    <result column="pj_id" property="pjId" jdbcType="BIGINT"/>
+    <result column="sch_project" property="schProject" jdbcType="VARCHAR"/>
+    <result column="sch_organization" property="schOrganization" jdbcType="VARCHAR"/>
+    <result column="sch_standard" property="schStandard" jdbcType="VARCHAR"/>
+    <result column="sch_instrument" property="schInstrument" jdbcType="VARCHAR"/>
+    <result column="sch_qualifications" property="schQualifications" jdbcType="VARCHAR"/>
+    <result column="sch_period" property="schPeriod" jdbcType="VARCHAR"/>
+    <result column="sch_offer_service" property="schOfferService" jdbcType="INTEGER"/>
+    <result column="sch_price" property="schPrice" jdbcType="VARCHAR"/>
+    <result column="sch_distance" property="schDistance" jdbcType="VARCHAR"/>
+    <result column="sch_praise" property="schPraise" jdbcType="VARCHAR"/>
+    <result column="sch_feature" property="schFeature" jdbcType="INTEGER"/>
+    <result column="sch_version" property="schVersion" jdbcType="INTEGER"/>
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sch_id, pj_id, sch_project, sch_organization, sch_standard, sch_instrument, sch_qualifications,
+    sch_period, sch_offer_service, sch_price, sch_distance, sch_praise, sch_feature,
+    sch_version, create_time, modify_time
+  </sql>
+  <!--根据方案Id查询-->
+  <select id="selectBySchId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_scheme
+    where sch_id = #{schId,jdbcType=BIGINT}
+  </select>
+
+  <!--根据方案Id查询-->
+  <select id="selectBySchId2" resultMap="SchemeInfo" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_order_info.t_order_scheme
+    where sch_id = #{schId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPjId" resultMap="SchemeInfo" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_order_info.t_order_scheme
+    where pj_id = #{pj_id,jdbcType=BIGINT}
+  </select>
+  <!--插入-->
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.OrderScheme" >
+    insert into rlab_order_info.t_order_scheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="schId != null" >
+        sch_id,
+      </if>
+      <if test="pjId != null" >
+        pj_id,
+      </if>
+      <if test="schProject != null" >
+        sch_project,
+      </if>
+      <if test="schOrganization != null" >
+        sch_organization,
+      </if>
+      <if test="schStandard != null" >
+        sch_standard,
+      </if>
+      <if test="schInstrument != null" >
+        sch_instrument,
+      </if>
+      <if test="schQualifications != null" >
+        sch_qualifications,
+      </if>
+      <if test="schPeriod != null" >
+        sch_period,
+      </if>
+      <if test="schOfferService != null" >
+        sch_offer_service,
+      </if>
+      <if test="schPrice != null" >
+        sch_price,
+      </if>
+      <if test="schDistance != null" >
+        sch_distance,
+      </if>
+      <if test="schPraise != null" >
+        sch_praise,
+      </if>
+      <if test="schFeature != null" >
+        sch_feature,
+      </if>
+      <if test="schVersion != null" >
+        sch_version,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="schId != null" >
+        #{schId,jdbcType=BIGINT},
+      </if>
+      <if test="pjId != null" >
+        #{pjId,jdbcType=BIGINT},
+      </if>
+      <if test="schProject != null" >
+        #{schProject,jdbcType=VARCHAR},
+      </if>
+      <if test="schOrganization != null" >
+        #{schOrganization,jdbcType=VARCHAR},
+      </if>
+      <if test="schStandard != null" >
+        #{schStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="schInstrument != null" >
+        #{schInstrument,jdbcType=VARCHAR},
+      </if>
+      <if test="schQualifications != null" >
+        #{schQualifications,jdbcType=VARCHAR},
+      </if>
+      <if test="schPeriod != null" >
+        #{schPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="schOfferService != null" >
+        #{schOfferService,jdbcType=INTEGER},
+      </if>
+      <if test="schPrice != null" >
+        #{schPrice,jdbcType=BIGINT},
+      </if>
+      <if test="schDistance != null" >
+        #{schDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="schPraise != null" >
+        #{schPraise,jdbcType=VARCHAR},
+      </if>
+      <if test="schFeature != null" >
+        #{schFeature,jdbcType=INTEGER},
+      </if>
+      <if test="schVersion != null" >
+        #{schVersion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!--根据方案ID更新-->
+  <update id="updateBySchIdSelective" parameterType="com.renrenlab.cms.communication.model.OrderScheme" >
+    update rlab_order_info.t_order_scheme
+    <set >
+      <if test="pjId != null" >
+        pj_id = #{pjId,jdbcType=BIGINT},
+      </if>
+      <if test="schProject != null" >
+        sch_project = #{schProject,jdbcType=VARCHAR},
+      </if>
+      <if test="schOrganization != null" >
+        sch_organization = #{schOrganization,jdbcType=VARCHAR},
+      </if>
+      <if test="schStandard != null" >
+        sch_standard = #{schStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="schInstrument != null" >
+        sch_instrument = #{schInstrument,jdbcType=VARCHAR},
+      </if>
+      <if test="schQualifications != null" >
+        sch_qualifications = #{schQualifications,jdbcType=VARCHAR},
+      </if>
+      <if test="schPeriod != null" >
+        sch_period = #{schPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="schOfferService != null" >
+        sch_offer_service = #{schOfferService,jdbcType=INTEGER},
+      </if>
+      <if test="schPrice != null" >
+        sch_price = #{schPrice,jdbcType=BIGINT},
+      </if>
+      <if test="schDistance != null" >
+        sch_distance = #{schDistance,jdbcType=VARCHAR},
+      </if>
+      <if test="schPraise != null" >
+        sch_praise = #{schPraise,jdbcType=VARCHAR},
+      </if>
+      <if test="schFeature != null" >
+        sch_feature = #{schFeature,jdbcType=INTEGER},
+      </if>
+      <if test="schVersion != null" >
+        sch_version = #{schVersion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sch_id = #{schId,jdbcType=BIGINT}
+  </update>
+  <!--删除方案-->
+  <delete id="delBySchId" parameterType="java.lang.Long">
+    delete from rlab_order_info.t_order_scheme
+    where sch_id = #{sch_id,jdbcType=BIGINT}
+  </delete>
+</mapper>

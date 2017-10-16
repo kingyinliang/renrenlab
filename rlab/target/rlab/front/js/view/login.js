@@ -376,6 +376,7 @@ function toFrontHome() {
     } else {
         location.href = callBackURL;
     }
+
 }
 /**
  * 跳转管理端界面

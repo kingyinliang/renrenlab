@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.cms.communication.dao.PublishDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.Publish">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pub_id" jdbcType="BIGINT" property="pubId" />
+    <result column="pub_org_name" jdbcType="VARCHAR" property="pubOrgName" />
+    <result column="pub_contact_name" jdbcType="VARCHAR" property="pubContactName" />
+    <result column="pub_contact_phone" jdbcType="VARCHAR" property="pubContactPhone" />
+    <result column="pub_wx_openid" jdbcType="VARCHAR" property="pubWxOpenid" />
+    <result column="pub_district" jdbcType="INTEGER" property="pubDistrict" />
+    <result column="pub_registered_fund" jdbcType="INTEGER" property="pubRegisteredFund" />
+    <result column="pub_staff_num" jdbcType="INTEGER" property="pubStaffNum" />
+    <result column="pub_taking" jdbcType="INTEGER" property="pubTaking" />
+    <result column="pub_last_taking" jdbcType="INTEGER" property="pubLastTaking" />
+    <result column="pub_state" jdbcType="INTEGER" property="pubState" />
+    <result column="pub_discount" jdbcType="VARCHAR" property="pubDiscount" />
+    <result column="pub_limit" jdbcType="VARCHAR" property="pubLimit" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pub_id, pub_org_name,pub_contact_name, pub_contact_phone,pub_wx_openid, pub_district, pub_registered_fund, pub_staff_num,
+    pub_taking, pub_last_taking, pub_state, pub_discount, pub_limit, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_publish
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="listAll" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    DISTINCT ON (pub_org_name,create_time) <include refid="Base_Column_List" />
+    from rlab_common_info.t_publish
+    where pub_state = 1
+    ORDER BY create_time ASC
+    offset #{count,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_publish
+    where pub_wx_openid = #{wxOpenId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rlab_common_info.t_publish
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.Publish">
+    insert into rlab_common_info.t_publish (id, pub_id, pub_org_name, pub_contact_name,pub_contact_phone,
+      pub_wx_openid, pub_district, pub_registered_fund, 
+      pub_staff_num, pub_taking, pub_last_taking, 
+      pub_state, pub_discount, pub_limit, 
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{pubId,jdbcType=BIGINT}, #{pubOrgName,jdbcType=VARCHAR},
+     #{pubContactName,jdbcType=VARCHAR},#{pubContactPhone,jdbcType=VARCHAR},
+      #{pubWxOpenid,jdbcType=VARCHAR}, #{pubDistrict,jdbcType=INTEGER}, #{pubRegisteredFund,jdbcType=INTEGER}, 
+      #{pubStaffNum,jdbcType=INTEGER}, #{pubTaking,jdbcType=INTEGER}, #{pubLastTaking,jdbcType=INTEGER}, 
+      #{pubState,jdbcType=INTEGER}, #{pubDiscount,jdbcType=VARCHAR}, #{pubLimit,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.Publish">
+    insert into rlab_common_info.t_publish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pubId != null">
+        pub_id,
+      </if>
+      <if test="pubOrgName != null">
+        pub_org_name,
+      </if>
+      <if test="pubContactName != null">
+        pub_contact_name,
+      </if>
+      <if test="pubContactPhone != null">
+        pub_contact_phone,
+      </if>
+      <if test="pubWxOpenid != null">
+        pub_wx_openid,
+      </if>
+      <if test="pubDistrict != null">
+        pub_district,
+      </if>
+      <if test="pubRegisteredFund != null">
+        pub_registered_fund,
+      </if>
+      <if test="pubStaffNum != null">
+        pub_staff_num,
+      </if>
+      <if test="pubTaking != null">
+        pub_taking,
+      </if>
+      <if test="pubLastTaking != null">
+        pub_last_taking,
+      </if>
+      <if test="pubState != null">
+        pub_state,
+      </if>
+      <if test="pubDiscount != null">
+        pub_discount,
+      </if>
+      <if test="pubLimit != null">
+        pub_limit,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pubId != null">
+        #{pubId,jdbcType=BIGINT},
+      </if>
+      <if test="pubOrgName != null">
+        #{pubOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="pubContactName != null">
+        #{pubContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="pubContactPhone != null">
+        #{pubContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="pubWxOpenid != null">
+        #{pubWxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDistrict != null">
+        #{pubDistrict,jdbcType=INTEGER},
+      </if>
+      <if test="pubRegisteredFund != null">
+        #{pubRegisteredFund,jdbcType=INTEGER},
+      </if>
+      <if test="pubStaffNum != null">
+        #{pubStaffNum,jdbcType=INTEGER},
+      </if>
+      <if test="pubTaking != null">
+        #{pubTaking,jdbcType=INTEGER},
+      </if>
+      <if test="pubLastTaking != null">
+        #{pubLastTaking,jdbcType=INTEGER},
+      </if>
+      <if test="pubState != null">
+        #{pubState,jdbcType=INTEGER},
+      </if>
+      <if test="pubDiscount != null">
+        #{pubDiscount,jdbcType=VARCHAR},
+      </if>
+      <if test="pubLimit != null">
+        #{pubLimit,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+</mapper>

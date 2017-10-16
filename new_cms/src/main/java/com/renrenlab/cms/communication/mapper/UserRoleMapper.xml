@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserRoleDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserRole" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="r_rid" property="rRid" jdbcType="BIGINT" />
+    <result column="r_name" property="rName" jdbcType="VARCHAR" />
+    <result column="r_permisssion" property="rPermisssion" jdbcType="VARCHAR" />
+    <result column="r_description" property="rDescription" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, r_rid, r_name, r_permisssion, r_description, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据用户角色Id查询用户权限信息 -->
+  <select id="selectByuRid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM rlab_user_info.t_user_role
+    WHERE r_rid = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserRole" >
+    insert into rlab_user_info.t_user_role (id, r_rid, r_name, 
+      r_permisssion, r_description, create_time, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{rRid,jdbcType=BIGINT}, #{rName,jdbcType=VARCHAR}, 
+      #{rPermisssion,jdbcType=VARCHAR}, #{rDescription,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserRole" >
+    insert into rlab_user_info.t_user_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="rRid != null" >
+        r_rid,
+      </if>
+      <if test="rName != null" >
+        r_name,
+      </if>
+      <if test="rPermisssion != null" >
+        r_permisssion,
+      </if>
+      <if test="rDescription != null" >
+        r_description,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="rRid != null" >
+        #{rRid,jdbcType=BIGINT},
+      </if>
+      <if test="rName != null" >
+        #{rName,jdbcType=VARCHAR},
+      </if>
+      <if test="rPermisssion != null" >
+        #{rPermisssion,jdbcType=VARCHAR},
+      </if>
+      <if test="rDescription != null" >
+        #{rDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserRole" >
+    update rlab_user_info.t_user_role
+    <set >
+      <if test="rRid != null" >
+        r_rid = #{rRid,jdbcType=BIGINT},
+      </if>
+      <if test="rName != null" >
+        r_name = #{rName,jdbcType=VARCHAR},
+      </if>
+      <if test="rPermisssion != null" >
+        r_permisssion = #{rPermisssion,jdbcType=VARCHAR},
+      </if>
+      <if test="rDescription != null" >
+        r_description = #{rDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserRole" >
+    update rlab_user_info.t_user_role
+    set r_rid = #{rRid,jdbcType=BIGINT},
+      r_name = #{rName,jdbcType=VARCHAR},
+      r_permisssion = #{rPermisssion,jdbcType=VARCHAR},
+      r_description = #{rDescription,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

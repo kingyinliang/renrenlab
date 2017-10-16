@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.OrderCommentDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.OrderComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cm_id" property="cmId" jdbcType="BIGINT" />
+    <result column="cm_score" property="cmScore" jdbcType="INTEGER" />
+    <result column="cm_content" property="cmContent" jdbcType="VARCHAR" />
+    <result column="o_oid" property="oId" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="cm_u_type" property="cmUType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cm_id, cm_score, cm_content, o_oid, u_uid, cm_u_type, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByOId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_comment
+    where o_oid = #{oId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_order_info.t_order_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.OrderComment" >
+    insert into rlab_order_info.t_order_comment (id, cm_id, cm_score, 
+      cm_content, o_oid, u_uid, 
+      cm_u_type, create_time)
+    values (#{id,jdbcType=BIGINT}, #{cmId,jdbcType=BIGINT}, #{cmScore,jdbcType=INTEGER}, 
+      #{cmContent,jdbcType=VARCHAR}, #{oId,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, 
+      #{cmUType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.OrderComment" >
+    insert into rlab_order_info.t_order_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cmId != null" >
+        cm_id,
+      </if>
+      <if test="cmScore != null" >
+        cm_score,
+      </if>
+      <if test="cmContent != null" >
+        cm_content,
+      </if>
+      <if test="oId != null" >
+        o_oid,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="cmUType != null" >
+        cm_u_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cmId != null" >
+        #{cmId,jdbcType=BIGINT},
+      </if>
+      <if test="cmScore != null" >
+        #{cmScore,jdbcType=INTEGER},
+      </if>
+      <if test="cmContent != null" >
+        #{cmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        #{oId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="cmUType != null" >
+        #{cmUType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.OrderComment" >
+    update rlab_order_info.t_order_comment
+    <set >
+      <if test="cmId != null" >
+        cm_id = #{cmId,jdbcType=BIGINT},
+      </if>
+      <if test="cmScore != null" >
+        cm_score = #{cmScore,jdbcType=INTEGER},
+      </if>
+      <if test="cmContent != null" >
+        cm_content = #{cmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="oId != null" >
+        o_oid = #{oId,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="cmUType != null" >
+        cm_u_type = #{cmUType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.OrderComment" >
+    update rlab_order_info.t_order_comment
+    set cm_id = #{cmId,jdbcType=BIGINT},
+      cm_score = #{cmScore,jdbcType=INTEGER},
+      cm_content = #{cmContent,jdbcType=VARCHAR},
+      o_oid = #{oId,jdbcType=BIGINT},
+      u_uid = #{uUid,jdbcType=BIGINT},
+      cm_u_type = #{cmUType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

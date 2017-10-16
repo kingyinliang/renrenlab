@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.WxMenuDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.WxMenu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="wm_seq" property="wmSeq" jdbcType="INTEGER" />
+    <result column="wm_content" property="wmContent" jdbcType="VARCHAR" />
+    <result column="wm_menu_key" property="wmMenuKey" jdbcType="VARCHAR" />
+    <result column="wm_name" property="wmName" jdbcType="VARCHAR" />
+    <result column="wm_pid" property="wmPid" jdbcType="BIGINT" />
+    <result column="wm_resp_type" property="wmRespType" jdbcType="INTEGER" />
+    <result column="wm_type" property="wmType" jdbcType="VARCHAR" />
+    <result column="wm_url" property="wmUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time " property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, wm_seq, wm_content, wm_menu_key, wm_name, wm_pid, wm_resp_type, wm_type, wm_url, create_time,
+    "modify_time "
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_wx_menu
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectByWmMenuKey" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_wx_menu
+    where wm_menu_key=#{wmMenuKey,jdbcType=VARCHAR}
+  </select>
+  
+    <select id="listAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_wx_menu
+      ORDER BY wm_pid,wm_seq
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_common_info.t_common_wx_menu
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.WxMenu" >
+    insert into rlab_common_info.t_common_wx_menu (id, wm_seq, wm_content, wm_menu_key,
+      wm_name, wm_pid, wm_resp_type, 
+      wm_type, wm_url, create_time, 
+      "modify_time ")
+    values (#{id,jdbcType=BIGINT}, #{wmSeq,jdbcType=INTEGER}, #{wmContent,jdbcType=VARCHAR}, #{wmMenuKey,jdbcType=VARCHAR},
+      #{wmName,jdbcType=VARCHAR}, #{wmPid,jdbcType=BIGINT}, #{wmRespType,jdbcType=INTEGER}, 
+      #{wmType,jdbcType=VARCHAR}, #{wmUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.WxMenu" >
+    insert into rlab_common_info.t_common_wx_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wmSeq != null" >
+        wm_seq,
+      </if>
+      <if test="wmContent != null" >
+        wm_content,
+      </if>
+      <if test="wmMenuKey != null" >
+        wm_menu_key,
+      </if>
+      <if test="wmName != null" >
+        wm_name,
+      </if>
+      <if test="wmPid != null" >
+        wm_pid,
+      </if>
+      <if test="wmRespType != null" >
+        wm_resp_type,
+      </if>
+      <if test="wmType != null" >
+        wm_type,
+      </if>
+      <if test="wmUrl != null" >
+        wm_url,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        "modify_time ",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wmSeq != null" >
+        #{wmSeq,jdbcType=INTEGER},
+      </if>
+      <if test="wmContent != null" >
+        #{wmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="wmMenuKey != null" >
+        #{wmMenuKey,jdbcType=VARCHAR},
+      </if>
+      <if test="wmName != null" >
+        #{wmName,jdbcType=VARCHAR},
+      </if>
+      <if test="wmPid != null" >
+        #{wmPid,jdbcType=BIGINT},
+      </if>
+      <if test="wmRespType != null" >
+        #{wmRespType,jdbcType=INTEGER},
+      </if>
+      <if test="wmType != null" >
+        #{wmType,jdbcType=VARCHAR},
+      </if>
+      <if test="wmUrl != null" >
+        #{wmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.WxMenu" >
+    update rlab_common_info.t_common_wx_menu
+    <set >
+      <if test="wmSeq != null" >
+        wm_seq = #{wmSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="wmContent != null" >
+        wm_content = #{wmContent,jdbcType=VARCHAR},
+      </if>
+      <if test="wmMenuKey != null" >
+        wm_menu_key = #{wmMenuKey,jdbcType=VARCHAR},
+      </if>
+      <if test="wmName != null" >
+        wm_name = #{wmName,jdbcType=VARCHAR},
+      </if>
+      <if test="wmPid != null" >
+        wm_pid = #{wmPid,jdbcType=BIGINT},
+      </if>
+      <if test="wmRespType != null" >
+        wm_resp_type = #{wmRespType,jdbcType=INTEGER},
+      </if>
+      <if test="wmType != null" >
+        wm_type = #{wmType,jdbcType=VARCHAR},
+      </if>
+      <if test="wmUrl != null" >
+        wm_url = #{wmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        "modify_time " = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.WxMenu" >
+    update rlab_common_info.t_common_wx_menu
+    set
+      wm_seq = #{wmSeq,jdbcType=VARCHAR},
+      wm_content = #{wmContent,jdbcType=VARCHAR},
+      wm_menu_key = #{wmMenuKey,jdbcType=VARCHAR},
+      wm_name = #{wmName,jdbcType=VARCHAR},
+      wm_pid = #{wmPid,jdbcType=BIGINT},
+      wm_resp_type = #{wmRespType,jdbcType=INTEGER},
+      wm_type = #{wmType,jdbcType=VARCHAR},
+      wm_url = #{wmUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      "modify_time " = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

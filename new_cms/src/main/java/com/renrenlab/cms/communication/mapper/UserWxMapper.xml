@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserWxDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserWx" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="wx_open_id" property="wxOpenId" jdbcType="VARCHAR" />
+    <result column="wx_union_id" property="wxUnionId" jdbcType="VARCHAR" />
+    <result column="wx_subscribe" property="wxSubscribe" jdbcType="BIT" />
+    <result column="wx_subscribe_time" property="wxSubscribeTime" jdbcType="TIMESTAMP" />
+    <result column="wx_source" property="wxSource" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_uid, wx_open_id, wx_union_id, wx_subscribe, wx_subscribe_time, wx_source, create_time,
+    modify_time
+  </sql>
+    <!--根据用户id查询-->
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_wx
+    where u_uid = #{uUid,jdbcType=BIGINT}
+  </select>
+     <!--根据用户openId查询-->
+  <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_wx
+    where wx_open_id = #{wxOpenId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_wx
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserWx" >
+    insert into rlab_user_info.t_user_wx (id, u_uid, wx_open_id, 
+      wx_union_id, wx_subscribe, wx_subscribe_time, wx_source,
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, #{wxOpenId,jdbcType=VARCHAR}, 
+      #{wxUnionId,jdbcType=VARCHAR}, #{wxSubscribe,jdbcType=BIT}, #{wxSubscribeTime,jdbcType=TIMESTAMP}, 
+      #{wxSource,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <!--插入-->
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserWx" >
+    insert into rlab_user_info.t_user_wx
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="wxOpenId != null" >
+        wx_open_id,
+      </if>
+      <if test="wxUnionId != null" >
+        wx_union_id,
+      </if>
+      <if test="wxSubscribe != null" >
+        wx_subscribe,
+      </if>
+      <if test="wxSubscribeTime != null" >
+        wx_subscribe_time,
+      </if>
+      <if test="wxSource != null" >
+        wx_source,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="wxOpenId != null" >
+        #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUnionId != null" >
+        #{wxUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSubscribe != null" >
+        #{wxSubscribe,jdbcType=BIT},
+      </if>
+      <if test="wxSubscribeTime != null" >
+        #{wxSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxSource != null" >
+        #{wxSource,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+   <!--根据openId更新-->
+  <update id="updateByOpenIdSelective" parameterType="com.renrenlab.cms.communication.model.UserWx" >
+   update rlab_user_info.t_user_wx
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="wxOpenId != null" >
+        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUnionId != null" >
+        wx_union_id = #{wxUnionId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSubscribe != null" >
+        wx_subscribe = #{wxSubscribe,jdbcType=BIT},
+      </if>
+      <if test="wxSubscribeTime != null" >
+        wx_subscribe_time = #{wxSubscribeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxSource != null" >
+       wx_source = #{wxSource,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        modify_time = now(),
+    </set>
+    where wx_open_id = #{wxOpenId,jdbcType=VARCHAR}
+  </update>
+
+  <!--根据用户ID获取微信表中聊天所用信息-->
+  <select id="selectChatUserByUuId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_wx
+    where u_uid = #{uUid,jdbcType=BIGINT}
+    AND wx_source = 0
+  </select>
+  
+    <select id="selectUserByUuId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_wx
+    where u_uid = #{uUid,jdbcType=BIGINT}
+    AND wx_source = 0
+    AND wx_subscribe = 1
+  </select>
+  
+
+</mapper>

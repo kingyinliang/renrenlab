@@ -181,7 +181,7 @@
                             <td>${info.orgOid}</td>
                             <td>${info.orgBizUid==0?"公有":"私有"}</td>
                             <td>${info.orgName}</td>
-                            <td>${empty info.orgBizName ?"人人实验":info.orgBizName}</td>
+                            <td>${empty info.orgBizName ? "无名":(info.orgBizUid==0?"人人实验":info.orgBizName)}</td>
                             <td><fmt:formatDate value="${info.auditTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                             <td>${info.orgSource == 0?"线下拓展":info.orgSource == 1?"推广活动":"线上平台"}</td>
                             <td>${info.contact}</td>
@@ -323,7 +323,7 @@
         var form = layui.form();
 
         form.on('select(serviceStates)', function (data) {
-            serviceStates = data.value;
+            auditStates = data.value;
         });
 
         form.on('select(source)', function (data) {

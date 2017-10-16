@@ -179,10 +179,10 @@
                     <p class="tit" style="margin-top: 20px;width: auto;float: none">机构信息：</p>
                     <p><span class="titinp">机构名称<em>**</em>：</span><span class="txt">${orgInfo.orgName}</span></p>
                     <p style="float: left"><span class="titinp">机构logo：</span><span class="txt"></span></p>
-                    <c:if test="${orgInfo.orgLogo != null}">
+                    <c:if test="${!empty orgInfo.orgLogo}">
                         <img class="org_logo" src="${orgInfo.orgLogo}" style="width: 140px">
                     </c:if>
-                    <c:if test="${orgInfo.orgLogo == null}">
+                    <c:if test="${empty orgInfo.orgLogo}">
                         <img class="org_logo" src="${rlab}/front/imgs/icon/org_logo_default.png" style="width: 140px">
                     </c:if>
                     <p><span class="titinp">组织机构代码<em>**</em>：</span><span class="txt">${orgInfo.orgCode}</span></p>
@@ -218,15 +218,15 @@
                     </div>
                     <div class="clearfix box">
                         <p style="float: left"><span class="titinp">营业执照副本<em>**</em>：</span><span class="txt"></span></p>
-                        <img src="${orgInfo.orgLicense == null?'未知':orgInfo.orgLicense.orgLicensePic}" alt="" style="float: left">
+                        <img src="${empty orgInfo.orgLicense?'':orgInfo.orgLicense.orgLicensePic}" alt="" style="float: left">
                     </div>
                     <div class="clearfix box" style="display: ${empty orgInfo.orgCodeObject.orgCodePic ?"none":"block"}">
                         <p style="float: left"><span class="titinp">组织机构代码证<em>**</em>：</span><span class="txt"></span></p>
-                        <img src="${orgInfo.orgCodeObject.orgCodePic == null?'未知':orgInfo.orgCodeObject.orgCodePic}" alt="" style="float: left">
+                        <img src="${empty orgInfo.orgCodeObject.orgCodePic?'':orgInfo.orgCodeObject.orgCodePic}" alt="" style="float: left">
                     </div>
                     <div class="clearfix box" style="display: ${empty orgInfo.orgLicense.taxEnrolCertificatePic ?"none":"block"}">
                         <p style="float: left"><span class="titinp">税务登记证<em>**</em>：</span><span class="txt"></span></p>
-                        <img src="${orgInfo.orgLicense==null?'未知':orgInfo.orgLicense.taxEnrolCertificatePic}" alt="" style="float: left">
+                        <img src="${empty orgInfo.orgLicense?'':orgInfo.orgLicense.taxEnrolCertificatePic}" alt="" style="float: left">
                     </div>
                     <p style="color: #4e4e4e"><span style="color: #7b8da0;">机构简介</span><em>*</em>：<br>
                         ${orgInfo.orgDescription}

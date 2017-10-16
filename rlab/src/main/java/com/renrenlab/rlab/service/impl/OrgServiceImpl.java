@@ -11,7 +11,6 @@ import com.renrenlab.rlab.common.util.OrgUtil;
 import com.renrenlab.rlab.common.util.UserUtil;
 import com.renrenlab.rlab.dao.*;
 import com.renrenlab.rlab.model.*;
-import com.renrenlab.rlab.model.OrgLicense;
 import com.renrenlab.rlab.service.OrgService;
 import com.renrenlab.rlab.vo.*;
 import com.renrenlab.rlab.vo.OrgAddress;
@@ -145,7 +144,7 @@ public class OrgServiceImpl implements OrgService {
             }
             //查询机构座机
             OrgContacts orgContacts = orgContactsDao.searchOrgContactsByOrgId(orgInfo.getOrgOid());
-            if (orgContacts != null && orgContacts.getConPhone()!=null) {
+            if (orgContacts != null && orgContacts.getConPhone() != null) {
                 String[] phones = orgContacts.getConPhone().split(",");
                 orgContacts.setConPhoneList(Arrays.asList(phones));
                 orgInfo.setOrgContacts(orgContacts);
@@ -153,7 +152,7 @@ public class OrgServiceImpl implements OrgService {
             //查询机构联系人信息
             List<OrgContacts> orgContactsList = orgContactsDao.searchContactsByOrgId(orgInfo.getOrgOid(), 2);
             orgInfo.setOrgContactsList(orgContactsList);
-            for(OrgContacts orgContacts1 : orgContactsList){
+            for (OrgContacts orgContacts1 : orgContactsList) {
                 String[] phones = orgContacts1.getConPhone().split(",");
                 orgContacts1.setConPhoneList(Arrays.asList(phones));
             }
@@ -189,9 +188,9 @@ public class OrgServiceImpl implements OrgService {
 
             //查询机构对接业务人员
             UserBaseInfo userBaseInfo = null;
-            if(orgInfo.getOrgBizUid() != null && (userBaseInfo = userBaseInfoDao.selectUserBaseInfoByUUid(orgInfo.getOrgBizUid())) != null){
+            if (orgInfo.getOrgBizUid() != null && (userBaseInfo = userBaseInfoDao.selectUserBaseInfoByUUid(orgInfo.getOrgBizUid())) != null) {
                 orgInfo.setOrgBizName(userBaseInfo.getuName());
-            }else {
+            } else {
                 orgInfo.setOrgBizName("人人实验");
             }
 
@@ -320,7 +319,8 @@ public class OrgServiceImpl implements OrgService {
                 orgContactsMapDao.insertOrgContactsMap(new OrgContactsMap(conId, org.getOrgOid()));
             }
         }
-
+        //校验组织机构代码是否重复
+        checkOrgCode(org.getOrgCode(), org.getOrgOid());
         //添加组织机构代码
         if (!StringUtils.isBlank(org.getOrgCode())) {
             String codePic = org.getOrgCodeObject() != null && org.getOrgCodeObject().getOrgCodePic() != null ? org.getOrgCodeObject().getOrgCodePic() : null;
@@ -344,10 +344,11 @@ public class OrgServiceImpl implements OrgService {
         }
         //添加机构创建者,默认为机构拥有者
         if (org.getuUid() != null && org.getuUid() > 0) {
-            orgManagerDao.insertOrgManager(new OrgManager(org.getOrgOid(), org.getuUid(),org.getManagerType()));
+            orgManagerDao.insertOrgManager(new OrgManager(org.getOrgOid(), org.getuUid(), org.getManagerType()));
         }
         return org;
     }
+
 
     @Override
     public OrgCertificate addOrgCertificate(OrgCertificate orgCertificate) {
@@ -377,7 +378,7 @@ public class OrgServiceImpl implements OrgService {
             throw new BusinessException(ResponseEntity.PARAMETER_ERROR);
         }
         //非认证机构修改
-        if(orgInfo.getOrgIdentification() == 3){
+        if (orgInfo.getOrgIdentification() == 3) {
             org.setOrgType(1);
             org.setOrgIdentification(1);
         }
@@ -399,10 +400,10 @@ public class OrgServiceImpl implements OrgService {
             orgAddressDao.updateOrgAddress(org.getOrgAddress());
         }
         //修改机构座机
-        if (org.getOrgContacts() != null ) {
-            if(org.getOrgContacts().getConId() != null){
+        if (org.getOrgContacts() != null) {
+            if (org.getOrgContacts().getConId() != null) {
                 orgContactsDao.updateOrgContacts(org.getOrgContacts());
-            }else{
+            } else {
                 orgContactsDao.insertOrgContacts(org.getOrgContacts());
             }
         }
@@ -410,7 +411,7 @@ public class OrgServiceImpl implements OrgService {
         //修改机构联系人电话,先删除以前的，在添加新的联系人
         if (org.getOrgContactsList() != null) {
             List<OrgContacts> orgContactsList = orgContactsDao.searchContactsByOrgId(org.getOrgOid(), 2);
-            for (OrgContacts orgContacts1 : orgContactsList){
+            for (OrgContacts orgContacts1 : orgContactsList) {
                 orgContactsDao.delOrgContactsByConId(orgContacts1.getConId());
             }
             for (OrgContacts orgContacts : org.getOrgContactsList()) {
@@ -420,13 +421,15 @@ public class OrgServiceImpl implements OrgService {
                 orgContactsMapDao.insertOrgContactsMap(new OrgContactsMap(conId, org.getOrgOid()));
             }
         }
+        //校验组织机构代码是否重复
+        checkOrgCode(org.getOrgCode(), org.getOrgOid());
         //添加组织机构代码
         if (org.getOrgCode() != null) {
             String codePic = org.getOrgCodeObject() != null && org.getOrgCodeObject().getOrgCodePic() != null ? org.getOrgCodeObject().getOrgCodePic() : "";
             OrgCode orgCode = orgCodeDao.searchOrgCodeByOrgId(org.getOrgOid());
             if (orgCode == null) {
                 orgCodeDao.insertOrgCode(new OrgCode(org.getOrgOid(), org.getOrgCode(), codePic));
-            } else if (orgCode != null &&(!org.getOrgCode().equals(orgCode.getOrgCode()) || !codePic.equals(orgCode.getOrgCodePic())) ) {
+            } else if (orgCode != null && (!org.getOrgCode().equals(orgCode.getOrgCode()) || !codePic.equals(orgCode.getOrgCodePic()))) {
                 orgCodeDao.updateOrgCode(new OrgCode(org.getOrgOid(), org.getOrgCode(), codePic));
             }
         }
@@ -435,12 +438,12 @@ public class OrgServiceImpl implements OrgService {
 
         if (orgLicense == null && org.getOrgLicense() != null) {
             org.getOrgLicense().setOrgOid(org.getOrgOid());
-            org.getOrgLicense().setTaxEnrolCertificatePic(org.getOrgLicense().getTaxEnrolCertificatePic() == null ? "" :org.getOrgLicense().getTaxEnrolCertificatePic()  );
+            org.getOrgLicense().setTaxEnrolCertificatePic(org.getOrgLicense().getTaxEnrolCertificatePic() == null ? "" : org.getOrgLicense().getTaxEnrolCertificatePic());
             orgLicenseDao.insertOrgLicense(org.getOrgLicense());
         } else if (orgLicense != null && org.getOrgLicense() != null) {
             OrgLicense orgLicense1 = org.getOrgLicense();
             orgLicense1.setOrgOid(org.getOrgOid());
-            org.getOrgLicense().setTaxEnrolCertificatePic(org.getOrgLicense().getTaxEnrolCertificatePic() == null ? "" :org.getOrgLicense().getTaxEnrolCertificatePic()  );
+            org.getOrgLicense().setTaxEnrolCertificatePic(org.getOrgLicense().getTaxEnrolCertificatePic() == null ? "" : org.getOrgLicense().getTaxEnrolCertificatePic());
             //兼容机构模块添加机构上传营业执照照片
             if (!StringUtils.isBlank(org.getOrgLicensePic())) {
                 orgLicense.setOrgLicensePic(org.getOrgLicensePic());
@@ -612,6 +615,7 @@ public class OrgServiceImpl implements OrgService {
 
     /**
      * 查询机构创建者信息
+     *
      * @param orgOid
      * @return
      */
@@ -619,4 +623,18 @@ public class OrgServiceImpl implements OrgService {
     public OrgManager searchOrgManagerInfo(Long orgOid) {
         return orgManagerDao.searchOrgCreatorByOrgId(orgOid);
     }
+
+    /**
+     * 校验组织机构代码是否重复
+     *
+     * @param orgCode
+     */
+    private void checkOrgCode(String orgCode, Long orgOid) {
+        //组织机构代码已经存在
+        if (orgCode == null) return;
+        OrgCode orgCode1 = orgCodeDao.searchOrgCode(orgCode);
+        if (orgCode1 != null && !orgCode1.getOrgOid().equals(orgOid))
+            throw new BusinessException(ResponseEntity.REPEAT_ORG_CODE);
+    }
+
 }

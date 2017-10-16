@@ -1,0 +1,369 @@
+/*分类标题*/
+.await_title {
+    width: 100%;
+    height: 106px;
+    background: #363d46;
+    font-size: 18px;
+    color: #2fcba8;
+    padding: 40px 56px 0 100px;
+}
+
+.await_title > div {
+    position: relative;
+}
+
+.await_title span {
+    font-size: 18px;
+}
+
+.await_title .god_info {
+    width: 380px;
+    float: left;
+}
+
+.await_title .msg_time {
+    width: 300px;
+    float: left;
+}
+
+.await_title .waiter_title {
+    float: left;
+}
+
+.await_title .random_acpt {
+    width: 88px;
+    height: 34px;
+    line-height: 34px;
+    outline: none;
+    border: 0 none;
+    background: #2FCBA8;
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    right: 0;
+    cursor: pointer;
+}
+
+.await_title .random_acpt:active {
+    background-color: #008a6b;
+
+}
+
+/*待接入列表*/
+.await_list {
+    min-width: 1200px;
+    background: #232a31;
+    height: 100%;
+    padding-bottom: 150px;
+    /*margin-bottom:200px;*/
+    /*overflow: hidden;*/
+
+}
+
+.await_list ul.await_ul {
+}
+
+.await_list ul.await_ul > li {
+    position: relative;
+    height: 90px;
+    line-height: 90px;
+    cursor: pointer;
+    padding: 0 56px 0 100px;
+}
+
+.await_list ul.await_ul > li > a {
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid #434A52;
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
+
+/*消息发送时间*/
+ul.await_ul > li .acpt_time {
+    color: #2fcba8;
+    font-size: 12px;
+}
+
+/*消息过期时间*/
+ul.await_ul > li .lose_time {
+    color: #a4a4a4;
+    font-size: 12px;
+}
+
+/*消息内容样式*/
+ul.await_ul > li .god_txt {
+    font-size: 14px;
+    color: #a7b1b3;
+    margin-left: 20px
+}
+
+/*发送方样式*/
+ul.await_ul > li .god_name {
+    font-size: 14px;
+    color: #f8fcfc;
+    margin-left: 20px
+}
+
+.btn-style {
+    background: #2fcba8;
+}
+
+ul.await_ul > li:hover {
+    background: #3a4049;
+}
+
+ul.await_ul > li:hover > a {
+    border: 0 none;
+}
+
+ul.await_ul > li:hover > a .god_name {
+    color: #2fcba8;
+}
+
+ul.await_ul > li img {
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin-top: 12px;
+}
+
+ul.await_ul a > div {
+    height: 90px;
+    float: left;
+    padding-top: 10px;
+    line-height: 34px;
+}
+
+ul.await_ul a > div.god {
+    width: 380px;
+}
+
+ul.await_ul a > div.time {
+    width: 300px;
+}
+
+ul.await_ul a > div.receiver {
+    height: 90px;
+    float: left;
+    padding-top: 10px;
+    line-height: 34px;
+}
+
+.await_ul .title {
+    width: 186px;
+}
+
+.await_ul .msg {
+    overflow: hidden;
+    width: 186px;
+    max-height: 34px;
+    color: #a4a4a4;
+    font-size: 12px;
+}
+
+.await_ul .title .name {
+    float: left;
+    color: #f8fcfc;
+    font-size: 14px;
+}
+
+.await_ul .title .time {
+    /*float: right;*/
+    color: #a4a4a4;
+    font-size: 12px;
+}
+
+/*接入按钮样式*/
+ul.await_ul a button.reception {
+    position: absolute;
+    width: 88px;
+    height: 34px;
+    line-height: 34px;
+    outline: none;
+    border: 0 none;
+    background: #2FCBA8;
+    color: #fff;
+    right: 0;
+    top: 50%;
+    margin-top: -17px;
+    cursor: pointer;
+}
+
+ul.await_ul a button.reception:active {
+    background-color: #008a6b;
+}
+
+/*-------------接入列表部分结束-------------*/
+
+/*+++++++++++++++管理员权限的客服管理开始++++++++++++++++*/
+/*分类标题*/
+.setting {
+
+}
+
+.setting .waiter_title {
+    width: 100%;
+    height: 106px;
+    line-height: 106px;
+    padding-left: 70px;
+    font-size: 18px;
+    color: #2fcba8;
+    background: #363d46;
+}
+
+.waiter_title span {
+    font-size: 18px;
+}
+
+.waiter_title .god_info {
+    width: 380px;
+    float: left;
+}
+
+.waiter_title .msg_time {
+    width: 300px;
+    float: left;
+}
+
+/*客服列表*/
+.waiter_list {
+    height: 100%;
+    padding-bottom: 200px;
+}
+
+.waiter_list .waiter_ul {
+
+}
+
+.waiter_list .waiter_ul > li {
+    padding-left: 70px;
+    padding-right: 56px;
+    /*background: darkred;*/
+
+}
+
+.waiter_ul > li > a {
+
+}
+
+.waiter_ul a > div {
+    float: left;
+    height: 90px;
+    line-height: 90px;
+}
+
+.waiter_ul .avatar {
+    width: 380px;
+}
+
+.waiter_ul .avatar > img {
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 22px;
+    -moz-border-radius: 22px;
+    border-radius: 22px;
+}
+
+.waiter_ul .avatar > span {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #f8fcfc;
+}
+
+.waiter_ul > li a {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #434A52;
+}
+
+ul.waiter_ul > li:hover {
+    background: #3a4049;
+}
+
+.waiter_ul a .waiter_id {
+    width: 300px;
+    font-size: 14px;
+    color: #a4a4a4;
+}
+
+.waiter_ul a .performance {
+    color: #a4a4a4;
+    font-size: 14px;
+}
+
+.waiter_ul a .rt_icon {
+
+    float: right;
+    font-size: 26px;
+}
+
+.waiter_ul a .rt_icon .compile {
+    color: #2FCBA8;
+    margin-right: 46px;
+}
+
+.waiter_ul a .rt_icon .delete {
+    color: #FF7B7B;
+    margin-right: 20px;
+
+}
+
+/*普通客服权限-修改密码*/
+.common_title {
+    height: 106px;
+    line-height: 106px;
+    background: #363D46;
+    color: #2FCBA8;
+    font-size: 18px;
+    padding-left: 68px;
+}
+
+.common_alter_info {
+    padding-left: 68px;
+    padding-top: 34px;
+}
+
+.common_alter_info .alter_form {
+}
+
+.common_alter_info .alter_form label {
+    width: 116px;
+    font-size: 14px;
+    height: 36px;
+    line-height: 36px;
+    color: #919294;
+    padding:0;
+    text-align: left;
+}
+
+.common_alter_info .alter_form .psw {
+    margin-bottom: 24px;
+}
+
+.common_alter_info .alter_form .psw input {
+    background: #3B424B;
+    width: 200px;
+    border: 0 none;
+    color: #eee;
+}
+.alter_form .alter_psw_btn  {
+    width: 200px;
+    padding-left:115px;
+}
+
+.alter_form .alter_psw_btn button{
+    width: 200px;
+    background: #2FCBA8;
+    font-size: 14px;
+    color: #fff;
+
+}
+/*+++++++++++++++管理员权限的客服管理结束++++++++++++++++*/

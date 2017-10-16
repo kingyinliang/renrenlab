@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.SessionHistoryDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.SessionHistory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="h_id" property="hId" jdbcType="BIGINT" />
+    <result column="s_sid" property="sSid" jdbcType="BIGINT" />
+    <result column="h_value" property="hValue" jdbcType="VARCHAR" />
+    <result column="h_key" property="hKey" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, h_id, s_sid, h_value, h_key, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_session_info.t_session_history
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_session_info.t_session_history
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.SessionHistory" >
+    insert into rlab_session_info.t_session_history (id, h_id, s_sid, h_value, 
+      h_key, create_time)
+    values (#{id,jdbcType=BIGINT}, #{hId,jdbcType=BIGINT}, #{sSid,jdbcType=BIGINT}, #{hValue,jdbcType=VARCHAR}, 
+      #{hKey,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.SessionHistory" >
+    insert into rlab_session_info.t_session_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hId != null" >
+        h_id,
+      </if>
+      <if test="sSid != null" >
+        s_sid,
+      </if>
+      <if test="hValue != null" >
+        h_value,
+      </if>
+      <if test="hKey != null" >
+        h_key,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hId != null" >
+        #{hId,jdbcType=BIGINT},
+      </if>
+      <if test="sSid != null" >
+        #{sSid,jdbcType=BIGINT},
+      </if>
+      <if test="hValue != null" >
+        #{hValue,jdbcType=VARCHAR},
+      </if>
+      <if test="hKey != null" >
+        #{hKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.SessionHistory" >
+    update rlab_session_info.t_session_history
+    <set >
+      <if test="hId != null" >
+        h_id = #{hId,jdbcType=BIGINT},
+      </if>
+      <if test="sSid != null" >
+        s_sid = #{sSid,jdbcType=BIGINT},
+      </if>
+      <if test="hValue != null" >
+        h_value = #{hValue,jdbcType=VARCHAR},
+      </if>
+      <if test="hKey != null" >
+        h_key = #{hKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.SessionHistory" >
+    update rlab_session_info.t_session_history
+    set h_id = #{hId,jdbcType=BIGINT},
+      s_sid = #{sSid,jdbcType=BIGINT},
+      h_value = #{hValue,jdbcType=VARCHAR},
+      h_key = #{hKey,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 会话最后一次更新时间 -->
+  <select id="selectLastSessionHistory" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM rlab_session_info.t_session_history
+    WHERE s_sid = #{sSId,jdbcType=BIGINT}
+    ORDER BY create_time DESC limit 1
+  </select>
+
+  <!-- 插入 -->
+ <!--  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.SessionHistory" >
+    insert into rlab_session_info.t_session_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        h_id,
+      </if>
+      <if test="sSId != null" >
+        s_sid,
+      </if>
+      <if test="hValue != null" >
+        h_value,
+      </if>
+      <if test="hKey != null" >
+        h_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hId != null" >
+        #{hId,jdbcType=BIGINT},
+      </if>
+      <if test="sSId != null" >
+        #{sSId,jdbcType=BIGINT},
+      </if>
+      <if test="hValue != null" >
+        #{hValue,jdbcType=VARCHAR},
+      </if>
+      <if test="hKey != null" >
+        #{hKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert> -->
+</mapper>

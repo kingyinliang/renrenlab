@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserTagMapDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserTagMap" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="t_tid" property="tTid" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_uid, t_tid, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_tag_map
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectByUIdAndTId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_tag_map
+    where u_uid = #{uId,jdbcType=BIGINT} and t_tid= #{tId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_tag_map
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserTagMap" >
+    insert into rlab_user_info.t_user_tag_map (id, u_uid, t_tid, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, #{tTid,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserTagMap" >
+    insert into rlab_user_info.t_user_tag_map
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="tTid != null" >
+        t_tid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="tTid != null" >
+        #{tTid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserTagMap" >
+    update rlab_user_info.t_user_tag_map
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="tTid != null" >
+        t_tid = #{tTid,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserTagMap" >
+    update rlab_user_info.t_user_tag_map
+    set u_uid = #{uUid,jdbcType=BIGINT},
+      t_tid = #{tTid,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

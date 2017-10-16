@@ -330,10 +330,10 @@
                         机构Logo
                         :
                     </p>
-                    <c:if test="${orgInfo.orgLogo != null}">
+                    <c:if test="${!empty orgInfo.orgLogo}">
                         <img class="org_logo" src="${orgInfo.orgLogo}">
                     </c:if>
-                    <c:if test="${orgInfo.orgLogo == null}">
+                    <c:if test="${empty orgInfo.orgLogo}">
                         <img class="org_logo" src="${rlab}/front/imgs/icon/org_logo_default.png">
                     </c:if>
                 </div>
@@ -363,7 +363,7 @@
                 </div>
                 <div class="data_text">
                     <p class="title">机构名称:</p>
-                    <p style="color: #333; font-size: 16px; float: left">${orgInfo.orgName}</p>
+                    <p style="color: #333; font-size: 16px; float: left; width: 700px">${orgInfo.orgName}</p>
                 </div>
                 <div class="data_text">
                     <p class="title">组织机构代码:</p>

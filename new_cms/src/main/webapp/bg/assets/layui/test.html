@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试lyer</title>
+    <script src="../jquery-1.8.3/jquery.js"></script>
+    <script src="lay/dest/layui.lab.cms.js"></script>
+    <style>
+
+        .modal .my_custom_class {
+            /*width:420px;*/
+            /*overflow: hidden!important;*/
+            /*overflow: visible;*/
+        }
+
+        .modal .my_custom_class .layui-layer-title {
+            background: #c00;
+            color: #fff;
+            border: none;
+        }
+
+        .modal .my_custom_class .layui-layer-btn {
+            border-top: 1px solid #E9E7E7
+        }
+
+        .modal .my_custom_class .layui-layer-btn a {
+            background: #333;
+        }
+
+        .modal .my_custom_class .layui-layer-btn .layui-layer-btn1 {
+            background: #999;
+        }
+
+        /*自定义内容*/
+        .modal_1 {
+            /*height: 138px;*/
+            /*width: 420px;*/
+            /*background: green;*/
+        }
+
+        .modal_1 > .title {
+            height: 58px;
+            line-height: 58px;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            background: #2FCBA8;
+        }
+
+        .modal_1 > .main {
+            height: 80px;
+        }
+
+        .modal_1 > .main button {
+            height: 43px;
+            line-height: 43px;
+            outline: none;
+            border: 0 none;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .modal_1 > .main{
+            padding:20px 26px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .modal_1 > .main .cancel {
+            width: 124px;
+            background: #ccc;
+        }
+        .modal_1 > .main .cancel:active {
+            background: #999;
+        }
+
+        .modal_1 > .main .confirm {
+            width: 218px;
+            background: #2FCBA8;
+            margin-left:18px;
+        }
+        .modal_1 > .main .confirm:active {
+            width: 218px;
+            background-color: #008a6b;
+            margin-left:18px;
+        }
+
+    </style>
+</head>
+
+<div class="modal">
+    <div id="modal_1" class="modal_1">
+        <div class="title">确认完成订单？</div>
+        <div class="main">
+            <button class="cancel" type="button">取消</button>
+            <button id="cfm_order_btn" class="confirm" type="button">完成订单</button>
+        </div>
+    </div>
+</div>
+
+<div id="modal_2"></div>
+<div id="modal_3"></div>
+<div id="modal_4"></div>
+<div id="modal_5"></div>
+<body>
+
+<script>
+    //    layer.confirm('您是如何看待前端开发？', {
+    //        btn: ['重要','奇葩'] //按钮
+    //    }, function(){
+    //        layer.msg('的确很重要', {icon: 1});
+    //    }, function(){
+    //        layer.msg('也可以这样', {
+    //            time: 20000, //20s后自动关闭
+    //            btn: ['明白了', '知道了']
+    //        });
+    //    });
+
+    var modal_1 = layer.open({
+        type: 1,
+        title: false,
+        shade: [0.6, '#000'],
+        anim: 5,
+        content: $("#modal_1"), //注意，如果str是object，那么需要字符拼接。
+        area: ["420px", "138px"],
+        skin: 'my_custom_class',
+        closeBtn: 0
+    });
+
+    setTimeout(function () {
+        layer.close("#sfd");
+        $("#modal_1").hide();
+
+    }, 2000)
+
+    //    layer.open({
+    //        type: 2,
+    //        content: $("#modal_2") //注意，如果str是object，那么需要字符拼接。
+    //    });
+    //    layer.open({
+    //        type: 3,
+    //        content: $("#modal_3") //注意，如果str是object，那么需要字符拼接。
+    //    });
+</script>
+</body>
+</html>

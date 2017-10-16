@@ -93,8 +93,7 @@
         select
         <include refid="Base_Column_List"/>
         from rlab_user_info.t_user_base_info u
-        where u_mobile = #{mobile,
-		jdbcType=VARCHAR}
+        where u_mobile = #{mobile,jdbcType=VARCHAR}
         AND u_state != '2';
     </select>
 
@@ -462,6 +461,20 @@
             now(),
         </trim>
     </insert>
+
+    <update id="updateMana" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
+        UPDATE rlab_user_info.t_user_base_info
+        SET u_type  = jsonb_build_array(0, 0, 1),
+            u_email = (
+                CASE
+                WHEN u_email IS NULL
+                    THEN #{uEmail,jdbcType=VARCHAR}
+                ELSE u_email
+                END
+            )
+
+        WHERE u_uid = #{uUid,jdbcType = BIGINT};
+    </update>
 
     <insert id="insertRoleMap" parameterType="com.renrenlab.rlab.model.UserBaseInfo">
         /*插入角色map表*/

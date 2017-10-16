@@ -33,7 +33,7 @@
             OR POSITION (#{keyword,jdbcType = VARCHAR} IN u_mobile)>0)
         </if>
         <if test="state != null">
-            AND u_req_state = #{state,jdbcType=INTEGER}
+            AND (u_req_state = 3 OR u_req_state = 4)
         </if>
         <if test="beginTime != null and endTime != null">
             AND req.create_time BETWEEN DATE '${beginTime}' AND DATE '${endTime}'+INTEGER '1'
@@ -71,8 +71,8 @@
     </select>
     <select id="getCount" resultType="java.util.Map">
         SELECT
-        u_req_state,
-        COUNT(0)
+            u_req_state,
+            COUNT(0)
         FROM rlab_user_info.t_user_requirement req
         WHERE req.u_uid = #{uUid,jdbcType=BIGINT}
         GROUP BY u_req_state
@@ -87,8 +87,8 @@
         <include refid="Base_Column_List"/>
         from rlab_user_info.t_user_requirement req
         JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
-        WHERE u_req_state = 3 OR u_req_state = 0
-        ORDER BY req.modify_time
+        WHERE u_req_state = 4
+        ORDER BY req.create_time
         LIMIT 10
     </select>
 

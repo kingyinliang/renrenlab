@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+
+    <link rel="shortcut icon" href="../imgs/icon/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/views/w_plan.css?_5">
+    <!--<link rel="stylesheet" href="../css/views/w_addWaiter.css">-->
+    <!--<link rel="stylesheet" href="assets/bootstrap-3.3.7-dist/css/bootstrap.css">-->
+
+    <!--<script src="assets/jquery-1.8.3/jquery.js"></script>-->
+    <script src="../assets/jquery-2.1.1/jquery.js"></script>
+    <!--<script src="../assets/jquery.json.js"></script>-->
+
+    <script src="../assets/md5.js"></script>
+    <!--my common controller-->
+
+    <script src="../js/util.js"></script>
+
+    <!--scroll 20170327 19:56-->
+    <!--<script type="text/javascript" src="libs/prettify/prettify.js"></script>-->
+    <script type="text/javascript" src="../assets/jQuery-slimScroll/jquery.slimscroll.min.js"></script>
+    <!--scroll end-->
+    <script type="text/javascript" src="../assets/BaiduTemplate/baiduTemplate.js"></script>
+
+    <link rel="stylesheet" href="../css/common/base.css">
+    <link rel="stylesheet" href="../css/views/home.css?_7">
+    <link rel="stylesheet" href="../css/views/rightList.css?_7">
+    <link rel="stylesheet" href="../css/views/pending-access.css?_7">
+
+</head>
+<body class="crm_body">
+
+
+<div class="crm_content">
+    <!-- 头部 -->
+    <div class="crm_title clearfix">
+
+        <div class="lft">
+            <!--待IM tab-->
+            <div id="tab_im" data-tab="im" class="tab_im lft_tab active">
+                <a  href="javascript:void(0)">
+                    <i class="lab-im" style="font-size: 26px;"></i>
+                    <span>已接入</span>
+                </a>
+                <s id="joinedGad" class="awaitNum"></s>
+            </div>
+            <!--待接入tab-->
+            <div id="tab_await" data-tab="await" class="tab_await lft_tab">
+
+                <a  href="javascript:void(0)">
+                    <i class="lab-await" style="font-size: 24px;"></i>
+
+                    <span>待接入</span>
+                </a>
+
+                <s id="awaitGad" class="awaitNum"></s>
+            </div>
+            <!--优惠卷tab-->
+            <div id="tab_coupon" data-tab="coupon" class="tab_await lft_tab">
+
+                <a  href="javascript:void(0)">
+                    <i class="lab-scheme" style="font-size: 24px;"></i>
+                    <span>创新券</span>
+                </a>
+            </div>
+        </div>
+        <div id="testShow" style="float: left;color: #eee;">
+
+        </div>
+        <div class="rt">
+            <img src="../imgs/other/person_default.jpg" alt="默认头像">
+            <span id="waiterName" class="phone"></span>
+            <!--设置按键tab-->
+            <a id="tab_setting" style="color: #eee;" data-tab="setting" href="javascript:void(0)">
+                <i class="lab-set" style="font-size: 26px;"></i>
+            </a>
+            <!--退出按键tab-->
+
+            <i id="logout" class="lab-exit" style="color: #eee;font-size: 26px;margin-right: 24px;cursor: pointer;"></i>
+
+        </div>
+    </div>
+    <!-- 主体 -->
+    <div class="crm_main">
+        <!--IM 主体-->
+        <div id="im" class="im" >
+            <!--左侧接入列表部分开始-->
+            <div id="imList" class="im_list">
+                <!--用户检索-->
+                <div class="im_search">
+                    <div class="input">
+                        <div class="lft">
+                            <i class="lab-crm-search"></i>
+                        </div>
+                        <div class="rt">
+                            <input type="text" placeholder="搜索...">
+                        </div>
+
+                    </div>
+                </div>
+                <!--接入列表-->
+                <div class="im_item">
+                    <ul class="im_ul" id="testDiv">
+                        <!--<li onclick="controlHome.init(this)" data-user-info="us_id">-->
+                        <!--<a href="javascript:void(0)">-->
+                        <!--<img src="./imgs/other/person_default.jpg" alt="">-->
+                        <!--<div>-->
+                        <!--<div class="title clearfix">-->
+                        <!--<span class="name">Matt</span>-->
+                        <!--<span class="time">下午 3:23</span>-->
+                        <!--</div>-->
+                        <!--<div class="msg">-->
+                        <!--您好，发打发第三方的fdsfdsfdsfafddfdsf-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--<i></i>-->
+                        <!--<s></s>-->
+                        <!--</a>-->
+                        <!--</li>-->
+
+                    </ul>
+                </div>
+            </div>
+            <!--左侧接入列表部分结束-->
+
+            <!--右侧订单项目开始-->
+            <div id="rightInfo" class="rightList rightOrderList" style="display: none">
+
+                <!--三个tab键-->
+                <div class="order_tab">
+                    <div id="waiterInfoTab" data-tab="waiterInfo" class="tab order_tab_active"
+                         style="border-left:0 none;">
+                        <i id="icon1" class="lab-user buttonActivity"></i>
+                    </div>
+                    <div id="waiterProjectTab" data-tab="projectInfo" class="tab">
+                        <i id="icon2" class="lab-scheme"></i>
+                    </div>
+                    <div id="waiterOrderTab" data-tab="orderInfo" class="tab">
+                        <i id="icon3" class="lab-order"></i>
+                    </div>
+                </div>
+
+                <div id="planContent" class="content plan_content">
+                    <!--用户信息-->
+                    <div id="waiterInfo" class="user_info" style="display: block">
+
+                        <div class="info_list">
+
+                            <!--添加信息-->
+                            <div id="iptInfo" style="display: none">
+
+                                <div class="ipt_item">
+                                    <label><i class="lab-user"></i></label>
+                                    <input class="name" type="text"  maxlength="5" placeholder="记录用户的姓名">
+                                </div>
+
+                                <div class="ipt_item">
+                                    <label><i class="lab-phone"></i></label>
+                                    <input class="phone" disabled type="text" maxlength="11"  placeholder="记录用的手机号">
+                                </div>
+
+                                <div class="ipt_item">
+                                    <label><i class="lab-adress"></i></label>
+                                    <input class="address" maxlength="30" type="text" placeholder="记录用户地址">
+                                </div>
+
+                                <div class="ipt_item">
+                                    <label><i class="lab-company"></i></label>
+                                    <input id="compInfoIpt" maxlength="30" class="company" type="text" placeholder="记录用户的单位">
+                                    <ul id="companyList" class="down" >
+                                        <!--<li>匹配1</li>-->
+                                        <!--<li>匹配2</li>-->
+                                        <!--<li>匹配3</li>-->
+                                        <!--<li>匹配4</li>-->
+                                    </ul>
+                                </div>
+
+                                <div class="ipt_btn">
+                                    <button id="saveInfo" type="button">保&nbsp;存</button>
+                                </div>
+                            </div>
+
+                            <!--修改信息-->
+                            <div id="changeUserInfo" class="oinInfo" style="display: block">
+                                <p>
+                                    <span class="icon"><i class="lab-user"></i></span>
+                                    <span class="txt name">徐志响</span>
+                                </p>
+
+                                <p>
+                                    <span class="icon"><i class="lab-phone"></i></span>
+                                    <span class="txt phone">13261688305</span>
+                                </p>
+
+                                <p  style="min-height: 50px;height: auto;">
+                                    <span class="icon"><i class="lab-adress"></i></span>
+                                    <span class="txt address"></span>
+                                </p>
+
+                                <p class="last_p">
+                                    <span class="icon"><i class="lab-company"></i></span>
+                                    <span class="txt company"></span>
+                                </p>
+
+
+                                <div class="ipt_btn">
+                                    <button id="alterInfo" type="button">修&nbsp;改</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--项目列表-->
+                    <div id="projectInfo" class="project_list" style="display: none">
+                        <!--项目下的方案-->
+                        <div id="projectBox" class="project_select">
+                            <!--下拉自定义组件开始-->
+                            <div id="pjctSelect" class="lab_select">
+                                <div class="slect_bar">
+                                    <span class="title_txt">暂无项目</span>
+                                    <i class="lab-down" style="font-weight: 700"></i>
+                                </div>
+
+                                <ul class="select_ul">
+                                    <div class="project_lis">
+                                        <li class="activated">项目1</li>
+                                        <li>项目2</li>
+                                        <li>项目3</li>
+                                    </div>
+
+                                    <div class="add_project"><i id="addProject"></i></div>
+                                </ul>
+
+
+                            </div>
+                            <!--下拉自定义组件结束-->
+                        </div>
+
+                        <div id="planList" class="plan_list">
+
+                            <div id="planItemBar" class="plan">
+                                <!--方案1-->
+                                <div class="plan_item">
+                                    <div class="plan_checkbox">
+                                        <div class="lab_checked">
+                                            <label><input onclick="controlHome.controlChecked(this)"
+                                                          type="checkbox"></label>
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        <i class="lab-godAdress"></i>
+                                        <span>距离最近方案1.4</span>
+                                    </div>
+                                    <div class="alter_plan">
+                                        <i class="lab-alter"></i>
+                                    </div>
+                                </div>
+
+                                <!--方案2-->
+                                <div class="plan_item">
+                                    <div class="plan_checkbox">
+                                        <div class="lab_checked">
+                                            <label><input onclick="controlHome.controlChecked(this)"
+                                                          type="checkbox"></label>
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        <i class="lab-godAdress"></i>
+                                        <span>距离最近方案1.4</span>
+                                    </div>
+                                    <div class="alter_plan">
+                                        <i class="lab-alter"></i>
+                                    </div>
+                                </div>
+                                <!--方案3-->
+                                <div class="plan_item">
+                                    <div class="plan_checkbox">
+                                        <div class="lab_checked">
+                                            <label><input onclick="controlHome.controlChecked(this)"
+                                                          type="checkbox"></label>
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        <i class="lab-godAdress"></i>
+                                        <span>距离最近方案1.4</span>
+                                    </div>
+                                    <div class="alter_plan">
+                                        <i class="lab-alter"></i>
+                                    </div>
+                                </div>
+                                <!--方案4-->
+                                <div class="plan_item">
+                                    <div class="plan_checkbox">
+                                        <div class="lab_checked">
+                                            <label><input onclick="controlHome.controlChecked(this)"
+                                                          type="checkbox"></label>
+                                        </div>
+                                    </div>
+                                    <div class="title">
+                                        <i class="lab-godAdress"></i>
+                                        <span>距离最近方案1.4</span>
+                                    </div>
+                                    <div class="alter_plan">
+                                        <i class="lab-alter"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="add_plan">
+                                <i id="addPlan"></i>
+                            </div>
+
+                        </div>
+                        <div id="sendPlan" class="send_plan">
+                            发送给用户
+                        </div>
+                    </div>
+                    <!--订单列表-->
+                    <div id="orderInfo" class="order_list" style="display: none">
+                        <div class="order_main order_select">
+
+                            <div id="orderSelect" class="lab_select">
+                                <div class="slect_bar">
+                                    <span class="title_txt">项目1</span>
+                                    <i class="lab-down" style="font-weight: 700"></i>
+                                </div>
+
+                                <!--<i class="lab-top" style="font-weight: 700"></i>-->
+                                <ul class="select_ul">
+
+
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!--订单item-->
+                        <div class="order_content" id="orderList">
+                            <!--当前状态-->
+                            <div class="current_state">
+                                <p>进行中</p>
+                            </div>
+
+                            <!--订单信息-->
+                            <div class="order_info">
+                                <div class="info_detail">
+                                    <p>
+                                        <b>订单号</b>
+                                        <span class="orderId"></span>
+                                    </p>
+                                    <p>
+                                        <b> 创建时间</b>
+                                        <span class="createTime"></span>
+                                    </p>
+                                    <div class="hr"></div>
+                                    <p>
+                                        <b>使用标准</b>
+                                        <span class="standard"></span>
+                                    </p>
+                                    <p>
+                                        <b>使用仪器</b>
+                                        <span class="facilityName"></span>
+                                    </p>
+                                    <p>
+                                        <b>资质授权</b>
+                                        <span class="grant"></span>
+                                    </p>
+                                    <p>
+                                        <b>周&nbsp;&nbsp;期</b>
+                                        <span class="period"></span>
+                                    </p>
+                                    <p>
+                                        <b class="last_b">提供样品制备服务</b><span class="supportService last_span"></span>
+                                    </p>
+                                </div>
+                                <div class="hr"></div>
+                                <div class="order_info_additional">
+                                    <div class="distance"><span class="distanceKm"></span></div>
+
+                                    <div class="alter_price">
+                                        <i class="lab-alter" id="alterPrice"
+                                           onclick="controlHome.alterOrderPrice(this)"></i>
+                                    </div>
+                                    <div class="price">
+                                        <span class="orderPrice"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="cfm_end_order">
+                                <button id="cancelOrder" onclick="controlHome.cancelOrder(this)" class="cancel_order"
+                                        type="button">放弃订单
+                                </button>
+                                <button id="cfmOrder" onclick="controlHome.cfmOrder(this)" class="cfm_order"
+                                        type="button">完成订单
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!--右侧订单项目结束-->
+
+            <!--中间聊天部分开始-->
+            <div id="imMain" class="im_main" style="display: none;">
+                <!--客服头部样式-->
+                <div class="hd">
+                    <span id="name" class="lft">徐志响</span>
+                    <i id="closeCurrentMsg" class="lab-close-1 rt"></i>
+                </div>
+                <!--客服列表-->
+                <div class="msg_list">
+                    <!--聊天内容展示部分-->
+                    <div class="show_msg">
+                        <div id="msgContent" class="msg_content">
+                            <div id="historyBtn" class="more_history">
+                                <i class="lab-history"></i>
+                                查看更多
+                            </div>
+                            <!--重新接入会话-->
+                            <!--<div class="item">-->
+                            <!--<div class="again_join">-->
+                            <!--<i class="lab-tip"></i>-->
+                            <!--<span>会话已结束，你可以<s>重新接入</s></span>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--对方消息-->
+                            <!--<div class="lft item clearfix">-->
+                            <!--<p>2017.03.28 <span style="padding-left: 5px">22:23</span></p>-->
+                            <!--<div class="news">-->
+                            <!--<img class="news_img" src="imgs/other/person_default.jpg" alt="客户头像">-->
+                            <!--<div class="news_txt">-->
+                            <!--<i></i>-->
+                            <!--您好的反对司法会计的数据库了放假都是jfk了觉得是浪费角度考虑时间弗劳德数发第三方第三方-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--自己/客服消息-->
+                            <!--<div class="rt item clearfix">-->
+                            <!--<p>2017.03.28 <span style="padding-left: 5px">22:23</span></p>-->
+                            <!--<div class="news">-->
+                            <!--<img class="news_img" src="imgs/other/waiter_default.jpg" alt="客户头像">-->
+                            <!--<div class="news_txt">-->
+                            <!--<i></i>-->
+                            <!--您好的反对司法会计的数据库了放假都是jfk了觉得是浪费角度考虑时间弗劳德数发第三方第三方-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                            <!--对方消息-->
+
+
+                        </div>
+                    </div>
+                    <!--客服聊天输入框-->
+                    <div class="compile_msg">
+                        <div class="text_arera">
+                            <textarea id="textIpt" maxlength="200" rows="30" draggable="false" placeholder="用温柔感动用户......"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--中间聊天部分结束-->
+        </div>
+
+        <!--await待回复主体-->
+        <div id="await" class="await" style="display: none;">
+            <div class="await_title">
+                <div class="clearfix">
+                    <div class="god_info">
+                        <span class="title-font-style">客户信息</span>
+                    </div>
+                    <div class="msg_time">
+                        <span class="title-font-style">消息时间</span>
+                    </div>
+
+                    <!--<div class="waiter_title">-->
+                    <!--<span>上次接待</span>-->
+                    <!--</div>-->
+
+                    <button class="random_acpt" id="btnSelect" style="display: none">
+                        随机接入
+                    </button>
+
+                </div>
+            </div>
+            <div class="await_list">
+                <ul id="awaitScrollBar" class="await_ul">
+                    <!--<li>-->
+                    <!--<a href="javascript:void(0)">-->
+                    <!--&lt;!&ndash;接入者姓名&ndash;&gt;-->
+                    <!--<div class="god">-->
+                    <!--<div style="float: left;">-->
+                    <!--<img src="./imgs/other/person_default.jpg" alt=""></div>-->
+                    <!--<div>-->
+                    <!--<span class="god_name">Matt</span><br>-->
+                    <!--<span class="god_txt"> 我想检测检验</span>-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <!--&lt;!&ndash;接入时间&ndash;&gt;-->
+                    <!--<div class="time">-->
+                    <!--<span class="acpt_time">下午3:34</span><br>-->
+                    <!--<span class="lose_time"> 48小时后过期</span>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;上次接待的客服&ndash;&gt;-->
+                    <!--<div class="receiver">-->
+                    <!--<span class="acpt_time">侯荣艳</span><br>-->
+                    <!--<span class="lose_time">3.29  11:32</span>-->
+                    <!--</div>-->
+                    <!--<button class="reception">接入</button>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                </ul>
+            </div>
+        </div>
+
+        <!--coupon创新卷主体-->
+        <div id="coupon" style="display: none;">
+            <div class="couponHead">
+                <div class="filteHead">
+                    <span>用户搜索：</span><input type="text" placeholder="请输入姓名或手机号" id="inpName" value="" maxlength="20"/><span>创新卷:</span>
+                    <div class="selectCoupon">
+				    	<div class="select" data-user-info="0">
+				    		全部
+				    	</div>
+				    	<ul>
+				    		
+				    	</ul>
+				    </div>
+                    <p id="searching">检索</p>
+                </div>
+            </div>
+
+            <div class="couponMain">
+                <div class="layui-form">
+                    <table class="layui-table" border="0">
+                        <colgroup>
+                            <col width="5%">
+                            <col width="15%">
+                            <col width="25%">
+                            <col width="25%">
+                            <col width="15%">
+                            <col width="15%">
+                        </colgroup>
+                        <thead>
+                        <tr style="background: #2E353E;height: 50px;">
+                            <th><div class="chex">
+                                <input type="checkbox" id="CheckAll">
+                            </div></th>
+                            <th>用户名称</th>
+                            <th>用户手机号</th>
+                            <th>创新卷名称</th>
+                            <th>当前状态</th>
+                            <td style="color: #2fcba8; position: relative; cursor: pointer;z-index: 99999;" class="td">
+                                <div class="handovers">
+                                    操作
+                                    <img src="../imgs/icon/list_arrow.png">
+                                    <ul class="ticket_details_tr_ul" id="numss">
+                                        <li data-index="1" class="activated">已过期</li>
+                                        <li data-index="2" class="employ">已使用</li>
+                                    </ul>
+                                </div>
+                                <div class="shade"></div>
+                            </td>
+                        </tr>
+                        </thead>
+                        <tbody class="couponBody">
+
+                        </tbody>
+                    </table>
+
+                    <div id="demo">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--setting设置页面主体-->
+        <div id="setting" class="setting" style="display: none">
+            <!--管理员权限-->
+            <div id="rootWaiter" style="height: 100%;display: none">
+                <!--客服标题-->
+                <div class="waiter_title">
+                    <div class="clearfix">
+                        <div class="god_info">
+                            <span class="title-font-style">客服信息</span>
+                        </div>
+                        <div class="msg_time">
+                            <span class="title-font-style">客服账号</span>
+                        </div>
+                        <div class="" style="width: 300px; float: right;">
+                            <button class="layui-btn" onclick="controlHome.addWaiter()">添加客服</button>
+                        </div>
+                        <div class="waiter_title">
+                            <span>总接待人数</span>
+                        </div>
+
+                    </div>
+                </div>
+                <!--客服列表-->
+                <div class="waiter_list">
+                    <ul id="adminStingBar" class="waiter_ul">
+                        <!--<li>-->
+                        <!--<a href="javascript:void(0)" class="clearfix">-->
+                        <!--<div class="avatar">-->
+                        <!--<img src="./imgs/other/person_default.jpg" alt="客服头像">-->
+                        <!--<span>徐志响</span>-->
+                        <!--</div>-->
+
+                        <!--<div class="waiter_id">-->
+                        <!--<span>xuzhixiang@renrenlab.com</span>-->
+                        <!--</div>-->
+                        <!--<div class="performance">-->
+                        <!--<span>39</span>-->
+                        <!--</div>-->
+                        <!--<div class="rt_icon">-->
+                        <!--<i class="compile lab-alter"></i>-->
+                        <!--<i class="delete lab-del"></i>-->
+                        <!--</div>-->
+
+                        <!--</a>-->
+                        <!--</li>-->
+                    </ul>
+                </div>
+            </div>
+            <!--普通客服权限-->
+            <div id="commonWaiter" style="display: none">
+                <div class="common_title">
+                    <span>修改密码</span>
+                </div>
+                <div class="common_alter_info">
+                    <div class="alter_form">
+                        <form class="layui-form " action="#">
+
+                            <div class="origin_psw psw">
+                                <label class="layui-form-label">原始密码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" required lay-verify="required" placeholder=""
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="new_psw psw">
+                                <label class="layui-form-label">新密码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" required lay-verify="required" placeholder=""
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="new_psw psw">
+                                <label class="layui-form-label">确认新密码：</label>
+                                <div class="layui-input-inline">
+                                    <input type="password" name="password" required lay-verify="required" placeholder=""
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="alter_psw_btn">
+                                <button type="button" class="layui-btn" onclick="controlHome.editWaiterPassword()">
+                                    确认修改
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--弹窗1：添加客服-->
+<div class="xq_modal" id="addWaiter">
+    <div class="xq_modal_contant">
+        <!--弹窗内容替换掉    -->
+        <div class="xq_modal_main alert">
+            <div class="container">
+                <div class="title">
+                    <p>添加客服<i id="addWaiterClose" class="layui-icon close" style="font-size: 30px; color: #FFF;">
+                        &#x1006;</i></p>
+                </div>
+                <form class="layui-form solution_form"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+                    <div class="layui-form-item slt_name">
+                        <label class="addwaiter_layui-form-label">客服登录手机号:</label>
+
+                        <div class="adwaiter_layui-input-block">
+                            <input id="addWaiterUserName" required type="text" name="userName" placeholder="请输入"
+                                   autocomplete="off" class="layui-input" style="color: #2fcba8; width: 280px">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item ">
+                        <label class="addwaiter_layui-form-label">客 服 密 码:</label>
+                        <div class="adwaiter_layui-input-block">
+                            <input id="addWaiterPassword" required type="text" name="password" placeholder="请输入"
+                                   autocomplete="off" class="layui-input" style="color: #2fcba8; width: 280px">
+                        </div>
+                    </div>
+
+                    <!--<div class="layui-form-item ">-->
+                    <!--<label class="addwaiter_layui-form-label">客 服 昵 称:</label>-->
+                    <!--<div class="adwaiter_layui-input-block">-->
+                    <!--<input id="nickName" required type="text" name="nickName" placeholder="请输入" autocomplete="off" class="layui-input" style="color: #2fcba8; width: 280px">-->
+                    <!--</div>-->
+                    <!--</div>-->
+
+                    <div>
+                        <p style="text-align: center">
+                            <button type="button" class="layui-btn submit" id="addWaiterSubmit">确定</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--弹窗1：编辑客服-->
+<div class="xq_modal" id="editWaiter">
+    <div class="xq_modal_contant">
+        <!--弹窗内容替换掉    -->
+        <div class="xq_modal_main alert">
+            <div class="container">
+                <div class="title">
+                    <p>编辑<i id="editWaiterClose" class="layui-icon close" style="font-size: 30px; color: #FFF;">
+                        &#x1006;</i></p>
+                </div>
+                <form class="layui-form solution_form">
+                    <div class="layui-form-item ">
+                        <label class="addwaiter_layui-form-label">客 服 名 称:</label>
+                        <div class="adwaiter_layui-input-block" style="margin-top: 15px">
+                            <input id="editWaiterNickName" required type="text" name="nickName" placeholder="请输入"
+                                   autocomplete="off" class="layui-input" style="color: #2fcba8; width: 280px">
+                        </div>
+                    </div>
+
+                    <div>
+                        <p style="text-align: center">
+                            <button type="button" class="layui-btn submit" id="editWaiterSubmit">确定</button>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--弹窗1：添加方案弹窗-->
+
+<div id="appPlanModal" class="add_xq_modal_contant">
+    <!--弹窗内容替换掉    -->
+    <div class="xq_modal_main alert">
+        <div id="container" class="add_slt">
+            <div id="planTitle" class="title" style="cursor: move;">
+                <p>添加另一个方案<i id="planClose" class="layui-icon" style="font-size: 30px; color: #FFF; cursor: pointer">&#x1006;</i></p>
+            </div>
+
+            <form class=" solution_form">
+
+                <div class="layui-form-item slt_select">
+                    <label class="plan_layui-form-label">方 案 特 色:</label>
+                    <div id="planSelect" class="lab_select" style="float: left;width: 274px;">
+
+                        <div class="slect_bar">
+                            <span class="title_txt">匹配度最高</span>
+                            <i class="lab-down" style="font-weight: 700"></i>
+                        </div>
+                        <ul class="select_ul">
+                            <li data-index="0" class="activated">匹配度最高</li>
+                            <li data-index="1" class="">距离最近</li>
+                            <li data-index="2" class="">评价最好</li>
+                            <li data-index="3" class="">价格最优</li>
+                            <li data-index="4" class="">周期最短</li>
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="plan_layui-form-label">检 测 机 构:</label>
+                    <div class="layui-input-block">
+                        <input id="jianCeJiGou" type="text" name="orgName" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8; width: 274px" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="plan_layui-form-label">使 用 标 准:</label>
+                    <div class="layui-input-block">
+                        <input id="shiYongBiaoZhun" type="text" name="standard" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8; width: 274px" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="plan_layui-form-label">使 用 仪 器:</label>
+                    <div class="layui-input-block">
+                        <input id="shiYongYiQi" type="text" name="machine" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8; width: 274px" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="layui-form-item ">
+                    <label class="plan_layui-form-label">资 质 授 权:</label>
+                    <div class="layui-input-block">
+                        <input id="ziZhiShouQuan" type="text" name="zizhi" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8; width: 274px" maxlength="30">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="plan_layui-form-label">项 目 周 期:</label>
+                    <div class="layui-input-block slt_input">
+                        <input id="xiangMuZhouQi" type="text" name="zhouqi" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8; width: 100px" max="200">
+                        <label>个 工 作 日</label>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="plan_layui-form-label slt_radio" style="width: 140px;">提供样品制备服务:</label>
+                    <div id="yangpin" class="yangpin">
+                        <input type="radio" name="yangpin" value="1"><span>&nbsp;是&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <input type="radio" name="yangpin" value="0"><span>&nbsp;否</span>
+                    </div>
+                </div>
+                <div class="layui-form-item ">
+                    <label class="plan_layui-form-label">价&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格:</label>
+                    <div class="layui-input-block slt_price">
+                        <input id="planPrice" type="text" name="price" placeholder="请输入" autocomplete="off"
+                               class="layui-input slt_price_input" style="color: #ed911a" max="999999999">
+                        <label>元 起</label>
+                        <div class="mianyi">
+                            <input id="mianYiRadio" type="radio" style="width: 15px" name="" value="0" class="">
+                            <span>面议</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="plan_layui-form-label">距&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;离:</label>
+                    <div class="layui-input-block slt_input">
+                        <input id="planDistance" type="text" name="distance" placeholder="请输入" autocomplete="off"
+                               class="layui-input" style="color: #2fcba8" min="0" max="6000">
+                        <label>K M</label>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="plan_layui-form-label">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;碑:</label>
+                    <div>
+                        <div id="starts" class="starts">
+                            <div id="start1" class="start"><img src="../imgs/icon/start_n_l.png"></div>
+                            <div id="start2" class="start"><img src="../imgs/icon/start_n_l.png"></div>
+                            <div id="start3" class="start"><img src="../imgs/icon/start_n_l.png"></div>
+                            <div id="start4" class="start"><img src="../imgs/icon/start_n_l.png"></div>
+                            <div id="start5" class="start"><img src="../imgs/icon/start_n_l.png"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <p style="text-align: center">
+                        <button type="button" id="planSubmit" class="layui-btn submit">发布为一条新方案</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--遮照-->
+<div class="xq_modal_back"></div>
+
+<!----------------模板部分-------------------->
+<!-- 有未读消息 haveMsg-->
+<!-- 正在聊天的样式 current_im-->
+<!--<% if( sessionList[i].unRead != 0 ) { %>-->
+
+<!--左侧会话列表-->
+<script id="tmlSessionList" type="text/html">
+
+    <% for(var i = 0;i < sessionList.length ; i++){ %>
+    <li class="<%= sessionList[i].uId == model.$_statis.userInfo.uId ? 'current_im':'' %>  <%= sessionList[i].unRead != 0? 'haveMsg':'' %>"
+        data-user-info="<%= JSON.stringify( sessionList[i]) %>" onclick="controlHome.init(this)">
+        <a href="javascript:void(0)">
+            <img src="<%= sessionList[i].uAvatar? sessionList[i].uAvatar:'../imgs/other/person_default.jpg'%> "
+                 alt="用户头像">
+            <div>
+                <div class="title clearfix">
+                    <span class="name"><%= labUtil.getStrWithLength(sessionList[i].uNickname,5) %></span>
+                    <span class="time"><%= labUtil.getTime(sessionList[i].msgTime).slice(5) %></span>
+                </div>
+                <div class="msg">
+                    <%- labUtil.getStrWithLength(sessionList[i].msgBody,12) %>
+                    <% if(sessionList[i].ssState == 2){ %>
+                    <span style="float: right">已结束</span>
+                    <% } %>
+                </div>
+            </div>
+            <i></i>
+            <s></s>
+        </a>
+    </li>
+    <% } %>
+
+</script>
+
+<!--客服列表-->
+<script id="tmlWaiters" type="text/html">
+    <% for(var i = 0;i < waitersList.length;i++){ %>
+    <li>
+        <a href="javascript:void(0)" class="clearfix">
+            <div class="avatar">
+                <img src="../imgs/other/person_default.jpg" alt="客服头像">
+                <span><%= waitersList[i].csName %></span>
+            </div>
+
+            <div class="waiter_id">
+                <span><%= waitersList[i].mobile %></span>
+            </div>
+            <div class="performance">
+                <span><%= waitersList[i].count %></span>
+            </div>
+            <div class="rt_icon">
+                <i class="compile lab-alter" onclick="controlHome.updataWaiter(this)"
+                   data-waiters-list="<%= JSON.stringify( waitersList[i] )%>"></i>
+                <i class="delete lab-del" onclick="controlHome.deleteWaiter(this)"
+                   data-waiters-list="<%= JSON.stringify( waitersList[i] )%>"></i>
+            </div>
+
+        </a>
+    </li>
+    <% } %>
+</script>
+
+<!--历史消息模板-->
+<script id="tmlMsg" type="text/html">
+    <% for(var i = 0 ;i < msgList.length ; i++){ %>
+
+    <% if( msgList[i].msgFrom == model.$_statis.userInfo.uId ) { %>
+    <div class="lft item clearfix">
+
+        <% if ( msgList[i].msgTime && i === 0) { %>
+        <p><%= labUtil.getTime(msgList[i].msgTime) %> </p>
+        <% } %>
+
+        <div class="news">
+            <img class="news_img"
+                 src="<%= msgList[i].uAvatar? msgList[i].uAvatar:'../imgs/other/person_default.jpg'%>"
+                 alt="客户头像">
+            <div class="news_txt">
+                <i></i>
+                <%- msgList[i].msgBody %>
+            </div>
+        </div>
+
+    </div>
+    <% } else { %>
+    <div class="rt item clearfix">
+
+        <% if ( msgList[i].msgTime && i === 0 ) { %>
+        <p><%= labUtil.getTime(msgList[i].msgTime) %> </p>
+        <% } %>
+        <div class="news">
+            <img class="news_img"
+                 src="../imgs/other/waiter_default.jpg"
+                 alt="客户头像">
+            <div class="news_txt">
+                <i></i>
+                <%- msgList[i].msgBody %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% } %>
+</script>
+
+<!--我发送的消息-->
+<script id="myMsg" type="text/html">
+
+    <div class="rt item clearfix">
+
+        <div class="news">
+            <% if( status === 1 ) { %>
+            <s style="color: red;font-size: 20px;font-weight: 700;position: absolute;top: 10px;left: -12px;">!</s>
+            <% } %>
+
+            <img class="news_img" src="<%= avatar %>" alt="客户头像">
+            <div class="news_txt">
+                <i></i>
+                <%=msgBody%>
+            </div>
+        </div>
+    </div>
+
+</script>
+
+<!--新消息模板-->
+<script id="newMsg" type="text/html">
+    <% for(var i = 0;i < newMsgList.length;i++){ %>
+    <% if( newMsgList[i].mtFrom == model.$_statis.userInfo.uId ) { %>
+    <div class="lft item clearfix">
+        <div class="news">
+            <img class="news_img"
+                 src="<%= newMsgList[i].uAvatar? newMsgList[i].uAvatar:'../imgs/other/person_default.jpg'%>" alt="客户头像">
+            <div class="news_txt">
+                <i></i>
+                <%- newMsgList[i].mtBody%>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% } %>
+
+</script>
+
+<!--方案列表渲染-->
+<script id="tmlPlan" type="text/html">
+
+    <% for(var i = 0;i < planList.length;i++){ %>
+    <div class="plan_item">
+        <div class="plan_checkbox">
+            <div class="lab_checked">
+                <label><input onclick="controlHome.controlChecked(this)" type="checkbox"></label>
+            </div>
+        </div>
+        <div class="title">
+            <i class="lab-godAdress"></i>
+                <span>
+                    <%= planList[i].schFeature == 0?"匹配度最高":""%>
+                    <%= planList[i].schFeature == 1?"距离最近":""%>
+                    <%= planList[i].schFeature == 2?"评价最好":""%>
+                    <%= planList[i].schFeature == 3?"价格最优":""%>
+                    <%= planList[i].schFeature == 4?"周期最短":""%>
+                </span>
+        </div>
+        <div class="alter_plan">
+            <i class="lab-alter" data-plan-info="<%= JSON.stringify( planList[i] ) %>"
+               onclick="controlHome.showPlanMenu(this)"></i>
+        </div>
+    </div>
+    <% } %>
+
+</script>
+
+<!--待接入列表-->
+<script id="tmAwaitList" type="text/html">
+
+    <% for(var i = 0;i < awaitList.length;i++){ %>
+    <li>
+        <a href="javascript:void(0)">
+            <!--接入者姓名-->
+            <div class="god">
+
+                <div style="float: left;">
+                    <img src="<%= awaitList[i].uAvatar? awaitList[i].uAvatar:'../imgs/other/person_default.jpg' %>"
+                         alt="">
+                </div>
+                <div>
+                    <span class="god_name"><%= awaitList[i].uNickname %></span><br>
+                    <span class="god_txt"><%- labUtil.getStrWithLength(awaitList[i].msgBody,20) %> </span>
+                </div>
+
+            </div>
+
+            <!--接入时间-->
+            <div class="time">
+                <span class="acpt_time"><%= labUtil.getTime(awaitList[i].msgTime)  %></span><br>
+                <span class="lose_time"> <%= labUtil.getLeftTime(awaitList[i].msgTime)  %>后过期</span>
+            </div>
+
+            <button data-await-list="<%= JSON.stringify( awaitList[i] )%>" onclick="controlHome.awaitListClick(this)"
+                    class="reception">接入
+            </button>
+        </a>
+    </li>
+    <% } %>
+</script>
+
+<!--初始化JS-->
+<script>
+    var bt = baidu.template; // baiduTemplate
+    // 左侧接入列表滚动条配置
+    $('#testDiv').slimscroll({
+        alwaysVisible: true,
+        height: '90%', //可滚动区域高度
+        size: '5px', //组件宽度
+        color: '#a4a4a4', //滚动条颜色
+        color: '#2fcba8', //滚动条颜色
+        opacity: 0.3, //滚动条透明度
+        allowPageScroll: true, //是否 使用滚轮到达顶端/底端时，滚动窗口
+        wheelStep: 20, //滚轮滚动量
+
+    });
+    function controlMsgScroll(cb) {
+        // 消息列表信息
+        $('#msgContent').slimscroll({
+
+            alwaysVisible: true,
+            start: 'bottom', //默认滚动位置：top/bottom
+            height: '100%', //可滚动区域高度
+            size: '5px', //组件宽度
+            opacity: 0.4, //滚动条透明度
+            wheelStep: 20, //滚轮滚动量
+
+        }).bind("top", function () {
+            if (labUtil.isFn(cb)) {
+                cb();
+            }
+        });
+
+    }
+    controlMsgScroll();
+    // 待接入列表的滚动条
+    $('#awaitScrollBar').slimscroll({
+
+        alwaysVisible: true,
+        start: 'top',
+        height: '98%',
+        color: '#2fcba8',
+        size: '5px',
+        opacity: 0.6,
+        railVisible: true,
+        railColor: '#666',
+        railOpacity: .2,
+        allowPageScroll: true,
+        wheelStep: 20,
+
+    });
+    // 客服管理列表
+    $('#adminStingBar').slimscroll({
+        alwaysVisible: true,
+        height: '100%',
+        color: '#2fcba8',
+        size: '5px',
+        opacity: 0.6,
+        allowPageScroll: true,
+        wheelStep: 20,
+
+    });
+    // 方案部分的滚动条
+    $('#planItemBar').slimscroll({
+        alwaysVisible: true,
+        height: '100%',
+        size: '5px',
+        opacity: 0.4,
+        allowPageScroll: true,
+        wheelStep: 20,
+    });
+</script>
+
+<script src="../assets/layui/layui.js"></script>
+<script src="../assets/layui/lay/modules/form.js"></script>
+<!--<script src="assets/layui/lay/dest/layui.lab.cms.js"></script>-->
+<!--<script src="assets/bootstrap-3.3.7-dist/js/bootstrap.js"></script>-->
+<script src="../js/controller/account.js?_7" type="text/javascript" charset="utf-8"></script>
+<script src="../js/model.js?_=7"></script>
+<script src="../js/controller.js?_=7"></script>
+
+</body>
+</html>

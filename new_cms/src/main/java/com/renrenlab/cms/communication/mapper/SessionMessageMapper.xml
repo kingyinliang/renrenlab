@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.SessionMessageDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.SessionMessage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="m_mid" property="mMid" jdbcType="BIGINT" />
+    <result column="m_from" property="mFrom" jdbcType="BIGINT" />
+    <result column="m_to" property="mTo" jdbcType="BIGINT" />
+    <result column="s_sid" property="sSid" jdbcType="BIGINT" />
+    <result column="m_state" property="mState" jdbcType="INTEGER" />
+    <result column="m_body" property="mBody" jdbcType="VARCHAR" />
+    <result column="m_source" property="mSource" jdbcType="INTEGER" />
+    <result column="m_type" property="mType" jdbcType="INTEGER" />
+    <result column="m_time" property="mTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="ResultMapForMessageInfo" type="com.renrenlab.cms.communication.vo.MessageInfo" >
+    <result column="m_from" property="msgFrom" jdbcType="BIGINT" />
+    <result column="m_state" property="msgState" jdbcType="INTEGER" />
+    <result column="m_body" property="msgBody" jdbcType="VARCHAR" />
+    <result column="m_time" property="msgTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, m_mid, m_from, m_to, s_sid, m_state, m_body, m_source, m_type, m_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_session_info.t_session_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_session_info.t_session_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.SessionMessage" >
+    insert into rlab_session_info.t_session_message
+    ( m_from,
+      m_to, s_sid, m_state, m_body,
+      m_source, m_type, m_time)
+    values
+    ( #{mFrom,jdbcType=BIGINT},
+      #{mTo,jdbcType=BIGINT}, #{sSid,jdbcType=BIGINT}, #{mState,jdbcType=INTEGER}, #{mBody,jdbcType=VARCHAR},
+      #{mSource,jdbcType=INTEGER}, #{mType,jdbcType=INTEGER}, #{mTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.SessionMessage" >
+    insert into rlab_session_info.t_session_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mMid != null" >
+        m_mid,
+      </if>
+      <if test="mFrom != null" >
+        m_from,
+      </if>
+      <if test="mTo != null" >
+        m_to,
+      </if>
+      <if test="sSid != null" >
+        s_sid,
+      </if>
+      <if test="mState != null" >
+        m_state,
+      </if>
+      <if test="mBody != null" >
+        m_body,
+      </if>
+      <if test="mSource != null" >
+        m_source,
+      </if>
+      <if test="mType != null" >
+        m_type,
+      </if>
+      <if test="mTime != null" >
+        m_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mMid != null" >
+        #{mMid,jdbcType=BIGINT},
+      </if>
+      <if test="mFrom != null" >
+        #{mFrom,jdbcType=BIGINT},
+      </if>
+      <if test="mTo != null" >
+        #{mTo,jdbcType=BIGINT},
+      </if>
+      <if test="sSid != null" >
+        #{sSid,jdbcType=BIGINT},
+      </if>
+      <if test="mState != null" >
+        #{mState,jdbcType=INTEGER},
+      </if>
+      <if test="mBody != null" >
+        #{mBody,jdbcType=VARCHAR},
+      </if>
+      <if test="mSource != null" >
+        #{mSource,jdbcType=INTEGER},
+      </if>
+      <if test="mType != null" >
+        #{mType,jdbcType=INTEGER},
+      </if>
+      <if test="mTime != null" >
+        #{mTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.SessionMessage" >
+    update rlab_session_info.t_session_message
+    <set >
+      <if test="mMid != null" >
+        m_mid = #{mMid,jdbcType=BIGINT},
+      </if>
+      <if test="mFrom != null" >
+        m_from = #{mFrom,jdbcType=BIGINT},
+      </if>
+      <if test="mTo != null" >
+        m_to = #{mTo,jdbcType=BIGINT},
+      </if>
+      <if test="sSid != null" >
+        s_sid = #{sSid,jdbcType=BIGINT},
+      </if>
+      <if test="mState != null" >
+        m_state = #{mState,jdbcType=INTEGER},
+      </if>
+      <if test="mBody != null" >
+        m_body = #{mBody,jdbcType=VARCHAR},
+      </if>
+      <if test="mSource != null" >
+        m_source = #{mSource,jdbcType=INTEGER},
+      </if>
+      <if test="mType != null" >
+        m_type = #{mType,jdbcType=INTEGER},
+      </if>
+      <if test="mTime != null" >
+        m_time = #{mTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.SessionMessage" >
+    update rlab_session_info.t_session_message
+    set m_mid = #{mMid,jdbcType=BIGINT},
+      m_from = #{mFrom,jdbcType=BIGINT},
+      m_to = #{mTo,jdbcType=BIGINT},
+      s_sid = #{sSid,jdbcType=BIGINT},
+      m_state = #{mState,jdbcType=INTEGER},
+      m_body = #{mBody,jdbcType=VARCHAR},
+      m_source = #{mSource,jdbcType=INTEGER},
+      m_type = #{mType,jdbcType=INTEGER},
+      m_time = #{mTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 通过会话ID查询最后一条消息 -->
+  <select id="selectLastItemMessageBySessionId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from rlab_session_info.t_session_message
+    where s_sid = #{s_sid,jdbcType=BIGINT} and m_state = '0'
+    order by m_time desc limit 1
+  </select>
+
+  <!-- 通过会话ID分页查询消息列表 -->
+  <select id="selectMessageBySessionId" resultMap="ResultMapForMessageInfo" >
+    select m_from as msgFrom, m_state as msgState, m_body as msgBody, m_time as msgTime
+    from rlab_session_info.t_session_message
+    where s_sid = #{sessionId,jdbcType=BIGINT}
+    order by m_mid desc
+  </select>
+
+  <!-- 通过会话ID查询用户发送的最后一条消息 -->
+  <select id="selectLastMsgBySsIdFromUser" resultMap="BaseResultMap" parameterType="com.renrenlab.cms.communication.vo.SessionBriefInfo">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM rlab_session_info.t_session_message
+    <trim prefix="WHERE" suffixOverrides="AND">
+      <if test="ssId != null">
+        s_sid = #{ssId,jdbcType=BIGINT} AND
+      </if>
+      <if test="uId != null">
+        m_from = #{uId,jdbcType=BIGINT} AND
+      </if>
+    </trim>
+    ORDER BY m_time desc limit 1
+  </select>
+
+</mapper>

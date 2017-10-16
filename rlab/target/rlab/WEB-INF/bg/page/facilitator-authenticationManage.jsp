@@ -323,7 +323,7 @@
         var form = layui.form();
 
         form.on('select(serviceStates)', function (data) {
-            serviceStates = data.value;
+            auditStates = data.value;
         });
 
         form.on('select(source)', function (data) {

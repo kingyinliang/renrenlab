@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserAddrInfoDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserAddrInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="u_fullname" property="uFullname" jdbcType="VARCHAR" />
+    <result column="u_conuntry" property="uConuntry" jdbcType="VARCHAR" />
+    <result column="u_city" property="uCity" jdbcType="VARCHAR" />
+    <result column="u_province" property="uProvince" jdbcType="VARCHAR" />
+    <result column="u_street" property="uStreet" jdbcType="VARCHAR" />
+    <result column="u_zipcode" property="uZipcode" jdbcType="VARCHAR" />
+    <result column="u_phone" property="uPhone" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_uid, u_fullname, u_conuntry, u_city, u_province, u_street, u_zipcode, u_phone, 
+    create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_addr_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_addr_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserAddrInfo" >
+    insert into rlab_user_info.t_user_addr_info (id, u_uid, u_fullname, 
+      u_conuntry, u_city, u_province, 
+      u_street, u_zipcode, u_phone, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, #{uFullname,jdbcType=VARCHAR}, 
+      #{uConuntry,jdbcType=VARCHAR}, #{uCity,jdbcType=VARCHAR}, #{uProvince,jdbcType=VARCHAR}, 
+      #{uStreet,jdbcType=VARCHAR}, #{uZipcode,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserAddrInfo" >
+    insert into rlab_user_info.t_user_addr_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="uFullname != null" >
+        u_fullname,
+      </if>
+      <if test="uConuntry != null" >
+        u_conuntry,
+      </if>
+      <if test="uCity != null" >
+        u_city,
+      </if>
+      <if test="uProvince != null" >
+        u_province,
+      </if>
+      <if test="uStreet != null" >
+        u_street,
+      </if>
+      <if test="uZipcode != null" >
+        u_zipcode,
+      </if>
+      <if test="uPhone != null" >
+        u_phone,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uFullname != null" >
+        #{uFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="uConuntry != null" >
+        #{uConuntry,jdbcType=VARCHAR},
+      </if>
+      <if test="uCity != null" >
+        #{uCity,jdbcType=VARCHAR},
+      </if>
+      <if test="uProvince != null" >
+        #{uProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="uStreet != null" >
+        #{uStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="uZipcode != null" >
+        #{uZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserAddrInfo" >
+    update rlab_user_info.t_user_addr_info
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uFullname != null" >
+        u_fullname = #{uFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="uConuntry != null" >
+        u_conuntry = #{uConuntry,jdbcType=VARCHAR},
+      </if>
+      <if test="uCity != null" >
+        u_city = #{uCity,jdbcType=VARCHAR},
+      </if>
+      <if test="uProvince != null" >
+        u_province = #{uProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="uStreet != null" >
+        u_street = #{uStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="uZipcode != null" >
+        u_zipcode = #{uZipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        u_phone = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserAddrInfo" >
+    update rlab_user_info.t_user_addr_info
+    set u_uid = #{uUid,jdbcType=BIGINT},
+      u_fullname = #{uFullname,jdbcType=VARCHAR},
+      u_conuntry = #{uConuntry,jdbcType=VARCHAR},
+      u_city = #{uCity,jdbcType=VARCHAR},
+      u_province = #{uProvince,jdbcType=VARCHAR},
+      u_street = #{uStreet,jdbcType=VARCHAR},
+      u_zipcode = #{uZipcode,jdbcType=VARCHAR},
+      u_phone = #{uPhone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

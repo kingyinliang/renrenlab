@@ -1,0 +1,59 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    min-height: 100%;
+}
+.orderlist_cell {
+    overflow: hidden;
+    width: 9.2rem;
+    height: 3.73333rem;
+    background-color: white;
+    border-radius: 0.1rem;
+    margin: 0 auto;
+    margin-top: 0.66666rem;
+    box-shadow: 0rem 0rem 0.17222rem 0rem rgba(124, 167, 219, 0.27);
+    position: relative;
+}
+
+.orderlist_cell .line {
+    background-color: #2fcba8;
+    height: 0.1rem;
+}
+
+.orderlist_cell .time {
+    /*font-size: 24px;*/
+    position: absolute;
+    color: #888888;
+    height: 1rem;
+    line-height: 1rem;
+    /*margin-left: 0.66666rem;*/
+    display: inline-block;
+    left: 0.66666rem;
+}
+
+.orderlist_cell .state {
+    position: absolute;
+    right: 0.66666rem;
+    color: #2fcba8;
+    display: inline-block;
+    height: 1rem;
+    line-height: 1rem;
+}
+
+.orderlist_cell .title {
+    height: 1.65333rem;
+    line-height: 1.65333rem;
+    font-size: 0.4rem;
+    position: relative;
+}
+
+.orderlist_cell .price {
+    color: orange;
+    line-height: 1rem;
+    position: absolute;
+    bottom: 0rem;
+    right: 0.66666rem;
+}

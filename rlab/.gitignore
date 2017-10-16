@@ -1,0 +1,14 @@
+/.mymetadata
+/.project
+/.idea/
+/.settings/
+/target/
+/.classpath
+/rlab.iml
+/src/main/webapp/WEB-INF/bg/.project
+/src/main/webapp/front/.project
+/src/main/webapp/.project
+test/
+/qqconnect.log
+/qqconnect.log.1
+*.iml

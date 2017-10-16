@@ -394,7 +394,7 @@
 
             <div class="orgCorporation">
                     <p class="tit">机构法人信息：</p>
-                    <p><span class="titinp">真实姓名<em>**</em>：</span><input type="text" placeholder="请输入真实姓名" id="userName" value="${orgInfo.orgLicense.orgPerson}"></p>
+                    <p><span class="titinp">真实姓名<em>**</em>：</span><input type="text" placeholder="请输入真实姓名" id="userName" value="${orgInfo.orgLicense.orgPerson}" maxlength="10"></p>
                     <p><span class="titinp">身份证号码<em>**</em>：</span><input type="text" placeholder="请输入身份证号码" id="userNum" value="${orgInfo.orgLicense.identificationNumber}"></p>
                     <div class="lab_p clearfix identity">
                         <p style="float: left;margin: 0"><span class="titinp">身份证照片<em>**</em>：</span></p>
@@ -871,7 +871,7 @@
             height: 300,
             tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', '|', 'image'],
             uploadImage: {
-                url: BASE_URL + '/bg/file/upload/richText',
+                url: BASE_URL + '/front/file/upload/richText',
                 type: 'post', //默认post
                 before: function (input) {
                     //返回的参数item，即为当前的input DOM对象
@@ -1225,8 +1225,8 @@
                 return false;
             }
 
-            $("#longitude").val(poi.point.lng);// 更新视图
-            $("#latitude").val(poi.point.lat);// 更新视图
+            $("#longitude").val(poi.point.lng.toFixed(2));// 更新视图
+            $("#latitude").val(poi.point.lat.toFixed(2));// 更新视图
 
             map.centerAndZoom(poi.point, 13);// 配置：更新地图位置
             var marker = new BMap.Marker(new BMap.Point(poi.point.lng, poi.point.lat));  // 配置：创建标注，为要查询的地方对应的经纬度
@@ -1289,7 +1289,7 @@
 
         for (var j = 0; j < orgPhoneIpts.length; j++) {
             if ($.trim($(orgPhoneIpts[j]).val()) !== "") {
-                if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(orgPhoneIpts[j]).val())){
+                if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(orgPhoneIpts[j]).val())){
                     alert("机构固话电话格式错误，请填写11位手机号或座机号!");
                     return false;
                 }
@@ -1315,17 +1315,21 @@
                 alert("请填写完整联系人");
                 return;
             }
+            if(!/^[\u4e00-\u9fa5]{2,10}$/.test(userNames)){
+                alert("联系人姓名格式错误");
+                return;
+            }
             var userPhone="";
             for (var j=0;j<$(".rowphone ").eq(i).find(".userPhone").length;j++) {
                 if (j==0) {
-                    if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
+                    if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
                         alert("请输入正确联系人手机号");
                         return;
                     }else {
                         userPhone=$(".rowphone ").eq(i).find(".userPhone").eq(j).val();
                     }
                 }else {
-                    if(!/^([0-9]{3,4}-[0-9]{8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
+                    if(!/^([0-9]{3,4}-[0-9]{7,8})|(1[34578]\d{9})$/.test($(".rowphone ").eq(i).find(".userPhone").eq(j).val())){
                         alert("请输入正确联系人手机号");
                         return;
                     }else {
@@ -1440,7 +1444,13 @@
         } else if (formData.orgAddress.orgAddrProvince.length == 0 || formData.orgAddress.orgAddrCity.length == 0 || formData.orgAddress.orgAddrDistrict.length == 0 || formData.orgAddress.orgAddrStreet.length == 0) {
             alert("机构地址不能为空");
             return false;
-        } else if (formData.orgAddress.orgAddrLongitude.length == 0 || formData.orgAddress.orgAddrLatitude.length == 0) {
+        }  else if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(formData.orgAddress.orgAddrLongitude) || /^[0-9]{1,3}$/.test(formData.orgAddress.orgAddrLongitude))) {
+            alert("经度格式错误");
+            return false;
+        } else if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(formData.orgAddress.orgAddrLatitude) || /^[0-9]{1,3}$/.test(formData.orgAddress.orgAddrLatitude))) {
+            alert("纬度格式错误");
+            return false;
+        }else if (formData.orgAddress.orgAddrLongitude.length == 0 || formData.orgAddress.orgAddrLatitude.length == 0) {
             alert("经纬度不能为空");
             return false;
         }else if(!/^[\u4e00-\u9fa5]{2,11}$/.test(formData.orgLicense.orgPerson)){
@@ -1514,7 +1524,7 @@
 
 
         if (formData.orgAddress.orgZipcode.length != 0) {
-            if (!/^[0-9]\d{4,5}$/.test(formData.orgAddress.orgZipcode)) {
+            if (!/^[0-9]{6}$/.test(formData.orgAddress.orgZipcode)) {
                 alert("机构邮编格式错误");
                 return false;
             }
@@ -1527,7 +1537,8 @@
             }
         }
         if (formData.orgContacts.conFax.length != 0) {
-            if (/^[0-9]{3,4}-[0-9]{7,8}$/.test(formData.orgContacts.conFax)) {
+            if (!/^[0-9]{3,4}-[0-9]{7,8}$/.test(formData.orgContacts.conFax)) {
+                console.log(formData.orgContacts.conFax);
                 alert("机构传真格式错误");
                 return false;
             }
@@ -1560,6 +1571,12 @@
                 } else if (data.code === 1013) {
                     //墨绿深蓝风
                     layer.alert('机构名已存在，请更换', {
+                        skin: 'layui-layer-molv' //样式类名
+                        , closeBtn: 0
+                    });
+                }else if (data.code === 2001) {
+                    //墨绿深蓝风
+                    layer.alert('组织机构代码重复，请更换', {
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });

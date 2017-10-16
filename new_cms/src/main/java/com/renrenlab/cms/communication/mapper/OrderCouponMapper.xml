@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.OrderCouponDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.OrderCoupon" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="o_cid" property="oCid" jdbcType="BIGINT" />
+    <result column="o_coupon_name" property="oCouponName" jdbcType="VARCHAR" />
+    <result column="o_coupon_description" property="oCouponDescription" jdbcType="VARCHAR" />
+    <result column="o_coupon_effective" property="oCouponEffective" jdbcType="INTEGER" />
+    <result column="o_coupon_stat" property="oCouponStat" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, o_cid, o_coupon_name, o_coupon_description, o_coupon_effective, o_coupon_stat, 
+    create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据优惠券id查询优惠券信息 -->
+  <select id="selectAllByCoIds" resultMap="BaseResultMap" parameterType="java.util.List">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_coupon
+    where o_cid in
+    <foreach collection="list" item="ids" open="(" separator="," close=")">
+      #{ids}
+    </foreach>
+  </select>
+  <select id="selectByCoId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_order_info.t_order_coupon
+    where o_cid = #{coId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_order_info.t_order_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.OrderCoupon" >
+    insert into rlab_order_info.t_order_coupon (id, o_cid, o_coupon_name, 
+      o_coupon_description, o_coupon_effective, o_coupon_stat, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{oCid,jdbcType=BIGINT}, #{oCouponName,jdbcType=VARCHAR}, 
+      #{oCouponDescription,jdbcType=VARCHAR}, #{oCouponEffective,jdbcType=INTEGER}, #{oCouponStat,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.OrderCoupon" >
+    insert into rlab_order_info.t_order_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="oCid != null" >
+        o_cid,
+      </if>
+      <if test="oCouponName != null" >
+        o_coupon_name,
+      </if>
+      <if test="oCouponDescription != null" >
+        o_coupon_description,
+      </if>
+      <if test="oCouponEffective != null" >
+        o_coupon_effective,
+      </if>
+      <if test="oCouponStat != null" >
+        o_coupon_stat,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="oCid != null" >
+        #{oCid,jdbcType=BIGINT},
+      </if>
+      <if test="oCouponName != null" >
+        #{oCouponName,jdbcType=VARCHAR},
+      </if>
+      <if test="oCouponDescription != null" >
+        #{oCouponDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="oCouponEffective != null" >
+        #{oCouponEffective,jdbcType=INTEGER},
+      </if>
+      <if test="oCouponStat != null" >
+        #{oCouponStat,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.OrderCoupon" >
+    update rlab_order_info.t_order_coupon
+    <set >
+      <if test="oCid != null" >
+        o_cid = #{oCid,jdbcType=BIGINT},
+      </if>
+      <if test="oCouponName != null" >
+        o_coupon_name = #{oCouponName,jdbcType=VARCHAR},
+      </if>
+      <if test="oCouponDescription != null" >
+        o_coupon_description = #{oCouponDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="oCouponEffective != null" >
+        o_coupon_effective = #{oCouponEffective,jdbcType=INTEGER},
+      </if>
+      <if test="oCouponStat != null" >
+        o_coupon_stat = #{oCouponStat,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.OrderCoupon" >
+    update rlab_order_info.t_order_coupon
+    set o_cid = #{oCid,jdbcType=BIGINT},
+      o_coupon_name = #{oCouponName,jdbcType=VARCHAR},
+      o_coupon_description = #{oCouponDescription,jdbcType=VARCHAR},
+      o_coupon_effective = #{oCouponEffective,jdbcType=INTEGER},
+      o_coupon_stat = #{oCouponStat,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByCoId" parameterType="com.renrenlab.cms.communication.model.OrderCoupon" >
+    update rlab_order_info.t_order_coupon
+    set o_coupon_stat = #{oCouponStat,jdbcType=INTEGER},
+    where o_coupon_stat = #{oCouponStat,jdbcType=INTEGER}
+  </update>
+</mapper>

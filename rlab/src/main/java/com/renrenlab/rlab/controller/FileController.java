@@ -26,7 +26,6 @@ public class FileController {
     @Autowired
     private FileService fileService;
 
-    @Authentication(permisssion = Permisssion.P1, description = "00000010")
     @RequestMapping(value = "/upload/{type}", method = RequestMethod.POST)
     @ResponseBody
     public Response<?> uploadImage(
@@ -38,8 +37,8 @@ public class FileController {
         }
         return ResponseHelper.createSuccessResponse(url);
     }
-
-    @Authentication(permisssion = Permisssion.P1, description = "00000010")
+/*
+      普通用户访问该路径 会重定向到主页，所以将该接口移动到 front/file 下
     @RequestMapping(value = "/upload/richText", method = RequestMethod.POST,produces="text/html;charset=UTF-8")
     @ResponseBody
     public String uploadImageForRichText(@RequestParam("file") MultipartFile file) throws Exception {
@@ -54,5 +53,6 @@ public class FileController {
         //  String jsonString = JsonMapper.getJsonString(result);
         return JSONObject.toJSONString(result);
     }
+*/
 
 }

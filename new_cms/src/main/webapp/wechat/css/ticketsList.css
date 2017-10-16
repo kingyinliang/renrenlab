@@ -1,0 +1,252 @@
+@font-face {
+    font-family: 'lab_icon';
+    src:  url('../font/lab_icon.eot?5enf83');
+    src:  url('../font/lab_icon.eot?5enf83#iefix') format('embedded-opentype'),
+    url('../font/lab_icon.ttf?5enf83') format('truetype'),
+    url('../font/lab_icon.woff?5enf83') format('woff'),
+    url('../font/lab_icon.svg?5enf83#lab_icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="lab-"], [class*=" lab-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'lab_icon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.lab-addicon:before {
+    content: "\e900";
+}
+.lab-adress:before {
+    content: "\e901";
+}
+.lab-alter:before {
+    content: "\e902";
+}
+.lab-await:before {
+    content: "\e903";
+}
+.lab-checked-1:before {
+    content: "\e904";
+}
+.lab-checked-2:before {
+    content: "\e905";
+}
+.lab-checked-3:before {
+    content: "\e906";
+}
+.lab-close-1:before {
+    content: "\e907";
+}
+.lab-close-2:before {
+    content: "\e908";
+}
+.lab-commont:before {
+    content: "\e909";
+}
+.lab-company:before {
+    content: "\e90a";
+}
+.lab-coupon:before {
+    content: "\e90b";
+}
+.lab-data:before {
+    content: "\e90c";
+}
+.lab-del:before {
+    content: "\e90d";
+}
+.lab-down:before {
+    content: "\e90e";
+}
+.lab-exit:before {
+    content: "\e90f";
+}
+.lab-godAdress:before {
+    content: "\e910";
+}
+.lab-godPrice:before {
+    content: "\e911";
+}
+.lab-godScheme:before {
+    content: "\e912";
+}
+.lab-godTime:before {
+    content: "\e913";
+}
+.lab-history:before {
+    content: "\e914";
+}
+.lab-im:before {
+    content: "\e915";
+}
+.lab-instrument:before {
+    content: "\e916";
+}
+.lab-lock:before {
+    content: "\e917";
+}
+.lab-order:before {
+    content: "\e918";
+}
+.lab-phone:before {
+    content: "\e919";
+}
+.lab-scheme:before {
+    content: "\e91a";
+}
+.lab-search:before {
+    content: "\e91b";
+}
+.lab-service:before {
+    content: "\e91c";
+}
+.lab-set:before {
+    content: "\e91d";
+}
+.lab-share-1:before {
+    content: "\e91e";
+}
+.lab-tip:before {
+    content: "\e91f";
+}
+.lab-top:before {
+    content: "\e920";
+}
+.lab-user:before {
+    content: "\e921";
+}
+
+
+.noticket {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.noticket img {
+    margin-top: 5rem;
+}
+
+.noticket p {
+    color: #999999;
+    font-size: 0.4rem;
+    margin-top: 0.3rem;
+}
+
+.noauthority {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.noauthority img {
+    margin-top: 5rem;
+}
+
+.noauthority p {
+    color: #999999;
+    font-size: 0.3rem;
+    margin-top: 0.3rem;
+    line-height: 0.5rem;
+}
+
+.tickets_list_cell {
+    margin: 0px auto;
+    margin-top: 0.85333rem;
+    width: 90%;
+    height: 2.93333rem;
+    /*background-color: red;*/
+    background-image: url("../img/600.jpg");
+    position: relative;
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+.listcell_left {
+    float: left;
+    width: 50%;
+    height: 2rem;
+}
+
+.listcell_left .title {
+    color: white;
+    font-size: 0.5rem;
+    margin-top: 0.5rem;
+    margin-left: 0.46666rem;
+}
+
+.listcell_left .subtitle {
+    color: white;
+    font-size: 0.3rem;
+    margin-top: 0.15rem;
+    margin-left: 0.46666rem;
+}
+
+.listcell_right {
+    float: right;
+    width: 50%;
+    height: 2rem;
+}
+
+.listcell_right .title {
+    color: white;
+    font-size: 0.8rem;
+    height: 2rem;
+    line-height: 2rem;
+    text-align: right;
+    margin-right: 0.5rem;
+}
+
+.listcell_right .title span {
+    font-size: 0.5rem;
+}
+
+.listcell_bottom {
+    position: absolute;
+    bottom: 0rem;
+    width: 100%;
+    height: 0.7rem;
+    line-height: 0.7rem;
+}
+
+.listcell_bottom .text {
+    color: #999999;
+    margin-left: 0.3rem;
+    font-size: 0.3rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    float: left;
+}
+
+.listcell_bottom .icon {
+    margin-left: 0.46666rem;
+    color: #999999;
+    font-size: 0.5rem;
+    line-height: 0.7rem;
+    height: 0.7rem;
+    float: left;
+}
+
+.ticket_state {
+    /*display: d;*/
+    background-image: url("../img/usedIcon.png");
+    background-repeat: no-repeat;
+    display:none;
+    background-size:cover;
+    position: absolute;
+    right: 0.3rem;
+    bottom: 0.1rem;
+    width: 2rem;
+    height: 1.2rem;
+}

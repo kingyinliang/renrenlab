@@ -622,7 +622,7 @@
             height: 300,
             tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', '|', 'image'],
             uploadImage: {
-                url: BASE_URL + '/bg/file/upload/richText',
+                url: BASE_URL + '/front/file/upload/richText',
                 type: 'post', //默认post
                 before: function (input) {
                     //返回的参数item，即为当前的input DOM对象

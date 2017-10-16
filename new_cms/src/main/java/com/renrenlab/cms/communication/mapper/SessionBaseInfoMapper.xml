@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.SessionBaseInfoDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.SessionBaseInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="s_sid" property="sSid" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="cs_id" property="csId" jdbcType="BIGINT" />
+    <result column="s_state" property="sState" jdbcType="INTEGER" />
+    <result column="s_source" property="sSource" jdbcType="INTEGER" />
+    <result column="s_time" property="sTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="ResultMapForSessionInfo" type="com.renrenlab.cms.communication.vo.SessionInfo">
+    <result column="s_sid" property="ssId" jdbcType="BIGINT"/>
+    <result column="u_uid" property="uId" jdbcType="BIGINT"/>
+    <result column="cs_id" property="csId" jdbcType="BIGINT"/>
+    <result column="s_state" property="ssState" jdbcType="INTEGER"/>
+    <result column="s_source" property="ssSource" jdbcType="INTEGER"/>
+  </resultMap>
+
+  <resultMap id="ResultMapForAllSsIdInfo" type="com.renrenlab.cms.communication.vo.SessionBriefInfo">
+    <result column="s_sid" property="ssId" jdbcType="BIGINT" />
+    <result column="s_state" property="ssState" jdbcType="INTEGER" />
+    <result column="u_uid" property="uId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, s_sid, u_uid, cs_id, s_state, s_source, s_time, create_time, modify_time
+  </sql>
+
+  <!-- 根据会话ID查询会话 -->
+  <select id="selectBySsId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_session_info.t_session_base_info
+    where s_sid = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 通过客服ID分页查询会话 -->
+  <select id="selectSessionsByCsId" resultMap="ResultMapForSessionInfo" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_session_info.t_session_base_info
+    where cs_id = #{cs_id,jdbcType=BIGINT} and s_state in ('1', '2')
+  </select>
+
+  <!-- 通过待接入会话 -->
+  <select id="selectSessionIsWaitJoinUp" resultMap="ResultMapForSessionInfo" parameterType="java.lang.Long">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_session_info.t_session_base_info
+    where s_state in ('0')
+  </select>
+  <select id="selectByUId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_session_info.t_session_base_info
+    where u_uid = #{uid,jdbcType=BIGINT}
+  </select>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.SessionBaseInfo" >
+	<selectKey keyProperty="sSid" resultType="java.lang.Long" order="AFTER">
+            select last_value as s_sid from rlab_session_info.session_sid_seq;
+        </selectKey>
+    insert into rlab_session_info.t_session_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sSid != null" >
+        s_sid,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="csId != null" >
+        cs_id,
+      </if>
+      <if test="sState != null" >
+        s_state,
+      </if>
+      <if test="sSource != null" >
+        s_source,
+      </if>
+      <if test="sTime != null" >
+        s_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sSid != null" >
+        #{sSid,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="csId != null" >
+        #{csId,jdbcType=BIGINT},
+      </if>
+      <if test="sState != null" >
+        #{sState,jdbcType=INTEGER},
+      </if>
+      <if test="sSource != null" >
+        #{sSource,jdbcType=INTEGER},
+      </if>
+      <if test="sTime != null" >
+        #{sTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- 根据客服id查询该客服接待人数 -->
+  <select id="selectByCsId" resultType="java.lang.Long" parameterType="java.lang.Long">
+    select COUNT(*)
+    from rlab_session_info.t_session_base_info
+    where cs_id = #{cs_id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 通过ID选择性更新会话 -->
+  <update id="updateSession" parameterType="com.renrenlab.cms.communication.model.SessionBaseInfo">
+    update rlab_session_info.t_session_base_info
+    <set>
+      <if test="uUid != null">
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="csId != null">
+        cs_id = #{csId,jdbcType=BIGINT},
+      </if>
+      <if test="sState != null">
+        s_state = #{sState,jdbcType=INTEGER},
+      </if>
+      <if test="sSource != null">
+        s_source = #{sSource,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where s_sid = #{sSid,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectAllSsId" resultMap="ResultMapForAllSsIdInfo">
+    SELECT s_sid,s_state,u_uid
+    FROM rlab_session_info.t_session_base_info
+    WHERE s_state != '3';
+  </select>
+
+</mapper>

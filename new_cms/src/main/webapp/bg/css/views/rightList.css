@@ -1,0 +1,462 @@
+/*+++++++++++++右侧选项卡部分开始++++++++++++++++++++++*/
+.rightList {
+    width: 255px;
+    /*height: 800px;*/
+    height: 100%;
+    background-color: white;
+    float: right;
+}
+
+/*三个tab*/
+.order_tab {
+    height: 75px;
+    line-height: 75px;
+    background-color: #EEF4F4;
+
+}
+
+.order_tab > .tab {
+    border-bottom: 1px solid #D8E1E1;
+    border-left: 1px solid #D8E1E1;
+    cursor: pointer;
+    width: 33%;
+    height: 74px;
+    float: left;
+    text-align: center;
+    line-height: 74px;
+}
+
+.order_tab > .tab i {
+    line-height: 75px;
+    font-size: 26px;
+    color: #7E7E7E;
+}
+
+/*激活状态下的tab*/
+.order_tab > .order_tab_active {
+    background: #fff;
+}
+
+.order_tab > .order_tab_active i {
+    color: #2fcba8;
+}
+
+.plan_content {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    /*height: 500px;*/
+    /*background-color: #2D93CA;*/
+}
+
+/*---选项卡个人信息部分开始---*/
+.plan_content .info_list {
+    padding: 20px 22px 66px 22px;
+}
+
+/*基本信息*/
+.plan_content .user_info .avatar {
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    border-radius: 55px;
+    font-size: 16px;
+    color: #4e4e4e;
+}
+
+.plan_content .base_info {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.plan_content .user_info .name {
+    /*margin-top: 25px;*/
+    /*font-size: 16px;*/
+}
+
+/*输入框列表*/
+.plan_content .info_list .ipt_item {
+    height: 36px;
+    background: #EEF4F4;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.plan_content .ipt_item label {
+    float: left;
+    display: block;
+    width: 40px;
+    height: 36px;
+    line-height: 33px;
+    text-align: center;
+    font-size: 16px;
+
+}
+
+.plan_content .ipt_item input {
+    float: left;
+    display: block;
+    width: 152px;
+    height: 100%;
+    border: 0 none;
+    outline: none;
+    background: #EEF4F4;
+    font-size: 12px;
+    padding-left: 15px;
+}
+
+.plan_content .ipt_btn > button {
+    background-color: #2fcba8;
+    outline: none;
+    border: 0 none;
+    width: 100%;
+    height: 42px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.plan_content .ipt_btn > button:active {
+    background-color: #008a6b;
+}
+
+/*输入框的模糊查询列表样式*/
+ .info_list .ipt_item ul.down {
+
+    width: 99%;
+    /*height: 200px;*/
+    background: #F7F9F9;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    z-index: 100;
+
+}
+
+ .info_list .ipt_item ul.down li {
+     height: 30px;
+     line-height: 30px;
+     cursor: pointer;
+     font-size: 12px;
+     color: #666;
+}
+
+.info_list .ipt_item ul.down li:hover {
+    background: #EEF4F4;
+}
+
+/*输入完后的选项卡*/
+.plan_content .oinInfo {
+    /*width: 210px;*/
+    /*background: darkred;*/
+    /*margin-top:-45px;*/
+}
+
+.plan_content .oinInfo > p {
+
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 2px solid #eee;
+    text-align: left;
+}
+
+.plan_content .oinInfo > p.last_p {
+    /*width: 210px;*/
+    height: auto;
+    border-bottom: 0 none;
+    margin-bottom: 50px;
+}
+
+.plan_content .oinInfo > p > span.icon {
+    display: block;
+    height: 100%;
+    width: 43px;
+    font-size: 20px;
+    text-align: center;
+    float: left;
+}
+
+.plan_content .oinInfo > p > span.txt {
+    font-size: 12px;
+    color: #545454;
+    /*margin-left:10px;*/
+    /*padding-left:1px;*/
+    display: block;
+    margin-left: 46px;
+}
+
+.plan_content .oinInfo > p > span.txt:last-child {
+    padding-top: 17px;
+    line-height: 25px;
+}
+
+/*----选项卡个人信息部分结束-----*/
+
+/*----右侧项目列表样式开始----*/
+.project_list {
+    height: 85%;
+    position: relative;
+    overflow: hidden;
+}
+
+.project_list .send_plan{
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    background: #2FCBA8;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+.project_list .send_plan:active{
+    background-color: #008a6b;
+}
+
+.project_list .plan_list {
+    /*overflow: hidden;*/
+    margin-top: 5px;
+    /*max-height: 74%;*/
+    height: 74%;
+}
+
+.project_list .plan_list .plan_item {
+    cursor: pointer;
+    height: 54px;
+    line-height: 54px;
+    color: #FFF;
+    background: #77AADC;
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 14px;
+    padding: 0 18px;
+    overflow: hidden;
+}
+
+.project_list .plan_list .plan_item:hover {
+    background: #4d8cc9;
+}
+
+.plan_list .plan_item .plan_checkbox {
+    float: left;
+    /*background: darkred;*/
+    width: 16px;
+    height: 54px;
+}
+
+.plan_list .plan_item .title {
+    float: left;
+    padding-left: 20px;
+    max-width: 185px;
+}
+
+.plan_list .plan_item .title > i {
+    vertical-align: baseline;
+}
+
+.plan_list .plan_item .alter_plan {
+    float: right;
+}
+
+.plan_list > .add_plan {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    /*border-top: 1px solid #eee;*/
+    /* background: darkred; */
+    position: relative;
+}
+
+.plan_list > .add_plan > i {
+    height: 30px;
+    width: 30px;
+    background: url(../../imgs/icon/icon-add-project.png) no-repeat 0 0 / 30px 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    cursor: pointer;
+}
+
+.plan_item .alter_plan i {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/*添加项目按钮*/
+.add_project {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    border-top: 1px solid #eee;
+    /*background: darkred;*/
+    position: relative;
+}
+
+.add_project > i {
+    height: 30px;
+    width: 30px;
+    background: url("../../imgs/icon/icon-add-project.png") no-repeat 0 0 / 30px 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -15px;
+    margin-top: -15px;
+    cursor: pointer;
+}
+
+/*----右侧项目列表样式结束---*/
+
+/*---右侧选项卡订单部分开始---*/
+.rightOrderList .order_content {
+    height: 100%;
+    padding: 0 18px;
+    padding-top: 20px;
+}
+
+.rightOrderList .order_list {
+    height: 90%;
+}
+
+.current_state {
+    /*width: 215px;*/
+    height: 42px;
+    background-color: #FBA057;
+    margin: 0 auto;
+    position: relative;
+}
+
+.current_state p {
+    line-height: 42px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.order_info {
+    /*margin-top: 15px;*/
+    /*text-align: left;*/
+    /*height: 330px;*/
+    padding: 16px 10px;
+    background: #F5F6FA;
+}
+
+.order_info .hr {
+    height: 1px;
+    background: #eee;
+}
+
+.order_info > .hr {
+    margin-top: 10px;
+}
+
+.order_info > .info_detail > p {
+
+    color: #4E4E4E;
+    font-size: 12px;
+    line-height: 28px;
+    text-align: left;
+    overflow: hidden;
+}
+
+.order_info > .info_detail > p > b {
+    display: inline-block;
+    float: left;
+    width: 60px;
+}
+
+.order_info > .info_detail > p > b.last_b {
+    width: 106px;
+}
+
+.order_info > .info_detail > p > span.last_span {
+    width: auto;
+}
+
+.order_info .info_detail .hr {
+    margin-top: 4px;
+    margin-bottom: 10px;
+
+}
+
+.order_info .info_detail p > span {
+    display: inline-block;
+    float: left;
+    max-width: 136px;
+    width: 136px;
+}
+
+/*确认订单按钮*/
+.cfm_end_order {
+    overflow: hidden;
+}
+
+.cfm_end_order button {
+    height: 43px;
+    width: 50%;
+    font-size: 14px;
+    line-height: 43px;
+    outline: none;
+    border: 0 none;
+    color: #fff;
+    float: left;
+    cursor: pointer;
+}
+
+.cfm_end_order .cancel_order {
+    background: #aaa;
+}
+
+.cfm_end_order .cancel_order:active {
+    background: #555;
+}
+
+.cfm_end_order .cfm_order {
+    background: #2FCBA8;
+}
+
+.cfm_end_order .cfm_order:active {
+    background-color: #008a6b;
+}
+
+/*修改价格*/
+.order_info .order_info_additional {
+    height: 50px;
+    font-size: 12px;
+    padding-top: 12px;
+
+}
+
+.order_info_additional .distance {
+    background-color: #E4E6EE;
+    color: #5C5C5D;
+    width: 64px;
+    height: 25px;
+    line-height: 25px;
+    float: left;
+    text-align: center;
+    -webkit-border-radius: 13px;
+    -moz-border-radius: 13px;
+    border-radius: 13px;
+}
+
+.order_info_additional .price {
+    float: right;
+    max-width: 90px;
+    line-height: 25px;
+    color: #fba057;
+}
+
+.order_info .alter_price {
+    float: right;
+    font-size: 16px;
+    color: #2fcba8;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+/*----右侧选项卡订单部分结束-----*/
+/*++++++++++++++++++++++右侧选项卡部分开始+++++++++++++++++++++*/

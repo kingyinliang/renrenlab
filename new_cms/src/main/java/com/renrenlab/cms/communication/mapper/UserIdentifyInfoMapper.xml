@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.UserIdentifyInfoDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.UserIdentifyInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="u_uid" property="uUid" jdbcType="BIGINT" />
+    <result column="u_identify_type" property="uIdentifyType" jdbcType="VARCHAR" />
+    <result column="u_identify_no" property="uIdentifyNo" jdbcType="VARCHAR" />
+    <result column="u_identify_issue" property="uIdentifyIssue" jdbcType="DATE" />
+    <result column="u_identify_expiry" property="uIdentifyExpiry" jdbcType="DATE" />
+    <result column="u_identify_fullname" property="uIdentifyFullname" jdbcType="VARCHAR" />
+    <result column="u_identify_pic1" property="uIdentifyPic1" jdbcType="VARCHAR" />
+    <result column="u_identify_pic2" property="uIdentifyPic2" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_uid, u_identify_type, u_identify_no, u_identify_issue, u_identify_expiry, u_identify_fullname, 
+    u_identify_pic1, u_identify_pic2, create_time, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_user_info.t_user_identify_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_user_info.t_user_identify_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.UserIdentifyInfo" >
+    insert into rlab_user_info.t_user_identify_info (id, u_uid, u_identify_type, 
+      u_identify_no, u_identify_issue, u_identify_expiry, 
+      u_identify_fullname, u_identify_pic1, u_identify_pic2, 
+      create_time, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{uUid,jdbcType=BIGINT}, #{uIdentifyType,jdbcType=VARCHAR}, 
+      #{uIdentifyNo,jdbcType=VARCHAR}, #{uIdentifyIssue,jdbcType=DATE}, #{uIdentifyExpiry,jdbcType=DATE}, 
+      #{uIdentifyFullname,jdbcType=VARCHAR}, #{uIdentifyPic1,jdbcType=VARCHAR}, #{uIdentifyPic2,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.UserIdentifyInfo" >
+    insert into rlab_user_info.t_user_identify_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uUid != null" >
+        u_uid,
+      </if>
+      <if test="uIdentifyType != null" >
+        u_identify_type,
+      </if>
+      <if test="uIdentifyNo != null" >
+        u_identify_no,
+      </if>
+      <if test="uIdentifyIssue != null" >
+        u_identify_issue,
+      </if>
+      <if test="uIdentifyExpiry != null" >
+        u_identify_expiry,
+      </if>
+      <if test="uIdentifyFullname != null" >
+        u_identify_fullname,
+      </if>
+      <if test="uIdentifyPic1 != null" >
+        u_identify_pic1,
+      </if>
+      <if test="uIdentifyPic2 != null" >
+        u_identify_pic2,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uUid != null" >
+        #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uIdentifyType != null" >
+        #{uIdentifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyNo != null" >
+        #{uIdentifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyIssue != null" >
+        #{uIdentifyIssue,jdbcType=DATE},
+      </if>
+      <if test="uIdentifyExpiry != null" >
+        #{uIdentifyExpiry,jdbcType=DATE},
+      </if>
+      <if test="uIdentifyFullname != null" >
+        #{uIdentifyFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyPic1 != null" >
+        #{uIdentifyPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyPic2 != null" >
+        #{uIdentifyPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.UserIdentifyInfo" >
+    update rlab_user_info.t_user_identify_info
+    <set >
+      <if test="uUid != null" >
+        u_uid = #{uUid,jdbcType=BIGINT},
+      </if>
+      <if test="uIdentifyType != null" >
+        u_identify_type = #{uIdentifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyNo != null" >
+        u_identify_no = #{uIdentifyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyIssue != null" >
+        u_identify_issue = #{uIdentifyIssue,jdbcType=DATE},
+      </if>
+      <if test="uIdentifyExpiry != null" >
+        u_identify_expiry = #{uIdentifyExpiry,jdbcType=DATE},
+      </if>
+      <if test="uIdentifyFullname != null" >
+        u_identify_fullname = #{uIdentifyFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyPic1 != null" >
+        u_identify_pic1 = #{uIdentifyPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="uIdentifyPic2 != null" >
+        u_identify_pic2 = #{uIdentifyPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.UserIdentifyInfo" >
+    update rlab_user_info.t_user_identify_info
+    set u_uid = #{uUid,jdbcType=BIGINT},
+      u_identify_type = #{uIdentifyType,jdbcType=VARCHAR},
+      u_identify_no = #{uIdentifyNo,jdbcType=VARCHAR},
+      u_identify_issue = #{uIdentifyIssue,jdbcType=DATE},
+      u_identify_expiry = #{uIdentifyExpiry,jdbcType=DATE},
+      u_identify_fullname = #{uIdentifyFullname,jdbcType=VARCHAR},
+      u_identify_pic1 = #{uIdentifyPic1,jdbcType=VARCHAR},
+      u_identify_pic2 = #{uIdentifyPic2,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

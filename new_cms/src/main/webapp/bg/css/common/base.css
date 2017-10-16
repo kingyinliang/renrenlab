@@ -1,0 +1,200 @@
+/*公用CSS*/
+html, body, div, span, object, h1, h2, h3,
+h4, h5, h6, p, a, em, font, img, s, samp, small, strong,
+dt,  ol, ul, li, fieldset, form, label, table,
+tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: 'PingFang SC', '微软雅黑', '黑体'!important;
+    box-sizing: border-box!important;
+}
+
+i{
+    font-style: normal;
+
+}
+
+i[class^="lab-"]{
+    vertical-align: middle;
+}
+
+s{
+    text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    text-decoration: none;
+}
+:focus {
+    outline: 0;
+}
+
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none
+}
+
+/*清除浮动*/
+.clearfix:after {
+    content: "";
+    height: 0;
+    line-height: 0;
+    clear: both;
+    display: block;
+    visibility: hidden
+}
+
+.clearfix {
+    zoom: 1; /*IE/7/6*/
+}
+
+
+/*按钮选中效果*/
+.active {
+    color: #2fcba8!important;
+}
+
+/*自定义web字体开始*/
+@font-face {
+    font-family: 'icomoon';
+    src:  url('../../font/lab_icon.eot?m5lc2o');
+    src:  url('../../font/lab_icon.eot?m5lc2o#iefix') format('embedded-opentype'),
+    url('../../font/lab_icon.ttf?m5lc2o') format('truetype'),
+    url('../../font/lab_icon.woff?m5lc2o') format('woff'),
+    url('../../font/lab_icon.svg?m5lc2o#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="lab-"], [class*=" lab-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.lab-share-1:before {
+    content: "\e900";
+}
+.lab-top:before {
+    content: "\e901";
+}
+.lab-checked-1:before {
+    content: "\e902";
+}
+.lab-checked-2:before {
+    content: "\e903";
+}
+.lab-checked-3:before {
+    content: "\e904";
+}
+.lab-close-1:before {
+    content: "\e905";
+}
+.lab-close-2:before {
+    content: "\e906";
+}
+.lab-down:before {
+    content: "\e907";
+}
+.lab-history:before {
+    content: "\e908";
+}
+.lab-search2:before {
+    content: "\e909";
+}
+.lab-godTime2:before {
+    content: "\e90a";
+}
+.lab-addicon:before {
+    content: "\e90b";
+}
+.lab-adress:before {
+    content: "\e90c";
+}
+.lab-alter:before {
+    content: "\e90d";
+}
+.lab-await:before {
+    content: "\e90e";
+}
+.lab-commont:before {
+    content: "\e90f";
+}
+.lab-company:before {
+    content: "\e910";
+}
+.lab-del:before {
+    content: "\e911";
+}
+.lab-exit:before {
+    content: "\e912";
+}
+.lab-godAdress:before {
+    content: "\e913";
+}
+.lab-godPrice:before {
+    content: "\e914";
+}
+.lab-godScheme:before {
+    content: "\e915";
+}
+.lab-godTime:before {
+    content: "\e916";
+}
+.lab-im:before {
+    content: "\e917";
+}
+.lab-order:before {
+    content: "\e918";
+}
+.lab-phone:before {
+    content: "\e919";
+}
+.lab-scheme:before {
+    content: "\e91a";
+}
+.lab-search:before {
+    content: "\e91b";
+}
+.lab-set:before {
+    content: "\e91c";
+}
+.lab-tip:before {
+    content: "\e91d";
+}
+.lab-user:before {
+    content: "\e91e";
+}
+.lab-user2:before {
+    content: "\e91f";
+}
+.lab-image:before {
+    content: "\e920";
+}
+.lab-images:before {
+    content: "\e921";
+}
+.lab-spinner:before {
+    content: "\e97a";
+}
+.lab-spinner2:before {
+    content: "\e97b";
+}
+.lab-spinner3:before {
+    content: "\e97c";
+}
+
+
+/*renrenlab字体图标结束*/

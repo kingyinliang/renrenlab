@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录，人人实验客服平台</title>
+    <link rel="shortcut icon" href="../imgs/icon/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/common/base.css">
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            /*overflow: hidden;*/
+        }
+
+        .content {
+            height: 100%;
+            min-height: 600px;
+            min-width: 998px;
+            background: pink;
+        }
+
+        /*左侧*/
+        .content .left_login {
+            height: 100%;
+            width: 30%;
+            background: #fff;
+            float: left;
+            padding-left: 80px;
+            position: relative;
+        }
+
+        .content .left_login .log_content{
+            position: absolute;
+            height: 180px;
+            top:50%;
+            margin-top: -90px;
+            left: 80px;
+        }
+
+        /*右侧*/
+        .content .right_bg {
+            height: 100%;
+            width: 70%;
+            background: pink;
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="left_login">
+        <img src="#" alt="">
+        <div class="log_content">
+            <p>
+                <label for="userName">
+                    <i class="lab-user"></i>
+                </label>
+                <input id="userName" type="text">
+            </p>
+            <p>
+                <label for="pwd">
+                    <i class="lab-adress"></i>
+                </label>
+                <input id="pwd" type="password">
+            </p>
+            <p></p>
+        </div>
+    </div>
+    <div class="right_bg">
+
+    </div>
+</div>
+</body>
+</html>

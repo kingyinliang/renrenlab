@@ -1,5 +1,6 @@
 package com.renrenlab.rlab.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.renrenlab.rlab.common.util.JsonMapper;
 import com.renrenlab.rlab.service.FileService;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,21 @@ public class FrontFileController {
         return jsonString;
     }
 
+
+    @RequestMapping(value = "/upload/richText", method = RequestMethod.POST,produces="text/html;charset=UTF-8")
+    @ResponseBody
+    public String uploadImageForRichText(@RequestParam("file") MultipartFile file) throws Exception {
+        String url = fileService.uploadImage(file, "other");
+        Map<String, Object> result = new HashMap<>();
+        result.put("code", 0);
+        result.put("msg", "人人实验");
+        Map<String, Object> pic = new HashMap<>();
+        pic.put("src", url);
+        pic.put("title", "人人实验");
+        result.put("data", pic);
+        //  String jsonString = JsonMapper.getJsonString(result);
+        return JSONObject.toJSONString(result);
+    }
     //// 下载文件
     //@RequestMapping(value = "/ie/download")
     ////@ResponseBody

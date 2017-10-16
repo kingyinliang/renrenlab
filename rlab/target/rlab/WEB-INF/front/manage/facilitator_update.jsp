@@ -1,4 +1,3 @@
-<%--suppress ALL --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -377,13 +376,13 @@
         }
 
         /*地址下拉*/
-        .ad_item {
+        .ad_new_item {
             width: 140px;
             float: left;
             margin-right: 16px;
         }
 
-        .user_main div.item .ad_item .layui-form-select dl {
+        .user_main div.item .ad_new_item .layui-form-select dl {
             width: 130px !important;
         }
 
@@ -968,8 +967,7 @@
                 <span>机构性质<em>*</em>：</span>
                 <div class="layui-form" style="width: 198px;float: left;">
                     <select id="orgNature" name="city" lay-verify="" lay-filter="orgNature">
-                        <option ${orgInfo.orgCategoryId == null || "".equals(orgInfo.orgCategoryId)?'selected':''} value="">请选择...
-                        </option>
+                        <option ${orgInfo.orgCategoryId == null || "".equals(orgInfo.orgCategoryId)?'selected':''} value="">请选择...</option>
                         <option ${orgInfo.orgCategoryId  != null && orgInfo.orgCategoryId == 1?'selected':''} value="1">科研院所</option>
                         <option ${orgInfo.orgCategoryId  != null && orgInfo.orgCategoryId == 2?'selected':''} value="2">高等院校</option>
                         <option ${orgInfo.orgCategoryId  != null && orgInfo.orgCategoryId == 3?'selected':''} value="3">国有企业</option>
@@ -985,7 +983,7 @@
                 <span>机构注册地<em>*</em>：</span>
                 <div class="layui-form" style="float: left;">
                     <%--省--%>
-                    <div class="ad_item" style="">
+                    <div class="ad_new_item" style="">
                         <select id="province_1" name="quiz1" lay-filter="province1" style="width: 114px;">
                             <option value="">请选择省</option>
                             <option value="北京市" data-province-id="110000">北京市</option>
@@ -1024,14 +1022,14 @@
                         </select>
                     </div>
                     <%--市--%>
-                    <div class="ad_item">
+                    <div class="ad_new_item">
                         <select id="city_1" name="quiz2" lay-filter="city1">
                             <option value="">请选择市</option>
                             <%--${orgInfo.orgLicense.orgAddrCity}--%>
                         </select>
                     </div>
                     <%--区--%>
-                    <div class="ad_item">
+                    <div class="ad_new_item">
                         <select id="county_1" name="quiz3" lay-filter="county1">
                             <option value="">请选择县/区</option>
                             <%--${orgInfo.orgLicense.orgAddrDistrict}--%>
@@ -1045,15 +1043,16 @@
             <div class="item">
                 <span>详细地址<em>*</em>：</span>
                 <input id="orgDetail_1" value="${orgInfo.orgLicense.orgAddress}" class="ipt_base" type="text"
-                       placeholder="请输入详细地址" style="float: left;"  maxlength="100" data-add-place="no">
-                <s id="orgDetailTip1" class="error_tip rt_tip" style="line-height: 38px;margin-left: 10px;display: none ;float: left">请输入注册地详细地址</s>
+                       placeholder="请输入详细地址" style="float: left;" maxlength="100" data-add-place="no">
+                <s id="orgDetailTip1" class="error_tip rt_tip"
+                   style="line-height: 38px;margin-left: 10px;display: none ;float: left">请输入注册地详细地址</s>
             </div>
             <%--机构所在地--%>
             <div class="item">
                 <span>机构所在地<em>*</em>：</span>
                 <div class="layui-form" style="float: left;">
                     <%--省--%>
-                    <div class="ad_item" style="">
+                    <div class="ad_new_item" style="">
                         <select id="province_2" name="quiz1" lay-filter="province2" style="width: 114px;">
                             <option value="">请选择省</option>
                             <option value="北京市" data-province-id="110000">北京市</option>
@@ -1092,14 +1091,14 @@
                         </select>
                     </div>
                     <%--市--%>
-                    <div class="ad_item">
+                    <div class="ad_new_item">
                         <select id="city_2" name="quiz2" lay-filter="city2">
                             <option value="">请选择市</option>
                             <%--${orgInfo.orgAddress.orgAddrCity}--%>
                         </select>
                     </div>
                     <%--区--%>
-                    <div class="ad_item">
+                    <div class="ad_new_item">
                         <select id="county_2" name="quiz3" lay-filter="county2">
                             <option value="">请选择县/区</option>
                             <%--${orgInfo.orgAddress.orgAddrDistrict}--%>
@@ -1114,16 +1113,19 @@
             <div class="item">
                 <span>详细地址<em>*</em>：</span>
                 <input id="addressDetail_2" value="${orgInfo.orgAddress.orgAddrStreet}" onblur="updateJingWeiDu()"
-                       class="ipt_base" type="text"  maxlength="100" placeholder="请输入详细地址" style="float: left;" data-add-place="no">
+                       class="ipt_base" type="text" maxlength="100" placeholder="请输入详细地址" style="float: left;"
+                       data-add-place="no">
                 <s id="orgDetailTip2" class="error_tip rt_tip"
                    style="line-height: 38px;margin-left: 10px;display: none;float: left">请输入所在地详细地址</s>
             </div>
             <%--机构所在地地址经纬度--%>
             <div class="item">
                 <span>地址经纬度<em>*</em>：</span>
-                <input id="longitude2" value="${orgInfo.orgAddress.orgAddrLongitude}" class="ipt_base" type="text"
+                <input onfocus="clearLatTip()" id="longitude2" value="${orgInfo.orgAddress.orgAddrLongitude}"
+                       class="ipt_base" type="text"
                        placeholder="东经" style="width: 100px;float: left;margin-right: 15px" data-add-place="no">
-                <input id="latitude2" class="ipt_base" value="${orgInfo.orgAddress.orgAddrLatitude}" type="text"
+                <input onfocus="clearLatTip()" id="latitude2" class="ipt_base"
+                       value="${orgInfo.orgAddress.orgAddrLatitude}" type="text"
                        placeholder="北纬" style="width: 100px;float: left;;" data-add-place="no">
                 <s id="orgJWD2" class="error_tip rt_tip"
                    style="display:none;right:-232px;height: 38px;line-height: 38px;margin-left: 10px;">请补全经纬度</s>
@@ -1171,7 +1173,7 @@
             <%--机构邮箱--%>
             <div class="item">
                 <span>机构邮箱：</span>
-                <input id="orgEmail" value="${orgInfo.orgContacts.conEmail}" class="ipt_base" type="text"
+                <input id="orgEmail" maxlength="50" value="${orgInfo.orgContacts.conEmail}" class="ipt_base" type="text"
                        placeholder="请输入机构邮箱" data-add-place="no">
                 <s id="orgEmailTip" class="error_tip rt_tip"
                    style="display:none;right:-232px;height: 38px;line-height: 38px;margin-left: 10px;">邮箱格式错误</s>
@@ -1201,7 +1203,7 @@
                                     <div>
                                         <input class=" ipt_base" value="${small_item}" type="text" placeholder="联系人号码"
                                                style="float: left;" data-add-place="no">
-                                        <s class="error_tip phone_error_tip" style="display:none;right:-170px;">请输入正确的手机号码</s>
+                                        <s class="error_tip phone_error_tip" style="display:none;right:-197px;">请输入正确的手机号码</s>
                                     </div>
                                 </c:forEach>
                                 <span class="icon_box" style="position: absolute;right: -68px;top: 0">
@@ -1325,6 +1327,7 @@
 <!--my common js-->
 <script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
 <script type="text/javascript">
+    /* ------------------------------  第一段代码区域块(START)  ---------------------------------- */
     var layer, layedit, ditIndex;
     layui.use(['form', 'layedit', 'layer'], function () {
         layer = layui.layer;
@@ -1463,7 +1466,6 @@
         }
         initAddress(form);// 初始化地址
     });
-
     /*
      ** 发送Ajax获取城市列表
      */
@@ -1603,6 +1605,7 @@
 
     var map = initMap();
     searchByStationName('初始化');
+
     // 失去详细地址的焦点时触发
     function updateJingWeiDu() {
         var flag = searchByStationName($("#province_2").val() + $("#city_2").val() + $("#county_2").val() + $("#addressDetail_2").val(), 2);
@@ -1870,7 +1873,7 @@
                     success(data.payload);
                 } else if (data.code === 1012) {
                     layer.msg("账户未登录或登录超时，请重新登录");
-                } else {
+                }else {
                     layer.msg("网络繁忙，请重新操作");
                 }
             },
@@ -1906,9 +1909,9 @@
             errTag.hide();
         }
     })
-</script>
-<script>
+    /* ------------------------------  第一段代码区域块(END)  ---------------------------------- */
 
+    /* ------------------------------  第二段代码区域块(START)  ---------------------------------- */
     // 机构座机添加，删除
     function addCallRow() {
         var callItem = '<input onclick="clearFixedPhoneTip()" class="ipt_base" type="text" placeholder="请输入机构座机">';
@@ -1948,7 +1951,7 @@
             <div class="person_phone">\
             <div>\
             <input class=" ipt_base" type="text" placeholder="联系人号码" style="float: left;">\
-            <s class="error_tip phone_error_tip" style="right:-170px;display: none">请输入正确的手机号码</s>\
+            <s class="error_tip phone_error_tip" style="right:-194px;display: none">请输入正确的手机号码</s>\
             </div>\
             <span class="icon_box" style="position: absolute;right: -68px;top: 0">\
                 <i class="up_icon lab-add_type1" onclick="addPersonPhone(this)"></i>\
@@ -1970,7 +1973,7 @@
         var callItem =
             '<div>\
             <input class=" ipt_base" type="text" placeholder="联系人号码" style="float: left;">\
-            <s  class="error_tip phone_error_tip" style="right:-170px;display: none;">请输入正确的手机号码</s>\
+            <s  class="error_tip phone_error_tip" style="right:-140px;display: none;">请输入正确的手机号码</s>\
             </div>';
 
 
@@ -1994,8 +1997,9 @@
             dom.parent().find("div").last().remove();
         }
     }
-</script>
-<script>
+    /* ------------------------------  第二段代码区域块(END)  ---------------------------------- */
+
+    /* ------------------------------  第三段代码区域块(START)  ---------------------------------- */
 
     //  上传
     function uploadLogos($_this) {
@@ -2127,7 +2131,10 @@
     function clearId($_this) {
         $("#orgInfoErrorTip").hide();//  todo
     }
-
+    // 清除经纬度Tp
+    function clearLatTip() {
+        $("#orgJWD2").hide();
+    }
     // 清除机构材料tip
     function clearErrorPaper($_this) {
         var flag = $("#szhy").prop("checked");
@@ -2170,7 +2177,7 @@
         }
 
         // 真实姓名校验:2-10位中文
-        if(!/^[\u4e00-\u9fa5]{2,11}/.test(uName)){
+        if (!/^[\u4e00-\u9fa5]{2,11}$/.test(uName)) {
             uNameTip.text("请输入正确的姓名");
             uNameTip.show();
             FLAG = false;
@@ -2311,17 +2318,25 @@
         var longitude2 = $("#longitude2").val();// 东经
         var latitude2 = $("#latitude2").val();// 北纬
         var orgJWD2 = $("#orgJWD2");// tip
-        if (longitude2 == "" || latitude2 == "") {
+        if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(longitude2) || /^[0-9]{1,3}$/.test(longitude2))) {
+            orgJWD2.text("请填写正确的经纬度")
             orgJWD2.show();
             FLAG = false;
         }
+
+        if (!(/^[0-9]{1,3}\.[0-9]{1,2}$/.test(latitude2) || /^[0-9]{1,3}$/.test(latitude2))) {
+            orgJWD2.text("请填写正确的经纬度")
+            orgJWD2.show();
+            FLAG = false;
+        }
+
         // 机构座机
         var addCallList = $("#addCall input");// list
         var orgCallArr = "";
         var curIndex = 0;
         addCallList.each(function (i) {
             var curFixedPhone = $(this).val();
-            if (curFixedPhone == "" || REG.fixedPhone.test(curFixedPhone) ) {
+            if (curFixedPhone == "" || REG.fixedPhone.test(curFixedPhone)) {
                 if (i === curIndex) {
                     if (curFixedPhone == "") {
                         curIndex++;
@@ -2364,7 +2379,7 @@
         // 机构传真
         var orgFax = $("#orgFax").val();
         console.log("机构传真：" + orgFax);
-        if (!REG.fixedPhone.test(orgFax)  && orgFax != "") {
+        if (!REG.fixedPhone.test(orgFax) && orgFax != "") {
             $("#orgFaxTip").text("传真号码格式错误");
             $("#orgFaxTip").show();
             FLAG = false;
@@ -2373,12 +2388,23 @@
         // 机构邮箱
         var orgEmail = $("#orgEmail").val();
         console.log("机构邮箱：" + orgEmail);
-        if (orgEmail.length < 5 && !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(orgEmail) && orgEmail != "") {
+        if (!/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(orgEmail) && orgEmail != "") {
             $("#orgEmailTip").text("请输入正确的邮箱地址");
             $("#orgEmailTip").show();
             FLAG = false;
         }
 
+        if (orgEmail.length < 5 && orgEmail != "") {
+            $("#orgEmailTip").text("请输入正确的邮箱地址");
+            $("#orgEmailTip").show();
+            FLAG = false;
+        }
+
+        if (orgEmail.length > 50 && orgEmail != "") {
+            $("#orgEmailTip").text("请输入正确的邮箱地址");
+            $("#orgEmailTip").show();
+            FLAG = false;
+        }
         // 联系人信息*
         var orgPeopleList = $("#orgPeople .person_item");
         var orgPeopleArr = [];// 联系人数据容器
@@ -2390,11 +2416,16 @@
             // 处理联系人姓名：
             var orgPeopleName = $(this).find(".person_name input");
             var orgPeopleNameTip = $(this).find(".name_error_tip");
-            if (orgPeopleName.val() == "") {
-                orgPeopleNameTip.text("请输入姓名");
+
+            console.log("***************");
+            console.log(orgPeopleName);
+            console.log(orgPeopleName.length);
+            if (!/^[\u4e00-\u9fa5]{2,5}$/.test(orgPeopleName.val())) {
+                orgPeopleNameTip.text("请输入正确的姓名");
                 orgPeopleNameTip.show();
                 FLAG = false;
             }
+
             item.conName = orgPeopleName.val();// 更新name
 
             var personPhoneList = $(this).find(".person_phone input");
@@ -2402,12 +2433,13 @@
                 var curPhone = $(this).val();
                 var curTip = $(this).parent().parent().parent().find(".phone_error_tip").eq(i);
                 if (curPhone == "") {
-                    curTip.text("请输入正确的手机号码");
+                    curTip.text("请输入正确的联系电话");
                     curTip.show();
                     FLAG = false;
                 }
+
                 if (!REG.fixedPhone.test(curPhone) && !REG.phone11.test(curPhone)) {
-                    curTip.text("手机号格式错误");
+                    curTip.text("请输入正确的联系电话");
                     curTip.show();
                     FLAG = false;
                 }
@@ -2459,8 +2491,8 @@
             $("#orgIntroTip").text("机构简介不能为空");
             $("#orgIntroTip").show();
             FLAG = false;
-        } else if ($.trim(orgDescriptionTxt).length > 800) {
-            $("#orgIntroTip").text("简介文字不能超过800字");
+        } else if ($.trim(orgDescriptionTxt).length > 5000) {
+            $("#orgIntroTip").text("简介文字不能超过5000字");
             $("#orgIntroTip").show();
             FLAG = false;
         } else {
@@ -2527,44 +2559,58 @@
     /*
      ** 发送Ajax获取城市列表
      */
+    var FLAG_PUT = true
     function postPutForm(formData, cb) {
+        if (FLAG_PUT) {
+            $.ajax({
+                url: BASE_URL + '/front/provider/application',
+                type: 'PUT',
+                data: JSON.stringify(formData),
+                dataType: "json",
+                contentType: "application/json",
+                beforesend: function () {
+                    FLAG_PUT = false;
+                },
+                success: function (data) {
 
-        $.ajax({
-            url: BASE_URL + '/front/provider/application',
-            type: 'PUT',
-            data: JSON.stringify(formData),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (data) {
+                    if (data.code == 0) {
+                        cb(data);
+                    } else if (data.code == 1012) {
+                        layer.msg("登陆超时，即将跳转登录页面");
+                        setTimeout(function () {
+                            logins();
+                        }, 2000);
+                    } else if (data.code === 1013) {
+                        layer.msg("机构已存在");
+                        $("orgNameTip").text("请输入机构名称");
+                        $("orgNameTip").show();
+                    } else if (data.code === 1000) {
+                        layer.msg("用户超时，即将跳转认证申请记录界面");
+//                        setTimeout(function () {
+//                            location.href = BASE_URL + "/front/provider/search?pageNo=1&pageSize=49";
+//                        }, 1000);
+                    }else if(data.code === 2001){
+                        layer.msg("组织机构代码重复，请查看表单");
+                        $("#orgCodeTip").text("组织机构代码已存在");
+                        $("#orgCodeTip").show();
+                    }
 
-                if (data.code == 0) {
-                    cb(data);
-                } else if (data.code == 1012) {
-                    layer.msg("登陆超时，即将跳转登录页面");
-                    setTimeout(function () {
-                        logins();
-                    }, 2000);
-                } else if (data.code == 1013) {
-                    layer.msg("机构已存在");
-                    $("orgNameTip").text("请输入机构名称");
-                    $("orgNameTip").show();
-                }else if(data.code === 1000) {
-                    layer.msg("用户超时，即将跳转认证申请记录界面");
-                    setTimeout(function () {
-                        location.href =  BASE_URL + "/front/provider/search?pageNo=1&pageSize=49";
-                    },1000);
+                },
+                error: function (err) {
+                    layer.msg("提交失败");
+                },
+                complete: function () {
+                    FLAG_PUT = true;
                 }
 
-            },
-            error: function (err) {
-                layer.msg("提交失败");
-            }
+            });
+        }
 
-        });
 
     }
-</script>
-<script type="text/javascript">
+    /* ------------------------------  第三段代码区域块(END)  ---------------------------------- */
+
+    /* ------------------------------  第四段代码区域块(START)  ---------------------------------- */
     // 初始化
     var initProvince1 = '${orgInfo.orgLicense.orgAddrProvince}';
     var initCity1 = '${orgInfo.orgLicense.orgAddrCity}';
@@ -2730,6 +2776,9 @@
     function logins() {
         toLoginPage();
     }
+    /* ------------------------------  第四段代码区域块(END)  ---------------------------------- */
+
 </script>
+
 </body>
 </html>

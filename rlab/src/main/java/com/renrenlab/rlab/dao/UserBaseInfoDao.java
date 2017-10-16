@@ -151,4 +151,6 @@ public interface UserBaseInfoDao {
 
     //更新角色权限
     int updateRolePermission(UserRole userRole);
+
+    int updateMana(UserBaseInfo baseInfo);
 }

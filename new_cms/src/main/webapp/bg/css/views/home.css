@@ -1,0 +1,852 @@
+/*内容盒子*/
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background: #333 !important;
+    overflow: hidden;
+}
+
+.crm_content {
+    /*min-height: 270px;*/
+
+    height: 100%;
+    margin: 0 auto;
+    /*margin-top:20px;*/
+    box-shadow: 5px 1px 25px 1px rgba(0, 0, 0, .3);
+}
+
+/*头部CSS样式开始*/
+.crm_title {
+    background: #232A31;
+    border-bottom: 1px solid #434A52;
+}
+
+/*左侧*/
+.crm_title .lft {
+    float: left;
+}
+
+.crm_title .lft_tab {
+    width: 142px;
+    height: 80px;
+    border-right: 1px solid #434A52;
+    line-height: 79px;
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+
+
+.crm_title .lft div.active > a{
+    color: #2fcba8 !important;
+}
+
+.crm_title .lft .lft_tab s.awaitNum{
+
+    height: 19px;
+    padding: 0 6px;
+    font-size: 12px;
+    line-height: 19px;
+    position: absolute;
+    top: 10px;
+    border-radius: 10px;
+    color: #fff!important;
+    background: #e4593f;
+    vertical-align: middle;
+
+}
+
+.crm_title .lft a {
+    color: #b2b2b2;
+    font-size: 14px;
+}
+
+.crm_title .lft a:hover {
+    color: #2fcba8;
+}
+
+/*右侧*/
+.crm_title .rt {
+    float: right;
+    height: 60px;
+    line-height: 80px;
+}
+
+.crm_title .rt a {
+    margin-right: 46px;
+
+}
+.crm_title .rt .lab-exit {
+    cursor: pointer;
+}
+
+.crm_title img {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+
+    margin-right: 20px;
+}
+
+.crm_title .phone {
+    font-size: 12px;
+    color: #7a7a7a;
+    margin-right: 46px;
+}
+
+.crm_title .tab_setting {
+    font-size: 22px;
+    margin-right: 46px;
+    cursor: pointer;
+}
+
+.crm_title .tab_exit {
+    font-size: 22px;
+    margin-right: 46px;
+    cursor: pointer;
+}
+
+/*头部CSS样式结束*/
+
+/*主体部分CSS样式开始*/
+.crm_main {
+    min-height: 678px;
+    height: auto !important;
+    overflow: hidden;
+    position: absolute;
+    top: 82px;
+    bottom: 0;
+    width: 100%;
+    min-width: 1200px;
+}
+
+/* im部分主体　*/
+.crm_main .im {
+    height: 100%;
+}
+
+/*-------------接入列表部分开始-------------*/
+/*检索*/
+.im .im_search {
+    height: 75px;
+    border-bottom: 1px solid #434A52;
+    position: relative;
+}
+
+.im .im_search .input {
+    position: absolute;
+    height: 36px;
+    width: 234px;
+    top: 50%;
+    left: 50%;
+    margin-top: -18px;
+    margin-left: -117px;
+    background: #363D45;
+    -webkit-border-radius: 18px;
+    -moz-border-radius: 18px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.im_search .input input {
+    height: 100%;
+    outline: none;
+    border: 0 none;
+    background: #363D45;
+    color: #eee;
+    font-size: 14px;
+}
+
+.im_search .lft {
+    width: 45px;
+    height: 36px;
+    float: left;
+    padding-left: 16px;
+    line-height: 36px;
+    font-size: 14px;
+    color: #eee;
+}
+
+.im_search .rt {
+    height: 36px;
+    float: left;
+}
+
+/*列表*/
+.im .im_list {
+    width: 284px;
+    background: #2E353E;
+    height: 100%;
+    float: left;
+}
+
+.im .im_list .im_item {
+    /*padding: 0 24px;*/
+    height: 100%;
+    /*padding-bottom:40px;*/
+}
+
+.im_list .im_item ul {
+
+}
+
+.im_item ul.im_ul > li {
+    position: relative;
+    height: 90px;
+    line-height: 90px;
+    cursor: pointer;
+    padding: 0 24px;
+}
+
+.im_item ul.im_ul > li > a {
+    border-bottom: 1px solid #434A52;
+    cursor: pointer;
+    display: block;
+}
+
+ul.im_ul > li.current_im s {
+    position: absolute;
+    display: block;
+    height: 90px;
+    width: 4px;
+    background: #2fcba8;
+    left: 0;
+    top: 0;
+}
+
+ul.im_ul > li.haveMsg i {
+    position: absolute;
+    display: block;
+    background: #FF5353;
+    width: 8px;
+    height: 8px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    top: 14px;
+    left: 12px;
+}
+
+ul.im_ul > li:hover {
+    background: #3a4049;
+}
+
+ul.im_ul > li:hover > a {
+    border: 0 none;
+}
+
+ul.im_ul > li:hover > a .name {
+    color: #2fcba8;
+}
+
+.im_item ul.im_ul > li img {
+    width: 40px;
+    height: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    vertical-align: middle;
+}
+
+ul.im_ul a > div {
+    height: 90px;
+    float: right;
+    padding-top: 10px;
+    line-height: 34px;
+}
+
+.im_ul .title {
+    width: 186px;
+}
+
+.im_ul .msg {
+    overflow: hidden;
+    width: 186px;
+    max-height: 34px;
+    color: #a4a4a4;
+    font-size: 12px;
+}
+
+.im_ul .title .name {
+    float: left;
+    color: #f8fcfc;
+    font-size: 14px;
+}
+
+.im_ul .title .time {
+    float: right;
+    color: #a4a4a4;
+    font-size: 12px;
+}
+
+/*-------------接入列表部分结束-------------*/
+
+/*聊天部分*/
+.im .im_main {
+    min-width: 400px;
+}
+
+/*右侧订单操作*/
+.im .im_order {
+
+}
+
+/* await部分主体　*/
+.crm_main .await {
+    height: 100%;
+}
+
+/* setting部分主体 */
+
+.crm_main .setting {
+    height: 100%;
+    background: #2E353E;
+}
+
+/*-------------im主体部分开始------------*/
+.im_main {
+    margin-left: 284px;
+    margin-right: 255px;
+    background: #eee;
+    height: 100%;
+    position: relative;
+}
+
+/*头部*/
+.im_main .hd {
+    line-height: 74px;
+    height: 74px;
+    border-bottom: 1px solid #D8E1E1;
+    width: 100%;
+
+    position: absolute;
+    top: 0;
+}
+
+.im_main .hd span.lft {
+    color: #4e4e4e;
+    font-size: 16px;
+    font-weight: 700;
+    float: left;
+    margin-left: 24px;
+}
+
+.im_main .hd i.rt {
+    cursor: pointer;
+    color: #4e4e4e;
+    font-size: 18px;
+    font-weight: 700;
+    font-size: 24px;
+    float: right;
+    line-height: 74px;
+    margin-right: 24px;
+}
+
+/*消息列表*/
+.im_main .msg_list {
+
+    background: #fff;
+    /*overflow: auto;*/
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    min-height: 200px;
+    /*height: 100%;*/
+    position: absolute;
+    margin-top: 74px;
+    padding-bottom: 260px;
+
+}
+
+.im_main .show_msg {
+    background: #eee;
+    border-bottom: 1px solid #D8E1E1;
+    width: 100%;
+    height: 100%;
+
+}
+
+.im_main .show_msg .msg_content {
+    height: 100%;
+    padding: 10px 24px;
+    /*background: green;*/
+}
+
+/*查看更多历史纪录*/
+.im_main .show_msg .more_history {
+    text-align: center;
+    color: #77aadc;
+    cursor: pointer;
+    line-height: 34px;
+}
+
+/*公用聊天记录样式*/
+.show_msg .msg_content .item {
+    /*height: 100px;*/
+    font-size: 14px;
+    color: #4e4e4e;
+}
+
+.msg_content .item > p {
+    text-align: center;
+    line-height: 36px;
+}
+
+.msg_content .item .news {
+    position: relative;
+    margin-top: 25px;
+}
+
+.msg_content .news i {
+    position: absolute;
+    width: 5px;
+    height: 9px;
+    top: 19px;
+}
+
+.msg_content .item img.news_img {
+    width: 32px;
+    height: 32px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    border-radius: 16px;
+}
+
+.msg_content .item div.news_txt {
+    padding: 15px 18px;
+    min-width: 60px;
+    max-width: 500px;
+    word-wrap: break-word!important;
+    position: relative;
+
+}
+
+/*重新接入样式*/
+.show_msg .msg_content .item {
+
+}
+
+.show_msg .msg_content .item .again_join{
+    width: 270px;
+    height: 42px;
+}
+
+/*左侧聊天记录样式*/
+.show_msg .msg_content .lft {
+}
+
+.msg_content .lft > div {
+    float: left;
+    padding-top: 23px;
+}
+
+.msg_content .lft .news {
+    float: left;
+    padding-top: 23px;
+}
+
+.msg_content .lft .news > img.news_img {
+    float: left;
+}
+
+.msg_content .lft .news > div.news_txt {
+    float: left;
+    margin-left: 25px;
+    background: #fff;
+}
+
+.msg_content .lft i {
+    left: -5px;
+    background: url("../../imgs/icon/icon-im-left.png") no-repeat;
+}
+
+/*右侧聊天记录样式*/
+.show_msg .msg_content .rt {
+    /*background: darkred;*/
+}
+
+.msg_content .rt > div {
+    float: right;
+}
+
+.msg_content .rt .news > img.news_img {
+    float: right;
+}
+
+.msg_content .rt .news > div.news_txt {
+    float: right;
+    margin-right: 25px;
+    background: #4CE8C5;
+}
+
+.msg_content .rt i {
+    right: -5px;
+    background: url("../../imgs/icon/icon-im-right.png") no-repeat;
+}
+
+/*编辑输入框*/
+.im_main .compile_msg {
+    width: 100%;
+    height: 260px;
+    background: #F6FBFB;
+    position: absolute;
+    bottom: 0;
+}
+
+.compile_msg .text_arera {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 100%;
+    height: 230px;
+    /*background: green;*/
+    overflow: hidden;
+}
+
+.compile_msg .text_arera textarea {
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 20px;
+    border: 0 none;
+    width: 101%;
+    height: 170px!important;
+    /*height: 100%;*/
+    background: #F6FBFB;
+    /*padding:5px px;*/
+    padding: 5px 20px;
+
+}
+
+/*-------------im主体部分结束------------*/
+
+/*公用部分*/
+
+/*兼容小屏幕*/
+@media screen and (max-width: 1380px) {
+    /*处理小屏幕下聊天内容过于窄*/
+    .msg_content .item div.news_txt {
+        max-width: 360px;
+    }
+
+    .project_list .plan_list {
+        height: 70%!important;
+    }
+    .project_list{
+        height: 70%!important;
+    }
+
+    .order_tab > .tab i{
+        line-height:60px!important;
+    }
+    .order_tab{
+        height: 60px!important;
+        line-height: 60px!important;
+    }
+    .order_tab > .tab{
+        height: 60px!important;
+        line-height: 60px!important;
+
+    }
+    .im_main .msg_list{
+        margin-top:60px!important;
+        padding-bottom:290px!important;
+    }
+    .im_main .hd {
+        line-height:60px!important;
+        height: 60px!important;
+    }
+    .im_main .hd i.rt {
+        line-height: 60px!important;
+    }
+    .im_main .compile_msg {
+        height: 290px!important;
+    }
+
+
+    /*头部tab*/
+    .crm_main {
+        top: 60px!important;
+    }
+    .crm_title .lft_tab {
+        height: 60px!important;
+        line-height: 60px!important;
+    }
+    .crm_title .rt {
+        line-height: 60px;
+    }
+    .crm_title {
+        border-bottom: 0 none;
+    }
+
+    /*左侧接入列表*/
+    .im .im_list .im_item{
+
+    }
+}
+
+
+
+
+/*------------组件部分样式开始--------*/
+/*下拉列表组件*****/
+.lab_select {
+    padding-right:10px;
+    font-size: 14px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    background: #2FCBA8;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+    display: none;
+
+}
+.lab_select i {
+    position: absolute;
+    right: 20px;
+    /*float: right;*/
+    font-size: 16px;
+    line-height:42px;
+}
+
+.lab_select .select_ul {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    background: #fff;
+    left: 0;
+    bottom: -1px;
+    -webkit-transform:  translateY(100%);
+    -moz-transform:  translateY(100%);
+    -ms-transform:  translateY(100%);
+    -o-transform:  translateY(100%);
+    transform:  translateY(100%);
+    border: 1px solid #d2d2d2;
+    box-shadow: 0 2px 4px rgba(0,0,0,.12);
+    border-radius: 2px;
+    box-sizing: border-box;
+    /*margin:-100%;*/
+}
+.lab_select .select_ul ul{
+
+    display: block;
+}
+.lab_select .select_ul  li {
+
+    display: block;
+    height: 36px;
+    width: 100%;
+    line-height: 36px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    color: #333;
+
+}
+.lab_select .select_ul  li:hover {
+    background-color: #f2f2f2;
+}
+
+.lab_select .select_ul  li.activated {
+    background-color: #5FB878;
+    color: #fff;
+}
+
+/*复选框组件*****/
+.lab_checked{
+    /*display: none;*/
+    overflow: hidden;
+    /*width: 12px;*/
+    height: 100%;
+    width: 100%;
+    /*height: 12px;*/
+    /*background: pink;*/
+    position: relative;
+}
+
+.lab_checked > label{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top:50%;
+    left: 0;
+    margin-top:-8px;
+    /*background: darkred;*/
+    cursor: pointer;
+    background: url("../../imgs/icon/checked-out.png") no-repeat 0 0 / 16px 16px;
+    overflow: hidden;
+}
+
+.lab_checked label.ckd_active {
+    background-image: url("../../imgs/icon/checked-in.png");
+
+}
+
+.lab_checked > label > input{
+    position: absolute;
+    top:40px;
+    left: -40px;
+
+}
+
+/*------------组件部分样式结束--------*/
+
+/*------------创新卷样式--------*/
+.couponMain th {
+	height: 70px;
+    color: #2fcba8;
+    font-size: 14px;
+}
+
+.couponMain td {
+	height: 30px;
+	text-align: center;
+    color: white;
+    font-size: 12px;
+}
+.couponHead{
+	width: 100%;
+	height: 108px;
+	background: #363d46;
+	position: relative;
+	padding: 38px 30px;
+}
+.filteHead{
+	line-height: 30px;
+	color: #2fcba8;
+	font-size: 14px;
+}
+#inpName{
+	height: 26px;
+	margin: 0 10px;
+	padding: 0 10px;
+}
+.typeInp{
+	height: 30px;
+	width: 150px;
+	margin: 0 14px;
+	position: absolute;
+	top: 38px;
+	left: 350px;
+}
+
+.typeInp input{
+	height: 30px;
+}
+.typeInp dl{
+	top: 30px;
+}
+.section{
+	display: inline;
+	margin-left: 124px;
+}
+.typeInp .layui-input{
+	border-color: #2fcba8 !important;line-height: 30px;
+}
+.typeInp dd:hover{
+	background-color: #2fcba8 !important;
+	color: white;
+}
+.typeInp .layui-input:hover{
+	border-color: #2fcba8 !important;
+}
+
+.layui-form-select .layui-edge{
+	border-top-color: #2fcba8 !important;
+}
+.couponMain table tr:nth-child(odd){background:#363d46;}.couponMain table tr:nth-child(even){background:#2E353E;}
+.couponMain td,.couponMain th{border: none;text-align: center;}.couponMain{background: #2E353E;}
+#demo a,#demo div,#demo span{background: none;border: none;color: #FFFFFF;}
+.layui-laypage-em{background: none !important;}.layui-laypage-curr em{color: #2fcba8 !important;}
+#searching{
+	position: absolute;
+	top: 38px;
+	left: 600px;
+	color: white;
+	width: 76px;
+	background: #2fcba8;
+	text-align: center;
+	border-radius: 2px;
+	cursor: pointer;
+}
+.couponMain{
+	padding: 50px 30px;
+}
+#demo{text-align: center;width: 100%;position: absolute;bottom: 50px;}#coupon{height: 100%;background: #2E353E;}
+.ticket_details_tr_ul {
+    display: none;
+    position: absolute;
+    z-index: 3000;
+    width: 90px;
+    background: #fff;
+    left: 50%;
+    margin-left: -45px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    
+}
+.ticket_details_tr_ul li{
+	height: 30px;
+	line-height: 30px;
+	color: #000000;
+}
+.ticket_details_tr_ul li:hover{
+	color: #2fcba8;
+}
+.shade{
+	width: 100%;height: 100%;position: absolute;z-index: 2000;top: 0;display: none;
+	filter: alpha(opacity=60);     
+    opacity:0.6; -moz-opacity:0.6; 
+}
+.chex{position: relative;}
+.chex div{display: none;}.chex input{display: block !important;width: 20px;height: 20px;}
+.oddcss{background:#363d46;}.evencss{background:#2E353E;}
+.typeInp select{
+	width: 100%;
+	height: 100%;
+	line-height: 30px;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	padding: 0 5px;
+	background: white;
+	
+}
+
+ .selectCoupon{
+ 	width: 160px;
+ 	height: 30px;
+ 	position: absolute;
+ 	left: 380px;
+ 	top: 38px;
+ 	background: white;
+ 	cursor: pointer;
+ }
+ .selectCoupon div{
+ 	height: 30px;
+ 	width: 100%;
+ 	padding: 0 10px;
+ 	background: url(../../imgs/icon/icon-down-type1.png) no-repeat white 130px center;
+ }
+ .selectCoupon ul li{
+ 	width: 100%;
+ 	background: white;
+ 	padding: 0 10px;
+ }
+ .selectCoupon ul{
+ 	display: none;
+ }
+ .selectCoupon ul li:hover{
+ 	color: white;
+ 	background: #2fcba8;
+ }

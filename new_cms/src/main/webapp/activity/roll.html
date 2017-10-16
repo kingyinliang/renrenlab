@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+		<script src="../wechat/build/flexible_css.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../wechat/build/flexible.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../wechat/scripts/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<title>人人实验（北京）科技有限公司</title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}html,body{width: 100%;height: 100%;}li{list-style: none;}
+			#main{
+				width: 100%;
+				height: 100%;
+			}
+			#scrooll img,#main img{
+				width: 100%;
+				height: 100%;
+			}
+			#scrooll{
+				width: 960px;
+				height: 610px;
+				margin: auto;
+				position: relative;
+				top: 10%;
+				overflow: hidden;
+			}
+			.name{color: #3066ff;font-weight: bold;}
+			.money{color: #a34bfe;font-weight: bold;}
+			#liBox{width: 900px;height: 540px;overflow:hidden;position: relative;margin-top: 10px;margin: 30px;}
+			#liBox ul li{float:left;height:108px;width: 100%;font-size: 24px;color: #2a2a2a;line-height: 54px}
+			#liBox ul li p{line-height: 54px}
+			#liBox1,#liBox2{overflow: hidden;}
+			#bigliBox{
+				position: relative;
+			}
+			.shade{
+				width: 100%;height: 100%;background: rgba(0,0,0,0.6);position: absolute;top: 0;left: 0;display: none;
+			}
+			.shadeMain{
+				width: 965px;height: 206px;
+				position: absolute;top: 50%;left: 50%;
+				margin-left: -482.5px;margin-top: -103px;
+				display: none;
+			}
+			.shadeMain img{position: absolute;}
+			.shadeMaintit{font-size: 22px;color: #333333;padding: 60px 115px 0 115px;position: relative;line-height: 0.8rem;text-align: center}
+			.shadeMaintit .name,.shadeMaintit .money{font-size: 26px;font-weight: bold;}.shadeMaintit span{display: inline-block}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<img src="rollBack.jpg" style="position: absolute;"/>
+			<div id="scrooll">
+				<img src="rollFront.png" style="position: absolute;"/>
+				<div id="liBox">
+					<div id="bigliBox">
+						<div id="liBox1">
+							<ul>
+
+							</ul>
+						</div>
+						<div id="liBox2"></div>
+					</div>
+				</div>
+			</div>
+			<div class="shade">
+				<div class="shadeMain">
+					<img src="float.png"/>
+					<p class="shadeMaintit"><span><a>恭喜 <em class="name"> 人人实验5 </em> 获得人人创新券使用资格，</a>最高可享 <em class="money"> 10万元 </em> 优惠额度。</span></p>
+
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+        var count=0;
+        $.ajax({
+            url:"../wx/publish/list.do?count=0",
+            type:'get',
+            dataType:"json",
+            contentType:'application/json',
+            async:false
+        }).done(function (data) {
+            count=data.count;
+            var html="";
+            for (var i=0 ;i<data.list.length;i++){
+                html+='<li><p>恭喜 <em class="name">'+data.list[i].pubOrgName+'</em> 获得人人创新券使用资格，最高可享 <em class="money">'+data.list[i].pubLimit+'</em> 优惠额度。</p></li>';
+            }
+            $("#liBox1 ul").html(html);
+        }).fail(function (data) {
+            console.log("---");
+        });
+        $(function(){
+
+            var top=0;
+            var switchs=false;
+            var dd=false;
+            function switchx(){
+                if ($("#liBox1 ul li").length>4) {
+                    switchs=true;
+                }
+            }
+            switchx();
+            setInterval(function(){
+                if (switchs) {
+                    if ($("#bigliBox").css("top")=="-"+$("#liBox1").height()+"px") {
+                        $("#bigliBox").css("top","0px");
+                        top=0;
+                    }
+                    top+=108;
+                    $("#liBox2").html($("#liBox1").html());
+                    $("#bigliBox").animate({top:"-"+top+"px"},1000);
+                }
+            },2000)
+
+            var arr=[];
+            ppap();
+            function ppap(){
+                if (arr.length!=0) {
+                    dd=false;
+                    setTimeout(function(){
+                        $(".shade").show();
+						$(".shadeMain p .name").html(arr[0].pubOrgName);
+                        $(".shadeMain p .money").html(arr[0].pubLimit);
+                        $(".shadeMain p").find('br').remove();
+                        if($(".shadeMain p span").height()>74){
+                            console.log("wu");
+                            $(".shadeMain p").find('br').remove();
+						}else {
+                            console.log("you");
+                            console.log($(".shadeMain p span").height());
+                            $(".shadeMain p a").after('</br>');
+						}
+
+                        $(".shadeMain").fadeIn(1500);
+                    },1000)
+
+                    setTimeout(function () {
+                        $(".shade").hide();
+                        $("#liBox1 ul").append('<li><p>恭喜 <em class="name">'+arr[0].pubOrgName+'</em> 获得人人创新券使用资格，最高可享 <em class="money">'+arr[0].pubLimit+'</em> 优惠额度。</p></li>');
+                        switchx();
+                        arr.splice(0,1);
+                        ppap();
+                    },4500)
+                }else {
+                    dd=true;
+				}
+            }
+
+			setInterval(function () {
+                $.ajax({
+                    url:"../wx/publish/list.do?count="+count,
+                    type:'get',
+                    dataType:"json",
+                    contentType:'application/json',
+                    async:false
+                }).done(function (data) {
+                    count=data.count;
+                    for (var i=0 ;i<data.list.length;i++){
+                        arr.push(data.list[i]);
+					}
+                    if (dd){
+                        ppap();
+                    }
+                }).fail(function (data) {
+                    console.log("---");
+                });
+            },3000)
+
+
+
+        });
+
+	</script>
+</html>

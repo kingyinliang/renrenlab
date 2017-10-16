@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.renrenlab.cms.communication.dao.VerifyCodeDao" >
+  <resultMap id="BaseResultMap" type="com.renrenlab.cms.communication.model.VerifyCode" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="v_id" property="vId" jdbcType="BIGINT" />
+    <result column="v_phone" property="vPhone" jdbcType="VARCHAR" />
+    <result column="v_deadline" property="vDeadline" jdbcType="BIGINT" />
+    <result column="v_smscode" property="vSmscode" jdbcType="VARCHAR" />
+    <result column="v_graphcode" property="vGraphcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, v_id, v_phone, v_deadline, v_smscode, v_graphcode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_verifycode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPhoneAndGraphCode" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_verifycode
+    where v_phone = #{phone,jdbcType=VARCHAR} and v_graphcode= #{validateCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rlab_common_info.t_common_verifycode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.renrenlab.cms.communication.model.VerifyCode" >
+    insert into rlab_common_info.t_common_verifycode (v_phone, 
+      v_deadline, v_smscode, v_graphcode
+      )
+    values (#{vPhone,jdbcType=VARCHAR}, 
+      #{vDeadline,jdbcType=BIGINT}, #{vSmscode,jdbcType=VARCHAR}, #{vGraphcode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.renrenlab.cms.communication.model.VerifyCode" >
+    insert into rlab_common_info.t_common_verifycode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="vId != null" >
+        v_id,
+      </if>
+      <if test="vPhone != null" >
+        v_phone,
+      </if>
+      <if test="vDeadline != null" >
+        v_deadline,
+      </if>
+      <if test="vSmscode != null" >
+        v_smscode,
+      </if>
+      <if test="vGraphcode != null" >
+        v_graphcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="vId != null" >
+        #{vId,jdbcType=BIGINT},
+      </if>
+      <if test="vPhone != null" >
+        #{vPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vDeadline != null" >
+        #{vDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="vSmscode != null" >
+        #{vSmscode,jdbcType=VARCHAR},
+      </if>
+      <if test="vGraphcode != null" >
+        #{vGraphcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.cms.communication.model.VerifyCode" >
+    update rlab_common_info.t_common_verifycode
+    <set >
+      <if test="vId != null" >
+        v_id = #{vId,jdbcType=BIGINT},
+      </if>
+      <if test="vPhone != null" >
+        v_phone = #{vPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="vDeadline != null" >
+        v_deadline = #{vDeadline,jdbcType=BIGINT},
+      </if>
+      <if test="vSmscode != null" >
+        v_smscode = #{vSmscode,jdbcType=VARCHAR},
+      </if>
+      <if test="vGraphcode != null" >
+        v_graphcode = #{vGraphcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.cms.communication.model.VerifyCode" >
+    update rlab_common_info.t_common_verifycode
+    set v_id = #{vId,jdbcType=BIGINT},
+      v_phone = #{vPhone,jdbcType=VARCHAR},
+      v_deadline = #{vDeadline,jdbcType=BIGINT},
+      v_smscode = #{vSmscode,jdbcType=VARCHAR},
+      v_graphcode = #{vGraphcode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
