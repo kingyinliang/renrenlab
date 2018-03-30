@@ -839,7 +839,7 @@
 <%--<h6>请您登录后下载文件</h6>--%>
 <%--<p><span id="timer">3s</span>后自动跳转至登录页</p>--%>
 <%--</div>--%>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script>
 
     function toCouponPage() {

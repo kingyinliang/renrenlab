@@ -436,7 +436,7 @@
 </div>
 <!--my common js-->
 <script src="${rlab}/front/js/util/pagination.js?v_=20170622"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
 
     var PAGE_NO = '${pageNo}';// 起始页参数

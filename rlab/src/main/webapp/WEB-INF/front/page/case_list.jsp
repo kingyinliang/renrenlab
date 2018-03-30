@@ -176,7 +176,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 </body>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
 
     // 这个数据和case_list.jsp 里的 caseStore 一致，可以对应一下

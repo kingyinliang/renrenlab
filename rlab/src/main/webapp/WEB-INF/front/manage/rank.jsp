@@ -291,7 +291,7 @@
 </div>
 </body>
 <script src="${rlab}/front/js/util/pagination.js"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 
 <script src="${rlab}/front/assets/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script>
 </html>

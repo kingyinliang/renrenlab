@@ -551,7 +551,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20171108"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
     // 定义URL参数
     var PAGE_NO = '${pageNo}' || 1,// 初始化当前页数

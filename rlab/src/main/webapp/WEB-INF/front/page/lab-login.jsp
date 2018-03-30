@@ -135,7 +135,7 @@
 </div>
 </body>
 <script src="${rlab}/common/assets/layui/layui.js" charset="utf-8"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
     var types='';
     layui.use(['form'], function () {

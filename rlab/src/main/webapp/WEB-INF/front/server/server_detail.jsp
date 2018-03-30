@@ -400,7 +400,7 @@
 </div>
 
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script src="${rlab}/front/js/util/baiduMap.js?v_=20170905"></script>
 <%--<script src="http://api.map.baidu.com/api?v=2.0&ak=A4nolGZjoPlGYMl42qD6csYeDHKRdG8h" type="text/javascript"></script>--%>
 <script>

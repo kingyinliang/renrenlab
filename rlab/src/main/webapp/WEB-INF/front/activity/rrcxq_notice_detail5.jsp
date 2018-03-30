@@ -215,7 +215,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 </body>
 </html>
 </html>

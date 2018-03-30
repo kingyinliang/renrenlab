@@ -530,7 +530,7 @@
 </div>
 <script src="${rlab}/common/assets/layui/layui.js"></script>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script src="${rlab}/front/js/util/baiduMap.js?v_=20170905"></script>
 
 <%--<script src="${rlab}/front/js/view/facilitator_prove.js"></script>--%>

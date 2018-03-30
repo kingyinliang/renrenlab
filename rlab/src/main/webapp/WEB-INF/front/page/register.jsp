@@ -130,6 +130,6 @@
 </div>
 <script src="${rlab}/front/js/view/register.js?v_=20170905"></script>
 <script src="${rlab}/front/js/util/bg_line.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 </body>
 </html>

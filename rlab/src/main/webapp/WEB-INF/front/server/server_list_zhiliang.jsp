@@ -279,7 +279,7 @@
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
     <jsp:include page="../template/header.jsp" flush="true">
-        <jsp:param name="selected" value="${name=='质量服务'?'6':name=='检验检测'?'6':name=='计量校准'?'6':'3'}"/>
+        <jsp:param name="selected" value="6"/>
     </jsp:include>
     <%-- START高级搜索--%>
     <c:if test="${interests.size() > 0}">
@@ -435,21 +435,22 @@
                             </c:otherwise>
                         </c:choose>
                     </span></p>
-                    <p class="aptitude">服务资质
-                        <c:forEach items="${item.serviceAptitude}" var="aptitude">
-                            <c:choose>
-                                <c:when test="${fn:length(aptitude) == 4}">
-                                    <span class="tp2">${aptitude}</span>
-                                </c:when>
-                                <c:when test="${fn:length(aptitude) == 3}">
-                                    <span class="tp1">${aptitude}</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span class="tp1">${aptitude}</span>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </p>
+                    <p>服务领域<span><c:forEach items="${item.serviceScope}" var="scope">${scope}</c:forEach></span></p>
+                    <%--<p class="aptitude">服务资质--%>
+                        <%--<c:forEach items="${item.serviceAptitude}" var="aptitude">--%>
+                            <%--<c:choose>--%>
+                                <%--<c:when test="${fn:length(aptitude) == 4}">--%>
+                                    <%--<span class="tp2">${aptitude}</span>--%>
+                                <%--</c:when>--%>
+                                <%--<c:when test="${fn:length(aptitude) == 3}">--%>
+                                    <%--<span class="tp1">${aptitude}</span>--%>
+                                <%--</c:when>--%>
+                                <%--<c:otherwise>--%>
+                                    <%--<span class="tp1">${aptitude}</span>--%>
+                                <%--</c:otherwise>--%>
+                            <%--</c:choose>--%>
+                        <%--</c:forEach>--%>
+                    <%--</p>--%>
                 </div>
                 <div class="itemNum" style="width: 200px">
                     <c:choose>
@@ -552,7 +553,7 @@
 <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20171108"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
     // 定义URL参数
     var PAGE_NO = '${infos.pageNum}' || 1,// 初始化当前页数
@@ -690,7 +691,8 @@
 
         return labelArr;
     }
-    var flags='/service/zhiliang?classify=${classify}&name=${name}';
+    var flags='zhiliang';
+    var fenyes='/service/zhiliang?classify=${classify}&name=${name}';
     // 初始化页面分页
     showPages(INS_TOTAL, FROM_NO, 10, function (from, max) {
             PAGE_NO = from / 10 + 1;

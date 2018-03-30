@@ -179,7 +179,7 @@
         /*background-color:red;*/
     }
 </style>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
     //    function fill($this) {
     //        $("#pwdfill").val($($this).val());

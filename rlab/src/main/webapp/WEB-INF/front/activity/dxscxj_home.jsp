@@ -430,7 +430,7 @@
     <!--绑定手机号弹窗源码-->
 </div>
 
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script>
     function isLogin() {
         var lyerModal;

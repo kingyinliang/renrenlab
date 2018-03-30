@@ -17,6 +17,7 @@ var SERCH_TYPE=$(".pitchTab").data("searchType");//搜索类型；1为仪器，2
 var SORT_TYPE=null;
 var classify='',name='';
 var instag=false;//仪器预约
+var flags='';
 
 
 // if (!BASE_URL) {
@@ -202,6 +203,7 @@ $("#gosearch").on("click", function (e) {
 
 // 检索功能
 function toSearch(e) {
+    flags='';
     // var address = $("#adCurrent").text();
     // 处理参数
     PAGE_NO = 1;
@@ -265,8 +267,10 @@ function toGoodsList() {
             var URL = BASE_URL + "/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
         }
     }else if (SERCH_TYPE==2){
-        if(flags){
-            var URL = BASE_URL + flags +"&keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        if(flags=='zhiliang'){
+            var URL = BASE_URL + fenyes +"&keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        }else if(flags=='keyan') {
+            var URL = BASE_URL + fenyes +"&keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
         }else {
             var URL = BASE_URL + "/service/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
         }

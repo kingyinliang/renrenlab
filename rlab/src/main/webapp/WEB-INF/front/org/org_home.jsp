@@ -411,7 +411,7 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
-<script type="text/javascript" src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script type="text/javascript" src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script src="${rlab}/front/js/util/baiduMap.js?v_=20170829"></script>
 
 <script type="text/javascript">

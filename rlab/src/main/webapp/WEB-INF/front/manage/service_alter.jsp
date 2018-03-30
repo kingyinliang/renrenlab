@@ -1473,7 +1473,7 @@
 </div>
 <script type="text/javascript" src="${rlab}/common/assets/layui/layui.js"></script>
 <!--my common js-->
-<script type="text/javascript" src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script type="text/javascript" src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <%--<script src="${rlab}/front/js/view/facilitator_prove.js"></script>--%>
 <script type="text/javascript">
     // 清除服务名称提示

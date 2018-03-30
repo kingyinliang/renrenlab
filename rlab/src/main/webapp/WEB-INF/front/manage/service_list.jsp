@@ -733,7 +733,7 @@
 <script src="${rlab}/common/assets/layui/layui.js"></script>
 <!--my common js-->
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script>
     var layer;
     layui.use(['layer'], function () {

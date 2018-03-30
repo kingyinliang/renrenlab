@@ -287,7 +287,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180331"></script>
 <script type="text/javascript">
     // 初始化页面分页
     showPages(40, 0, 10, function (from, max) {
