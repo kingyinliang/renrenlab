@@ -19,7 +19,19 @@ public interface BgHomeDao {
 
     Integer selectUserCounts();
 
+    Integer selectUserCounts12MonthAgo();
+
     Integer selectOrgCounts();
 
     Integer selectInsCounts();
+
+    Integer selectOrgCounts12MonthAgo();
+
+    Integer selectInsCounts12MonthAgo();
+
+    Integer selectServiceCounts12MonthAgo();
+
+    List<BgHomeInfo> selectServiceCountsByDate();
+
+    Integer selectSerivceCounts();
 }

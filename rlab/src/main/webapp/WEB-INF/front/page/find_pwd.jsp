@@ -29,7 +29,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170905">
 
     <script type="text/javascript">
@@ -95,7 +95,7 @@
                      <input id="imgVertify" type="text" placeholder="请输入验证码">
                     </span>
                     <img id="vertifyImg" data-include-img="1" onclick="updateValidateImg(this)"
-                         src="${rlab}/front/user/validateCode" alt="图形校验码">
+                         src="${rlab}/user/validateCode" alt="图形校验码">
                 </p>
                 <p id="imgInfo" class="item_tip" style="color: darkred"></p>
 
@@ -119,7 +119,7 @@
 
 <script src="${rlab}/front/js/view/find_pwd.js?v_=20170905"></script>
 <script src="${rlab}/front/js/util/bg_line.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 
 </body>
 </html>

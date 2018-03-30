@@ -44,7 +44,7 @@ $("#getMsg").on("click", function (e) {
 })
 var REST_FLAG = true;
 $("#resetPwd").on("click", function () {
-    // location.href = BASE_URL + "/front/user/login.html";
+    // location.href = BASE_URL + "/user/login.html";
     reset();
 })
 
@@ -247,7 +247,7 @@ function doRegister() {
     }
 
     $.ajax({
-        url: BASE_URL + "/front/user/reset",
+        url: BASE_URL + "/user/reset",
         type: 'put',
         dataType: 'json',
         contentType: 'application/json',
@@ -258,7 +258,7 @@ function doRegister() {
         success: function (data) {
             if (data.code == 0) {
                 // todo:登录成功，跳转回调页面
-                location.href = BASE_URL + '/front/user/login';
+                location.href = BASE_URL + '/user/login';
             } else if (data.code === 1006) {
                 // todo:登录失败，短信验证码错误
                 setTip($("#verifyInfo"), "请输入有效的验证码");
@@ -318,10 +318,10 @@ function setTip($this, text) {
 function updateValidateImg($this) {
 
     if ($this === undefined) {
-        $("#vertifyImg").attr("src", BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+        $("#vertifyImg").attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
     }
     $this = $($this);
-    $this.attr("src", BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+    $this.attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
 }
 
@@ -341,7 +341,7 @@ function todoGetNodeCode() {
     }
 
     $.ajax({
-        url: BASE_URL + "/front/user/sendVerifyCode",
+        url: BASE_URL + "/user/sendVerifyCode",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -388,7 +388,7 @@ function todoGetNodeCode() {
  * 跳转主页
  */
 function toHomePage() {
-    window.location.href = BASE_URL + "/page/home";
+    window.location.href = BASE_URL;
 }
 
 

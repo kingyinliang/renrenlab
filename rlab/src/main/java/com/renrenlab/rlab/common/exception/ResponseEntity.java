@@ -2,8 +2,8 @@ package com.renrenlab.rlab.common.exception;
 
 public enum ResponseEntity {
 
-    SUCCESS(0,"成功"),
-    GLOBAL_ERROR(1000,"系统异常"),
+    SUCCESS(0, "成功"),
+    GLOBAL_ERROR(1000, "系统异常"),
     PARAMETER_ERROR(1001, "参数异常"),
     USER_NOT_FOUND_ERROR(1002, "用户不存在"),
     USER_OR_PASSWORD_ERROR(1003, "用户名和密码不匹配异常"),
@@ -21,15 +21,23 @@ public enum ResponseEntity {
     USER_EXIST_WECHAT_ERROR(1015, "用户已经在微信号注册"),
     MOBILE_VERICODE_EXPIRE_ERROR(1016, "手机验证码过期异常"),
     USER_ERROR(1017, "用户被禁用"),
-    PERMISSSION_ERROR(1018, "权限不够"),
+    PERMISSSION_ERROR(1018, "缺少相应权限"),
+    USER_PHONE_ILLEGAL(1019, "手机号不合法"),
 
-    REPEAT_U_JOB_NUMBER(2000,"工号重复"),
-    REPEAT_ORG_CODE(2001,"组织机构代码重复"),
+    REPEAT_U_JOB_NUMBER(2000, "工号重复"),
+    REPEAT_ORG_CODE(2001, "组织机构代码重复"),
 
     //    需求管理
     REQUIREMENT_HAS_CHANGE(3001, "该需求已经被修改，请管理员刷新页面重新审核"),
     MANAGER_EXIST(3002, "该用户已经存在，且身份为管理员"),
-    ;
+
+    DATABASE_UPDATA_ERROR(4001, "数据库更新异常"),
+
+    //    服务管理
+    SERVICE_EXIST(5001, "服务已存在"),
+    SERVICE_NOT_EXIST(5002, "服务不存在"),
+    APTITUDE_EXIST(5003, "资质已存在"),
+    FEATURE_EXIST(5004, "特点已存在");
 
     private Integer code;
 
@@ -54,6 +62,6 @@ public enum ResponseEntity {
 
     @Override
     public String toString() {
-        return "{\"code\":"+this.code+",\"message\":\""+this.message+"\"}";
+        return "{\"code\":" + this.code + ",\"message\":\"" + this.message + "\"}";
     }
 }

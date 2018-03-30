@@ -60,7 +60,7 @@ function keyencode(key) {
     return keyword_input;
 }
 function logouts() {
-    window.location.href = BASE_URL + "/front/user/logout";
+    window.location.href = BASE_URL + "/user/logout";
 }
 
 /**

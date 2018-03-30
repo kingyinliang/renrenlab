@@ -24,6 +24,7 @@
         <result column="index_state" jdbcType="INTEGER" property="indexState"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="ins_custom_tag" jdbcType="VARCHAR" property="insCustomTag"/>
     </resultMap>
     <resultMap id="DetailResultMap" type="com.renrenlab.rlab.model.InsDetailInfo">
         <result column="map_id" jdbcType="BIGINT" property="mapId"/>
@@ -44,7 +45,6 @@
         <result column="ins_scope" jdbcType="VARCHAR" property="insScope"/>
         <result column="link_page" jdbcType="VARCHAR" property="linkPage"/>
         <result column="con_id" jdbcType="OTHER" property="conId"/>
-
     </resultMap>
     <sql id="Base_Column_List">
         map_id, ins_name, ins_mode, ins_brand,
@@ -53,7 +53,7 @@
         org_addr_city, org_addr_district, org_addr_street,
         org_addr_longitude, org_addr_latitude, ins_org_price_list,
         ins_pic, index_state, create_time,
-        modify_time, org_oid
+        modify_time, org_oid,ins_custom_tag
         <if test="isDis and longitude!=null and latitude!=null">
             ,earth_distance (
             ll_to_earth (
@@ -107,7 +107,8 @@
         ins_scope,
         ins_feature,
         link_page,
-        con_id
+        con_id,
+        base.ins_custom_tag
     </sql>
 
     <select id="selectBykeyword" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -116,7 +117,7 @@
         FROM
         rlab_common_info.t_instrument_index idx
         <if test="keyword !=null ">
-            , to_tsquery('rlab_common_info.jiebacfg', #{keyword,jdbcType=VARCHAR} ) query
+            , to_tsquery('jiebacfg', #{keyword,jdbcType=VARCHAR} ) query
         </if>
         WHERE
         TRUE
@@ -179,6 +180,9 @@
         <if test="district !=null">
             AND POSITION (#{district,jdbcType=VARCHAR} IN org_addr_district)>0
         </if>
+        <if test="isSubscribe != null">
+            and ins_custom_tag = #{isSubscribe}
+        </if>
         ORDER BY
         <if test="keyword !=null ">
             RANK DESC ,
@@ -190,12 +194,42 @@
             dis ASC,
         </if>
         <if test="scopeLowPrice !=null ||  scopeHighPrice !=null">
-            (ins_org_price_list->>'flag')::INT ASC , (ins_org_price_list::json->>'accPrice')::NUMERIC ASC,
+            (ins_org_price_list->>'flag')::INT ASC ,
+            (ins_org_price_list::json->>'accPrice')::NUMERIC ASC,
             (ins_org_price_list::json->>'scopeLowPrice')::NUMERIC ASC ,
         </if>
         map_id ASC
     </select>
-    <select id="getDistrict" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="selectByMapId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            map_id,
+            ins_name,
+            ins_mode,
+            ins_brand,
+            ins_category,
+            ins_scope_name,
+            ins_feature_name,
+            ins_service_type,
+            org_name,
+            org_addr_province,
+            org_addr_city,
+            org_addr_district,
+            org_addr_street,
+            org_addr_longitude,
+            org_addr_latitude,
+            ins_org_price_list,
+            ins_pic,
+            index_state,
+            create_time,
+            modify_time,
+            org_oid,
+            ins_custom_tag
+        FROM
+            rlab_common_info.t_instrument_index idx
+        WHERE
+            idx.map_id = #{mapId,jdbcType=BIGINT}
+    </select>
+    <select id="getDistrict" resultType="string">
         SELECT
         DISTINCT
         idx.org_addr_district
@@ -221,6 +255,7 @@
         WHERE
         idx.org_oid = #{oid,jdbcType=BIGINT}
         ORDER BY
+        ins_pic DESC nulls LAST,
         map_id DESC
     </select>
     <select id="searchDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
@@ -252,7 +287,7 @@
             COUNT(*),
             org_oid  AS oid,
             org_name AS orgName
-        FROM rlab_common_info.t_instrument_index, to_tsquery('rlab_common_info.jiebacfg', '${keyword}') query
+        FROM rlab_common_info.t_instrument_index, to_tsquery('jiebacfg', '${keyword}') query
         WHERE
             numnode(query) > 0 AND ins_keyword @@ query
         GROUP BY org_oid, org_name
@@ -289,9 +324,11 @@
         org_addr_district,
         org_addr_street,
         org_addr_longitude,
-        org_addr_latitude
+        org_addr_latitude,
+        ins_custom_tag
         ) SELECT
         insmap.map_id,
+        insmap.ins_custom_tag,
         CASE
         WHEN insmap.map_new_ins IS NOT NULL
         THEN
@@ -315,7 +352,7 @@
         END AS ins_brand,
         setweight(
         to_tsvector(
-        'rlab_common_info.jiebacfg',
+        'jiebacfg',
         COALESCE(
         CASE
         WHEN insmap.map_new_ins IS NOT NULL
@@ -330,7 +367,7 @@
         'A'
         ) || setweight(
         to_tsvector(
-        'rlab_common_info.jiebacfg',
+        'jiebacfg',
         COALESCE(
         CASE
         WHEN orgbase.org_name IS NOT NULL
@@ -343,7 +380,7 @@
         'B'
         ) || setweight(
         to_tsvector(
-        'rlab_common_info.jiebacfg',
+        'jiebacfg',
         COALESCE(
         CASE
         WHEN insmap.map_new_ins IS NOT NULL
@@ -358,7 +395,7 @@
         'B'
         ) || setweight(
         to_tsvector(
-        'rlab_common_info.jiebacfg',
+        'jiebacfg',
         COALESCE(
         CASE
         WHEN insmap.map_new_ins IS NOT NULL
@@ -373,7 +410,7 @@
         'C'
         ) || setweight(
         to_tsvector(
-        'rlab_common_info.jiebacfg',
+        'jiebacfg',
         COALESCE(
         (
         CASE
@@ -551,7 +588,7 @@
         JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 0 = ic.ins_category
         AND ic.LEVEL = 1
         ) T
-        WHERE rlab_common_info.t_instrument_index.map_id  IN
+        WHERE rlab_common_info.t_instrument_index.map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
@@ -571,7 +608,7 @@
         JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 1 = ic.ins_category
         AND ic.LEVEL = 2
         ) T
-        WHERE rlab_common_info.t_instrument_index.map_id  IN
+        WHERE rlab_common_info.t_instrument_index.map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
@@ -590,7 +627,7 @@
         ON (idx.ins_feature :: JSON ->> 2) :: INT = fe.ins_feature_id
         ) AS re
         WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
-        rlab_common_info.t_instrument_index.map_id  IN
+        rlab_common_info.t_instrument_index.map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
@@ -609,7 +646,7 @@
         ON (idx.ins_feature :: JSON ->> 0) :: INT = fe.ins_feature_id
         ) AS re
         WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
-        rlab_common_info.t_instrument_index.map_id  IN
+        rlab_common_info.t_instrument_index.map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
@@ -628,14 +665,14 @@
         ON (idx.ins_feature :: JSON ->> 1) :: INT = fe.ins_feature_id
         ) AS re
         WHERE rlab_common_info.t_instrument_index.map_id = re.map_id AND
-        rlab_common_info.t_instrument_index.map_id  IN
+        rlab_common_info.t_instrument_index.map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
 
         UPDATE rlab_common_info.t_instrument_index
         SET ins_scope_name = '综合'
-        WHERE map_id  IN
+        WHERE map_id IN
         <foreach collection="mapIds" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>;
@@ -658,7 +695,8 @@
             org_addr_district,
             org_addr_street,
             org_addr_longitude,
-            org_addr_latitude
+            org_addr_latitude,
+            ins_custom_tag
         ) SELECT
               insmap.map_id,
               CASE
@@ -684,7 +722,7 @@
               END AS ins_brand,
               setweight(
                       to_tsvector(
-                              'rlab_common_info.jiebacfg',
+                              'jiebacfg',
                               COALESCE(
                                       CASE
                                       WHEN insmap.map_new_ins IS NOT NULL
@@ -699,7 +737,7 @@
                       'A'
               ) || setweight(
                       to_tsvector(
-                              'rlab_common_info.jiebacfg',
+                              'jiebacfg',
                               COALESCE(
                                       CASE
                                       WHEN orgbase.org_name IS NOT NULL
@@ -712,7 +750,7 @@
                       'B'
               ) || setweight(
                       to_tsvector(
-                              'rlab_common_info.jiebacfg',
+                              'jiebacfg',
                               COALESCE(
                                       CASE
                                       WHEN insmap.map_new_ins IS NOT NULL
@@ -727,7 +765,7 @@
                       'B'
               ) || setweight(
                       to_tsvector(
-                              'rlab_common_info.jiebacfg',
+                              'jiebacfg',
                               COALESCE(
                                       CASE
                                       WHEN insmap.map_new_ins IS NOT NULL
@@ -742,7 +780,7 @@
                       'C'
               ) || setweight(
                       to_tsvector(
-                              'rlab_common_info.jiebacfg',
+                              'jiebacfg',
                               COALESCE(
                                       (
                                           CASE
@@ -859,7 +897,8 @@
               addr.org_addr_district,
               addr.org_addr_street,
               addr.org_addr_longitude,
-              addr.org_addr_latitude
+              addr.org_addr_latitude,
+              insmap.ins_custom_tag
           FROM
               rlab_instrument_info.t_instrument_base_info AS insbase
               JOIN rlab_instrument_info.t_instrument_org_map AS insmap ON insbase.ins_iid = insmap.ins_iid
@@ -904,7 +943,7 @@
             rlab_common_info.t_instrument_index.map_id = ins.map_id
             AND ins.map_id = #{mapId,jdbcType=BIGINT};
 
-        UPDATE rlab_common_info.t_instrument_index
+        UPDATE rlab_common_info.t_instrument_index ind
         SET ins_category = json_build_array(
                 T.name1,
                 ins_category :: JSON ->> 1
@@ -919,9 +958,9 @@
                     JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 0 = ic.ins_category
                                                                           AND ic.LEVEL = 1
             ) T
-        WHERE rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+        WHERE T.map_id = ind.map_id AND ind.map_id = #{mapId,jdbcType=BIGINT};
 
-        UPDATE rlab_common_info.t_instrument_index
+        UPDATE rlab_common_info.t_instrument_index ind
         SET ins_category = json_build_array(
                 ins_category :: JSON ->> 0,
                 T.name1
@@ -936,7 +975,7 @@
                     JOIN rlab_instrument_info.t_instrument_category ic ON i.ins_category :: JSON ->> 1 = ic.ins_category
                                                                           AND ic.LEVEL = 2
             ) T
-        WHERE rlab_common_info.t_instrument_index.map_id = #{mapId,jdbcType=BIGINT};
+        WHERE T.map_id = ind.map_id AND ind.map_id = #{mapId,jdbcType=BIGINT};
 
         UPDATE rlab_common_info.t_instrument_index
         SET ins_feature_name = json_build_array(

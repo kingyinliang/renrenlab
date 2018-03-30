@@ -123,7 +123,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>
@@ -151,11 +151,11 @@
                                     </c:otherwise>
                                 </c:choose>
                             </span>
-                            <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                            <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                                 <c:if test="${orgInfo.orgBizUid==0||sessionScope.uid==orgInfo.orgBizUid}">
                                     <span><a href="${rlab}/bg/provider/modify/${orgInfo.orgOid}" ><button class="layui-btn">修改</button></a></span>
                                 </c:if>
-                            </c:if>
+                            <%--</c:if>--%>
 
                         </p>
                     </div>
@@ -232,11 +232,11 @@
                         ${orgInfo.orgDescription}
                     </p>
                 </div>
-                <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                     <div class="save" style="display: ${orgInfo.orgIdentification eq 1?"block":"none" }">
                         <button class="layui-btn" onclick="gotan()">审核</button>
                     </div>
-                </c:if>
+                <%--</c:if>--%>
             </div>
         </div>
     </div>
@@ -308,6 +308,8 @@
                 if(num==2){
                     window.location.href="${rlab}/bg/provider/detail/certificated/${orgInfo.orgOid}";
                 }
+            } else {
+                alert(data.description);
             }
 //            window.location.reload(true);
         })

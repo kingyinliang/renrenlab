@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
 
     <%--导入字体样式--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
@@ -171,7 +171,7 @@
     </div>
 </div>
 </body>
-<script src="${rlab}/front/js/common/main.js"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     $(function () {
         var text = $(".input").val();
@@ -231,7 +231,7 @@
 
 
             $.ajax({
-                url: '${rlab}/front/user/req/modify',
+                url: '${rlab}/user/req/modify',
                 type: 'POST',
                 dataType: "json",
                 data: JSON.stringify(data),
@@ -240,7 +240,7 @@
                     if(data.code === 0){
                         layer.msg("需求修改成功,即将跳转");
                         setTimeout(function () {
-                            window.location.href = '${rlab}/front/user/req/tinylist?pageNo=1&pageSize=10&state=0';
+                            window.location.href = '${rlab}/user/req/tinylist?pageNo=1&pageSize=10&state=0';
                         },1000)
                     }
                 },

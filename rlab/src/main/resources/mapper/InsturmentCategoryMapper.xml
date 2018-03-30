@@ -10,14 +10,27 @@
         <result column="parent_code" property="parentCode" jdbcType="VARCHAR"/>
         <result column="com" property="com" jdbcType="SMALLINT"/>
     </resultMap>
+    <resultMap id="BaseResultMap2" type="com.renrenlab.rlab.model.InstrumentCategory" extends="BaseResultMap">
+        <collection column="{insCategory=ins_category}" property="categoryList"
+                    ofType="com.renrenlab.rlab.model.InstrumentCategory"
+                    select="selectRecursive"/>
+    </resultMap>
     <sql id="Base_Column_List">
-    id, level, ins_category, category_name, href, parent_code, com
-  </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        id, level, ins_category, category_name, href, parent_code, com
+    </sql>
+
+    <select id="selectRecursive" resultMap="BaseResultMap2">
         select
         <include refid="Base_Column_List"/>
         from rlab_instrument_info.t_instrument_category
-        where id = #{id,jdbcType=BIGINT}
+        <where>
+            <if test="insCategory != null">
+                and parent_code = #{insCategory,jdbcType=VARCHAR}
+            </if>
+            <if test="insCategory == null">
+                and parent_code is null
+            </if>
+        </where>
     </select>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -40,69 +53,6 @@
             and parent_code = #{code,jdbcType=VARCHAR}
         </if>
     </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from rlab_instrument_info.t_instrument_category
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-    <insert id="insert" parameterType="com.renrenlab.rlab.model.InstrumentCategory">
-    insert into rlab_instrument_info.t_instrument_category (id, level, ins_category, 
-      category_name, href, parent_code, 
-      com)
-    values (#{id,jdbcType=BIGINT}, #{level,jdbcType=INTEGER}, #{insCategory,jdbcType=VARCHAR}, 
-      #{categoryName,jdbcType=VARCHAR}, #{href,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
-      #{com,jdbcType=SMALLINT})
-  </insert>
-    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InstrumentCategory">
-        insert into rlab_instrument_info.t_instrument_category
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
-            <if test="level != null">
-                level,
-            </if>
-            <if test="insCategory != null">
-                ins_category,
-            </if>
-            <if test="categoryName != null">
-                category_name,
-            </if>
-            <if test="href != null">
-                href,
-            </if>
-            <if test="parentCode != null">
-                parent_code,
-            </if>
-            <if test="com != null">
-                com,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=BIGINT},
-            </if>
-            <if test="level != null">
-                #{level,jdbcType=INTEGER},
-            </if>
-            <if test="insCategory != null">
-                #{insCategory,jdbcType=VARCHAR},
-            </if>
-            <if test="categoryName != null">
-                #{categoryName,jdbcType=VARCHAR},
-            </if>
-            <if test="href != null">
-                #{href,jdbcType=VARCHAR},
-            </if>
-            <if test="parentCode != null">
-                #{parentCode,jdbcType=VARCHAR},
-            </if>
-            <if test="com != null">
-                #{com,jdbcType=SMALLINT},
-            </if>
-        </trim>
-    </insert>
-
     <select id="selectCategory" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.ServiceAptitudeInfoDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.ServiceAptitudeInfo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="aptitude_id" jdbcType="BIGINT" property="aptitudeId"/>
+        <result column="aptitude_name" jdbcType="VARCHAR" property="aptitudeName"/>
+        <result column="u_uid" jdbcType="BIGINT" property="uUid"/>
+        <result column="is_manager" jdbcType="SMALLINT" property="isManager"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, aptitude_id, aptitude_name, u_uid, is_manager, create_time, modify_time
+    </sql>
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_service_info.t_service_aptitude
+        where aptitude_name = #{aptitudeName}
+    </select>
+    <select id="selectList" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_service_info.t_service_aptitude
+        <where>
+            <if test="isManager == 0 and uid != null">
+                u_uid = #{uid} OR is_manager = 1
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM rlab_service_info.t_service_aptitude
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.ServiceAptitudeInfo">
+        insert into rlab_service_info.t_service_aptitude
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="aptitudeId != null">
+                aptitude_id,
+            </if>
+            <if test="aptitudeName != null">
+                aptitude_name,
+            </if>
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="isManager != null">
+                is_manager,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="aptitudeId != null">
+                #{aptitudeId,jdbcType=BIGINT},
+            </if>
+            <if test="aptitudeName != null">
+                #{aptitudeName,jdbcType=VARCHAR},
+            </if>
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="isManager != null">
+                #{isManager,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.ServiceAptitudeInfo">
+        update rlab_service_info.t_service_aptitude
+        <set>
+            <if test="aptitudeId != null">
+                aptitude_id = #{aptitudeId,jdbcType=BIGINT},
+            </if>
+            <if test="aptitudeName != null">
+                aptitude_name = #{aptitudeName,jdbcType=VARCHAR},
+            </if>
+            <if test="uUid != null">
+                u_uid = #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="isManager != null">
+                is_manager = #{isManager,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.ServiceAptitudeInfo">
+        UPDATE rlab_service_info.t_service_aptitude
+        SET aptitude_id   = #{aptitudeId,jdbcType=BIGINT},
+            aptitude_name = #{aptitudeName,jdbcType=VARCHAR},
+            u_uid         = #{uUid,jdbcType=BIGINT},
+            is_manager    = #{isManager,jdbcType=SMALLINT},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            modify_time   = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

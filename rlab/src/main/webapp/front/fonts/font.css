@@ -11,7 +11,7 @@
 
 [class^="lab-"], [class*=" lab-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'lab_icon' !important;
+  font-family: 'lab_icon'!important;
   speak: none;
   font-style: normal;
   font-weight: normal;

@@ -99,6 +99,13 @@ public class ExcelUtil {
 			case Cell.CELL_TYPE_BLANK:
 				strCell = null;
 				break;
+			case Cell.CELL_TYPE_FORMULA:
+				try {
+					strCell = cell.getStringCellValue();
+				} catch (IllegalStateException e) {
+					strCell = String.format("%.0f", cell.getNumericCellValue());
+				}
+				break;
 			default:
 				strCell = null;
 				break;

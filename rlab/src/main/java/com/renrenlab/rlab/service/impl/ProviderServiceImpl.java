@@ -3,8 +3,10 @@ package com.renrenlab.rlab.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.dao.OrgDao;
+import com.renrenlab.rlab.dao.OrgIndexDao;
 import com.renrenlab.rlab.dao.OrgManagerDao;
 import com.renrenlab.rlab.model.OrgBaseInfo;
+import com.renrenlab.rlab.model.OrgIndex;
 import com.renrenlab.rlab.service.ProviderService;
 import com.renrenlab.rlab.vo.OrgManager;
 import com.renrenlab.rlab.vo.ProviderInfo;
@@ -26,6 +28,9 @@ public class ProviderServiceImpl implements ProviderService{
 
     @Autowired
     private OrgDao orgDao;
+
+    @Autowired
+    private OrgIndexDao orgIndexDao;
 
     @Autowired
     private OrgManagerDao orgManagerDao;
@@ -95,6 +100,13 @@ public class ProviderServiceImpl implements ProviderService{
     public int backout(Long[] oids, Long uId, String reason) {
 
         int result = orgDao.backoutProvider(oids,uId,reason);
+        for (Long oid : oids) {
+            short type =1;
+            OrgIndex orgIndex = new OrgIndex();
+            orgIndex.setOrgOid(oid);
+            orgIndex.setOrgType(type);
+            orgIndexDao.updateByOidSelective(orgIndex);
+        }
         return result;
     }
 
@@ -119,8 +131,16 @@ public class ProviderServiceImpl implements ProviderService{
      */
     @Override
     public int audit(Long uId, Long oid, Integer state, String reason) {
-
+//        2审核通过 3 审核拒绝
         int result = orgDao.modifyState(oid,null,state,reason,uId);
+        if(state==2){
+            //更新索引表
+            short type = 2;
+            OrgIndex orgIndex = new OrgIndex();
+            orgIndex.setOrgType(type);
+            orgIndex.setOrgOid(oid);
+            orgIndexDao.updateByOidSelective(orgIndex);
+        }
         return result;
     }
 

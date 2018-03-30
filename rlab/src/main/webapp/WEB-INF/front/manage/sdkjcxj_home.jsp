@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
 
@@ -177,7 +177,7 @@
         </jsp:include>
         <div class="user_main" style="padding: 40px 35px 0 35px">
             <h2 style="font-size: 22px; color: #508DF0">首都科技条件平台创新券</h2>
-            <img src="${rlab}/front/imgs/rrcxj/shouke.png" style="width: 320px; height: 50px; margin-top: 70px">
+            <img src="${rlab}/front/imgs/rrcxj/shouke.png" style="width: 320px; margin-top: 70px">
             <p style="font-size: 16px; color: #666; margin-top: 40px; line-height: 1.8">为落实《北京市关于加快推进科研机构科技成果转化和产业化的若干意见（试行）》（京政办发〔2014〕35号），充分发挥市场在资源配置中的决定性作用，进一步盘活首都优势科技资源，降低小微企业和创业团队科研创新投入成本，激发小微企业和创业团队的科技创新活力，北京市决定实施首都科技创新券制度。</p>
             <p style="color: #333; font-size: 16px; margin-top: 35px">人人实验平台作为首都科技条件平台的推荐机构，主要负责申领企业资质审批和创新券发放工作。</p>
             <div style="text-align: center; width: 100%; margin-top: 80px">
@@ -189,7 +189,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 <script type="text/javascript">
     $(".details_link").on('click', function () {

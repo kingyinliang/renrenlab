@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kingyinliang
-  Date: 2017/9/6 0006
-  Time: 16:50
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +9,8 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
 
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202 ">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
@@ -253,7 +246,7 @@
     </div>
     <%--END 头部样式引入（中间带logo）--%>
     <div class="totals">
-        共<span>${total}</span>条仪器信息
+        共：<span>${total}</span>条仪器信息
     </div>
     <%--仪器列表开始--%>
     <div class="goods_list">
@@ -330,70 +323,32 @@
     <%-- 分页结束--%>
 </body>
 <script src="${rlab}/mobile/assets/fenye/pagination.js"></script>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script type="text/javascript">
-    /**
-     * 返回历史上一页
-     */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
-    function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
-    }
 
     setCallbackUrl();// 设置登录时回跳路径
     /**
      * 初始化分页
      */
     // 初始化页面分页
+    var backFlag = '${backFlag}';
     showPages('${total}', ('${pageNo}' - 1) * 10, 10, function (from, max) {
-
+            backFlag ++;
             PAGE_NO = from / 10 + 1;
-            window.location.href = BASE_URL + '/front/org/${oid}/ins?pageNo=' + PAGE_NO + '&pageSize=10';
-
+        window.location.href = BASE_URL + '/org/${oid}/ins?pageNo=' + PAGE_NO + '&pageSize=10&backFlag=' + backFlag;
         }, "page_container"
     )
 
-    <%--function initPaging() {--%>
-    <%--showPages(${total}, (${pageNo} -1) * 10, 10, function (from, max) {--%>
-    <%--// 处理页码参数--%>
-    <%--PAGE_NO = from / 10 + 1;--%>
-
-    <%--// 处理地址参数（为当前已选择地址）--%>
-    <%--// var address = $("#adCurrent").text();--%>
-    <%--var address = $("#curAddressOrigin").text();--%>
-    <%--if (address === "北京") {--%>
-    <%--CUR_PROVINCE = "北京市";--%>
-    <%--} else if (address === "上海") {--%>
-    <%--CUR_PROVINCE = "上海";--%>
-    <%--} else if (address === "重庆") {--%>
-    <%--CUR_PROVINCE = "重庆";--%>
-    <%--} else if (address === "天津") {--%>
-    <%--CUR_PROVINCE = "天津";--%>
-    <%--} else {--%>
-    <%--if (address !== "全国") {--%>
-    <%--CUR_CITY = $("#curAddressOrigin").text();--%>
-    <%--}--%>
-    <%--}--%>
-    <%--// 处理关键字参数--%>
-    <%--KEY_WORD = $("#searchIpt").val();--%>
-    <%--toGoodsList();// 跳转搜索结果页--%>
-    <%--}, "page_container");--%>
-    <%--}--%>
+    /**
+     * 返回历史上一页
+     */
+    function goBack() {
+        if(backFlag){
+            history.go(-backFlag);
+        }else {
+            history.go(-1);
+        }
+    }
 
 </script>
 </html>

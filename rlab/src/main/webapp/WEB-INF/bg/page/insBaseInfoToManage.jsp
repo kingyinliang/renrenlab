@@ -82,7 +82,6 @@
                         <%--<i class="fa fa-caret-down"></i>--%>
                         <i class="layui-icon date_icon">&#xe637;</i>
                     </button>
-
                 </div>
                 <%--END 公用时间组件--%>
                 <button class="layui-btn btn" style="float: left;margin-right: 23px;background: #49aaff;margin-top: 10px" onclick="gosearch()">
@@ -128,13 +127,13 @@
                             <td>${info.time}</td>
                             <td>
                                 <%--查询权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                     <a class="check" style="color: #6693c8;" href="${rlab}/bg/baseins/detail?insIid=${info.insIid}">查看详情</a>
-                                </c:if>
+                                <%--</c:if>--%>
                                 <%--修改权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                                     <a class="forbidden" href="${rlab}/bg/baseins/tomodify?insIid=${info.insIid}">修改</a>
-                                </c:if>
+                                <%--</c:if>--%>
                             </td>
                         </tr>
                     </c:forEach>

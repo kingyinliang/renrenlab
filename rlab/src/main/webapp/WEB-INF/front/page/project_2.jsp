@@ -17,7 +17,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170905">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/scientific_search.css?v_=20170905"/>
 
@@ -134,10 +134,10 @@
                 <div id="pages" style="text-align: center;overflow: hidden;">
                     <c:if test="${relatedProject!=null && fn:length(relatedProject)>9}">
                     <%--<c:if test="${relatedProject!=null}">--%>
-                        <a id="next" href="JavaScript:location.href='${rlab}/front/superSearch/morePro?pageNo=${pageNo +1}&pageSize=10&query='+encodeURI('${keyword}');">下一页</a>
+                        <a id="next" href="JavaScript:location.href='${rlab}/front/superSearch/morePro?flag=${flag}&pageNo=${pageNo +1}&pageSize=10&query='+encodeURI('${keyword}');">下一页</a>
                     </c:if>
                     <c:if test="${pageNo != 0}">
-                        <a id="top" href="JavaScript:location.href='${rlab}/front/superSearch/morePro?pageNo=${pageNo -1}&pageSize=10&query='+encodeURI('${keyword}');">上一页</a>
+                        <a id="top" href="JavaScript:location.href='${rlab}/front/superSearch/morePro?flag=${flag}&pageNo=${pageNo -1}&pageSize=10&query='+encodeURI('${keyword}');">上一页</a>
                     </c:if>
                 </div>
             </div>
@@ -149,10 +149,16 @@
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 
 </div>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
 <script type="text/javascript">
-
+    $(".searchTab a").each(function () {
+        $(this).attr("class","");
+        if ( $(this).data("searchType")==(${flag}+1)) {
+            $(this).attr("class","pitchTab");
+            SERCH_TYPE=$(this).data("searchType")-0;
+        }
+    })
     showPages(100, 0, 5, function (from, max) {
         location.href = "http://v3.bootcss.com/components/#pagination-default";
     }, "page_container");

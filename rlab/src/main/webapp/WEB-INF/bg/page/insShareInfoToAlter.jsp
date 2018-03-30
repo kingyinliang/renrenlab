@@ -744,6 +744,7 @@
     $("#save").on("click", function () {
         //价格
         var priceRemark = $("#priceRemark").val();
+
         var pricaData;
         if (priceType == 3) {
             pricaData = {
@@ -772,6 +773,7 @@
                 'accPrice': $("#fixedBox input").eq(0).val() * 100,
                 'unit': $("#fixedBox input").eq(1).val()
             }
+
         } else if (priceType == 2) {
             var unitReg = /^[\u4e00-\u9fa5]{0,5}$/;
             if (!unitReg.test($("#rangeBox input").eq(2).val()) || $("#rangeBox input").eq(2).val().length == 0) {
@@ -808,6 +810,7 @@
                 'scopeHighPrice': $("#rangeBox input").eq(1).val() * 100,
                 'unit': $("#rangeBox input").eq(2).val()
             }
+
         }
 
 
@@ -824,7 +827,6 @@
         }
 
         var serviceType = $("#serviceType option:selected").val();
-
         var contacts = $("#contacts tr");
         var contactsData = [];
 
@@ -912,7 +914,7 @@
             if (data.code == 0) {
                 window.location.href = '${rlab}/bg/share/detail?mapId=' + mapId
             } else {
-                layer.msg("系统繁忙 , 请稍后再试");
+                layer.msg(data.description);
             }
         }).fail(function () {
             layer.msg("系统繁忙 , 请稍后再试");

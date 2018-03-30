@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
 <%
     boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
-    if(isMobileDevice){
+    if (isMobileDevice) {
         request.getRequestDispatcher("/m_404Error.jsp").forward(request, response);
     }
 %>
@@ -64,7 +65,7 @@
     <!--底部底边栏-->
     <jsp:include page="./WEB-INF/front/template/footer.jsp"></jsp:include>
 </div>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/front/js/common/main.js"></script>
 
 <script>
 
@@ -76,7 +77,7 @@
         $('body,html').animate({scrollTop: 0}, 500);
     }
 
-    function toGoodsDetail(){
+    function toGoodsDetail() {
 
     }
 

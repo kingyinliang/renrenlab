@@ -189,7 +189,7 @@ function clearCode() {
 //code img
 function updateValidateImg () {
 
-    $("#codeImg").attr("src",BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+    $("#codeImg").attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
 }
 //计数
@@ -229,7 +229,7 @@ function todoGetNodeCode(){
         validateCode:$("#codeimgInp").val()
     }
     $.ajax({
-        url: BASE_URL + "/front/user/sendVerifyCode",
+        url: BASE_URL + "/user/sendVerifyCode",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -308,7 +308,7 @@ function doRegister(){
     }
 
     $.ajax({
-        url:BASE_URL + "/front/user/register",
+        url: BASE_URL + "/user/register",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -363,7 +363,7 @@ function findPaw(){
     }
 
     $.ajax({
-        url: BASE_URL + "/front/user/reset",
+        url: BASE_URL + "/user/reset",
         type: 'put',
         dataType: 'json',
         contentType: 'application/json',
@@ -372,7 +372,7 @@ function findPaw(){
 
             if (data.code == 0) {
                 // todo:登录成功，跳转回调页面
-                location.href = BASE_URL + '/front/user/login?curURI=' +  encodeURI(URL_CUR_CITY ) ;
+                location.href = BASE_URL + '/user/login?curURI=' + encodeURI(URL_CUR_CITY);
             } else if (data.code === 1006) {
 
                 // todo:登录失败，短信验证码错误
@@ -402,7 +402,7 @@ function doNoteLogin(){
     }
 
     $.ajax({
-        url:BASE_URL + "/front/user/text/login",
+        url: BASE_URL + "/user/newregister",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',

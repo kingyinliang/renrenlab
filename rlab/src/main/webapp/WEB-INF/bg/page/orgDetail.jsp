@@ -112,7 +112,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2" />
-                <jsp:param name="firstMenu" value="4" />
+                <jsp:param name="firstMenu" value="5" />
                 <jsp:param name="secondMenu" value="1" />
             </jsp:include>
         </div>
@@ -124,7 +124,7 @@
                 </span>
             </div>
             <div class="orgDetail">
-                <p><span class="detailTit">机构名称：</span><span class="datailText mar">${orgInfo.orgName}</span><span class="approve" style="display: ${orgInfo.orgIdentification != 2 ? '':"none"}"><label class="iconfont icon-renzheng"></label> ${orgInfo.orgIdentification == 0 ? '企业':"服务商"}</span><span class="approve lls" style="display: ${orgInfo.orgIdentification == 2 ? '':"none"}"><label class="iconfont icon-renzheng"></label> 认证服务商</span></p>
+                <p><span class="detailTit">机构名称：</span><span class="datailText mar">${orgInfo.orgName}</span><span class="approve" style="display: ${orgInfo.orgType != 2 ? '':"none"}"><label class="iconfont icon-renzheng"></label> ${orgInfo.orgType == 0 ? '企业':"服务商"}</span><span class="approve lls" style="display: ${orgInfo.orgType == 2 ? '':"none"}"><label class="iconfont icon-renzheng"></label> 认证服务商</span></p>
                 <p><span class="detailTit">隶属机构：</span><span class="datailText mar">${orgInfo.parentOrgName == null ? '暂无': orgInfo.parentOrgName}</span></p>
                 <p><span class="detailTit logo">机构logo：</span><span class="datailText mar" style="border-radius: 7px;overflow: hidden">
                     <c:choose>
@@ -233,13 +233,13 @@
                 </div>
                 <div style="text-align: center;margin-top: 30px">
                     <%--撤销权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                         <button class="layui-btn btn" style="background: #f3737b" onclick="closeOrg(this)">${orgInfo.orgState == 0? '关闭': '开启'}机构</button>
-                    </c:if>
+                    <%--</c:if>--%>
                     <%--撤销权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                         <button class="layui-btn btn" style="margin-right: 23px;background: #49aaff" onclick="tomidify()">修改机构</button>
-                    </c:if>
+                    <%--</c:if>--%>
                 </div>
 
             </div>
@@ -259,8 +259,8 @@
 </body>
 <script src="${rlab}/bg/js/main.js"></script>
 <script>
-    var x=${orgInfo.orgAddress.orgAddrLongitude};
-    var y=${orgInfo.orgAddress.orgAddrLatitude};
+    var x='${orgInfo.orgAddress.orgAddrLongitude}' - 0;
+    var y='${orgInfo.orgAddress.orgAddrLatitude}' - 0;
     var map = new BMap.Map("map");
     var point = new BMap.Point(x,y);
     var marker = new BMap.Marker(point);  // 创建标注
@@ -285,7 +285,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("修改失败");

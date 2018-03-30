@@ -26,7 +26,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_detail.css?v_=20170905">
 
     <!--[if lt IE 8]>
@@ -380,7 +380,7 @@
 </div>
 
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js??v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script src="${rlab}/front/js/util/baiduMap.js?v_=20170905"></script>
 <script>
 

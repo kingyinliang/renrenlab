@@ -256,7 +256,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="4"/>
+                <jsp:param name="firstMenu" value="5"/>
                 <jsp:param name="secondMenu" value="2"/>
             </jsp:include>
         </div>
@@ -423,8 +423,7 @@
                             <h5>机构电话：</h5>
                         </div>
                         <div id="orgPhone" class="rt">
-                            <a href="javascript:void (0)" onclick="addRowPhone()"
-                               style="margin-bottom: 10px;color:#6693c8;font-size:14px;line-height: 30px;">添加一行</a>
+                            <a href="javascript:void (0)" onclick="addRowPhone()" style="margin-bottom: 10px;color:#6693c8;font-size:14px;line-height: 30px;">添加一行</a>
                             <div class="phone_row" style="margin-bottom: 10px">
                                 <input value="" class="lab_input_base lab_input_middle" type="text"
                                        placeholder="电话...">
@@ -1005,7 +1004,6 @@
             }
         }
 
-
         $.ajax({
             url: BASE_URL + '/bg/org/add',
             type: 'POST',
@@ -1023,6 +1021,8 @@
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });
+                } else {
+                    alert(data.description);
                 }
 
             },

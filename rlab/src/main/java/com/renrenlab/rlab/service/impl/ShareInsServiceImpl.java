@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.common.util.CommonUtil;
-import com.renrenlab.rlab.common.util.InsUtil;
+import com.renrenlab.rlab.common.util.SearchUtil;
 import com.renrenlab.rlab.dao.*;
 import com.renrenlab.rlab.model.*;
 import com.renrenlab.rlab.service.ShareInsService;
@@ -81,7 +81,7 @@ public class ShareInsServiceImpl implements ShareInsService {
             }
             //处理价格
             if (shareInfo.getInsOrgPriceList() != null) {
-                shareInfo.setInsOrgPriceList(InsUtil.handlePrice(shareInfo.getInsOrgPriceList().toString()));
+                shareInfo.setInsOrgPriceList(SearchUtil.handlePrice(shareInfo.getInsOrgPriceList().toString()));
             }
             //处理mapState
             if (shareInfo.getMapState() != null) {
@@ -150,7 +150,7 @@ public class ShareInsServiceImpl implements ShareInsService {
         }
         //处理核心参数
         if (insDetailInfo.getInsCoreParam() != null) {
-            insDetailInfo.setInsCoreParam(InsUtil.handelCoreParam(insDetailInfo.getInsCoreParam().toString()));
+            insDetailInfo.setInsCoreParam(SearchUtil.handelCoreParam(insDetailInfo.getInsCoreParam().toString()));
         }
         //仪器分类
         String[] insCategory = JSONObject.parseObject(insDetailInfo.getInsCategory().toString(), String[].class);
@@ -170,15 +170,15 @@ public class ShareInsServiceImpl implements ShareInsService {
         //处理描述
         if (insDetailInfo.getInsDescription() != null) {
 //            List<TitleContent> descriptionList = JSONObject.parseArray(insDetailInfo.getInsDescription().toString(), TitleContent.class);
-            insDetailInfo.setInsDescription(InsUtil.handleDes(insDetailInfo.getInsDescription().toString()));
+            insDetailInfo.setInsDescription(SearchUtil.handleDes(insDetailInfo.getInsDescription().toString()));
         }
         //价格处理
         if (insDetailInfo.getInsOrgPriceList() != null) {
-            insDetailInfo.setInsOrgPriceList(InsUtil.handlePrice(insDetailInfo.getInsOrgPriceList().toString()));
+            insDetailInfo.setInsOrgPriceList(SearchUtil.handlePrice(insDetailInfo.getInsOrgPriceList().toString()));
         }
         //图片处理
         if (insDetailInfo.getInsPic() != null) {
-            insDetailInfo.setInsPic(InsUtil.handlePic(insDetailInfo.getInsPic().toString()));
+            insDetailInfo.setInsPic(SearchUtil.handlePic(insDetailInfo.getInsPic().toString()));
         }
         //处理mapState
         if (insDetailInfo.getMapState() != null) {

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.InfomationResumeDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InfomationResume">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="resume_id" jdbcType="BIGINT" property="resumeId" />
+    <result column="resume_title" jdbcType="VARCHAR" property="resumeTitle" />
+    <result column="resume_name" jdbcType="VARCHAR" property="resumeName" />
+    <result column="resume_sex" jdbcType="VARCHAR" property="resumeSex" />
+    <result column="resume_birth" jdbcType="VARCHAR" property="resumeBirth" />
+    <result column="resume_bg" jdbcType="VARCHAR" property="resumeBg" />
+    <result column="resume_experience" jdbcType="VARCHAR" property="resumeExperience" />
+    <result column="resume_work_experience" jdbcType="VARCHAR" property="resumeWorkExperience" />
+    <result column="resume_project_experience" jdbcType="VARCHAR" property="resumeProjectExperience" />
+    <result column="resume_skills" jdbcType="VARCHAR" property="resumeSkills" />
+    <result column="resume_self_evaluation" jdbcType="VARCHAR" property="resumeSelfEvaluation" />
+    <result column="resume_read_count" jdbcType="BIGINT" property="resumeReadCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="resume_state" jdbcType="SMALLINT" property="resumeState" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, resume_id, resume_title, resume_name, resume_sex, resume_birth, resume_bg, resume_experience, 
+    resume_work_experience, resume_project_experience, resume_skills, resume_self_evaluation, 
+    resume_read_count, create_time, modify_time, resume_state
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_infomation_info.t_infomation_resume
+    where resume_id = #{id,jdbcType=BIGINT};
+
+    UPDATE rlab_infomation_info.t_infomation_resume
+    SET resume_read_count = resume_read_count + 1
+    WHERE resume_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rlab_infomation_info.t_infomation_resume
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InfomationResume">
+    insert into rlab_infomation_info.t_infomation_resume
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="resumeId != null">
+        resume_id,
+      </if>
+      <if test="resumeTitle != null">
+        resume_title,
+      </if>
+      <if test="resumeName != null">
+        resume_name,
+      </if>
+      <if test="resumeSex != null">
+        resume_sex,
+      </if>
+      <if test="resumeBirth != null">
+        resume_birth,
+      </if>
+      <if test="resumeBg != null">
+        resume_bg,
+      </if>
+      <if test="resumeExperience != null">
+        resume_experience,
+      </if>
+      <if test="resumeWorkExperience != null">
+        resume_work_experience,
+      </if>
+      <if test="resumeProjectExperience != null">
+        resume_project_experience,
+      </if>
+      <if test="resumeSkills != null">
+        resume_skills,
+      </if>
+      <if test="resumeSelfEvaluation != null">
+        resume_self_evaluation,
+      </if>
+      <if test="resumeReadCount != null">
+        resume_read_count,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="resumeState != null">
+        resume_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="resumeId != null">
+        #{resumeId,jdbcType=BIGINT},
+      </if>
+      <if test="resumeTitle != null">
+        #{resumeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeName != null">
+        #{resumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSex != null">
+        #{resumeSex,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeBirth != null">
+        #{resumeBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeBg != null">
+        #{resumeBg,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeExperience != null">
+        #{resumeExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeWorkExperience != null">
+        #{resumeWorkExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeProjectExperience != null">
+        #{resumeProjectExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSkills != null">
+        #{resumeSkills,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSelfEvaluation != null">
+        #{resumeSelfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeReadCount != null">
+        #{resumeReadCount,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeState != null">
+        #{resumeState,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.InfomationResume">
+    update rlab_infomation_info.t_infomation_resume
+    <set>
+      <if test="resumeId != null">
+        resume_id = #{resumeId,jdbcType=BIGINT},
+      </if>
+      <if test="resumeTitle != null">
+        resume_title = #{resumeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeName != null">
+        resume_name = #{resumeName,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSex != null">
+        resume_sex = #{resumeSex,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeBirth != null">
+        resume_birth = #{resumeBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeBg != null">
+        resume_bg = #{resumeBg,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeExperience != null">
+        resume_experience = #{resumeExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeWorkExperience != null">
+        resume_work_experience = #{resumeWorkExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeProjectExperience != null">
+        resume_project_experience = #{resumeProjectExperience,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSkills != null">
+        resume_skills = #{resumeSkills,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeSelfEvaluation != null">
+        resume_self_evaluation = #{resumeSelfEvaluation,jdbcType=VARCHAR},
+      </if>
+      <if test="resumeReadCount != null">
+        resume_read_count = #{resumeReadCount,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resumeState != null">
+        resume_state = #{resumeState,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.InfomationResume">
+    update rlab_infomation_info.t_infomation_resume
+    set resume_id = #{resumeId,jdbcType=BIGINT},
+      resume_title = #{resumeTitle,jdbcType=VARCHAR},
+      resume_name = #{resumeName,jdbcType=VARCHAR},
+      resume_sex = #{resumeSex,jdbcType=VARCHAR},
+      resume_birth = #{resumeBirth,jdbcType=VARCHAR},
+      resume_bg = #{resumeBg,jdbcType=VARCHAR},
+      resume_experience = #{resumeExperience,jdbcType=VARCHAR},
+      resume_work_experience = #{resumeWorkExperience,jdbcType=VARCHAR},
+      resume_project_experience = #{resumeProjectExperience,jdbcType=VARCHAR},
+      resume_skills = #{resumeSkills,jdbcType=VARCHAR},
+      resume_self_evaluation = #{resumeSelfEvaluation,jdbcType=VARCHAR},
+      resume_read_count = #{resumeReadCount,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      resume_state = #{resumeState,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM rlab_infomation_info.t_infomation_resume
+    WHERE resume_state = 0
+    ORDER BY create_time DESC
+    <if test="limit != 0">
+      LIMIT #{limit,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

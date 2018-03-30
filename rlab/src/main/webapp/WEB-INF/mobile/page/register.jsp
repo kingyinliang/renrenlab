@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>人人实验（renrenlab.com）官方网站-互联网+科技服务平台</title>
 
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170608">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_20180202">
 
 
     <script src="${rlab}/mobile/js/zeptojs.js" type="text/javascript" charset="utf-8"></script>
@@ -21,8 +21,8 @@
     <%--<script src="${rlab}/front/assets/md5/jquery.md5.js"></script>--%>
     <link rel="stylesheet" href="${rlab}/mobile/css/login_register.css?v_=20170608">
     <script src="${rlab}/mobile/assets/zepto-md5/zepto.md5.js"></script>
-    <script src="${rlab}/mobile/js/main.js"></script>
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
+    <script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
     <style>
         input{margin: 0 !important;padding: 0 !important;line-height: normal !important;}
     </style>
@@ -44,7 +44,7 @@
         <p id="userTip" class="item_tip" ></p>
         <p class="item item_nomal">
             <label for="pwdcode" class="lab-im"></label>
-            <input id="pwdcode" type="number" placeholder="请输入验证码">
+            <input id="pwdcode" type="text" placeholder="请输入验证码">
             <button id="code" disabled>获取验证码</button>
         </p>
         <p class="item_tip" id="codeError"></p>
@@ -53,13 +53,13 @@
             <input id="pwd" type="password" placeholder="请设置密码">
         </p>
         <p class="item_tip" id="pwdInfo"></p>
-        <button id="go" disabled>注册</button>
+        <button id="goo">注册</button>
         <p class="logosHref" style="text-align: center"><span>点击注册表示我已同意《人人实验用户协议》</span></p>
-        <%--<p class="logosHref"><span>已有账号？</span><a id="to_register" href="${rlab}/front/user/register">立即注册</a><a id="forget" href="${rlab}/front/user/reset">忘记密码？</a></p>
+        <%--<p class="logosHref"><span>已有账号？</span><a id="to_register" href="${rlab}/user/register">立即注册</a><a id="forget" href="${rlab}/user/reset">忘记密码？</a></p>
         <div class="other_login">
             <div class="top_line">or</div>
             <div class="btm_login">
-                <a href="${rlab}/front/user/text/login" class="lab-im" id="note"></a>
+                <a href="${rlab}/user/text/login" class="lab-im" id="note"></a>
                 <p class="login_tit">验证码登陆</p>
             </div>
         </div>--%>
@@ -81,24 +81,8 @@
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
     var pageName=2;
@@ -111,12 +95,24 @@
     });
 
     $("#code").on("click",function(){
-
-        $("#codeimgInp").val("");
-        setTip($("#imgInfo"),"");
-        updateValidateImg();
-        mask.show();
-        $("#codes").show();
+//        $.ajax({
+//            url: BASE_URL + "/user/validatePhone?phoneNumber=" + $("#user").val(),
+//            type: 'GET',
+//            success:function (data) {
+//                if (data.code == 1002){
+                    $("#codeimgInp").val("");
+                    setTip($("#imgInfo"), "");
+                    updateValidateImg();
+                    mask.show();
+                    $("#codes").show();
+//                }else if(data.code == 0){
+//                    mui.toast("用户已存在");
+//                }
+//            },
+//            error:function () {
+//                mui.toast("网络繁忙，请稍后再试");
+//            }
+//        })
     })
     $(".close").on("click",function(){
         $("#codes").hide();
@@ -130,9 +126,33 @@
             todoGetNodeCode();
         }
     })
-    $("#go").on("click",function () {
+    $("#goo").on("click",function () {
 
-        register();
+        var formData = {
+            mobile:$("#user").val(),
+            verifyCode:$("#pwdcode").val()
+        }
+
+        $.ajax({
+            url: BASE_URL + "/user/newregister",
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success:function (data) {
+                console.log(data);
+                if (data.code == 0) {
+
+                } else {
+                    mui.toast("网络繁忙，请稍后再试");
+                }
+            },
+            error:function () {
+                mui.toast("网络繁忙，请稍后再试");
+            }
+
+        })
+//        register();
     })
     $("#pwdcode").on("input",function () {
         if ($(this).val().length==6) {

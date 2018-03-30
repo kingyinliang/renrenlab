@@ -28,8 +28,14 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170905">
+
+    <%--导入字体样式--%>
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
+    <!--<![endif]-->
 
     <style type="text/css">
         #canvas {
@@ -85,7 +91,7 @@
                     <span>
                        <input id="imgVertify" type="text" placeholder="请输入验证码">
                     </span>
-                    <img id="vertifyImg" onclick="updateValidateImg(this)" src="${rlab}/front/user/validateCode"
+                    <img id="vertifyImg" onclick="updateValidateImg(this)" src="${rlab}/user/validateCode"
                          alt="图形校验码">
                 </p>
                 <p id="imgInfo" class="item_tip"></p>
@@ -106,7 +112,7 @@
                     <label>
                         <input id="readProtocol" onchange="reade()" type="checkbox" checked>
                     </label>
-                    <span>已阅读同意<a href="http://www.renrenlab.com/pages/service_protocol.html" target="_blank">《人人实验服务协议》</a></span>
+                    <span>已阅读同意<a href="${rlab}/page/server" target="_blank">《人人实验服务协议》</a></span>
                 </div>
                 <p id="toolInfo" class="item_tip"></p>
 
@@ -124,6 +130,6 @@
 </div>
 <script src="${rlab}/front/js/view/register.js?v_=20170905"></script>
 <script src="${rlab}/front/js/util/bg_line.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 </html>

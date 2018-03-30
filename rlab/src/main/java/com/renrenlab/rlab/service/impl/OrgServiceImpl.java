@@ -6,15 +6,14 @@ import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.common.constant.Constant;
 import com.renrenlab.rlab.common.exception.BusinessException;
 import com.renrenlab.rlab.common.exception.ResponseEntity;
-import com.renrenlab.rlab.common.util.InsUtil;
-import com.renrenlab.rlab.common.util.OrgUtil;
-import com.renrenlab.rlab.common.util.UserUtil;
+import com.renrenlab.rlab.common.util.*;
 import com.renrenlab.rlab.dao.*;
 import com.renrenlab.rlab.model.*;
 import com.renrenlab.rlab.service.OrgService;
 import com.renrenlab.rlab.vo.*;
 import com.renrenlab.rlab.vo.OrgAddress;
 import com.renrenlab.rlab.vo.OrgCertificate;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -64,8 +64,15 @@ public class OrgServiceImpl implements OrgService {
     @Autowired
     private InstrumentBaseInfoDao instrumentBaseInfoDao;
 
+
     @Autowired
     private UserBaseInfoDao userBaseInfoDao;
+
+    @Autowired
+    private OrgIndexDao orgIndexDao;
+
+    @Autowired
+    private ServiceIndexDao serviceIndexDao;
 
     /**
      * 根据id查询机构基础信息
@@ -73,6 +80,7 @@ public class OrgServiceImpl implements OrgService {
      * @param oid
      * @return
      */
+    @Override
     public OrgBaseInfo searchOrgBaseInfoByOid(long oid) {
         return orgDao.searchOrgBaseInfoByOid(oid);
     }
@@ -80,7 +88,8 @@ public class OrgServiceImpl implements OrgService {
     @Override
     public List<OrgInfo> searchOrgBaseInfoListTopK(Integer k) {
         k = k == null || k < 1 || k > 10 ? 3 : k;
-        List<OrgInfo> orgInfoList = orgDao.searchOrgBaseInfoListTopK(k);
+        List<OrgInfo> orgInfoList = orgIndexDao.searchOrgBaseInfoListTopK(k);
+//        List<OrgInfo> orgInfoList = orgDao.searchOrgBaseInfoListTopK(k)
         int tmp = 1;
         for (OrgInfo orgInfo : orgInfoList) {
             //处理orgLogo
@@ -118,6 +127,7 @@ public class OrgServiceImpl implements OrgService {
      * @param oid
      * @return
      */
+    @Override
     public OrgInfo searchOrgInfoByOid(long oid) {
         //查询机构基本信息
         OrgInfo orgInfo = orgDao.searchOrgInfoByOid(oid);
@@ -125,8 +135,9 @@ public class OrgServiceImpl implements OrgService {
             //查询父机构信息
             if (orgInfo.getOrgParentId() != 0) {
                 OrgInfo parentOrgInfo = orgDao.searchOrgInfoByOid(orgInfo.getOrgParentId());
-                if (parentOrgInfo != null && parentOrgInfo.getOrgName() != null)
+                if (parentOrgInfo != null && parentOrgInfo.getOrgName() != null) {
                     orgInfo.setParentOrgName(parentOrgInfo.getOrgName());
+                }
             }
             //查询组织机构代码信息
             OrgCode orgCode = orgCodeDao.searchOrgCodeByOrgId(orgInfo.getOrgOid());
@@ -245,6 +256,7 @@ public class OrgServiceImpl implements OrgService {
      * @param pageSize
      * @return
      */
+    @Override
     public PageInfo<OrgInfo> searchOrgList(String keyword, Integer wordType, Integer orgCategoryId, Integer pageNo, Integer pageSize, String order) {
         PageHelper.startPage(pageNo, pageSize);
         List<OrgInfo> orgInfoList = null;
@@ -266,6 +278,7 @@ public class OrgServiceImpl implements OrgService {
                 //处理机构性质
                 orgInfo.setOrgCategory(OrgUtil.toOrgCategory(orgInfo.getOrgCategoryId()));
                 orgInfo.setOrgShareIndexStr(UserUtil.toConvertShareIndex(orgInfo.getOrgShareIndex()));
+
             }
         }
         return new PageInfo<OrgInfo>(orgInfoList);
@@ -276,6 +289,7 @@ public class OrgServiceImpl implements OrgService {
      *
      * @param org
      */
+    @Override
     public OrgInfo addOrg(OrgInfo org) {
         //判断参数是否合法
         if (StringUtils.isBlank(org.getOrgName())) {
@@ -305,7 +319,7 @@ public class OrgServiceImpl implements OrgService {
             orgAddressDao.insertOrgAddress(org.getOrgAddress());
         }
         //添加机构座机
-        if (org.getOrgContacts() != null && org.getOrgContacts().getConPhone() != null) {
+        if (org.getOrgContacts() != null && StringUtils.isNotBlank(org.getOrgContacts().getConPhone())) {
             orgContactsDao.insertOrgContacts(org.getOrgContacts());
             Long conId = org.getOrgContacts().getConId();
             orgContactsMapDao.insertOrgContactsMap(new OrgContactsMap(conId, org.getOrgOid()));
@@ -319,10 +333,11 @@ public class OrgServiceImpl implements OrgService {
                 orgContactsMapDao.insertOrgContactsMap(new OrgContactsMap(conId, org.getOrgOid()));
             }
         }
-        //校验组织机构代码是否重复
-        checkOrgCode(org.getOrgCode(), org.getOrgOid());
+
         //添加组织机构代码
         if (!StringUtils.isBlank(org.getOrgCode())) {
+            //校验组织机构代码是否重复
+            checkOrgCode(org.getOrgCode(), org.getOrgOid());
             String codePic = org.getOrgCodeObject() != null && org.getOrgCodeObject().getOrgCodePic() != null ? org.getOrgCodeObject().getOrgCodePic() : null;
             orgCodeDao.insertOrgCode(new OrgCode(org.getOrgOid(), org.getOrgCode(), codePic));
         }
@@ -346,6 +361,8 @@ public class OrgServiceImpl implements OrgService {
         if (org.getuUid() != null && org.getuUid() > 0) {
             orgManagerDao.insertOrgManager(new OrgManager(org.getOrgOid(), org.getuUid(), org.getManagerType()));
         }
+        //添加索引表
+        orgIndexDao.insertSelectiveByOrgOid(org.getOrgOid());
         return org;
     }
 
@@ -362,6 +379,7 @@ public class OrgServiceImpl implements OrgService {
      *
      * @param org
      */
+    @Override
     public void modifyOrg(OrgInfo org) {
         //判断参数是否合法
         if (org == null || StringUtils.isBlank(org.getOrgName()) || org.getOrgOid() == null) {
@@ -405,6 +423,7 @@ public class OrgServiceImpl implements OrgService {
                 orgContactsDao.updateOrgContacts(org.getOrgContacts());
             } else {
                 orgContactsDao.insertOrgContacts(org.getOrgContacts());
+                orgContactsMapDao.insertOrgContactsMap(new OrgContactsMap(org.getOrgContacts().getConId(), org.getOrgOid()));
             }
         }
 
@@ -424,12 +443,15 @@ public class OrgServiceImpl implements OrgService {
         //校验组织机构代码是否重复
         checkOrgCode(org.getOrgCode(), org.getOrgOid());
         //添加组织机构代码
-        if (org.getOrgCode() != null) {
+        if (StringUtils.isNotBlank(org.getOrgCode())) {
             String codePic = org.getOrgCodeObject() != null && org.getOrgCodeObject().getOrgCodePic() != null ? org.getOrgCodeObject().getOrgCodePic() : "";
             OrgCode orgCode = orgCodeDao.searchOrgCodeByOrgId(org.getOrgOid());
             if (orgCode == null) {
                 orgCodeDao.insertOrgCode(new OrgCode(org.getOrgOid(), org.getOrgCode(), codePic));
             } else if (orgCode != null && (!org.getOrgCode().equals(orgCode.getOrgCode()) || !codePic.equals(orgCode.getOrgCodePic()))) {
+                if (org.getOrgCodeObject() == null) {
+                    codePic = null;
+                }
                 orgCodeDao.updateOrgCode(new OrgCode(org.getOrgOid(), org.getOrgCode(), codePic));
             }
         }
@@ -483,6 +505,13 @@ public class OrgServiceImpl implements OrgService {
         } else if (org.getOrgMid() != null && org.getuUid() != null) {
             orgManagerDao.updateOrgManager(new OrgManager(org.getOrgMid(), org.getOrgOid(), org.getuUid()));
         }
+        if (orgInfo.getOrgState() == 0) {
+            //删除索引
+            orgIndexDao.deleteByOid(org.getOrgOid());
+            //关闭索引
+            orgIndexDao.insertSelectiveByOrgOid(org.getOrgOid());
+        }
+
     }
 
     /**
@@ -491,9 +520,21 @@ public class OrgServiceImpl implements OrgService {
      * @param oid
      * @return
      */
+    @Override
     public int closeOrg(long oid, int os) {
         try {
             List<HashMap<String, Long>> instrumentBaseInfos = orgDao.selectInsByOid(oid);
+            if (os == 0) {
+                if (orgIndexDao.selectByOid(oid) == null) {
+                    orgIndexDao.insertSelectiveByOrgOid(oid);
+                }
+                if (serviceIndexDao.selectByOid(oid) == null) {
+                    serviceIndexDao.insertIndexByOrgOid(oid);
+                }
+            } else {
+                serviceIndexDao.deleteIndexByOrgOid(oid);
+                orgIndexDao.deleteByOid(oid);
+            }
             if (instrumentBaseInfos != null && instrumentBaseInfos.size() > 0) {
                 List mapIds = new ArrayList();
                 //0正常状态，1表示删除状态
@@ -502,6 +543,7 @@ public class OrgServiceImpl implements OrgService {
 //                    insSearchDao.insertIndex(instrumentBaseInfo.get("map_id"));
                         mapIds.add(instrumentBaseInfo.get("map_id"));
                     }
+                    //插入仪器索引 服务索引 机构索引
                     insSearchDao.insertIndexs(mapIds);
                 } else {
                     for (Map<String, Long> instrumentBaseInfo : instrumentBaseInfos) {
@@ -569,7 +611,7 @@ public class OrgServiceImpl implements OrgService {
         for (InsListInfo insListInfo : insListInfos) {
             insListInfo.setInsCategory(JSON.parseArray(insListInfo.getInsCategory().toString()));
             //insListInfo.setPrice(JSON.toJavaObject(JSON.parseObject(insListInfo.getInsOrgPriceList()), Price.class));
-            insListInfo.setPrice(InsUtil.handlePrice(insListInfo.getInsOrgPriceList().toString()));
+            insListInfo.setPrice(SearchUtil.handlePrice(insListInfo.getInsOrgPriceList().toString()));
             if ("无".equals(insListInfo.getPrice().getUnit())) {
                 insListInfo.getPrice().setUnit("天");
             }
@@ -601,7 +643,9 @@ public class OrgServiceImpl implements OrgService {
 
     @Override
     public PageInfo<FrontProviderInfo> selectProviderInfoByUid(Long uid, Integer pageNo, Integer pageSize) {
-        if (uid == null || pageNo == null || pageSize == null) return null;
+        if (uid == null || pageNo == null || pageSize == null) {
+            return null;
+        }
         PageHelper.startPage(pageNo, pageSize);
         List<FrontProviderInfo> frontProviderInfos = orgDao.selectFrontProviderInfoByUid(uid);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -624,6 +668,7 @@ public class OrgServiceImpl implements OrgService {
         return orgManagerDao.searchOrgCreatorByOrgId(orgOid);
     }
 
+
     /**
      * 校验组织机构代码是否重复
      *
@@ -631,10 +676,174 @@ public class OrgServiceImpl implements OrgService {
      */
     private void checkOrgCode(String orgCode, Long orgOid) {
         //组织机构代码已经存在
-        if (orgCode == null) return;
+        if (StringUtils.isBlank(orgCode)) {
+            return;
+        }
         OrgCode orgCode1 = orgCodeDao.searchOrgCode(orgCode);
-        if (orgCode1 != null && !orgCode1.getOrgOid().equals(orgOid))
+        if (orgCode1 != null && !orgCode1.getOrgOid().equals(orgOid)) {
             throw new BusinessException(ResponseEntity.REPEAT_ORG_CODE);
+        }
     }
 
+    /**
+     * web端搜索服务机构列表（索引表）
+     *
+     * @param keyword
+     * @param province
+     * @param city
+     * @param district
+     * @param order    排序规则 0 默认（认证状态和距离） 1 距离排序 2 共享指数
+     * @param pageNo
+     * @param pageSize
+     * @param session
+     * @return
+     */
+    @Override
+    public Map<String, Object> searchFrontOrgList(String keyword, String province, String city, String district, Integer order, Integer pageNo, Integer pageSize, HttpSession session) {
+        Map<String, Object> map = new HashMap<>();
+        //处理特殊字符
+        keyword = SearchUtil.doHandleKeyword(keyword);
+        province = SearchUtil.doHandleKeyword(province);
+        city = SearchUtil.doHandleKeyword(city);
+        district = SearchUtil.doHandleKeyword(district);
+
+        Double longitude = null, latitude = null;
+        if (order != null && (order == 0 || order == 1)) {
+            //从session取出经纬度 经纬度有可能为空
+            Object longi = session.getAttribute("longi");
+            Object lati = session.getAttribute("lati");
+            if (longi == null && lati == null) {
+                Map<String, Object> map1 = handleLocation(session);
+                longi = map1.get("x");
+                lati = map1.get("y");
+            }
+            try {
+                longitude = Double.parseDouble(longi + "");
+                latitude = Double.parseDouble(lati + "");
+            } catch (NumberFormatException e) {
+                logger.error("机构列表,session 中获取经纬度失败");
+            }
+        }
+        if (pageNo == null) pageNo = 1;
+        if (pageSize == null) pageSize = 10;
+        PageHelper.startPage(pageNo, pageSize);
+        List<OrgIndex> orgList = null;
+        orgList = orgIndexDao.selectByCondition(keyword, province, city, district, order, longitude, latitude);
+        //other 为0 该地区有机构 1该区域没有机构 2 该城市没有机构 3 该省没有机构 4 都没有机构
+        map.put("other", 0);
+        if (orgList.size() <= 0) {
+            PageHelper.startPage(pageNo, pageSize);
+            orgList = orgIndexDao.selectByCondition(keyword, province, city, null, order, longitude, latitude);
+            map.put("other", 1);
+        }
+        if (orgList.size() <= 0) {
+            PageHelper.startPage(pageNo, pageSize);
+            orgList = orgIndexDao.selectByCondition(keyword, province, null, null, order, longitude, latitude);
+            map.put("other", 2);
+        }
+        if (orgList.size() <= 0) {
+            PageHelper.startPage(pageNo, pageSize);
+            orgList = orgIndexDao.selectByCondition(keyword, null, null, null, order, longitude, latitude);
+            map.put("other", 3);
+        }
+        if (orgList.size() <= 0) {
+            map.put("other", 4);
+            if (StringUtils.isNotBlank(keyword)) {
+                //搜索关键字匹配的仪器 服务数量
+                PageHelper.startPage(pageNo, pageSize);
+                List<InsListInfo> insListInfos = insSearchDao.selectBykeyword(keyword, null, null, null, null, null, null, null, null, false, null, null, null);
+                PageInfo<InsListInfo> insListInfoPageInfo = new PageInfo<>(insListInfos);
+                map.put("insCounts", insListInfoPageInfo.getTotal());
+                //服务数量
+                PageHelper.startPage(pageNo, pageSize);
+                List<ServiceIndexInfo> search = serviceIndexDao.search(keyword, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                PageInfo<ServiceIndexInfo> serviceIndexInfoPageInfo = new PageInfo<>(search);
+                map.put("serCounts", serviceIndexInfoPageInfo.getTotal());
+            }
+        }
+        //服务条数
+        PageInfo<OrgIndex> orgIndexPageInfo = new PageInfo<>(orgList);
+        for (OrgIndex orgIndex : orgIndexPageInfo.getList()) {
+            int serviceCounts = serviceIndexDao.selectCountsByOrgOid(orgIndex.getOrgOid());
+            orgIndex.setOrgServiceCount(serviceCounts);
+            orgIndex.setOrgLogo(OrgUtil.toRightOrgPicUrl(orgIndex.getOrgLogo(), Constant.ORGIMG));
+            orgIndex.setOrgShareIndexStr(UserUtil.toConvertShareIndex(orgIndex.getOrgShareIndex()));
+        }
+        map.put("infos", orgIndexPageInfo);
+        return map;
+    }
+
+    @Override
+    public List<String> getDistrict(String province, String city) {
+        return orgIndexDao.getDistrict(province, city);
+    }
+
+    private Map<String, Object> handleLocation(HttpSession session) {
+        //获取客户端地理位置
+        String orgProvince = "";
+        String orgCity = "";
+        String orgIsMunicipality = "0";
+        Object x = null;
+        Object y = null;
+        if (StringUtils.isEmpty((CharSequence) session.getAttribute("orgCity"))
+                && StringUtils.isEmpty((CharSequence) session.getAttribute("orgProvince"))) {
+            try {
+                session.setAttribute("locState", 1);
+                String ip = (String) session.getAttribute("ip");
+                if (!"3".equals(ConfigUtil.getProperty("env"))) {
+                    ip = "111.204.101.181";
+                }
+                String result = HttpClientUtils.getSend(Constant.BAIDU_IP + ip);
+//                result = "{\"address\":\"CN|\\u4e0a\\u6d77|\\u4e0a\\u6d77|None|CHINANET|0|0\",\"content\":{\"address\":\"\\u4e0a\\u6d77\\u5e02\",\"address_detail\":{\"city\":\"\\u4e0a\\u6d77\\u5e02\",\"city_code\":289,\"district\":\"\",\"province\":\"\\u4e0a\\u6d77\\u5e02\",\"street\":\"\",\"street_number\":\"\"},\"point\":{\"x\":\"121.48789949\",\"y\":\"31.24916171\"}},\"status\":0}";
+//                result = "{\"address\":\"CN|\\u5317\\u4eac|\\u5317\\u4eac|None|UNICOM|0|0\",\"content\":{\"address\":\"\\u5317\\u4eac\\u5e02\",\"address_detail\":{\"city\":\"\\u5317\\u4eac\\u5e02\",\"city_code\":131,\"district\":\"\",\"province\":\"\\u5317\\u4eac\\u5e02\",\"street\":\"\",\"street_number\":\"\"},\"point\":{\"x\":\"116.40387397\",\"y\":\"39.91488908\"}},\"status\":0}";
+//                result = "{\"address\":\"CN|\\u6e56\\u5317|\\u6b66\\u6c49|None|CHINANET|0|0\",\"content\":{\"address\":\"\\u6e56\\u5317\\u7701\\u6b66\\u6c49\\u5e02\",\"address_detail\":{\"city\":\"\\u6b66\\u6c49\\u5e02\",\"city_code\":218,\"district\":\"\",\"province\":\"\\u6e56\\u5317\\u7701\",\"street\":\"\",\"street_number\":\"\"},\"point\":{\"x\":\"114.31620010\",\"y\":\"30.58108413\"}},\"status\":0}";
+                net.sf.json.JSONObject jsonObject = net.sf.json.JSONObject.fromObject(result);
+                Integer status = (Integer) jsonObject.get("status");
+                if (status != null && status == 0) {
+                    JSONObject adderssDetail = JSONObject.fromObject(JSONObject.fromObject(JSONObject.fromObject(jsonObject.get("content"))).get("address_detail"));
+                    orgProvince = (String) adderssDetail.get("province");
+                    orgCity = (String) adderssDetail.get("city");
+                    //解析result 得到经纬度
+                    JSONObject latlng = JSONObject.fromObject(JSONObject.fromObject(JSONObject.fromObject(jsonObject.get("content"))).get("point"));
+                    x = latlng.get("x");
+                    y = latlng.get("y");
+                    session.setAttribute("longi", x);
+                    session.setAttribute("lati", y);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //是否是直辖市
+            if (!StringUtils.isBlank(orgProvince) && !StringUtils.isBlank(orgCity) && orgCity.equals(orgProvince)) {
+                //判断该直辖市是否有仪器
+                orgIsMunicipality = "1";
+                if (orgIndexDao.IsExistedOrg(orgProvince, false) <= 0) {
+                    orgProvince = "";
+                }
+                orgCity = "";
+            } else if (!StringUtils.isBlank(orgProvince) && !StringUtils.isBlank(orgCity) && !orgCity.equals(orgProvince)) {
+                //判断该城市是否有仪器，如果没有判断省份有没有仪器
+                if (orgIndexDao.IsExistedOrg(orgCity, true) > 0) {
+                    orgProvince = "";
+                } else if (orgIndexDao.IsExistedOrg(orgProvince, false) > 0) {
+                    orgCity = "";
+                } else {
+                    orgCity = "";
+                    orgProvince = "";
+                }
+            }
+            session.setAttribute("orgProvince", orgProvince);
+            session.setAttribute("orgCity", orgCity);
+        } else {
+            orgCity = (String) session.getAttribute("orgCity");
+            orgProvince = (String) session.getAttribute("orgProvince");
+        }
+        Map<String, Object> result = new HashMap<>();
+        result.put("x", x);
+        result.put("y", y);
+        result.put("orgCity", orgCity);
+        result.put("orgProvince", orgProvince);
+        result.put("orgIsMunicipality", orgIsMunicipality);
+        return result;
+    }
 }

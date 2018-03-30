@@ -7,8 +7,8 @@
     <title>人人实验（renrenlab.com）官方网站-互联网+科技服务平台</title>
     <%@ include file="../../config/taglibs.jsp" %>
     <!--my CSS start-->
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
     <script src="${rlab}/mobile/assets/zepto/zepto.js"></script>
     <script src="${rlab}/mobile/assets/flexible/flexible.js"></script>
     <script src="${rlab}/mobile/assets/flexible/flexible_css.js"></script>
@@ -35,8 +35,8 @@
 
         /*START下拉地址样式*/
         .select_address {
-            height: 0.8rem;
-            line-height: 0.7rem;
+            height: 1rem;
+            line-height: 1rem;
             text-align: center;
             color: #B5B5B5;
             font-size: 0.37rem;
@@ -47,14 +47,15 @@
             position: absolute;
             display: block;
             left: 50%;
-            height: 0.8rem;
-            line-height: 0.7rem;
+            height: 1rem;
+            line-height: 1rem;
             /*transform: translateX(-50%);*/
             -webkit-transform: translateX(-50%);
             -moz-transform: translateX(-50%);
             -ms-transform: translateX(-50%);
             -o-transform: translateX(-50%);
             transform: translateX(-50%);
+            margin-left: -0.2rem;
         }
 
         .select_address > span > i {
@@ -62,11 +63,12 @@
             display: block;
             top: 0;
             right: -0.5rem;
-            height: 0.8rem;
-            line-height: 0.65rem;
+            height: 1rem;
+            line-height: 0.98rem;
             font-size: 0.28rem;
             color: #4E4E4E;
         }
+
         /*END 下拉地址样式*/
 
         /*列表页面*/
@@ -127,6 +129,11 @@
             position: absolute;
             top: 0.56rem;
             left: 0;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 6rem;
         }
 
         .goods_list .rt_info .int_type {
@@ -278,6 +285,7 @@
         .paging .page_list .next:active {
             background: #2b6ed8;
         }
+
         /*END 分页样式*/
 
         /*其他推荐*/
@@ -552,17 +560,69 @@
             font-weight: 600;
             right: 0;
         }
+
+        /*仪器列表切换*/
+        .goods_tab {
+            display: -webkit-flex; /* Safari */
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+        }
+
+        .goods_tab > span {
+            display: block;
+            background: #fff;
+            line-height: 1.06rem;
+            width: calc((100%) / 3);
+            width: -webkit-calc((100%) / 3);
+            width: -moz-calc((100%) / 3);
+            text-align: center;
+        }
+
+        .goods_tab > span.cur {
+            border-bottom: 2px solid #588eff;
+            color: #588eff;
+        }
+
+        [data-dpr="1"] .goods_tab > span {
+            font-size: 14px;
+        }
+
+        [data-dpr="2"] .goods_tab > span{
+            font-size: 28px;
+        }
+
+        [data-dpr="3"] .goods_tab > span{
+            font-size: 42px;
+        }
+
+        [data-dpr="1"] .goods_tab > span.cur {
+            border-bottom: 1px solid #588eff;
+        }
+
+        [data-dpr="2"] .goods_tab > span.cur {
+            border-bottom: 2px solid #588eff;
+        }
+
+        [data-dpr="3"] .goods_tab > span.cur {
+            border-bottom: 3px solid #588eff;
+        }
+
     </style>
 </head>
 <body>
 <%--搜索页面独有的头部--%>
-
 <%--内容区域--%>
 <div id="main" class="wrapper" style="display: block">
     <%--START 头部公用部分引入--%>
     <%@ include file="../template/header_one.jsp" %>
     <%--END 头部公用部分引入--%>
-
+    <div class="goods_tab">
+        <span onclick="choseInsList()" class="cur">仪器<i>&nbsp;(${total})</i></span>
+        <span onclick="choseServiceList()" class="">服务<i>&nbsp;(${serviceSize})</i></span>
+        <span onclick="choseOrgList()" class="">机构<i>&nbsp;(${orgSize})</i></span>
+    </div>
     <%--START 地址下拉按钮--%>
     <div class="select_address">
         <span onclick="selectAddress()"> <s id="curAddressOrigin"></s><i class="lab-arrow-down"></i></span>
@@ -577,7 +637,7 @@
                 <c:forEach items="${interestArr}" var="item" varStatus="status">
                     <li onclick="toSearch(this)">${item}</li>
                 </c:forEach>
-                <a href="javascript:void(0);" onclick="toSuperSearch()">
+                <a href="javascript:void(0);" onclick="toSuperSearch('ins')">
                     <s class="lab-youjian_1"></s>
                 </a>
             </ul>
@@ -620,9 +680,11 @@
                             <%--<c:out value="${ item.insMode.length() > 15 ? item.insMode.substring(0,15).concat('...') :item.insMode }" escapeXml="true"/>--%>
                             <%--</p>--%>
                         <p class="int_about">
-                            <span class="ad"><c:out value="${item.orgAddrProvince}" escapeXml="true"/><c:out
-                                    value="${item.orgAddrCity}" escapeXml="true"/></span>
-
+                            <span class="ad">
+                                <%--<c:out value="${item.orgAddrProvince}" escapeXml="true"/>--%>
+                                <c:out value="${item.orgAddrCity}" escapeXml="true"/>
+                                <c:out value="${item.orgAddrDistrict}" escapeXml="true"/>
+                            </span>
                             <span class="price">
                                    <c:choose>
                                        <c:when test="${item.price.flag == 1}">
@@ -712,31 +774,18 @@
 </body>
 
 <script src="${rlab}/mobile/assets/fenye/pagination.js"></script>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script>
+    setCallbackUrl();// 设置登录时回跳路径
+
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
-    }
+        var url = BASE_URL + '/page/home';
+        window.location.href = url;
 
+    }
 
     // [#maidian] 搜索关键字埋点
     _dgt.push(['trackAttr', ['keywords'], ['${keyword}']]);
@@ -872,6 +921,62 @@
         // 跳转
         toGoodsList();
     }
+    
+    /**
+     * 头部tab切换，点击仪器
+     */
+    function choseInsList() {
+        dealParams();
+        // 跳转服务页面
+        toGoodsList();
+    }
+
+    /**
+     * 头部tab切换，点击服务列表
+     */
+    function choseServiceList() {
+        dealParams();
+        toServiceList();
+    }
+
+    /**
+     * 头部tab切换，点击机构列表
+     */
+    function choseOrgList() {
+        dealParams();
+        toOrgList();
+    }
+
+    /**
+     * 头部tab切换，点击机构列表
+     */
+    function dealParams() {
+        // 处理地址参数
+        var curAddress = $("#curAddressOrigin").text();
+        URL_CUR_CITY = curAddress;
+        // 处理地址
+        var address = curAddress;
+        if (address === "北京") {
+            CUR_PROVINCE = "北京市";
+        } else if (address === "上海") {
+            CUR_PROVINCE = "上海";
+        } else if (address === "重庆") {
+            CUR_PROVINCE = "重庆";
+        } else if (address === "天津") {
+            CUR_PROVINCE = "天津";
+        } else {
+            if (address !== "全国") {
+                CUR_CITY = $("#curAddressOrigin").text();
+            }
+        }
+
+        // 处理页面参数
+        pageNo = 1;
+        pageSize = 10;
+
+        // 处理关键字参数
+        KEY_WORD = $("#searchIpt").val();
+    }
 
     /**
      * 从地址页返回搜索页
@@ -881,7 +986,7 @@
         $("#dropdown").data("flag", 0);
         $("#main").show(1000);
         // $("#superSearch").show();
-        $("#div_moveToTop").hide();
+         $("#div_moveToTop").hide();
     }
 
 

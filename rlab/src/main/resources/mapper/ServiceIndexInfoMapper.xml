@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.ServiceIndexDao">
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.ServiceIndexInfo">
+        <id column="service_id" jdbcType="BIGINT" property="serviceId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="service_price" jdbcType="OTHER" property="servicePrice"/>
+        <result column="service_pic" jdbcType="VARCHAR" property="servicePic"/>
+        <result column="service_scope" jdbcType="OTHER" property="serviceScope"/>
+        <result column="service_aptitude" jdbcType="OTHER" property="serviceAptitude"/>
+        <result column="service_province" jdbcType="VARCHAR" property="serviceProvince"/>
+        <result column="service_city" jdbcType="VARCHAR" property="serviceCity"/>
+        <result column="service_district" jdbcType="VARCHAR" property="serviceDistrict"/>
+        <result column="service_lon" jdbcType="NUMERIC" property="serviceLon"/>
+        <result column="service_lat" jdbcType="NUMERIC" property="serviceLat"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="service_custom_tag" jdbcType="VARCHAR" property="serviceCustomTag"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        service_id, index.org_oid, service_name, index.org_name,service_price, service_pic,
+        service_scope, service_aptitude, service_province, service_city, service_district,
+        service_lon, service_lat, index.create_time, index.modify_time, service_custom_tag
+        <if test="keyword != null">
+            ,
+            (
+            CASE
+            WHEN service_pic IS NULL THEN
+            ts_rank_cd(service_keyword, query) - 2.0
+            ELSE
+            ts_rank_cd(service_keyword, query)
+            END
+            ) AS RANK
+        </if>
+        <if test="orderByDis != null and longitude!= null and latitude!= null">
+            ,earth_distance (
+            ll_to_earth (
+            ('${latitude}'),
+            ('${longitude}')
+            ),
+            ll_to_earth (
+            service_lat,
+            service_lon
+            )
+            ) AS dis
+        </if>
+        <if test="orderByDefault != null">
+            ,baseinfo.org_type
+        </if>
+    </sql>
+
+    <select id="search" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_common_info.t_service_index index
+        <if test="orderByDefault != null">
+            JOIN rlab_org_info.t_org_base_info baseinfo ON index.org_oid = baseinfo.org_oid
+        </if>
+        <if test="keyword !=null ">
+            , to_tsquery('jiebacfg', #{keyword,jdbcType=VARCHAR} ) query
+        </if>
+        <where>
+            <if test="keyword != null">
+                AND numnode(query) > 0 and service_keyword @@ query
+            </if>
+            <if test="province != null">
+                AND POSITION (#{province,jdbcType=VARCHAR} IN service_province)>0
+            </if>
+            <if test="city !=null">
+                AND POSITION (#{city,jdbcType=VARCHAR} IN service_city)>0
+            </if>
+            <if test="district !=null">
+                AND POSITION (#{district,jdbcType=VARCHAR} IN service_district)>0
+            </if>
+            <choose>
+                <when test="scopeLowPrice !=null and scopeHighPrice !=null">
+                    AND (
+                    ((service_price::json->>'scopeLowPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'scopeLowPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} )
+                    OR ((service_price::json->>'scopeHighPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC != 0)
+                    OR ((service_price::json->>'scopeLowPrice')::NUMERIC &lt;= #{scopeLowPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC >=#{scopeHighPrice,jdbcType=BIGINT} )
+                    OR ((service_price::json->>'accPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'accPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT})
+                    OR ( (service_price :: json ->> 'flag') :: INTEGER = 3)
+                    )
+                </when>
+                <when test="scopeLowPrice != null and scopeHighPrice == null">
+                    AND ( (service_price::json->>'scopeHighPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT}
+                    OR (service_price::json->>'scopeHighPrice')::NUMERIC =0
+                    OR (service_price::json->>'accPrice')::NUMERIC >= #{scopeLowPrice,jdbcType=BIGINT}
+                    OR (service_price :: json ->> 'flag') :: INTEGER = 3
+                    )
+                </when>
+                <when test="scopeLowPrice == null and scopeHighPrice != null">
+                    AND (
+                    ((service_price::json->>'scopeLowPrice')::NUMERIC >= 0 AND
+                    (service_price::json->>'scopeLowPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} )
+                    OR ((service_price::json->>'scopeHighPrice')::NUMERIC >= 0 AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT} AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC != 0)
+                    OR ((service_price::json->>'scopeLowPrice')::NUMERIC &lt;= 0 AND
+                    (service_price::json->>'scopeHighPrice')::NUMERIC >=#{scopeHighPrice,jdbcType=BIGINT} )
+                    OR ((service_price::json->>'accPrice')::NUMERIC >= 0 AND
+                    (service_price::json->>'accPrice')::NUMERIC &lt; #{scopeHighPrice,jdbcType=BIGINT})
+                    OR ( (service_price :: json ->> 'flag') :: INTEGER = 3)
+                    )
+                </when>
+            </choose>
+            <if test="orgOid !=null">
+                and #{orgOid,jdbcType=BIGINT} = index.org_oid
+            </if>
+            <!-- <if test="customTag != null">
+                 and position(#{customTag} in service_custom_tag)>0
+             </if>-->
+            <if test="category1 != null and category1 != 0">
+                and index.service_classify @> jsonb &apos;[${category1}]&apos;
+            </if>
+            <if test="category1 == 0">
+                and index.service_classify @> jsonb &apos;[18]&apos;
+            </if>
+            <if test="category2 != null">
+                and index.service_product_classify @> jsonb &apos;[${category2}]&apos;
+            </if>
+        </where>
+        ORDER BY
+        service_pic DESC nulls LAST,
+        <if test="keyword !=null ">
+            RANK DESC ,
+        </if>
+        <if test="orderByDefault != null">
+            baseinfo.org_type DESC ,
+        </if>
+
+        <if test="orderByDis == 'dis_asc' and longitude!=null and latitude!=null">
+            dis ASC,
+        </if>
+        <if test="orderByDis == 'dis_des' and longitude!=null and latitude!=null">
+            dis DESC,
+        </if>
+        <if test="orderByPrice !=null">
+            (service_price->>'flag')::INT ASC ,
+            <if test="orderByPrice == 'price_des'">
+                (service_price::json->>'accPrice')::NUMERIC desc,
+                (service_price::json->>'scopeLowPrice')::NUMERIC desc ,
+            </if>
+            <if test="orderByPrice == 'price_asc'">
+                (service_price::json->>'accPrice')::NUMERIC asc,
+                (service_price::json->>'scopeLowPrice')::NUMERIC asc ,
+            </if>
+        </if>
+        service_id ASC
+    </select>
+
+    <select id="getDistrict" resultType="string">
+        SELECT
+        DISTINCT
+        idx.service_district
+        FROM
+        rlab_common_info.t_service_index idx
+        WHERE
+        TRUE
+        <if test="province != null">
+            AND POSITION (#{province,jdbcType=VARCHAR} IN service_province)>0
+        </if>
+        <if test="city != null">
+            AND POSITION (#{city,jdbcType=VARCHAR} IN service_city)>0
+        </if>
+        AND idx.service_district is not null
+        ORDER BY
+        service_district ASC
+    </select>
+
+    <select id="selectByServiceId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            service_id,
+            index.org_oid,
+            service_name,
+            index.org_name,
+            service_price,
+            service_pic,
+            service_scope,
+            service_aptitude,
+            service_province,
+            service_city,
+            service_district,
+            service_lon,
+            service_lat,
+            index.create_time,
+            index.modify_time,
+            service_custom_tag
+        FROM rlab_common_info.t_service_index index
+        WHERE service_id = #{serviceId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            service_id,
+            org_oid,
+            service_name,
+            org_name,
+            service_price,
+            service_province,
+            service_city,
+            service_district,
+            service_lon,
+            service_lat,
+            service_keyword,
+            service_pic,
+            service_scope,
+            service_aptitude
+        FROM rlab_common_info.t_service_index
+        WHERE org_oid = #{orgOid,jdbcType=BIGINT}
+        ORDER BY
+            service_pic DESC NULLS LAST,
+            service_id ASC;
+    </select>
+
+    <select id="selectCountsByOrgOid" resultType="int">
+        SELECT COUNT(*)
+        FROM rlab_common_info.t_service_index
+        WHERE org_oid = #{orgOid,jdbcType=BIGINT};
+    </select>
+
+    <delete id="deleteIndexByServiceId" parameterType="map">
+        DELETE FROM rlab_common_info.t_service_index
+        WHERE service_id = #{serviceId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteIndexByOrgOid" parameterType="list">
+        DELETE FROM rlab_common_info.t_service_index
+        WHERE org_oid = #{orgOid,jdbcType=BIGINT};
+    </delete>
+
+    <insert id="insertIndexByServiceId" parameterType="long">
+        INSERT INTO rlab_common_info.t_service_index (
+            service_id,
+            org_oid,
+            service_name,
+            org_name,
+            service_price,
+            service_province,
+            service_city,
+            service_district,
+            service_lon,
+            service_lat,
+            service_keyword,
+            service_pic,
+            service_scope,
+            service_aptitude,
+            service_product_classify,
+            service_classify
+        ) SELECT
+              service_id,
+              orginfo.org_oid,
+              service_name,
+              org_name,
+              service_price,
+              service_province,
+              service_city,
+              service_district,
+              service_lon,
+              service_lat,
+              setweight(
+                      to_tsvector(
+                              'jiebacfg',
+                              COALESCE(
+                                      serviceinfo.service_name,
+                                      ''
+                              )
+                      ),
+                      'A'
+              ) AS service_keyword,
+              (
+                  CASE
+                  WHEN service_pics IS NOT NULL
+                       AND service_pics ->> 0 IS NOT NULL
+                      THEN
+                          service_pics ->> 0
+                  END
+              ) AS service_pic,
+              service_scope,
+              service_credit,
+              service_product_classify,
+              service_classify
+          FROM
+              rlab_service_info.t_service_info AS serviceinfo
+              JOIN rlab_org_info.t_org_base_info AS orginfo ON serviceinfo.org_oid = orginfo.org_oid
+          WHERE service_id = #{serviceId,jdbcType=BIGINT}
+    </insert>
+
+    <insert id="insertIndexByOrgOid" parameterType="list">
+        INSERT INTO rlab_common_info.t_service_index (
+            service_id,
+            org_oid,
+            service_name,
+            org_name,
+            service_price,
+            service_province,
+            service_city,
+            service_district,
+            service_lon,
+            service_lat,
+            service_keyword,
+            service_pic,
+            service_scope,
+            service_aptitude
+        ) SELECT
+              service_id,
+              orginfo.org_oid,
+              service_name,
+              org_name,
+              service_price,
+              service_province,
+              service_city,
+              service_district,
+              service_lon,
+              service_lat,
+              setweight(
+                      to_tsvector(
+                              'jiebacfg',
+                              COALESCE(
+                                      serviceinfo.service_name,
+                                      ''
+                              )
+                      ),
+                      'A'
+              ) AS service_keyword,
+              (
+                  CASE
+                  WHEN service_pics IS NOT NULL
+                       AND service_pics ->> 0 IS NOT NULL
+                      THEN
+                          service_pics ->> 0
+                  END
+              ) AS service_pic,
+              service_scope,
+              service_credit
+          FROM
+              rlab_service_info.t_service_info AS serviceinfo
+              JOIN rlab_org_info.t_org_base_info AS orginfo ON serviceinfo.org_oid = orginfo.org_oid
+          WHERE serviceinfo.org_oid = #{orgOid,jdbcType=BIGINT};
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.ServiceIndexInfo">
+        update rlab_common_info.t_service_index
+        <set>
+            <if test="orgOid != null">
+                org_oid = #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="serviceName != null">
+                service_name = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceKeyword != null">
+                service_keyword = #{serviceKeyword,jdbcType=OTHER},
+            </if>
+            <if test="servicePrice != null">
+                service_price = #{servicePrice,jdbcType=OTHER},
+            </if>
+            <if test="servicePic != null">
+                service_pic = #{servicePic,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceScope != null">
+                service_scope = #{serviceScope,jdbcType=OTHER},
+            </if>
+            <if test="serviceAptitude != null">
+                service_aptitude = #{serviceAptitude,jdbcType=OTHER},
+            </if>
+            <if test="serviceProvince != null">
+                service_province = #{serviceProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null">
+                service_city = #{serviceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceDistrict != null">
+                service_district = #{serviceDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceLon != null">
+                service_lon = #{serviceLon,jdbcType=NUMERIC},
+            </if>
+            <if test="serviceLat != null">
+                service_lat = #{serviceLat,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+        and service_id = #{serviceId,jdbcType=BIGINT}
+    </update>
+</mapper>

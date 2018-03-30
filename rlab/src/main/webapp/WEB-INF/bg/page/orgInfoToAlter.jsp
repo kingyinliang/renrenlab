@@ -257,7 +257,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="4"/>
+                <jsp:param name="firstMenu" value="5"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>
@@ -1213,7 +1213,7 @@
 
                 if (data.code === 0) {
 
-                    location.href = BASE_URL + "/bg/org/search/detail?operator=look&oid=" + '${orgInfo.orgOid}';
+                    location.href = BASE_URL + "/bg/org/search/detail/look?oid=" + '${orgInfo.orgOid}';
 
                 } else if (data.code === 1013) {
                     //墨绿深蓝风
@@ -1221,6 +1221,8 @@
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });
+                } else {
+                    alert(data.description);
                 }
             },
             error: function (err) {

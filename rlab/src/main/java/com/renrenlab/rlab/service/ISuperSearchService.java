@@ -1,5 +1,6 @@
 package com.renrenlab.rlab.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.renrenlab.rlab.vo.KejsoEchartsInfo;
 
 import java.util.List;
@@ -52,4 +53,11 @@ public interface ISuperSearchService {
      * @return
      */
     List<?> searchRankInfo(String query);
+
+    /**
+     * web搜索页调用高级搜索感兴趣领域接口
+     * @param keyword
+     * @return
+     */
+    JSONArray relatedInterest(String keyword);
 }

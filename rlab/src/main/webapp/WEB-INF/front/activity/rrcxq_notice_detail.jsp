@@ -9,7 +9,7 @@
     <%--<jsp:include page="../template/shujike.jsp" flush="true"/>--%>
     <%@ include file="../../config/taglibs.jsp" %>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
 
     <%--<link rel="shortcut icon" href="${rlab}/front/imgs/favicon.png" type="image/x-icon">--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
@@ -206,7 +206,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 </html>
 </html>

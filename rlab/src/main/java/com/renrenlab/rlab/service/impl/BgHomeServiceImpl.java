@@ -25,64 +25,73 @@ public class BgHomeServiceImpl implements BgHomeService{
     @Override
     public Map<String, Object> searchInfo() {
         Map<String,Object> map = new HashMap<>();
+        Integer[] users = new Integer[12];
+        int[] inss = new int[12];
+        int[] orgs = new int[12];
+        int[] services = new int[12];
 
-        Date d = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("M/d");
-        String format = df.format(d.getTime()-86400000L);
-        String[] dates = new String[7];
-        for (int i = 7; i > 0; i--) {
-            dates[7-i]="\""+df.format(d.getTime()-86400000L*i)+"\"";
+        //处理日期(按月份)
+        SimpleDateFormat format=new SimpleDateFormat("yy/MM");
+        String[] dates = new String[12];
+        for (int i = 11; i >= 0; i--) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MONTH, -i);
+        Date m = c.getTime();
+        String mon = format.format(m);
+            dates[11-i]="\""+mon+"\"";
         }
-        //返回日期
-        map.put("days", Arrays.toString(dates));
-
+        map.put("month", Arrays.toString(dates));
+        //处理日期 （按日）
         //用户统计
+        Integer uUserCounts12MonthAgo = bgHomeDao.selectUserCounts12MonthAgo();
         List<BgHomeInfo> userInfo = bgHomeDao.selectUserCountsByDate();
-        int[] users = new int[]{0,0,0,0,0,0,0};
-        int[] inss = new int[]{0,0,0,0,0,0,0};
-        int[] orgs = new int[]{0,0,0,0,0,0,0};
-        int i = 1;
-        for (BgHomeInfo user : userInfo) {
-            String s = user.getBefore();
-            if(s.contains("days")){
-                s = s.substring(0,s.length()-5);
-            }else {
-                s = s.substring(0,s.length()-4);
-            }
-            i = Integer.parseInt(s);
-            users[7-i]=user.getCount();
-        }
-        Integer userCounts = bgHomeDao.selectUserCounts();
-        map.put("userInfo",users);
-        map.put("userCounts",userCounts);
         //机构总数
         List<BgHomeInfo> orgInfo = bgHomeDao.selectOrgCountsByDate();
-        Integer orgCounts = bgHomeDao.selectOrgCounts();
-        for (BgHomeInfo org : orgInfo) {
-            String s = org.getBefore();
-            if(s.contains("days")){
-                s = s.substring(0,s.length()-5);
-            }else {
-                s = s.substring(0,s.length()-4);
-            }
-            i = Integer.parseInt(s);
-            orgs[7-i]=org.getCount();
-        }
-        map.put("orgInfo",orgs);
-        map.put("orgCounts",orgCounts);
         //仪器总数
         List<BgHomeInfo> insInfo = bgHomeDao.selectInsCountsByDate();
-        Integer insCounts = bgHomeDao.selectInsCounts();
-        for (BgHomeInfo ins : insInfo) {
-            String s = ins.getBefore();
-            if(s.contains("days")){
-                s = s.substring(0,s.length()-5);
-            }else {
-                s = s.substring(0,s.length()-4);
+        List<BgHomeInfo> serviceInfo = bgHomeDao.selectServiceCountsByDate();
+        //拿到用户数量
+        for (int i = 0; i < 12; i++) {
+            Integer orgRise=0;
+            Integer insRise=0;
+            Integer serviceRise=0;
+            for (BgHomeInfo user : userInfo) {
+                if(dates[i].contains(user.getTime())){
+                    uUserCounts12MonthAgo=user.getCount()+uUserCounts12MonthAgo;
+                }
             }
-            i = Integer.parseInt(s);
-            inss[7-i]=ins.getCount();
+            for (BgHomeInfo org : orgInfo) {
+                if(dates[i].contains(org.getTime())){
+                    orgRise=org.getCount();
+                }
+            }
+            for (BgHomeInfo ins : insInfo) {
+                if(dates[i].contains(ins.getTime())){
+                    insRise=ins.getCount();
+                }
+            }
+            for (BgHomeInfo service : serviceInfo) {
+                if(dates[i].contains(service.getTime())){
+                    serviceRise=service.getCount();
+                }
+            }
+            users[i]=uUserCounts12MonthAgo;
+            orgs[i]=orgRise;
+            inss[i]=insRise;
+            services[i]=serviceRise;
         }
+        Integer userCounts = bgHomeDao.selectUserCounts();
+        Integer insCounts = bgHomeDao.selectInsCounts();
+        Integer orgCounts = bgHomeDao.selectOrgCounts();
+        Integer serviceCounts = bgHomeDao.selectSerivceCounts();
+        map.put("userInfo",users);
+        map.put("userCounts",userCounts);
+        map.put("serviceInfo",services);
+        map.put("serviceCounts",serviceCounts);
+
+        map.put("orgInfo",orgs);
+        map.put("orgCounts",orgCounts);
         map.put("insInfo",inss);
         map.put("insCounts",insCounts);
 

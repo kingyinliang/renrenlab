@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.CommonBannerDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.CommonBanner">
+    <id column="b_id" jdbcType="BIGINT" property="bId" />
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="b_seq" jdbcType="INTEGER" property="bSeq" />
+    <result column="b_title" jdbcType="VARCHAR" property="bTitle" />
+    <result column="b_pic" jdbcType="VARCHAR" property="bPic" />
+    <result column="b_link" jdbcType="VARCHAR" property="bLink" />
+    <result column="b_link_type" jdbcType="INTEGER" property="bLinkType" />
+    <result column="b_position" jdbcType="INTEGER" property="bPosition" />
+    <result column="b_state" jdbcType="SMALLINT" property="bState" />
+    <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    b_id, id, b_seq, b_title, b_pic, b_link, b_link_type, b_position, b_state, creat_time, 
+    modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_banner
+    where b_id = #{bId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCondition" parameterType="com.renrenlab.rlab.model.CommonBanner" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_banner
+    <where>
+      TRUE
+      <if test="id != null">
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="bId != null">
+        and b_id = #{bId,jdbcType=BIGINT}
+      </if>
+      <if test="bSeq != null">
+        and b_seq = #{bSeq,jdbcType=INTEGER}
+      </if>
+      <if test="bTitle != null">
+        and b_title = #{bTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="bPic != null">
+        and b_pic = #{bPic,jdbcType=VARCHAR}
+      </if>
+      <if test="bLink != null">
+        and b_link = #{bLink,jdbcType=VARCHAR}
+      </if>
+      <if test="bLinkType != null">
+        and b_link_type = #{bLinkType,jdbcType=INTEGER}
+      </if>
+      <if test="bPosition != null">
+        and  b_position = #{bPosition,jdbcType=INTEGER}
+      </if>
+      <if test="bState != null">
+        and b_state != #{bState,jdbcType=SMALLINT}
+      </if>
+      <if test="creatTime != null">
+        and creat_time &gt;= #{creatTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="modifyTime != null">
+        and modify_time &gt;= #{modifyTime,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+    ORDER BY b_state DESC ,b_seq ASC ,modify_time ASC
+  </select>
+  <select id="selectFrontBannerList"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_common_banner
+    <where>
+      TRUE
+      <if test="position != null">
+        and  b_position = #{position,jdbcType=INTEGER}
+      </if>
+      <if test="state != null">
+        and b_state = #{state,jdbcType=SMALLINT}
+      </if>
+    </where>
+    ORDER BY b_state DESC ,b_seq ASC ,modify_time ASC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rlab_common_info.t_common_banner
+    where b_id = #{bId,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.CommonBanner">
+    insert into rlab_common_info.t_common_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        b_id,
+      </if>
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bSeq != null">
+        b_seq,
+      </if>
+      <if test="bTitle != null">
+        b_title,
+      </if>
+      <if test="bPic != null">
+        b_pic,
+      </if>
+      <if test="bLink != null">
+        b_link,
+      </if>
+      <if test="bLinkType != null">
+        b_link_type,
+      </if>
+      <if test="bPosition != null">
+        b_position,
+      </if>
+      <if test="bState != null">
+        b_state,
+      </if>
+        creat_time,
+        modify_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=BIGINT},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bSeq != null">
+        #{bSeq,jdbcType=INTEGER},
+      </if>
+      <if test="bTitle != null">
+        #{bTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bPic != null">
+        #{bPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bLink != null">
+        #{bLink,jdbcType=VARCHAR},
+      </if>
+      <if test="bLinkType != null">
+        #{bLinkType,jdbcType=INTEGER},
+      </if>
+      <if test="bPosition != null">
+        #{bPosition,jdbcType=INTEGER},
+      </if>
+      <if test="bState != null">
+        #{bState,jdbcType=SMALLINT},
+      </if>
+      now(),now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.CommonBanner">
+    update rlab_common_info.t_common_banner
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bSeq != null">
+        b_seq = #{bSeq,jdbcType=INTEGER},
+      </if>
+      <if test="bTitle != null">
+        b_title = #{bTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bPic != null">
+        b_pic = #{bPic,jdbcType=VARCHAR},
+      </if>
+      <if test="bLink != null">
+        b_link = #{bLink,jdbcType=VARCHAR},
+      </if>
+      <if test="bLinkType != null">
+        b_link_type = #{bLinkType,jdbcType=INTEGER},
+      </if>
+      <if test="bPosition != null">
+        b_position = #{bPosition,jdbcType=INTEGER},
+      </if>
+      <if test="bState != null">
+        b_state = #{bState,jdbcType=SMALLINT},
+      </if>
+      <if test="creatTime != null">
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+        modify_time = now()
+    </set>
+    where b_id = #{bId,jdbcType=BIGINT}
+  </update>
+
+</mapper>

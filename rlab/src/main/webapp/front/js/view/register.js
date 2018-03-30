@@ -201,7 +201,7 @@ function todoGetNodeCode() {
     }
 
     $.ajax({
-        url: BASE_URL + "/front/user/sendVerifyCode",
+        url: BASE_URL + "/user/sendVerifyCode",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -265,7 +265,7 @@ function countTime() {
 function updateValidateImg($this) {
 
     $this = $($this);
-    $this.attr("src", BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+    $this.attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
 }
 
@@ -326,7 +326,7 @@ function doRegister() {
     }
 
     $.ajax({
-        url: BASE_URL + "/front/user/register",
+        url: BASE_URL + "/user/register",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -342,7 +342,7 @@ function doRegister() {
                 // 注册成功，跳转回调页面
                 var callBackURL = sessionStorage.getItem("labcallBackURL");
                 if (!callBackURL) {
-                    location.href = BASE_URL + "/front/page/home";
+                    location.href = BASE_URL;
                 } else {
                     location.href = callBackURL;
                 }
@@ -420,7 +420,7 @@ function wechatLogin($this) {
  * 跳转主页
  */
 function toHomePage() {
-    window.location.href = BASE_URL + "/page/home";
+    window.location.href = BASE_URL;
 }
 
 

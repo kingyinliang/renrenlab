@@ -23,46 +23,7 @@ import java.util.UUID;
 @Transactional
 public class FileServiceImpl implements FileService {
 
-    /**
-     * 上传仪器图片
-     *
-     * @param file
-     * @return
-     * @throws IOException
-     */
-    @Override
-    public String uploadImage(MultipartFile file, String type) throws IOException {
-        String diskUrl = "";
-        String ossUrl = "";
-        String bucket = "renrenlab";
-        if("image".equals(type)){
-            diskUrl = "/home/elab/repository/image/";
-            ossUrl = "image/";
-        }else if("orgimage".equals(type)){
-            diskUrl = "/home/elab/repository/orgimage/";
-            ossUrl = "orgimage/";
-        }else if("identity".equals(type)){
-            diskUrl = "/home/elab/repository/identity/";
-            ossUrl = "identity/";
-        }else if("avatar".equals(type)){
-            diskUrl = "/home/elab/repository/avatar/";
-            ossUrl = "avatar/";
-        }else if("other".equals(type)){
-            diskUrl = "/home/elab/repository/other/";
-            ossUrl = "other/";
-        }
-        //1.生成图片名
-        String saveName = getFileName(file, true);
-        saveName = saveName.replaceAll("\\\\", "/");
-        //保存文件到磁盘
-        saveFile(file, new File(diskUrl, saveName));
-        //上传文件到阿里云
-        OSSClient ossClient = new OSSClient("http://oss-cn-shanghai.aliyuncs.com", "LTAIDEc0xPsAmL8X", "kfWbAeTgMjvkf1OCJDKjHZFRiHCpOY");
-        ossClient.putObject(bucket, ossUrl + saveName, new File(diskUrl + saveName));
-        ossClient.shutdown();
-        return "http://"+bucket+".oss-cn-shanghai.aliyuncs.com/"+ossUrl +saveName;
-    }
-
+    private static String bucket = "renrenlab";
 
     /**
      * 保存文件到磁盘
@@ -85,8 +46,58 @@ public class FileServiceImpl implements FileService {
             }, target);
         } finally {
             is.close();
-            System.out.println("save file: " + target.getAbsolutePath());
+            System.out.println("save multiFile: " + target.getAbsolutePath());
         }
+    }
+
+    /**
+     * 上传仪器图片
+     *
+     * @param multiFile
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public String uploadImage(MultipartFile multiFile, String type) throws IOException {
+        String diskUrl = "/tmp/elab/repository/";
+        String ossUrl = "";
+        switch (type) {
+            case "image":
+                ossUrl = "image/";
+                break;
+            case "orgimage":
+                ossUrl = "orgimage/";
+                break;
+            case "identity":
+                ossUrl = "identity/";
+                break;
+            case "avatar":
+                ossUrl = "avatar/";
+                break;
+            case "other":
+                ossUrl = "other/";
+                break;
+            default:
+                ossUrl = "other/";
+                break;
+        }
+        diskUrl += ossUrl;
+        //1.生成图片名
+        String saveName = getFileName(multiFile, true);
+        saveName = saveName.replaceAll("\\\\", "/");
+        //保存文件到磁盘
+        File file = new File(diskUrl, saveName);
+        saveFile(multiFile, file);
+        //上传文件到阿里云
+        return saveToOSS(ossUrl + saveName, file);
+    }
+
+    public String saveToOSS(String saveName, File file) {
+        OSSClient ossClient = new OSSClient("http://oss-cn-shanghai.aliyuncs.com",
+                "LTAIDEc0xPsAmL8X", "kfWbAeTgMjvkf1OCJDKjHZFRiHCpOY");
+        ossClient.putObject(bucket, saveName, file);
+        ossClient.shutdown();
+        return "http://" + bucket + ".oss-cn-shanghai.aliyuncs.com/" + saveName;
     }
 
     /**

@@ -224,14 +224,14 @@
                 <div class="sre_rt sre_base">
                     <h4>仪器共享信息</h4>
                     <div class="dt_1 clearfix">
-                        <h5>持有机构<span>*</span>:</h5>
+                        <h5>持有机构:</h5>
                         <div class="rt">
                             <span>${detail.orgName}</span>
                         </div>
                     </div>
 
                     <div class="dt_1 clearfix">
-                        <h5>参考报价<span>*</span>:</h5>
+                        <h5>参考报价:</h5>
                         <div class="rt">
                             <span><c:choose>
                                 <c:when test="${detail.insOrgPriceList.flag == 1}">
@@ -272,7 +272,7 @@
                         <h5>报价说明:</h5>
                         <div class="rt">
                             <span><c:choose>
-                                <c:when test="${detail.insOrgPriceList.remark == null || fn:length(detail.insOrgPriceList.remark) == 0} ">无</c:when>
+                                <c:when test="${detail.insOrgPriceList.remark == null||detail.insOrgPriceList.remark == '' || fn:length(detail.insOrgPriceList.remark) == 0} ">无</c:when>
                                 <c:otherwise>
                                     ${detail.insOrgPriceList.remark}
                                 </c:otherwise>
@@ -281,7 +281,7 @@
                     </div>
 
                     <div class="dt_1 clearfix">
-                        <h5>适用领域<span>*</span>:</h5>
+                        <h5>适用领域:</h5>
                         <div class="rt">
                             <span>
                                <c:choose>
@@ -314,8 +314,15 @@
                         </div>
                     </div>
 
+                    <div class="dt_1 clearfix">
+                        <h5>服务方式:</h5>
+                        <div class="rt">
+                            <span>${detail.insServiceName==null?"暂无":detail.insServiceName}</span>
+                        </div>
+                    </div>
+
                     <div class="dt_2 clearfix">
-                        <h5>联系方式<span>*</span>:</h5>
+                        <h5>联系电话:</h5>
                         <div class="btm">
                             <table class="lab_table_phone">
                                 <thead>
@@ -361,40 +368,40 @@
             <div class="share_btn" style="margin: 0 auto; text-align: center">
                 <c:if test="${detail.mapState[2] == '0'}">
                     <%--修改权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                         <button class="layui-btn btn" style="background: #49aaff; width: 150px" onclick="modify()">修改</button>
-                    </c:if>
+                    <%--</c:if>--%>
                     <%--撤销权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                         <button class="layui-btn btn" style="margin-right: 23px;background: #7c7c7c; width: 150px" onclick="dropAlert()">下架</button>
-                    </c:if>
+                    <%--</c:if>--%>
                 </c:if>
                 <c:if test="${detail.mapState[2] == '1'}">
                     <%--审核权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                         <button class="layui-btn btn" style="background: #16b8be; width: 150px" onclick="agreeAlert()">审核通过</button>
                         <button class="layui-btn btn" style="background: #ec8086; width: 150px" onclick="refuseAlert()">审核拒绝</button>
-                    </c:if>
+                    <%--</c:if>--%>
                     <%--修改权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                         <button class="layui-btn btn" style="background: #49aaff; width: 150px" onclick="modify()">修改</button>
-                    </c:if>
+                    <%--</c:if>--%>
                 </c:if>
                 <c:if test="${detail.mapState[2] == '2'}">
                     <%--修改权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                         <button class="layui-btn btn" style="background: #49aaff; width: 150px" onclick="modify()">修改</button>
-                    </c:if>
+                    <%--</c:if>--%>
                 </c:if>
                 <c:if test="${detail.mapState[2] == '3'}">
                     <%--撤销权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                         <button class="layui-btn btn" style="background: #16b8be; width: 150px" onclick="agreeAlert()">启用</button>
-                    </c:if>
+                    <%--</c:if>--%>
                     <%--修改权限--%>
-                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                         <button class="layui-btn btn" style="background: #49aaff; width: 150px" onclick="modify()">修改</button>
-                    </c:if>
+                    <%--</c:if>--%>
                 </c:if>
             </div>
             <%--END操作按钮--%>
@@ -462,7 +469,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("下架失败");
@@ -483,7 +494,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("审核通过失败");
@@ -504,7 +519,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("审核拒绝失败");

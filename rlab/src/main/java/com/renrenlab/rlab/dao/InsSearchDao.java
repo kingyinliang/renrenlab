@@ -28,8 +28,11 @@ public interface InsSearchDao {
             @Param("isDis") boolean isDis,
             //经纬度
             @Param("longitude") Double longitude,
-            @Param("latitude") Double latitude
+            @Param("latitude") Double latitude,
+            @Param("isSubscribe") String isSubscribe
     );
+
+    InsListInfo selectByMapId(Long mapId);
 
     /**
      * 获取省市下的区
@@ -63,6 +66,7 @@ public interface InsSearchDao {
 
     /**
      * 批量删除索引
+     *
      * @param mapIds
      * @return
      */

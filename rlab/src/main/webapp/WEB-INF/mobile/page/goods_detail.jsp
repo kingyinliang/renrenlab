@@ -23,8 +23,8 @@
 
     <!--my CSS start-->
     <%--<link rel="stylesheet" href="${rlab}/common/fonts/font.css">--%>
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <%--layer--%>
     <script src="${rlab}/mobile/assets/layer.mobile-v2.0/layer_mobile/layer.js"></script>
@@ -349,7 +349,8 @@
         }
 
         .org_main > s {
-            background: url("${rlab}/mobile/imgs/icon/share_bg_@2x.png");
+            background: url("${rlab}/mobile/imgs/icon/share_bg_@2x.png") no-repeat;
+            background-size: 100% 100%;
             display: block;
             position: absolute;
             width: 1.3rem;
@@ -395,6 +396,8 @@
         .ins_address .phone a {
             color: #4b4b4b;
             margin-right: 0.4rem;
+            color: blue;
+
         }
 
         .ins_address .phone span {
@@ -499,16 +502,25 @@
         .layui-m-layercont {
             padding: 0 !important;
         }
-
+        .layui-m-layer0 .layui-m-layerchild {
+            width: 90%;
+            max-width: 940px;
+        }
+        .layui-m-layer0 .layui-m-layerchild {
+            width: 90%;
+            max-width: 940px;
+        }
         /*END 登录弹窗*/
 
     </style>
 <body>
 <div class="wrapper" id="main">
     <%--START 头部公用部分引入--%>
-    <%@ include file="../template/header_two.jsp" %>
+    <header>
+        <%@ include file="../template/header_four.jsp" %>
+    </header>
     <%--END 头部公用部分引入--%>
-    <div class="main clearfix">
+    <div class="main clearfix" style="margin-top: 1.175rem">
         <%-- 仪器图片 --%>
         <div class="goods_img">
             <div>
@@ -543,8 +555,11 @@
                 <%--仪器编号--%>
                 <c:if test="${detail.mapId != null && !''.equals(detail.mapId)}">
                     <p class="clearfix">
-                        <i class="lab-dot-1"></i><s>仪器编号：</s><span><c:out value="${detail.mapId}"
-                                                                          escapeXml="true"/></span>
+                        <i class="lab-dot-1"></i>
+                        <s>仪器编号：</s>
+                        <span>
+                            <c:out value="${detail.mapId}" escapeXml="true"/>
+                        </span>
                     </p>
                 </c:if>
                 <%--仪器型号--%>
@@ -554,7 +569,7 @@
                         <s>仪器型号：</s>
                         <span>
                         <c:out value="${detail.insMode}" escapeXml="true"/>
-                    </span>
+                        </span>
                     </p>
                 </c:if>
                 <%--仪器品牌 --%>
@@ -611,40 +626,44 @@
                     </span>
                     </p>
                 </c:if>
-            </div>
-            <%--价格区域--%>
-            <div class="goods_price">
-                <c:choose>
-                    <c:when test="${detail.price.flag == 1}">
-                        <c:if test='${"无".equals(detail.price.unit)}'>
-                            ￥${detail.price.accPrice}
-                        </c:if>
-                        <c:if test='${!"无".equals(detail.price.unit)}'>
-                            ￥${detail.price.accPrice}/${detail.price.unit}
-                        </c:if>
-                    </c:when>
-                    <c:when test="${detail.price.flag  == 2}">
-                        <c:if test='${detail.price.scopeHighPrice.equals("0")}'>
-                            <c:if test='${"无".equals(detail.price.unit)}'>
-                                ￥${detail.price.scopeLowPrice}起
-                            </c:if>
-                            <c:if test='${!"无".equals(detail.price.unit)}'>
-                                ￥${detail.price.scopeLowPrice}/${detail.price.unit}起
-                            </c:if>
-                        </c:if>
-                        <c:if test='${!detail.price.scopeHighPrice.equals("0")}'>
-                            <c:if test='${"无".equals(detail.price.unit)}'>
-                                ￥${detail.price.scopeLowPrice} ~ ${detail.price.scopeHighPrice}
-                            </c:if>
-                            <c:if test='${!"无".equals(detail.price.unit)}'>
-                                ￥${detail.price.scopeLowPrice} ~ ${detail.price.scopeHighPrice}/${detail.price.unit}
-                            </c:if>
-                        </c:if>
-                    </c:when>
-                    <c:when test="${detail.price.flag  == 3}">
-                        面议
-                    </c:when>
-                </c:choose>
+                <%--价格区域--%>
+                <p class="clearfix">
+                    <i class="lab-dot-1" style="top: 0.2rem;"></i>
+                    <s style="top: 0.25rem">参考价格：</s>
+                    <span style="font-size: 0.43rem;color: #de5a5b">
+                        <c:choose>
+                            <c:when test="${detail.price.flag == 1}">
+                                <c:if test='${"无".equals(detail.price.unit)}'>
+                                    ￥${detail.price.accPrice}
+                                </c:if>
+                                <c:if test='${!"无".equals(detail.price.unit)}'>
+                                    ￥${detail.price.accPrice}/${detail.price.unit}
+                                </c:if>
+                            </c:when>
+                            <c:when test="${detail.price.flag  == 2}">
+                                <c:if test='${detail.price.scopeHighPrice.equals("0")}'>
+                                    <c:if test='${"无".equals(detail.price.unit)}'>
+                                        ￥${detail.price.scopeLowPrice}起
+                                    </c:if>
+                                    <c:if test='${!"无".equals(detail.price.unit)}'>
+                                        ￥${detail.price.scopeLowPrice}/${detail.price.unit}起
+                                    </c:if>
+                                </c:if>
+                                <c:if test='${!detail.price.scopeHighPrice.equals("0")}'>
+                                    <c:if test='${"无".equals(detail.price.unit)}'>
+                                        ￥${detail.price.scopeLowPrice} ~ ${detail.price.scopeHighPrice}
+                                    </c:if>
+                                    <c:if test='${!"无".equals(detail.price.unit)}'>
+                                        ￥${detail.price.scopeLowPrice} ~ ${detail.price.scopeHighPrice}/${detail.price.unit}
+                                    </c:if>
+                                </c:if>
+                            </c:when>
+                            <c:when test="${detail.price.flag  == 3}">
+                                <em style="color: #FAD291;letter-spacing: 0.1rem">面议</em>
+                            </c:when>
+                        </c:choose>
+                    </span>
+                </p>
             </div>
             <%--备注信息--%>
             <div class="goods_remark">
@@ -672,6 +691,7 @@
                             <img src="${rlab}/front/imgs/icon/org_logo_default.png">
                         </c:otherwise>
                     </c:choose>
+
                     <c:if test="${orgInfo.orgIdentification == 1}">
                         <i class="lab-renzheng_1"></i>
                     </c:if>
@@ -681,7 +701,7 @@
                     <p><c:out
                             value="${orgInfo.orgName.length() > 13? orgInfo.orgName.substring(0,12).concat('...') :orgInfo.orgName}"
                             escapeXml="true"/></p>
-                    <c:if test="${orgInfo.orgShareIndex != null}">
+                    <c:if test="${orgInfo.orgShareIndex != null && orgInfo.orgShareIndexStr!='0'}">
                         <span>共享指数&nbsp;${orgInfo.orgShareIndexStr}<s></s></span>
                     </c:if>
                 </div>
@@ -701,32 +721,34 @@
         </div>
         <%--仪器使用联系方式--%>
         <c:if test="${sessionScope.uid != null}">
-            <div class="goods_state ins_add_main">
-                <div class="st_list">
-                    <div class="item last_item ins_address">
-                        <h4><i></i>仪器使用联系方式</h4>
-                        <div class="add">
-                            <s class="lab-zuobiao"></s>
-                                ${orgInfo.orgAddress.orgAddrProvince}${orgInfo.orgAddress.orgAddrCity}${orgInfo.orgAddress.orgAddrDistrict}${orgInfo.orgAddress.orgAddrStreet}
-                        </div>
-                        <div class="phone">
-                            <c:forEach items="${detail.conId}" var="item" varStatus="status">
-                                <c:choose>
-                                    <c:when test="${!status.last}">
-                                        <span>${item.conName}：</span>
-                                        <a href="tel:${item.conPhone}">${item.conPhone}</a>
-                                        <br>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span>${item.conName}：</span>
-                                        <a href="tel:${item.conPhone}">${item.conPhone}</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
+            <c:if test="${detail.insCustomTag != '仪器预约'}">
+                <div class="goods_state ins_add_main">
+                    <div class="st_list">
+                        <div class="item last_item ins_address">
+                            <h4><i></i>仪器使用联系方式</h4>
+                            <div class="add">
+                                <s class="lab-zuobiao"></s>
+                                    ${orgInfo.orgAddress.orgAddrProvince}${orgInfo.orgAddress.orgAddrCity}${orgInfo.orgAddress.orgAddrDistrict}${orgInfo.orgAddress.orgAddrStreet}
+                            </div>
+                            <div class="phone">
+                                <c:forEach items="${detail.conId}" var="item" varStatus="status">
+                                    <c:choose>
+                                        <c:when test="${!status.last}">
+                                            <span>${item.conName}：</span>
+                                            <a href="tel:${item.conPhone}">${item.conPhone}</a>
+                                            <br>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span>${item.conName}：</span>
+                                            <a href="tel:${item.conPhone}">${item.conPhone}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </c:if>
         </c:if>
         <%--详情简介--%>
         <div class="goods_state">
@@ -783,8 +805,14 @@
         </div>
     </div>
 </div>
-<c:if test="${sessionScope.uid == null}">
-    <button class="open_phone" type="button" onclick="showModalToLogin()">查看联系方式</button>
+<c:if test="${detail.insCustomTag != '仪器预约'}">
+    <c:if test="${sessionScope.uid == null}">
+        <button class="open_phone" type="button" onclick="showModalToLogin()">查看联系方式</button>
+    </c:if>
+</c:if>
+
+<c:if test="${detail.insCustomTag == '仪器预约'}">
+    <a href="tel:400-102-9559" class="open_phone" style="text-align: center">在线咨询</a>
 </c:if>
 <%--查看联系方式悬浮1--%>
 <%--公用搜索部分--%>
@@ -826,40 +854,22 @@
 <%--</div>--%>
 <%--</div>--%>
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script type="text/javascript">
-
-    /**
-     * 返回历史上一页
-     */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
+    setCallbackUrl();// 设置登录时回跳路径
 
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
-
-
 
     (function () {
         setCallbackUrl();// 设置登录时回跳路径
     })();
+
     function toOrgHome($this) {
-        location.href = BASE_URL + "/front/org/" + $($this).data("orgOid");
+        location.href = BASE_URL + "/org/" + $($this).data("orgOid");
     }
+
     function showModalToLogin() {
         var html =
             '<div class="login_modal">\
@@ -890,7 +900,7 @@
     }
 
     function push() {
-        window.location.href = BASE_URL + "/front/org/" + ${detail.orgOid};
+        window.location.href = BASE_URL + "/org/" + ${detail.orgOid};
     }
 
     //    $("#getCompanyInfo").on("click", function () {

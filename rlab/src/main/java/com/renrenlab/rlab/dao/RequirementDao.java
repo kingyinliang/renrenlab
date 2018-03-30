@@ -83,4 +83,18 @@ public interface RequirementDao {
      * @return
      */
     List<Requirement> getTop10();
+
+    /**
+     * 最新发布并通过审核的未解决的需求三个
+     *
+     * @return
+     */
+    List<Requirement> getNewRequirement();
+
+    /**
+     * 新发布并通过审核的已解决的需求三个
+     *
+     * @return
+     */
+    List<Requirement> getNewRequirement2();
 }

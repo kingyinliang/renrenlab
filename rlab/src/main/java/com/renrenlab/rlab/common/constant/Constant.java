@@ -56,8 +56,12 @@ public class Constant {
      */
 //   public static final String TESTPICURL = "http://renrenlab-test.oss-cn-shanghai.aliyuncs.com";
     public static final String TESTPICURL = "http://renrenlab.oss-cn-shanghai.aliyuncs.com";
+    /**
+     * 用户缺省头像
+     */
+    public static final String DEFAULT_AVATAR = TESTPICURL + "/avatar/person_default.jpg";
 
-    public static final String DEFAULT_INS_PIC = "http://www.renrenlab.com/rlab/common/common_img/default/ins_140X110.jpg";
+    public static final String DEFAULT_INS_PIC = "http://www.renrenlab.com/common/common_img/default/ins_140X110.jpg";
 
     public static final String Z_INS_PIC_END_URL = "?x-oss-process=style/renrenlab140_110";
 
@@ -81,6 +85,8 @@ public class Constant {
     public static final String XOSS = "?x-oss-process=style/renrenlabpic";
 
     public static final String XOSSCONG = "?x-oss-process=style/renrenlab";
+
+    public static final String PRIFIXOSS = "?x-oss-process=style";
 
     /**
      * 获取客户端地理位置接口
@@ -116,30 +122,28 @@ public class Constant {
      * 认证用户
      */
     public static final int USER_AUTH = 4;
-
-    /**
-     * 需求管理分组
+    /*
+     * 轮播位置（咨讯模块）
      */
-    public interface Requirement {
-        /**
-         * 审核通过or拒绝，短信通知申请人
-         */
-        String REQSTATEMODIFY = "【人人实验】尊敬的用户您好，您发布的微需求审核状态已更新，敬请登录人人实验官网www.renrenlab.com查看。如有疑问，欢迎拨打客服热线4001029559咨询。";
-        /**
-         * 需求还剩3天过期，则上午十点给用户发信息提醒
-         */
-        String WILLBEOUTDATE = "【人人实验】尊敬的用户您好，您发布的微需求将于3日后过期。若需求已解决，敬请登录人人实验官网www.renrenlab.com更新需求状态；若需求尚未解决，我们建议您登录官网设置延长有效期。如有疑问，欢迎拨打客服热线4001029559咨询。";
-        /**
-         * 需求已延长过一次有效期，还剩3天的时候仍然发短信给用户
-         */
-        String WILLBEOUTDATE2 = "【人人实验】尊敬的用户您好，您发布的微需求将于3日后过期。若需求已解决，敬请登录人人实验官网www.renrenlab.com更新需求状态。如有疑问，欢迎拨打客服热线4001029559咨询。";
-    }
+    public static final Integer BANNER_POSITION_INFO = 0;
+    /*
+     * 轮播位置（首页）
+     */
+    public static final Integer BANNER_POSITION_HOME = 1;
 
     public interface RolePermission {
         /**
          * 记录修改角色权限时间
          */
         String ROLE_KEY = "role_modify_time";
+    }
+
+    /**
+     * 服务模块常量
+     */
+    public interface Service {
+        String LONGITUDE = "lng"; //经度
+        String LATITUDE = "lat"; //纬度
     }
 
 }

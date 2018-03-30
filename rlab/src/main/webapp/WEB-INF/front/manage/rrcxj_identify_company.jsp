@@ -11,14 +11,15 @@
 
     <!--bootstrapValidator-->
     <script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
-    <script src="${rlab}/front/assets/md5/jquery.md5.js"></script>
+    <%--<script src="${rlab}/front/assets/md5/jquery.md5.js"></script>--%>
+    <script src="${rlab}/front/js/view/jq.form.js"></script>
 
     <!--layer-->
     <link rel="stylesheet" href="${rlab}/front/assets/layer-v3.0.3/layer/skin/default/layer.css">
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
 
@@ -429,7 +430,7 @@
                     </p>
                     <p class="name" style="margin-top: 26px">
                         <span>基本信息表 <b>*</b> ：</span>
-                        <a download="" href="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/2017/08/02/%E4%BA%BA%E4%BA%BA%E5%88%9B%E6%96%B0%E5%88%B8%E4%BC%81%E4%B8%9A%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E8%A1%A8%EF%BC%88201708%E7%89%88%EF%BC%89.docx" class="down">人人创新券企业基本信息表.doc</a>
+                        <a download="" href="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E4%BA%BA%E4%BA%BA%E5%88%9B%E6%96%B0%E5%88%B8%E4%BC%81%E4%B8%9A%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E8%A1%A8%EF%BC%88201710%E7%89%88%EF%BC%89.docx" class="down">人人创新券企业基本信息表.doc</a>
                     </p>
                     <form id="file" method="post" enctype="multipart/form-data">
                         <p class="put clearfix">
@@ -519,7 +520,7 @@
                         </p>
                     </div>
                     <p class="statement"><span style="margin-right:10px">财务报表 <b>*</b> ：</span><span
-                            style="color: #999999;">请上传近两年的财务报表</span><span style="color: #999999;font-size: 12px">（无第三方审计报表，则提交汇算清缴报表）</span>
+                            style="color: #999999;">请上传近两年的财务报表</span><span style="color: #999999;font-size: 12px">（无第三方审计报表，则提交汇算清缴报表：<a href="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E4%BA%BA%E4%BA%BA%E5%88%9B%E6%96%B0%E5%88%B8--%E6%8F%90%E4%BA%A4%E8%B4%A2%E5%8A%A1%E8%B5%84%E6%96%99%E7%A4%BA%E4%BE%8B201710.pdf" download="" style="color: #588eff">财务报表示例模板</a>）</span>
                     </p>
                     <form id="statement" method="post" enctype="multipart/form-data">
                         <p class="put clearfix" style="margin-left: 225px">
@@ -555,7 +556,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
 
     //检查文件后缀
@@ -596,11 +597,18 @@
     })
     $(".gopage2").on("click", function () {
         var companyName = $(".companyName").val();
-        var re = /^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$/;
-        if (!re.test(companyName) || companyName.length == 0) {
-            layer.msg("公司名称为30位内中文、英文、数字,不能为空");
+        var re = /^[\w\u4E00-\u9FA5\uF900-\uFA2D（）()]*$/;
+
+        if(companyName.length == 0){
+            layer.msg("公司名称不能为空");
             return;
         }
+
+        if (!re.test(companyName)) {
+            layer.msg("公司名称为30位内中英文、数字或（）");
+            return;
+        }
+
         if (!$(".page1 .course").data("fileUrl")) {
             layer.msg("请上传基本信息表");
             return;
@@ -677,14 +685,14 @@
         if (!document.getElementById(str1).files) {
             var filenames = document.getElementById(str1).value;
             var filename = filenames.substring(filenames.lastIndexOf('\\') + 1);
-            if (!verifyFileSuffx(name, filename)) {
+            if (!verifyFileSuffx(name, filename.toLowerCase())) {
                 layer.msg("文件格式不正确");
                 return;
             }
             $(str).find(".course span").html(filename);
         } else {
             var file = document.getElementById(str1).files[0];
-            if (!verifyFileSuffx(name, file.name)) {
+            if (!verifyFileSuffx(name, file.name.toLowerCase())) {
                 layer.msg("文件格式不正确");
                 return;
             }
@@ -838,7 +846,7 @@
         if (!document.getElementById(str1).files) {
             var filenames = document.getElementById(str1).value;
             var filename = filenames.substring(filenames.lastIndexOf('\\') + 1);
-            if (!verifyFileSuffx("pdf", filename)) {
+            if (!verifyFileSuffx("pdf", filename.toLowerCase())) {
                 layer.msg("文件格式不正确");
                 progress.remove();
                 return;
@@ -846,7 +854,7 @@
             progress.find("span").html(filename);
         } else {
             var file = document.getElementById(str1).files[0];
-            if (!verifyFileSuffx("pdf", file.name)) {
+            if (!verifyFileSuffx("pdf", file.name.toLowerCase())) {
                 layer.msg("文件格式不正确");
                 progress.remove();
                 return;
@@ -998,7 +1006,7 @@
         }
 //        console.log(data);
         $.ajax({
-            url: '${rlab}/front/coupon/applyCertify?operate=${operate}',
+            url: '${rlab}/coupon/applyCertify?operate=${operate}',
             type: 'POST',
             data: JSON.stringify(data),
             dataType: "json",
@@ -1011,7 +1019,7 @@
             contentType: "application/json"
         }).done(function (data) {
             if (data.code == 200) {
-                window.location.href = "${rlab}/front/coupon/page"
+                window.location.href = "${rlab}/coupon/page"
             }  else if(data.code == 250){
                 layer.msg(data.payload);
             }else if(data.code == 1012){

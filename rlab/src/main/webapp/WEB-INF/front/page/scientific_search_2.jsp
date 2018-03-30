@@ -16,7 +16,7 @@
 
     <%--     <script src="${rlab}/front/assets/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script> --%>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170622">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/scientific_search.css?v_=20170622"/>
 
@@ -153,9 +153,9 @@
                     </div>
                     <div id="correlation">
                         <c:forEach items="${interestWords}" var="word" varStatus="st">
-                            <%--<a onclick="toSearchFromSuper(${word })" href="JavaScript:location.href='${rlab}/front/instrument/search?pageNo=1&pageSize=10&keyword='+encodeURI('${word }');" target="_blank">${word }</a>--%>
+                            <%--<a onclick="toSearchFromSuper(${word })" href="JavaScript:location.href='${rlab}/instrument/search?pageNo=1&pageSize=10&keyword='+encodeURI('${word }');" target="_blank">${word }</a>--%>
                             <a onclick="toSearchFromSuper('${word.text }')"  href="javascript:void (0)">${word.text}</a>
-                            <%-- <a href="${rlab}/front/instrument/search?pageNo=1&pageSize=10&keyword=${word}" target="_blank">${word }</a> --%>
+                            <%-- <a href="${rlab}/instrument/search?pageNo=1&pageSize=10&keyword=${word}" target="_blank">${word }</a> --%>
                         </c:forEach>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
                                                     items="${prolist.leader}"
                                                     var="leader">${leader eq "null"?"不详":empty leader ?"不详":leader} </c:forEach></span></p>
                                         </c:if>
-                                        <c:if test="${prolist.leader==null && fn:length(prolist.leader)<=0}">
+                                        <c:if test="${prolist.leader==null || fn:length(prolist.leader)<=0}">
                                             <p class="rightMark"><span class="mark"
                                                                        style="width:32px;">${prolist.year}</span> <span
                                                     style="float:right;margin: 0 6px;">|</span> <span class="mark"
@@ -293,7 +293,7 @@
                             <ul>
                                 <c:forEach items="${orgrank}" var="orglist" begin="0" end="4" varStatus="st">
                                     <li>
-                                        <p><a href="${rlab}/front/org/${orglist.oid}"
+                                        <p><a href="${rlab}/org/${orglist.oid}"
                                               style="color: #5080df;font-size: 14px">${st.index +1}.${orglist.orgname }</a>
                                         </p>
                                     </li>
@@ -304,7 +304,7 @@
                             <ul>
                                 <c:forEach items="${orgrank}" var="orglist" begin="5" end="9" varStatus="st">
                                     <li>
-                                        <p><a href="${rlab}/front/org/${orglist.oid}"
+                                        <p><a href="${rlab}/org/${orglist.oid}"
                                               style="color: #5080df;font-size: 14px">${st.index +1}.${orglist.orgname }</a>
                                         </p>
                                     </li>
@@ -323,12 +323,19 @@
 </div>
 
 <script src="${rlab}/front/js/util/pagination.js"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170608"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 
 <script src="${rlab}/front/assets/echarts/echarts-plain.js" type="text/javascript" charset="utf-8"></script>
 <%-- <script src="${rlab}/front/js/view/echarts_database.js" type="text/javascript" charset="utf-8"></script> --%>
 
 <script>
+    $(".searchTab a").each(function () {
+        $(this).attr("class","");
+        if ( $(this).data("searchType")==(${flag}+1)) {
+            $(this).attr("class","pitchTab");
+            SERCH_TYPE=$(this).data("searchType")-0;
+        }
+    })
 
     showPages(100, 0, 5, function (from, max) {
         location.href = "http://v3.bootcss.com/components/#pagination-default";
@@ -350,8 +357,30 @@
 
 
         if (param.type == 'click') {
-            toSearchFromSuper(param.name);
+//            toSearchFromSuper(param.name);
+            toKejso(param.name);
         }
+    }
+    /**
+     * 跳转高级搜索页面
+     */
+    function toKejso(keyword) {
+
+//        var keyword = $("#search").val();
+        if (keyword === "") {
+            keyword = "仪器"
+        }
+
+        keyword = encodeURI(keyword);
+        keyword = keyword.replace(/\+/g, "%2B");
+        keyword = keyword.replace(/#/g, "%23");
+        keyword = keyword.replace(/&/g, "%26");
+        keyword = keyword.replace(/</g, "%3c");
+        keyword = keyword.replace(/>/g, "%3e");
+
+        var URL = '${rlab}/front/superSearch/search?flag=2&query=' + keyword;
+        window.open(URL);
+
     }
 
 
@@ -582,14 +611,14 @@
     // 跳转到相关项目
     function toProject() {
 
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
         keyword = keyword.replace(/\+/g, "%2B");
         keyword = keyword.replace(/#/g, "%23");
         keyword = keyword.replace(/&/g, "%26");
         keyword = keyword.replace(/</g, "%3c");
         keyword = keyword.replace(/>/g, "%3e");
 
-        var URL = BASE_URL + '/front/superSearch/morePro?pageNo=0&pageSize=10&query=' + keyword;
+        var URL = BASE_URL + '/front/superSearch/morePro?flag=${flag}&pageNo=0&pageSize=10&query=' + keyword;
         window.open(URL);
 
     }
@@ -597,7 +626,7 @@
     // 跳转到论文页面
     function toThesis() {
 
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
 
         keyword = keyword.replace(/\+/g, "%2B");
         keyword = keyword.replace(/#/g, "%23");
@@ -605,13 +634,13 @@
         keyword = keyword.replace(/</g, "%3c");
         keyword = keyword.replace(/>/g, "%3e");
 
-        var URL = BASE_URL + '/front/superSearch/morePaper?pageNo=0&pageSize=10&query=' + keyword;
+        var URL = BASE_URL + '/front/superSearch/morePaper?flag=${flag}&pageNo=0&pageSize=10&query=' + keyword;
         window.open(URL);
 
     }
 
     function toInformation() {
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
 
         keyword = keyword.replace(/\+/g, "%2B");
         keyword = keyword.replace(/#/g, "%23");
@@ -619,7 +648,7 @@
         keyword = keyword.replace(/</g, "%3c");
         keyword = keyword.replace(/>/g, "%3e");
 
-        var URL = BASE_URL + '/front/superSearch/moreRelatedInfo?pageNo=0&pageSize=10&query=' + keyword;
+        var URL = BASE_URL + '/front/superSearch/moreRelatedInfo?flag=${flag}&pageNo=0&pageSize=10&query=' + keyword;
 
         window.open(URL);
 
@@ -628,7 +657,17 @@
 
     function toSearchFromSuper(keywords) {
 
-        var URL = BASE_URL + "/front/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        var flag = ${flag};
+        //1 服务
+        if(flag == 1){
+            var URL = BASE_URL + "/service/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }else if(flag==2){
+            //2 机构
+            var URL = BASE_URL + "/org/query?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }else{
+            //0 仪器
+            var URL = BASE_URL + "/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }
 
         var address = getCurremtAdress();
 

@@ -29,7 +29,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170905">
 
     <!--[if lt IE 8]>
@@ -83,7 +83,7 @@
                     </div>
                 </c:if>
                 <div class="rt_tx">
-                    没找到想要的？来<a href="${rlab}/front/instrument/qr" target="_blank" style="color: #508df0">“人人实验服务号”</a>，私人助手帮您快速解决！
+                    没找到想要的？来<a href="${rlab}/instrument/qr" target="_blank" style="color: #508df0">“人人实验服务号”</a>，私人助手帮您快速解决！
                 </div>
             </div>
             <div class="rt_tip">
@@ -226,7 +226,7 @@
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     _dgt.push(['trackAttr',['keywords'], ['${keyword}']]);
     (function () {
@@ -249,7 +249,7 @@
     // jsp获取当前页数
     PAGE_NO = ${pageNo};
     <%--KEY_WORD = "<c:out value="${keyword}" escapeXml="true"/>";--%>
-    KEY_WORD = $("#serach").val();
+    KEY_WORD = $("#search").val();
     var FROM_NO = (PAGE_NO -1)*10;
     // 初始化页面分页
     showPages( ${total}, FROM_NO , 10, function (from, max) {
@@ -291,7 +291,7 @@
      */
     function toKejso() {
 
-        var keyword = $("#serach").val();
+        var keyword = $("#search").val();
         if(keyword === "") {
             keyword = "仪器"
         }
@@ -423,7 +423,7 @@
 
             }
 
-            KEY_WORD = $("#serach").val();
+            KEY_WORD = $("#search").val();
             PAGE_NO = 1;
             toGoodsList();
         }

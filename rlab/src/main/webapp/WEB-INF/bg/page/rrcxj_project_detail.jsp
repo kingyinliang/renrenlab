@@ -88,7 +88,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="7"/>
+                <jsp:param name="firstMenu" value="8"/>
                 <jsp:param name="secondMenu" value="2"/>
             </jsp:include>
         </div>
@@ -161,7 +161,7 @@
             </div>
             <%--操作按钮--%>
             <%--审核权限--%>
-            <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+            <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                 <div style="text-align: center;display: ${detail.orgProState eq 0 ?"block":"none"}" >
                     <button  class="lab_btn_base  lab_btn_type1" onclick="acceptStatus(1)" type="button">审核通过</button>
                     <button class="lab_btn_base  lab_btn_type5" onclick="rejectStatus()" type="button" style="margin-left: 26px;">审核不通过</button>
@@ -172,7 +172,7 @@
                 <div style="text-align: center;margin-top: 40px;display: ${detail.orgProState eq 3 ?"block":"none"}">
                     <button class="lab_btn_base  lab_btn_type1" onclick="acceptStatus(4)" type="button">项目已完成</button>
                 </div>
-            </c:if>
+            <%--</c:if>--%>
         </div>
     </div>
     <div id="delete" class="shade">
@@ -193,6 +193,7 @@
 <script src="${rlab}/bg/js/main.js"></script>
 <script type="text/javascript">
     var layer;
+    var LOGIN_AJAX_FLAG=true;
     layui.use(['layer'], function () {
         layer = layui.layer;
     });
@@ -205,6 +206,10 @@
     }
     // 通过审核
     function deleteCommit($this) {
+        if (!LOGIN_AJAX_FLAG) {
+            alert("请勿频繁操作");
+            return;
+        }
         $this=$($this);
         var state=$this.data("stateId");
         $.ajax({
@@ -215,13 +220,21 @@
                 "state":state,
                 "flag":2
             },
+            beforeSend:function () {
+                LOGIN_AJAX_FLAG = false;
+            },
             success: function (data) {
                 if(data.code==200){
                     window.location.href ='${rlab}/bg/coupon/proDetail?id=${detail.orgProId}';
+                } else {
+                    alert(data.description);
                 }
             },
             complete: function () {
 
+            },
+            complete:function () {
+                LOGIN_AJAX_FLAG = true;
             },
             error: function () {
 
@@ -233,6 +246,10 @@
     function rejectStatus() {
 
         showRjectModal('审核不通过原因', function (txt) {
+            if (!LOGIN_AJAX_FLAG) {
+                alert("请勿频繁操作");
+                return;
+            }
             if (txt.length > 50) {
                 alert("字数不能超过50字");
                 return;
@@ -246,13 +263,21 @@
                     "flag":2,
                     "reason":txt
                 },
+                beforeSend:function () {
+                    LOGIN_AJAX_FLAG = false;
+                },
                 success: function (data) {
                     if(data.code==200){
                         window.location.href ='${rlab}/bg/coupon/proDetail?id=${detail.orgProId}';
+                    } else {
+                        alert(data.description);
                     }
                 },
                 complete: function () {
 
+                },
+                complete:function () {
+                    LOGIN_AJAX_FLAG = true;
                 },
                 error: function () {
 

@@ -33,18 +33,18 @@
             /*height: 4.7067rem;*/
         }
 
-        .error_404  p {
+        .error_404 p {
             text-align: center;
         }
 
-        .error_404  .tit {
+        .error_404 .tit {
             font-size: 0.4rem;
             line-height: 0.7rem;
             color: #959595;
             margin-top: 0.5rem;
         }
 
-        .error_404  .tits {
+        .error_404 .tits {
             font-size: 0.32rem;
             line-height: 0.5rem;
             color: #B5B5B5;
@@ -106,8 +106,9 @@
             float: left;
             width: 8.8rem;
         }
+
         a {
-            text-decoration: none!important;
+            text-decoration: none !important;
         }
     </style>
 </head>
@@ -116,7 +117,7 @@
 <div id="main" style="overflow: hidden;">
     <div class="headers">
         <p class="homelogo"><a href="${rlab}/page/home"><img src="${rlab}/mobile/imgs/home_logo.png"/></a></p>
-        <a class="users lab-user" id="gouser" href="${rlab}/front/user/center"></a>
+        <a class="users lab-user" id="gouser" href="${rlab}/user/center"></a>
         <a class="lab-search" id="searchs" href="${rlab}/page/search"></a>
     </div>
     <div class="error_404">
@@ -131,10 +132,11 @@
      * 返回历史上一页
      */
     var HISTORY_URL = null;
+
     function goBack() {
-        if(HISTORY_URL != null) {
+        if (HISTORY_URL != null) {
             window.location.href = HISTORY_URL;
-        }else {
+        } else {
             window.history.back();
         }
     }

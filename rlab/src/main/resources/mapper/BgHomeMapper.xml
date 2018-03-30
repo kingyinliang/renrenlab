@@ -4,58 +4,101 @@
 
     <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.BgHomeInfo">
         <result column="count" jdbcType="BIGINT" property="count"/>
-        <result column="time" jdbcType="TIMESTAMP" property="time"/>
+        <result column="time" jdbcType="VARCHAR" property="time"/>
         <result column="before" jdbcType="VARCHAR" property="before"/>
     </resultMap>
 
 
+    <select id="selectUserCounts12MonthAgo" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        rlab_user_info.t_user_base_info
+        WHERE
+        to_char((select now() - interval '11 month'),'YY/MM') > TO_CHAR(create_time,   'YY/MM') and u_state !=2
+    </select>
+    <select id="selectOrgCounts12MonthAgo" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        rlab_org_info.t_org_base_info
+        WHERE
+        to_char((select now() - interval '11 month'),'YY/MM') > TO_CHAR(create_time,   'YY/MM') and org_state =0
+    </select>
+    <select id="selectInsCounts12MonthAgo" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        rlab_instrument_info.t_instrument_org_map
+        WHERE
+        to_char((select now() - interval '11 month'),'YY/MM') > TO_CHAR(create_time,   'YY/MM') and map_state ='[0,0,0]'
+    </select>
+    <select id="selectServiceCounts12MonthAgo" resultType="java.lang.Integer">
+        SELECT count(*) FROM
+        rlab_service_info.t_service_info
+        WHERE
+        to_char((select now() - interval '11 month'),'YY/MM') > TO_CHAR(create_time,   'YY/MM') and service_state =4
+    </select>
+
+
     <select id="selectUserCountsByDate" resultType="com.renrenlab.rlab.vo.BgHomeInfo">
-        SELECT
-        count(*), date_trunc('day', create_time) AS time,age(date_trunc('day', create_time)) as BEFORE
+        SELECT TO_CHAR(create_time,   'YY/MM') as time,count(*)
         FROM
         rlab_user_info.t_user_base_info
-        WHERE create_time BETWEEN (CURRENT_DATE - 7) AND CURRENT_DATE and u_state!=2
-        GROUP BY date_trunc('day', create_time)
+        WHERE
+        TO_CHAR(create_time,   'YY/MM') BETWEEN   to_char((select now() - interval '11 month'),'YY/MM') and TO_CHAR(now(),   'YY/MM') and u_state !=2
+        GROUP BY time ORDER by TIME ASC
 
     </select>
 
     <select id="selectOrgCountsByDate" resultType="com.renrenlab.rlab.vo.BgHomeInfo">
-        SELECT
-	    count(*), date_trunc('day', create_time) AS time,age(date_trunc('day', create_time)) as BEFORE
+        SELECT TO_CHAR(create_time,   'YY/MM') as time,count(*)
         FROM
         rlab_org_info.t_org_base_info
-        WHERE create_time BETWEEN (CURRENT_DATE - 7) AND CURRENT_DATE
-        GROUP BY date_trunc('day', create_time)
+        WHERE
+        TO_CHAR(create_time,   'YY/MM') BETWEEN   to_char((select now() - interval '11 month'),'YY/MM') and TO_CHAR(now(),   'YY/MM') and org_state =0
+        GROUP BY time ORDER by TIME ASC
     </select>
 
     <select id="selectInsCountsByDate" resultType="com.renrenlab.rlab.vo.BgHomeInfo">
-        SELECT
-	    count(*), date_trunc('day', create_time) AS time,age(date_trunc('day', create_time)) as BEFORE
+        SELECT TO_CHAR(create_time,   'YY/MM') as time,count(*)
         FROM
         rlab_instrument_info.t_instrument_org_map
-        WHERE create_time BETWEEN (CURRENT_DATE - 7) AND CURRENT_DATE
-        GROUP BY date_trunc('day', create_time)
+        WHERE
+        TO_CHAR(create_time,   'YY/MM') BETWEEN   to_char((select now() - interval '11 month'),'YY/MM') and TO_CHAR(now(),   'YY/MM') and map_state ='[0,0,0]'
+        GROUP BY time ORDER by TIME ASC
+    </select>
+    <select id="selectServiceCountsByDate" resultType="com.renrenlab.rlab.vo.BgHomeInfo">
+        SELECT TO_CHAR(create_time,   'YY/MM') as time,count(*)
+        FROM
+            rlab_service_info.t_service_info
+        WHERE
+            TO_CHAR(create_time,   'YY/MM') BETWEEN   to_char((select now() - interval '11 month'),'YY/MM') and TO_CHAR(now(),   'YY/MM') and service_state =4
+        GROUP BY time ORDER by TIME ASC
     </select>
 
     <select id="selectInsCounts" resultType="java.lang.Integer">
         SELECT
-        count(*)
+            count(*)
         FROM
-        rlab_instrument_info.t_instrument_org_map
+            rlab_instrument_info.t_instrument_org_map
+        WHERE map_state ='[0,0,0]'
     </select>
 
     <select id="selectUserCounts" resultType="java.lang.Integer">
         SELECT
-        count(*)
+            count(*)
         FROM
-        rlab_user_info.t_user_base_info
+            rlab_user_info.t_user_base_info
         where u_state !=2
     </select>
 
     <select id="selectOrgCounts" resultType="java.lang.Integer">
         SELECT
-	    count(*)
+            count(*)
         FROM
-        rlab_org_info.t_org_base_info
+            rlab_org_info.t_org_base_info
+        where org_state=0
+    </select>
+    <select id="selectSerivceCounts" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            rlab_service_info.t_service_info
+        where service_state =4
     </select>
 </mapper>

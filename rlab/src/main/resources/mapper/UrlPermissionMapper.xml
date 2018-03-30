@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.UrlPermissionDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.UrlPermission">
+        <result column="permission_id" jdbcType="BIGINT" property="permissionId"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="url_des" jdbcType="VARCHAR" property="urlDes"/>
+        <result column="request_type" jdbcType="VARCHAR" property="requestType"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column">
+        permission_id, parent_id, url, url_des, request_type, modify_time, create_time
+    </sql>
+
+    <select id="getFilterMap" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM rlab_role_permission.t_url_permission
+        WHERE parent_id > 0
+        ORDER BY permission_id ASC
+    </select>
+    <select id="selectPermission" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column"/>
+        FROM rlab_role_permission.t_url_permission
+        WHERE parent_id >= 0
+        <if test="permissionIds != null">
+            AND t_url_permission.parent_id IN
+            <foreach collection="permissionIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        ORDER BY parent_id ASC
+    </select>
+    <select id="getAllPermission" resultMap="BaseResultMap">
+        SELECT
+            parent_id,
+            permission_id,
+            url
+        FROM rlab_role_permission.t_url_permission
+        WHERE 0 > t_url_permission.parent_id
+        ORDER BY permission_id ASC
+    </select>
+
+</mapper>

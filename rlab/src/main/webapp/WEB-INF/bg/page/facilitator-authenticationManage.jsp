@@ -78,7 +78,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="2"/>
             </jsp:include>
         </div>
@@ -169,9 +169,10 @@
                         <th>联系方式</th>
                         <th>共享指数排名</th>
                         <th>操作</th>
-                        <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                        <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                             <th>管理员权限</th>
-                        </c:if>
+                        <%--</c:if>--%>
+                        <th>链接</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -189,17 +190,18 @@
                             <td>
                                 <a class="check" style="color: #6693c8;" href="${rlab}/bg/provider/detail/certificated/${info.orgOid}">查看详情</a>
                             </td>
-                            <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                            <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                                 <td>
                                     <a class="check" style="color: red;" onclick="gotan(this)" data-org-id="${info.orgOid}">撤销认证</a>
                                 </td>
-                            </c:if>
+                            <%--</c:if>--%>
+                            <td><a href="${rlab}/org/${info.orgOid}" target="_blank">${rlab}/org/${info.orgOid}</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
             </div>
-            <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+            <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                 <div class="but">
                     <button class="layui-btn btn" onclick="selectAll()">
                         全部选中
@@ -208,7 +210,7 @@
                         撤销认证
                     </button>
                 </div>
-            </c:if>
+            <%--</c:if>--%>
             <div class="pages clearfix" style="display: ${total > 10 ? 'block' : 'none'}">
                 <div class="textinfo">
                     <p>显示第${(pageNo - 1) * pageSize+1}-${pageNo * pageSize > total? total : pageNo * pageSize}条/共${total}条</p>
@@ -312,12 +314,16 @@
             traditional: true
 
         })
-        .done(function (data) {
-            window.location.reload(true);
-        })
-        .fail(function (data) {
-            alert("失败");
-        });
+            .done(function (data) {
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
+            })
+            .fail(function (data) {
+                alert("失败");
+            });
     }
     layui.use(['form', 'layedit', 'laydate'], function () {
         var form = layui.form();

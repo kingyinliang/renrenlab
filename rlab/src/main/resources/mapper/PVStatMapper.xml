@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.PVStatDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.PVStatInfo">
+        <result column="pv_id" jdbcType="BIGINT" property="pvId"/>
+        <result column="pv_count" jdbcType="INTEGER" property="pvCount"/>
+        <result column="creat_time" jdbcType="TIMESTAMP" property="creatTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        pv_id, pv_count, creat_time, modify_time
+    </sql>
+
+    <select id="selectByDate" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_common_info.t_pv_statistics
+        where creat_time BETWEEN DATE(#{beginTime}) and DATE(#{endTime}) +1::INT
+        ORDER BY creat_time DESC ;
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM rlab_common_info.t_pv_statistics
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="addPVCount" parameterType="int">
+        insert into rlab_common_info.t_pv_statistics
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pvCount != null">
+                pv_count,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pvCount != null">
+                #{pvCount},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updatePVCount" parameterType="com.renrenlab.rlab.model.PVStatInfo">
+        update rlab_common_info.t_pv_statistics
+        <set>
+            <if test="pvCount != null">
+                pv_count = #{pvCount,jdbcType=INTEGER},
+            </if>
+            modify_time = now()
+        </set>
+        where pv_id = #{pvId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.PVStatInfo">
+        UPDATE rlab_common_info.t_pv_statistics
+        SET pv_id       = #{pvId,jdbcType=BIGINT},
+            pv_count    = #{pvCount,jdbcType=INTEGER},
+            creat_time  = #{creatTime,jdbcType=TIMESTAMP},
+            modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="getRankList" resultType="java.util.HashMap">
+        SELECT
+            classify_name "classifyName",
+            ins_count     "insCount"
+        FROM rlab_instrument_info.t_classify_one
+        ORDER BY ins_count DESC
+        LIMIT 10
+    </select>
+
+    <select id="getOrgRank" resultType="java.util.HashMap">
+        SELECT
+            org_logo        "orgLogo",
+            org_name        "orgName",
+            org_share_index "shareIndex",
+            org_rank        "orgRank",
+            org_oid          "orgId"
+        FROM rlab_common_info.t_org_index
+        ORDER BY org_rank ASC
+        LIMIT 10
+    </select>
+</mapper>

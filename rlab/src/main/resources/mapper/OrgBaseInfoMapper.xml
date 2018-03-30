@@ -281,30 +281,30 @@
         </if>
     </select>
 
-    <select id="searchOrgBaseInfoListTopK" resultType="com.renrenlab.rlab.vo.OrgInfo">
-        SELECT
-            obi.org_oid,
-            tmp.num AS insCount,
-            obi.org_name,
-            obi.org_share_index,
-            obi.org_rank,
-            obi.org_identification,
-            obi.org_logo
-        FROM
-            (
-                SELECT
-                    COUNT (ii.org_oid) AS num,
-                    ii.org_oid AS oid
-                FROM
-                    rlab_common_info.t_instrument_index ii
-                GROUP BY
-                    ii.org_oid
-                ORDER BY
-                    num DESC
-                LIMIT #{k, jdbcType=INTEGER}
-            ) tmp
-        JOIN rlab_org_info.t_org_base_info obi ON (tmp.oid = obi.org_oid) ORDER BY tmp.num DESC;
-    </select>
+    <!--<select id="searchOrgBaseInfoListTopK" resultType="com.renrenlab.rlab.vo.OrgInfo">-->
+        <!--SELECT-->
+            <!--obi.org_oid,-->
+            <!--tmp.num AS insCount,-->
+            <!--obi.org_name,-->
+            <!--obi.org_share_index,-->
+            <!--obi.org_rank,-->
+            <!--obi.org_identification,-->
+            <!--obi.org_logo-->
+        <!--FROM-->
+            <!--(-->
+                <!--SELECT-->
+                    <!--COUNT (ii.org_oid) AS num,-->
+                    <!--ii.org_oid AS oid-->
+                <!--FROM-->
+                    <!--rlab_common_info.t_instrument_index ii-->
+                <!--GROUP BY-->
+                    <!--ii.org_oid-->
+                <!--ORDER BY-->
+                    <!--num DESC-->
+                <!--LIMIT #{k, jdbcType=INTEGER}-->
+            <!--) tmp-->
+        <!--JOIN rlab_org_info.t_org_base_info obi ON (tmp.oid = obi.org_oid) ORDER BY tmp.num DESC;-->
+    <!--</select>-->
 
     <select id="searchInsCountByOrgId" parameterType="java.lang.Long" resultType="java.lang.Integer">
         SELECT
@@ -364,6 +364,7 @@
                 org_source = #{orgSource,jdbcType=INTEGER},
             </if>
             modify_time = now(),
+            org_true=0,
         </set>
         where org_oid = #{orgOid,jdbcType=BIGINT}
     </update>
@@ -443,6 +444,7 @@
             <if test="applicationTime != null" >
                 application_time,
             </if>
+            org_true
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="id != null" >
@@ -507,6 +509,7 @@
             <if test="applicationTime != null" >
                 now(),
             </if>
+            0
         </trim>
     </insert>
 

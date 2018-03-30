@@ -66,12 +66,11 @@ input.lab_isError {
     min-width: 1120px;
     min-height:100%!important;
     position: relative;
-    padding-bottom: 320px;
     box-sizing: content-box!important;
 }
 
 /*=S 公用头部 [王银亮，2017-05-16]*/
-.header {
+/*.header {
     height: 135px;
     background: #508df0;
 }
@@ -171,25 +170,27 @@ input.lab_isError {
 .header_content > .logo > img {
     vertical-align: middle;
     width: 126px;
-}
+}*/
 
 /*地区选择下拉列表*/
-.header_content > .city_btn {
+.city_btn {
     width: 100px;
     text-align: center;
     font-size: 16px;
-    color: #fff;
+    color: #686868;
     float: left;
     margin-left: 16px;
     position: relative;
     cursor: pointer;
+    line-height: 45px;
+    margin-top: 55px;
 }
 
-.header_content > .city_btn > div.cur {
-    height: 100px;
+.city_btn > div.cur {
+    height: 60px;
 }
 
-.header_content > .city_btn .dorpdown {
+.city_btn .dorpdown {
     width: 406px;
     height: 410px;
     overflow: hidden;
@@ -197,9 +198,9 @@ input.lab_isError {
     color: #4e4e4e;
     text-align: left;
     position: absolute;
-    top: 90px;
+    top: 48px;
     left: 20px;
-    z-index: 7;
+    z-index: 99999;
     background: #fff;
     -webkit-box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
     -moz-box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
@@ -209,13 +210,13 @@ input.lab_isError {
     border-radius: 8px;
 }
 
-.header_content > .city_btn .dorpdown > div {
+.city_btn .dorpdown > div {
     padding: 0 24px;
     /*padding-bottom: 28px;*/
 
 }
 
-.header_content > .city_btn .dorpdown a:hover {
+.city_btn .dorpdown a:hover {
     color: #508df0;
 }
 
@@ -223,7 +224,7 @@ input.lab_isError {
     /*display: block!important;*/
 /*}*/
 
-.header_content > .city_btn .dorpdown div.title {
+ .city_btn .dorpdown div.title {
     height: 62px;
     width:100%;
     line-height: 62px;
@@ -297,12 +298,19 @@ div.district > ul > li a{
     font-size: 14px;
 }
 
+.searchInp label {
+    color: #cbcbcb
+}
+
+.searchInp s {
+    color: #cbcbcb
+}
 
 /*搜索框*/
-.header_content > .search_box {
+/*.header_content > .search_box {
     width: 555px;
     height: 100px;
-    /* background: grey; */
+    !* background: grey; *!
     float: left;
     position: absolute;
     left: 260px;
@@ -345,15 +353,15 @@ div.district > ul > li a{
 }
 
 .header_content .search_main > label:active {
-    /*background: #90ccf0;*/
+    !*background: #90ccf0;*!
     background: #eee;
-    /*color: #fff;*/
-    /*color: #508DF0;*/
+    !*color: #fff;*!
+    !*color: #508DF0;*!
 }
 
 .header_content .user_info {
     height: 100px;
-    /*width: 170px;*/
+    !*width: 170px;*!
     min-width: 134px;
     max-width: 180px;
     float: right;
@@ -407,12 +415,12 @@ div.district > ul > li a{
 }
 
 .header_content .user_info > div.unick_name {
-    /*max-width: 100px;*/
+    !*max-width: 100px;*!
     height: 100px;
     line-height:106px;
     font-size: 16px;
     float: right;
-    /*margin-right: 30px;*/
+    !*margin-right: 30px;*!
     color: #fff;
     cursor: pointer;
     position: relative;
@@ -441,7 +449,7 @@ div.district > ul > li a{
 }
 
 
-/*返回旧版*/
+!*返回旧版*!
 .cb_old_web{
     height: 100px;
     width: 90px;
@@ -471,10 +479,10 @@ div.district > ul > li a{
  .cb_old_web > a:hover {
     background: #76a6f3;
 }
- /*账户管理下拉*/
-/*.header_content .user_info > div.unick_name:hover .user_down{*/
-    /*display: block;*/
-/*}*/
+ !*账户管理下拉*!
+!*.header_content .user_info > div.unick_name:hover .user_down{*!
+    !*display: block;*!
+!*}*!
 
 div.unick_name ul.user_down {
     position: absolute;
@@ -508,17 +516,428 @@ div.unick_name ul.user_down li a{
 div.unick_name ul.user_down li a:hover {
     color: #508df0;
 }
+*/
 
+/*头部样式*/
+li{
+    list-style: none;
+}
 .dn {
     display: none!important;
 }
+#head{
+    width: 100%;
+}
+#heads,#headTab{
+    width: 1000px;
+    min-width: 1000px;
+    margin: auto;
+}
+#heads{
+    padding-bottom: 49px;
+}
+#heads img{
+    margin: 37px 160px 27px 20px;
+    width: 184px;
+    height: 52px;
+    float: left;
+}
+.search{
+    height: 75px;
+    margin: 25px 0 16px 0;
+    float: left;
+}
+.searchInp{
+    height: 45px;
+    width: 350px;
+    line-height: 45px;
+    position: relative;
+}
+.searchInp s{
+    padding: 0!important;
+    top:0!important;
+    left: 48px!important;
+    font-size: 14px!important;
+}
+.searchInp input{
+    float: left;
+    border: solid 4px #588EFF;
+    height: 45px;
+    width: 280px;
+}
+#gosearch{
+    cursor: pointer;
+}
+#search{
+    padding-left: 48px;
+    box-sizing: border-box;
+    line-height: 35px;
+}
+.searchBut{
+    display: inline-block;
+    width: 48px;
+    height: 45px;
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 19px;
+    line-height: 45px!important;
+    float: left;
+    position: absolute;
+}
+.searchInp #gosearch{
+    width: 72px;
+    height: 45px;
+    font-size: 18px;
+    background: #588EFF;
+    color: white;
+    border: none;
+    float: left;
+    margin-left: -4px;
+}
+.searchTab a{
+    font-size: 12px;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
+    width: 48px;
+    height: 30px;
+    color: #588eff;
+}
+.searchTab .pitchTab{
+    color: white;
+    background: #588eff;
+}
+#godemand{
+    display: inline-block;
+    width: 120px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    color: white;
+    background-color: #588eff;
+    float: left;
+    margin-top: 55px;
+    margin-left: 45px;
+}
+#headTab{
+    width: 100%;
+    background: #588eff;
+    position: absolute;
+    top:116px;
+    z-index: 9999;
+}
+.headTab{
+    width: 1000px;
+    height: 49px;
+    margin: auto;
+}
+.headTab label{
+    cursor: pointer;
+}
+.tab span,.tabSelect span{
+    cursor: pointer;
+}
+.tab,.tabSelect{
+    width: 113px;
+    height: 49px;
+    line-height: 49px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+    float: left;
+    position: relative;
+}
+.hoverTab{
+    box-shadow: 0px 3px 7px 3px rgba(21, 24, 103, 0.25);
+}
+.tabStrip{
+    position: absolute;
+    background: white;
+    height: 3px;
+    width: 0px;
+}
+.tabSearch{
+    cursor: pointer;
+    float: left;
+    width: 110px;
+    height: 63px;
+    line-height: 63px;
+    color: white;
+    text-align: center;
+    font-size: 19px;
+}
+.tabSearch span{
+    color: #8bb0ff;
+    font-size: 14px;
+}
+.tabSearch label{
+    display: block;
+    float: left;
+    margin: 22px 0 0 15px;
+}
+.userMain,.login{
+    cursor: pointer;
+    float: right;
+    max-width: 165px;
+    height: 49px;
+    line-height: 49px;
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+.userMain img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+}
+.reel li,.usersele li{
+    height: 50px;
+    line-height: 50px;
+    font-size: 12px;
+}
+.reel,.usersele{
+    display: none;
+    background: white;
+    color: #686868;
+    box-shadow: 0px 2px 12px 0px
+    rgba(193, 193, 193, 0.5);
+}
+.reel li a,.usersele a{
+    color: #686868;
+}
+.reel li a:hover,.usersele a:hover{
+    color: #588eff;
+}
+.login{
+    cursor: auto;
+    position: relative;
+}
+.login label{
+    position: absolute;
+    top:50%;
+    margin-top: -9px;
+    font-size: 18px;
+}
+.login a span{
+    border-right: 1px solid white;
+    width: 100%;
+    height: 14px;
+    display: inline-block;
+    line-height: 14px;
+}
+.login a{
+    color: white;
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+}
+
+/*newhome*/
+#headTop{
+    height: 37px;
+    background:  #e3e4e5;
+}
+#headTabmain{
+    width: 1000px;
+    margin: auto;
+    line-height: 37px;
+    font-size: 11px;
+    color: #989da6;
+}
+#headTabmain label{
+    margin-right: 10px;
+}
+.code{
+    float: left;
+    width: 100px;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+.user div,.user a{
+    float: right;
+    color: #989da6;
+    width: 80px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+#userMain img{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px;
+}
+.user #userMain{
+    margin-right: 15px;
+    max-width: 165px;
+    width: auto;
+    position: relative;
+}
+#userMain .usersele li a{
+    float: none;
+    text-align: center;
+}
+#userMain .usersele{
+    position: absolute;
+    width: 100%;
+}
+#headTab{
+    border-top: 0.1px solid #cfd3d5;
+    top:153px;
+    background: white;
+    color: #485362!important;
+}
+.tab{
+    color: #485362;
+}
+.selectedTab{
+    border-bottom: 2px solid #588eff;
+}
+body{
+    background: #f2f2f2;
+}
+#head{
+    background: white;
+}
+.codeimg{
+    display: none;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top:37px;
+}
+.reclassify{
+    display: none;
+    position: absolute;
+    top:49px;
+    padding: 19px 25px;
+    background-color: #ffffff;
+    box-shadow: 0px -2px 5px 0px
+    rgba(0, 0, 0, 0.09);
+    max-height: 237px;
+    width: 400px;
+    line-height: 40px;
+    font-size: 12px;
+}
+.reclassify a,.reclassify i{
+    font-size: 13px;
+    line-height: 35px;
+    display: inline-block;
+    color: #0c2d59;
+    width: 175px;
+    text-align: left;
+    float: left;
+}
+.server{
+    max-height: 277px;
+}
+.server i,.server a{
+    width: 100px;
+}
+.reclassify i{
+    color: #0c2d59;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+.server a{
+    font-size: 10px;
+}
+.quality{
+    width: auto;
+    padding-right: 0;
+    padding-left: 0;
+}
+.quality a{
+    width: 100%;
+    text-align: center;
+}
+/*头部样式结束*/
 
 /*=E 公用头部 [王银亮，2017-05-16]*/
 
 
 
 /*=S 公用尾部 [王银亮，2017-05-16]*/
-footer.lab_footer {
+/*底部样式*/
+#foot{
+    width: 100%;
+    min-width: 1120px;
+    height: 549px;
+    background: #588eff;
+    overflow: hidden;
+    color: white;
+    margin-top: 100px;
+}
+.foot{
+    width: 1120px;
+    height: 220px;
+    margin: auto;
+    margin-top: 44px;
+    font-size: 16px;
+}
+.bottom{
+    width: 100%;
+    min-width: 1120px;
+    background: #3c77f3;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    font-size: 14px;
+}
+.orglogo{
+    width: 100%;
+    min-width: 1120px;
+    height: 155px;
+    background: #eef2f5;
+    overflow: hidden;
+}
+.logoimg a{
+    display: block;
+    float: left;
+}
+.logoimg img{
+    width: 100%;
+}
+.logoimg{
+    width: 1120px;
+    margin: auto;
+    margin-top: 30px;
+}
+.as{
+    height: 203px;
+    float: left;
+}
+.as ul{
+    float: left;
+}
+.as li a{
+    color: white;
+}
+.as img{
+    display: block;
+    width: 115px;
+    height: 115px;
+    margin: auto;
+    margin-bottom: 22px;
+}
+.as li{
+    margin-bottom: 22px;
+    width: 174px;
+    line-height: 35px;
+    text-align: center;
+}
+.footTit{
+    line-height: 28px;
+    float: left;
+    width: 70px;
+    text-align: center;
+}
+/*底部样式结束*/
+/*footer.lab_footer {
     background: #494C5a;
     width: 100%;
     height: 320px;
@@ -536,7 +955,7 @@ footer.lab_footer .ft_blogroll {
 }
 
 footer.lab_footer .ft_blogroll > .ft_bl_item {
-    /*background: green;*/
+    !*background: green;*!
     float: left;
     width: 250px;
 }
@@ -561,12 +980,12 @@ footer.lab_footer .ft_bl_item a:hover{
 footer.lab_footer .ft_wechat{
     float: left;
     width: 370px;
-    /*background: pink;*/
+    !*background: pink;*!
 }
 
 footer.lab_footer .ft_wechat > .lft {
     float: left;
-    /*background: darkred;*/
+    !*background: darkred;*!
 }
 
 footer.lab_footer .ft_wechat  .lft_img {
@@ -618,20 +1037,100 @@ footer.lab_footer .footer-btm {
     color: #fff;
     background: #3d3f4a;
 
+}*/
+
+
+/*=E 公用尾部 [王银亮，2017-05-16]*/
+
+
+/*=S 右侧悬浮 [王银亮，2017-05-16]*/
+/*侧边悬浮窗样式*/
+#rightBar{
+    display: none;
+    width: 56px;
+    height: 166px;
+    border: 1px solid rgb(202, 202, 202);
+    position: fixed;
+    bottom:150px;
+    right: 50px;
+    z-index: 9999;
+    background: white;
+    font-size: 25px;
+    color: #cbcbcb;
 }
-
-
-/*=E 公用尾部 [徐志响，2017-05-16]*/
-
-
-/*=S 右侧悬浮 [徐志响，2017-05-16]*/
-.rt_bar {
+#rightBar .rightTab label{
+    cursor: pointer;
+    margin-top: 15px;
+    display: inline-block;
+}
+#rightBar .rightTab{
+    cursor: pointer;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+}
+.gotop{
+    background: #588eff;
+    color: white;
+}
+.rightTab:hover{
+    color: white;
+    background: #3b72e3;
+}
+.call{
+    width: 178px;
+    height: 116px;
+    background-color: white;
+    box-shadow: 0px 4px 4px 0px
+    rgba(0, 0, 0, 0.17);
+    position: absolute;
+    right:0;
+    bottom: 55px;
+    display: none;
+}
+.callHead label{
+    font-weight: bold;
+    font-size: 18px;
+    float: right;
+    cursor: pointer;
+}
+.callHead{
+    height: 46px;
+    padding: 13px 12px 15px 21px;
+    font-size: 13px;
+    background: #588eff;
+    color: white;
+}
+.phones label{
+    margin-right: 5px;
+}
+.phones{
+    font-size: 18px;
+    text-align: center;
+    line-height: 70px;
+}
+.erweima img{
+    width: 100%;
+    height: 100%;
+}
+.erweima{
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    right: 0;
+    bottom: 110px;
+    box-shadow: 0px 4px 4px 0px
+    rgba(0, 0, 0, 0.17);
+    display: none;
+}
+/*侧边悬浮窗样式结束*/
+/*.rt_bar {
     width: 60px;
     padding:20px 0 0 0;
     background: #508df0;
     position: fixed;
     z-index: 666;
-    /*right: calc((100% - 1200px) / 4);*/
+    !*right: calc((100% - 1200px) / 4);*!
     right: 0px;
     top: 150px;
     -webkit-border-radius:6px;
@@ -665,7 +1164,7 @@ footer.lab_footer .footer-btm {
 }
 
 
-/*二维码*/
+!*二维码*!
 .qr_codes {
     display: none;
     width:180px;
@@ -716,9 +1215,9 @@ footer.lab_footer .footer-btm {
     width: 130px;
     height: 130px;
     vertical-align: middle;
-}
+}*/
 
-/*=E 右侧悬浮 [徐志响，2017-05-16]*/
+/*=E 右侧悬浮 [王银亮，2017-05-16]*/
 
 /* web-font */
 @font-face {
@@ -837,7 +1336,6 @@ footer.lab_footer .footer-btm {
 }
 .lab-history:before {
     content: "\e91d";
-    color: #1296db;
 }
 .lab-im:before {
     content: "\e91e";

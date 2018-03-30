@@ -27,9 +27,6 @@ public interface ShareInsDao {
      */
     OrgContacts getContactInfo(@Param("conId") Long conId);
 
-
-    int updateShareInsParam(ShareInsDetailInfo shareInsDetailInfo);
-
     /**
      * 插入联系人信息表 获取最后插入数据的ID
      *
@@ -45,6 +42,13 @@ public interface ShareInsDao {
      * @return
      */
     Long insertOrgAddr(OrgAddress address);
+
+    /**
+     * 插入关联表
+     * @param shareInsModel
+     * @return
+     */
+    Long insertSelective(ShareInsModel shareInsModel);
 
     /**
      * 更新共享仪器信息

@@ -277,7 +277,7 @@
                 <div class="lab_info_base" style="padding-left: 150px;">
                     <div class="lft" style="width: 150px">批量上传文件：</div>
                     <div class="rt">
-                        <a download href="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/2017/08/02/%E4%BB%AA%E5%99%A8%E6%89%B9%E9%87%8F%E4%B8%8A%E4%BC%A0%E6%A0%BC%E5%BC%8F.xls">
+                        <a download href="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E6%96%B0%E7%89%88%E6%89%B9%E9%87%8F%E4%B8%8A%E4%BC%A0%E8%A1%A8%E6%A0%BC%E6%A8%A1%E6%9D%BF%20(%E6%81%A2%E5%A4%8D%E7%9A%84).xlsx">
                             人人实验仪器共享模板文件下载.xlsx
                         </a>
                     </div>
@@ -415,7 +415,7 @@
                         currentStatus = 2;// 更新当前文件状态
                     } else {
                         initProgressBar();
-                        layer.alert('模板格式错误，请检查模板格式', {
+                        layer.alert(data.desc, {
                             skin: 'layui-layer-molv' //样式类名
                             , closeBtn: 0
                         });

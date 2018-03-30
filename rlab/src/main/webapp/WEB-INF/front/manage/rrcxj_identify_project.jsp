@@ -19,7 +19,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
 
@@ -324,7 +324,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     //检查文件后缀
     function verifyFileSuffx(format, fileName) {
@@ -352,7 +352,7 @@
         var companyName=$(".companyName").val();
         var re=/^[\w\u4E00-\u9FA5\uF900-\uFA2D]*$/;
         if(!re.test(companyName)||companyName.length==0){
-            layer.msg("公司名称为30位内中文、英文、数字,不能为空");
+            layer.msg("项目名称为30位内中文、英文、数字,不能为空");
             return;
         }
         if(!$(".page1 .course").data("fileUrl")){
@@ -366,7 +366,7 @@
             "orgCerId":${cerId}
         }
         $.ajax({
-            url: '${rlab}/front/coupon/applyProject',
+            url: '${rlab}/coupon/applyProject',
             type: 'POST',
             data: JSON.stringify(data),
             dataType: "json",
@@ -379,7 +379,7 @@
             }
         }).done(function (data) {
             if(data.code==200){
-                window.location.href="${rlab}/front/coupon/page"
+                window.location.href = "${rlab}/coupon/page"
             } else if(data.code == 250){
                 layer.msg(data.payload);
             }else if(data.code == 1012){
@@ -431,14 +431,14 @@
         if(!document.getElementById(str1).files){
             var filenames=document.getElementById(str1).value;
             var filename=filenames.substring( filenames.lastIndexOf('\\')+1 );
-            if (!verifyFileSuffx("pdf|doc|docx",filename)){
+            if (!verifyFileSuffx("pdf|doc|docx",filename.toLowerCase())){
                 layer.msg("文件格式不正确");
                 return;
             }
             $(str).find(".course span").html(filename);
         }else {
             var file = document.getElementById(str1).files[0];
-            if (!verifyFileSuffx("pdf|doc|docx",file.name)){
+            if (!verifyFileSuffx("pdf|doc|docx",file.name.toLowerCase())){
                 layer.msg("文件格式不正确");
                 return;
             }

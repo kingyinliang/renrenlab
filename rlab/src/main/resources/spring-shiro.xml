@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- 自定义Realm -->
+    <bean id="myRealm" class="com.renrenlab.rlab.common.shiro.MyRealm"/>
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="myRealm"/>
+        <property name="cacheManager" ref="customShiroCacheManager"/>
+        <!-- 定义要使用的session管理器 -->
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!-- 开启Shiro注解 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!-- 会话Session ID生成器 -->
+    <bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
+
+    <!-- session 创建、删除、查询 -->
+    <bean id="jedisShiroSessionRepository" class="com.renrenlab.rlab.common.shiro.session.JedisShiroSessionRepository">
+        <property name="jedisManager" ref="jedisManager"/>
+    </bean>
+    <!-- custom shiro session listener Session  的监听生命周期-->
+    <bean id="customShiroSessionDAO" class="com.renrenlab.rlab.common.shiro.session.CustomShiroSessionDAO">
+        <property name="shiroSessionRepository" ref="jedisShiroSessionRepository"/>
+        <!-- 定义该Session DAO操作中所使用的ID生成器 -->
+        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+    </bean>
+
+    <!-- 配置session的定时验证检测程序类，以让无效的session释放 -->
+    <bean id="sessionValidationScheduler"
+          class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <!--检测时间间距，默认是60分钟-->
+        <property name="interval" value="18000000"/>
+        <property name="sessionManager" ref="sessionManager"/>
+    </bean>
+
+    <!-- 会话Cookie模板 -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <!--cookie的name -->
+        <constructor-arg value="renrenlab_session_id"/>
+        <!-- 保证该系统不会受到跨域的脚本操作攻击 -->
+        <property name="httpOnly" value="true"/>
+        <!--cookie的有效时间 ，单位为秒，如果设置为-1表示浏览器关闭，则Cookie消失-->
+        <property name="maxAge" value="1800000"/>
+        <!-- 配置存储Session Cookie的domain为 一级域名 -->
+        <property name="domain" value=".renrenlab.com"/>
+
+    </bean>
+    <!-- Session Manager -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <!-- 相隔多久检查一次session的有效性   -->
+        <property name="sessionValidationInterval" value="1800000"/>
+        <!-- session 有效时间为半小时 （毫秒单位）-->
+        <property name="globalSessionTimeout" value="1800000"/>
+        <!-- 定义Session可以进行序列化的工具类 -->
+        <property name="sessionDAO" ref="customShiroSessionDAO"/>
+        <!-- session 监听，可以多个。 -->
+        <property name="sessionListeners">
+            <list>
+                <!--<ref bean="customSessionListener"/>-->
+            </list>
+        </property>
+        <!-- 间隔多少时间检查，不配置是60分钟 -->
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <!-- 是否开启 检测，默认开启 -->
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <!-- 是否删除无效的，默认也是开启 -->
+        <property name="deleteInvalidSessions" value="true"/>
+        <!--所有的session一定要将id设置到Cookie之中，需要提供有Cookie的操作模版 -->
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+    </bean>
+
+    <!-- redis 的缓存 -->
+    <bean id="jedisManager" class="com.renrenlab.rlab.common.shiro.cache.JedisManager">
+        <property name="jedisPool" ref="jedisPool"/>
+    </bean>
+    <!-- shiro 缓存实现，对ShiroCacheManager，我是采用redis的实现 -->
+    <bean id="jedisShiroCacheManager" class="com.renrenlab.rlab.common.shiro.cache.JedisShiroCacheManager">
+        <property name="jedisManager" ref="jedisManager"/>
+    </bean>
+    <!-- 用户缓存 -->
+    <bean id="customShiroCacheManager" class="com.renrenlab.rlab.common.shiro.cache.CustomShiroCacheManager">
+        <property name="shiroCacheManager" ref="jedisShiroCacheManager"/>
+    </bean>
+
+    <bean id="permission" class="com.renrenlab.rlab.common.shiro.filter.PermissionFilter"/>
+    <bean id="simple" class="com.renrenlab.rlab.common.shiro.filter.SimpleAuthFilter"/>
+    <bean id="role" class="com.renrenlab.rlab.common.shiro.filter.RoleAuthorizationFilter"/>
+    <!-- Shiro过滤器 -->
+    <bean id="shiroFilter" class="com.renrenlab.rlab.common.shiro.MyShiroFilterFactoryBean">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 身份认证失败，则跳转到登录页面的配置 -->
+        <property name="loginUrl" value="/user/login"/>
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <property name="unauthorizedUrl" value="/unauthorized"/>
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions" value=""/>
+        <!--   <value>
+                           /user/login/**=anon
+                            /front/**=anon
+                            /bg/**=au                              /**=anon
+
+                         /bg*=authc
+                            /user/student*/**=roles[teacher]
+                            /user/teacher*/**=perms["user:create"]
+        </value>-->
+        <property name="filters">
+            <util:map>
+                <!--<entry key="login" value-ref="login"></entry>-->
+                <!--<entry key="role" value-ref="role"></entry>-->
+                <entry key="perms" value-ref="permission"></entry>
+                <!--<entry key="simple" value-ref="simple"></entry>-->
+                <!--<entry key="kickout" value-ref="kickoutSessionFilter"></entry>-->
+            </util:map>
+        </property>
+    </bean>
+</beans>

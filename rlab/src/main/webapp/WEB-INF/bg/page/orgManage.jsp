@@ -30,46 +30,46 @@
     <%--<script src="../../common/assets/jquery-1.12.4/jquery.min.js"></script>--%>
     <%--<script src="../../common/assets/jQuery-slimScroll/jquery.slimscroll.min.js"></script>--%>
     <%--部署环境--%>
-<style>
-    .btn{
-        height: 50px;float: right;
-    }
-    .searchs{
-        width: 360px;
-    }
-    .shade .tit{
-        padding: 26px 0 0 0;
-        overflow: hidden;
-    }
-    .shade .tit span{
-        margin: auto;
-        font-size: 90px;
-        color: #ff783d;
-        display: block;
-        width: 90px;
-        height: 90px;
-        margin-bottom: 25px;
-    }
-    .shade .tit p{
-        font-size: 22px;
-        color: #333333;
-        line-height: 25px;
-        text-align: center;
-    }
-    .shade .tit button{
-        width: 50%;
-        box-sizing: content-box;
-        margin: 0;
-        float: left;
-        height: 60px;
-        margin-bottom: 0;
-        margin-top: 0;
-        border-radius: 0;
-        border-top: 1px solid #7b8da0;
-        background: #78b3e7;
-    }
-    .btn{font-size: 16px;float: left;margin: 0 15px;}
-</style>
+    <style>
+        .btn{
+            height: 50px;float: right;
+        }
+        .searchs{
+            width: 360px;
+        }
+        .shade .tit{
+            padding: 26px 0 0 0;
+            overflow: hidden;
+        }
+        .shade .tit span{
+            margin: auto;
+            font-size: 90px;
+            color: #ff783d;
+            display: block;
+            width: 90px;
+            height: 90px;
+            margin-bottom: 25px;
+        }
+        .shade .tit p{
+            font-size: 22px;
+            color: #333333;
+            line-height: 25px;
+            text-align: center;
+        }
+        .shade .tit button{
+            width: 50%;
+            box-sizing: content-box;
+            margin: 0;
+            float: left;
+            height: 60px;
+            margin-bottom: 0;
+            margin-top: 0;
+            border-radius: 0;
+            border-top: 1px solid #7b8da0;
+            background: #78b3e7;
+        }
+        .btn{font-size: 16px;float: left;margin: 0 15px;}
+    </style>
 </head>
 <body>
 <div class="wrapper">
@@ -82,7 +82,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2" />
-                <jsp:param name="firstMenu" value="4" />
+                <jsp:param name="firstMenu" value="5" />
                 <jsp:param name="secondMenu" value="1" />
             </jsp:include>
         </div>
@@ -147,6 +147,7 @@
                         <th>持有仪器</th>
                         <th style="cursor: pointer" onclick="listSort(this)" data-sort="${order}" class="sorts">创建时间<i class="${order==null? 'lab-down' : 'lab-top' }"></i></th>
                         <th>操作</th>
+                        <th>链接</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -155,25 +156,27 @@
                         <tr>
                             <td>${orgBaseInfo.orgName}</td>
                             <td>${orgBaseInfo.orgCategory}</td>
-                            <td>${orgBaseInfo.orgIdentification == 0 ? '企业': orgBaseInfo.orgIdentification == 1 ? '服务商': '认证服务商'}</td>
+                            <td>${orgBaseInfo.orgIdentification == 2 ? '认证服务商': orgBaseInfo.orgIdentification == 0 ? '企业': '服务商'}</td>
                             <td>${orgBaseInfo.orgCode}</td>
                             <td>${orgBaseInfo.orgShareIndexStr}</td>
                             <td>${orgBaseInfo.insCount}</td>
                             <td>${orgBaseInfo.createTimeStr}</td>
                             <td>
-                                <%--查看权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                    <%--查看权限--%>
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                     <a class="check" style="color: #6693c8;" href="${rlab}/bg/org/search/detail/look?oid=${orgBaseInfo.orgOid}">查看详情</a>
-                                </c:if>
-                                <%--修改权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                                <%--</c:if>--%>
+                                    <%--修改权限--%>
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                                     <a class="forbidden" href="${rlab}/bg/org/search/detail?operator=modify&oid=${orgBaseInfo.orgOid}">修改</a>
-                                </c:if>
-                                <%--撤销权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                                <%--</c:if>--%>
+                                    <%--撤销权限--%>
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                                     <a class="remove" onclick="closeOrg(this)" data-org-id="${orgBaseInfo.orgOid}" data-org-state="${orgBaseInfo.orgState}">${orgBaseInfo.orgState == 0? '关闭': '开启'}</a>
-                                </c:if>
+                                <%--</c:if>--%>
                             </td>
+                            <td><a href="${rlab}/org/${orgBaseInfo.orgOid}"
+                                   target="_blank">${rlab}/org/${orgBaseInfo.orgOid}</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -256,12 +259,16 @@
             dataType: "json",
             contentType: "application/json"
         })
-        .done(function (data) {
-            window.location.reload(true);
-        })
-        .fail(function (data) {
-            alert("修改失败");
-        });
+            .done(function (data) {
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
+            })
+            .fail(function (data) {
+                alert("修改失败");
+            });
     }
 
     function openn() {
@@ -273,7 +280,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("修改失败");

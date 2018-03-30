@@ -15,6 +15,11 @@ tbody, tfoot, thead, tr, th, td {
 html, body {
     height: 100% !important;
 }
+td{
+    table-layout: fixed!important;
+    word-break: break-all!important;
+    overflow: hidden!important;
+}
 
 * {
     margin: 0;
@@ -95,11 +100,11 @@ a, a:link, a:visited, a:hover, a:active {
 .sd {
     float: left;
     width: 240px;
-    height: 100%;
+    height: 93%;
     position: absolute;
     left: 0;
     top: 0;
-    overflow: scroll;
+    overflow: auto;
     background: #2c415a;
 }
 

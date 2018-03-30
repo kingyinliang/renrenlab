@@ -122,7 +122,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="1"/>
-                <jsp:param name="firstMenu" value="6"/>
+                <jsp:param name="firstMenu" value="7"/>
             </jsp:include>
         </div>
         <div class="main" style="overflow-y: auto">
@@ -276,7 +276,11 @@
             dataType: "json",
             contentType: "application/json"
         }).done(function (data) {
-            window.location.reload(true);
+            if (data.code == 0) {
+                window.location.reload(true);
+            } else {
+                alert(data.description);
+            }
         })
             .fail(function (data) {
                 alert("失败");
@@ -303,7 +307,11 @@
                 dataType: "json",
                 contentType: "application/json"
             }).done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
                 .fail(function (data) {
                     alert("失败");
@@ -332,7 +340,11 @@
             dataType: "json",
             contentType: "application/json"
         }).done(function (data) {
-            window.location.reload(true);
+            if (data.code == 0) {
+                window.location.reload(true);
+            } else {
+                alert(data.description);
+            }
         })
             .fail(function (data) {
                 alert("失败");
@@ -357,7 +369,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {

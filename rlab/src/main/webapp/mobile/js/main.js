@@ -21,7 +21,8 @@ window._dgt = _dgt;
     _dgt.push(['setSiteId', '05a36522bc9dd9cd']);
     var d = document, g = d.createElement('script'),
         s = d.getElementsByTagName('script')[0];
-    g.type = 'text/javascript'; g.async = true;
+    g.type = 'text/javascript';
+    g.async = true;
     g.defer = true;
     g.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'shujike.cn/dgt.js';
     s.parentNode.insertBefore(g, s);
@@ -68,42 +69,73 @@ function getAddressCookie() {
 /**
  * 跳转搜索页面
  */
-function toSearch($_this, text) {
-
-    // 传0个参数的情况（一般为直接搜索）
-    if (arguments.length == 0 || (!$_this && !text)) {
-        KEY_WORD = $.trim($("#searchInput").val());
-        if (isStorage) {
-            addSearchToHistory();
+function toSearch($_this) {
+    if($_this){
+        if($($_this).data("originKeyword")){
+            addhistory($($_this).data("originKeyword"));
+            window.location.href=BASE_URL + '/front/search/all?searchKey='+ $($_this).data("originKeyword");
+        }else {
+            addhistory($($_this).text());
+            window.location.href=BASE_URL + '/front/search/all?searchKey='+ $($_this).text();
         }
+    }else {
+        addhistory($.trim($("#searchInput").val()));
+        window.location.href=BASE_URL + '/front/search/all?searchKey='+ $.trim($("#searchInput").val());
     }
+}
+// function toSearch($_this, text) {
+//
+//     // 传0个参数的情况（一般为直接搜索）
+//     if (arguments.length == 0 || (!$_this && !text)) {
+//         KEY_WORD = $.trim($("#searchInput").val());
+//         if (isStorage) {
+//             addSearchToHistory();
+//         }
+//     }
+//
+//     // 传了1个参数的情况
+//     if (arguments.length == 1 || (!!$_this && !text)) {
+//         var originKeyword = $($_this).data("originKeyword");
+//         if(originKeyword){
+//             KEY_WORD = originKeyword;
+//         }else{
+//             KEY_WORD = $($_this).text();
+//         }
+//         $("#searchInput").val(KEY_WORD);
+//         if (isStorage) {
+//             addSearchToHistory();
+//         }
+//     }
+//
+//     // 传了2个参数的情况
+//     if (arguments.length == 2 || (!$_this && !!text) || (!$_this && text == "")) {
+//         KEY_WORD = text;
+//     }
+//
+//     var address = URL_CUR_CITY;
+//
+//     // 参数地址为空时优先获取定位
+//     if (address == "") {
+//         CUR_PROVINCE = null,
+//             CUR_CITY = null;
+//         address = getAddressByLocation();
+//         dealAddress(address);
+//
+//     } else if (address == "全国") {
+//         CUR_PROVINCE = null,
+//             CUR_CITY = null;
+//     } else {
+//         //　为正常地址时，直接处理参数
+//         dealAddress(address);
+//     }
+//     URL_CUR_CITY = address;
+//     // 处理页码相关参数（默认从第一页开始搜索）
+//     PAGE_NO = 1;
+//     // 跳转搜索结果页面
+//     toGoodsList();
+// }
 
-    // 传了1个参数的情况
-    if (arguments.length == 1 || (!!$_this && !text)) {
-        KEY_WORD = $($_this).text();
-        $("#searchInput").val(KEY_WORD);
-        if (isStorage) {
-            addSearchToHistory();
-        }
-    }
-
-    // 传了2个参数的情况
-    if (arguments.length == 2 || (!$_this && !!text) || (!$_this && text == "")) {
-        KEY_WORD = text;
-    }
-
-    // event = event ? event : window.event;
-    // // 处理关键字参数
-    // if(text || ($_this == null && event == null)){
-    //     KEY_WORD = text;
-    // } else {
-    //     if ($_this != undefined) {
-    //         KEY_WORD = $($_this).text();
-    //         $("#searchInput").val(KEY_WORD);
-    //     } else {
-    //         KEY_WORD = $.trim($("#searchInput").val());
-    //     }
-    // }
+function getAddressToUrl() {
     // 地址更新为URL参数地址
     var address = URL_CUR_CITY;
 
@@ -123,19 +155,17 @@ function toSearch($_this, text) {
         //　为正常地址时，直接处理参数
         dealAddress(address);
     }
+
     URL_CUR_CITY = address;
-    // 处理页码相关参数（默认从第一页开始搜索）
-    PAGE_NO = 1;
-    // 跳转搜索结果页面
-    toGoodsList();
 }
+
 
 /**
  * 通过定位获取地址
  */
 function getAddressByLocation(address) {
     $.ajax({
-        url: BASE_URL + "/front/instrument/location",
+        url: BASE_URL + "/instrument/location",
         type: 'GET',
         async: false,
         dataType: 'json',
@@ -195,7 +225,7 @@ function dealAddress(address) {
 }
 
 /**
- * 跳转至搜索结果页面
+ * 跳转至搜索结果页面(仪器)
  */
 function toGoodsList() {
 
@@ -213,7 +243,7 @@ function toGoodsList() {
         pageSize: PAGE_SIZE
     }
 
-    var URL = BASE_URL + "/front/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+    var URL = BASE_URL + "/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
 
     if (CUR_PROVINCE !== null) {
         // province
@@ -227,6 +257,87 @@ function toGoodsList() {
         URL = URL + "&city=" + CUR_CITY
     }
 
+
+    URL = URL + "&curURI=" + encodeURI(URL_CUR_CITY);
+
+    location.href = URL;
+
+}
+
+/**
+ * 跳转至搜索结果页面（服务）
+ */
+function toServiceList() {
+
+    var keyword = encodeURI(KEY_WORD);
+    keyword = keyword.replace(/\+/g, "%2B");
+    keyword = keyword.replace(/#/g, "%23");
+    keyword = keyword.replace(/&/g, "%26");
+    keyword = keyword.replace(/</g, "%3c");
+    keyword = keyword.replace(/>/g, "%3e");
+
+    var formData = {
+        // keyword: CUR_CITY + KEY_WORD,
+        keyword: keyword,
+        pageNo: PAGE_NO,
+        pageSize: PAGE_SIZE
+    }
+
+    var URL = BASE_URL + "/service/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+
+    if (CUR_PROVINCE !== null) {
+        // province
+        // formData.province = CUR_PROVINCE;
+        URL = URL + "&province=" + CUR_PROVINCE
+    }
+
+    if (CUR_CITY !== null) {
+        // city
+        // formData.city = CUR_CITY;
+        URL = URL + "&city=" + CUR_CITY
+    }
+
+
+    URL = URL + "&curURI=" + encodeURI(URL_CUR_CITY);
+
+    location.href = URL;
+
+}
+
+
+/**
+ * 跳转至搜索结果页面（机构）
+ */
+function toOrgList() {
+
+    var keyword = encodeURI(KEY_WORD);
+    keyword = keyword.replace(/\+/g, "%2B");
+    keyword = keyword.replace(/#/g, "%23");
+    keyword = keyword.replace(/&/g, "%26");
+    keyword = keyword.replace(/</g, "%3c");
+    keyword = keyword.replace(/>/g, "%3e");
+
+    var formData = {
+        // keyword: CUR_CITY + KEY_WORD,
+        keyword: keyword,
+        pageNo: PAGE_NO,
+        pageSize: PAGE_SIZE
+    }
+
+    var URL = BASE_URL + "/front/org/query?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+
+    if (CUR_PROVINCE !== null) {
+        // province
+        // formData.province = CUR_PROVINCE;
+        URL = URL + "&province=" + CUR_PROVINCE
+    }
+
+    if (CUR_CITY !== null) {
+        // city
+        alert(CUR_CITY)
+        // formData.city = CUR_CITY;
+        URL = URL + "&city=" + CUR_CITY
+    }
 
     URL = URL + "&curURI=" + encodeURI(URL_CUR_CITY);
 
@@ -273,11 +384,98 @@ function initSearchHistory() {
         $("#historySearch").show();
         var historyUl = $("#historyUl");
         for (var i = histroy.length - 1; i >= 0; i--) {
-            historyUl.append('<li onclick="toSearch(this)">' + histroy[i] + '</li>');
+            var keyword = histroy[i];
+            var sliceKeyword = keyword;
+
+            // 处理过长的显示问题
+            if (sliceKeyword.length > 10) {
+                sliceKeyword = keyword.length > 10 ? keyword.slice(0, 5) + "..." + keyword.slice(-5, -1) : keyword;
+            }
+
+            historyUl.append('<li data-origin-keyword="' + histroy[i] + '" onclick="toSearch(this)">' + sliceKeyword + '</li>');
         }
     }
-
 }
+function addhistory(str) {
+    if (str.trim() === "") {
+        return false;
+    }
+
+    var historyAddress = localStorage.getItem("histAddress");
+    var key_word = str.length > 10 ? str.slice(0, 5) + "..." + str.slice(-5, -1) : str;
+    var key_word_substitute = str.length > 10 ? str.slice(0, 5) + "..." + str.slice(-5, -1) : str;
+
+    if (historyAddress == null || historyAddress === undefined || historyAddress === "") {
+        localStorage.setItem("histAddress", JSON.stringify([htmlEscape(key_word)]));
+    } else {
+        historyAddress = JSON.parse(historyAddress);
+        var flag = true;// 标记历史记录不存在KEY_WORD新记录
+
+        for (var i = 0; i < historyAddress.length; i++) {
+
+            if (key_word === historyAddress[i]) {
+                flag = false;
+                historyAddress.splice(i, 1);
+                historyAddress.push(htmlEscape(key_word));
+            }
+
+        }
+
+        // 添加新历史
+        if (flag === true) {
+            historyAddress.push(htmlEscape(key_word));// 添加新记录
+        }
+
+        // 清除旧历史
+        if (historyAddress.length > 10) {
+            historyAddress.shift();
+        }
+
+        localStorage.setItem("histAddress", JSON.stringify(historyAddress));
+
+    }
+}
+function addSearchToHistoryOld() {
+
+    if (KEY_WORD.trim() === "") {
+        return false;
+    }
+
+    var historyAddress = localStorage.getItem("histAddress");
+    var key_word = KEY_WORD.length > 10 ? KEY_WORD.slice(0, 5) + "..." + KEY_WORD.slice(-5, -1) : KEY_WORD;
+    var key_word_substitute = KEY_WORD.length > 10 ? KEY_WORD.slice(0, 5) + "..." + KEY_WORD.slice(-5, -1) : KEY_WORD;
+
+    if (historyAddress == null || historyAddress === undefined || historyAddress === "") {
+        localStorage.setItem("histAddress", JSON.stringify([htmlEscape(key_word)]));
+    } else {
+        historyAddress = JSON.parse(historyAddress);
+        var flag = true;// 标记历史记录不存在KEY_WORD新记录
+
+        for (var i = 0; i < historyAddress.length; i++) {
+
+            if (key_word === historyAddress[i]) {
+                flag = false;
+                historyAddress.splice(i, 1);
+                historyAddress.push(htmlEscape(key_word));
+            }
+
+        }
+
+        // 添加新历史
+        if (flag === true) {
+            historyAddress.push(htmlEscape(key_word));// 添加新记录
+        }
+
+        // 清除旧历史
+        if (historyAddress.length > 10) {
+            historyAddress.shift();
+        }
+
+        localStorage.setItem("histAddress", JSON.stringify(historyAddress));
+
+    }
+}
+
 /**
  * 添加历史搜索记录
  */
@@ -288,12 +486,12 @@ function addSearchToHistory() {
     }
 
     var historyAddress = localStorage.getItem("histAddress");
-    var key_word = KEY_WORD.length > 10 ? KEY_WORD.slice(0, 5) + "..." + KEY_WORD.slice(-5, -1) : KEY_WORD;
+    // var key_word = KEY_WORD.length > 10 ? KEY_WORD.slice(0, 5) + "..." + KEY_WORD.slice(-5, -1) : KEY_WORD;
+    var key_word = KEY_WORD;
 
     if (historyAddress == null || historyAddress === undefined || historyAddress === "") {
         localStorage.setItem("histAddress", JSON.stringify([htmlEscape(key_word)]));
     } else {
-
         historyAddress = JSON.parse(historyAddress);
         var flag = true;// 标记历史记录不存在KEY_WORD新记录
 
@@ -350,7 +548,7 @@ function clearSearchHistory() {
  */
 function toLogin() {
     setCallbackUrl();
-    var URL = BASE_URL + "/front/user/login";
+    var URL = BASE_URL + "/user/login";
     URL = URL + '?curURI=' + URL_CUR_CITY;
     location.href = URL;
 }
@@ -395,7 +593,7 @@ function toHome() {
  * 跳转至用户中心页面
  */
 function toCenter() {
-    var URL = BASE_URL + "/front/user/center";
+    var URL = TOKEN1 + "/user/center";
     URL = URL + "?curURI=" + encodeURI(URL_CUR_CITY);
     location.href = URL;
 }
@@ -403,7 +601,7 @@ function toCenter() {
 /**
  * 跳转高级搜索页面
  */
-function toSuperSearch() {
+function toSuperSearch(origin) {
 
     var keyword = $("#searchIpt").val();
     if (keyword === "") {
@@ -417,8 +615,15 @@ function toSuperSearch() {
     keyword = keyword.replace(/</g, "%3c");
     keyword = keyword.replace(/>/g, "%3e");
 
-    var URL = BASE_URL + '/front/superSearch/search?query=' + keyword;
+    var URL = BASE_URL + '/front/superSearch/search?flag=0&query=' + keyword;
     URL = URL + "&curURI=" + encodeURI(URL_CUR_CITY);
+    if (origin === 'ins') {
+        URL = URL + '&origin=ins';
+    } else if (origin === 'service') {
+        URL = URL + '&origin=service';
+    } else if (origin === 'org') {
+        URL = URL + '&origin=org';
+    }
     window.location.href = URL;
 }
 
@@ -435,7 +640,7 @@ function toSuperSearch() {
 function toGoodsDetail($this) {
 
     var goodsInfo = $($this).data("goodsId");
-    var URL = BASE_URL + "/front/instrument/search/" + goodsInfo;
+    var URL = BASE_URL + "/instrument/search/" + goodsInfo;
     URL = URL + "?curURI=" + encodeURI(URL_CUR_CITY);
     location.href = URL;
 
@@ -529,4 +734,12 @@ function htmlEscape(sHtml) {
  */
 function removeHtmlTab(tab) {
     return tab.replace(/<[^<>]+?>/g, '');//删除所有HTML标签
+}
+/*跳转微需求页面*/
+function goReqlist() {
+    window.location.href = BASE_URL +"/page/req/listpage";
+}
+/*跳转分类页面*/
+function toClassify() {
+    window.location.href = BASE_URL + "/service/classify_home";
 }

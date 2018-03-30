@@ -3,7 +3,6 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:task="http://www.springframework.org/schema/task"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -12,9 +11,7 @@
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-	http://www.springframework.org/schema/task
-	http://www.springframework.org/schema/task/spring-task.xsd">
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- 配置SpringMVC -->
     <!-- 1.开启SpringMVC注解模式 -->
@@ -31,36 +28,30 @@
     <mvc:default-servlet-handler/>
 
     <mvc:interceptors>
+        <!--<bean class="com.renrenlab.rlab.common.interceptor.URLInterceptor"/>-->
         <bean class="com.renrenlab.rlab.common.interceptor.IPInterceptor"/>
+        <!-- <mvc:interceptor>
+             <mvc:mapping path="/bg/**"/>
+             <mvc:mapping path="/user/modify/**"/>
+             <mvc:mapping path="/user/center"/>
+             <mvc:mapping path="/user/service**"/>
+             <mvc:mapping path="/user/req/*"/>
+             <mvc:mapping path="/front/org/search"/>
+             <mvc:mapping path="/front/org/upload"/>
+             <mvc:mapping path="/front/provider/**"/>
+             <mvc:mapping path="/page/req/pubpage"/>
+             <mvc:mapping path="/page/hdxtcxj"/>
+             <mvc:mapping path="/page/sdkjcxj"/>
+             <mvc:mapping path="/front/coupon/**"/>
+             <mvc:exclude-mapping path="/user/req/m_list"/>
+             <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/query"/>
+             <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/add"/>
+             <mvc:exclude-mapping path="/bg/org/city"/>
+             <bean class="com.renrenlab.rlab.common.interceptor.AuthenticationInterceptor"/>
+         </mvc:interceptor>-->
         <mvc:interceptor>
-            <mvc:mapping path="/bg/**"/>
-            <mvc:mapping path="/front/user/modify/**"/>
-            <mvc:mapping path="/front/user/center"/>
-            <mvc:mapping path="/front/user/req/*"/>
-            <mvc:mapping path="/front/org/search"/>
-            <mvc:mapping path="/front/org/upload"/>
-            <mvc:mapping path="/front/provider/**"/>
-            <mvc:mapping path="/page/req/pubpage"/>
-            <mvc:mapping path="/page/hdxtcxj"/>
-            <mvc:mapping path="/page/sdkjcxj"/>
-            <mvc:mapping path="/front/coupon/**"/>
-            <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/query"/>
-            <mvc:exclude-mapping path="/bg/org/OrgcertificateTmp/add"/>
-            <mvc:exclude-mapping path="/bg/org/city"/>
-            <bean class="com.renrenlab.rlab.common.interceptor.AuthenticationInterceptor"/>
-        </mvc:interceptor>
-        <mvc:interceptor>
-            <mvc:mapping path="/page/**"/>
-            <mvc:mapping path="/front/user/**"/>
-            <mvc:mapping path="/front/instrument/search/**"/>
-            <mvc:mapping path="/front/superSearch/search"/>
-            <mvc:mapping path="/front/org"/>
-            <mvc:mapping path="/front/org/**"/>
-            <mvc:mapping path="/front/user/req/tinylist"/>
-            <mvc:exclude-mapping path="/page/req/detail/ajax"/>
-            <mvc:exclude-mapping path="/page/req/listinfo"/>
-            <mvc:exclude-mapping path="/page/req/top"/>
-            <bean class="com.renrenlab.rlab.common.interceptor.UrlCallbackInterceptor"/>
+            <mvc:mapping path="/**"/>
+            <bean class="com.renrenlab.rlab.common.interceptor.PVInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
     <!-- 3.配置jsp 显示ViewResolver -->
@@ -84,8 +75,7 @@
         <property name="maxUploadSize" value="10485760"/>
     </bean>
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-    <!--定时器-->
-    <task:annotation-driven scheduler="reqScheduler" mode="proxy"/>
-    <task:scheduler id="reqScheduler" pool-size="10"/>
-
+    <!--定时器  加上会执行两次-->
+    <!--<task:annotation-driven scheduler="reqScheduler" mode="proxy"/>-->
+    <!--<task:scheduler id="reqScheduler" pool-size="10"/>-->
 </beans>

@@ -16,7 +16,7 @@
 
     <%--     <script src="${rlab}/front/assets/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script> --%>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170905">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/scientific_search.css?v_=20170905"/>
 
@@ -112,7 +112,7 @@
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 
 </div>
-<script src="${rlab}/front/js/common/main.js?_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script src="${rlab}/front/js/util/pagination.js"></script>
 <script src="${rlab}/front/assets/echarts/echarts-plain.js" type="text/javascript" charset="utf-8"></script>
 <%-- <script src="${rlab}/front/js/view/echarts_database.js" type="text/javascript" charset="utf-8"></script> --%>

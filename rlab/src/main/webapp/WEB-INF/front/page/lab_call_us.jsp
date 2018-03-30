@@ -11,8 +11,9 @@
     <!--jquery-->
     <script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
-    <link rel="stylesheet" href="${rlab}/front/css/footpage.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20171108">
+    <link rel="stylesheet" href="${rlab}/front/css/footpage.css?v_=20171109">
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
     <!--<![endif]-->
@@ -71,14 +72,14 @@
     <div id="content">
         <div class="main clearfix">
             <div class="lef">
-                <div class="tab">
+                <div class="tabs">
                     <p style="font-size: 20px;color: #508df0;">人人实验</p>
                     <p><a href="${rlab}/page/aboutus">关于我们</a></p>
                     <p><a href="${rlab}/page/ournews">媒体报道</a></p>
                     <p><a href="${rlab}/page/joinus">加入我们</a></p>
                     <p class="select"><a href="${rlab}/page/callus">联系我们</a></p>
                 </div>
-                <div class="tab protocol">
+                <div class="tabs protocol">
                     <p style="font-size: 20px;color: #508df0;">服务条款</p>
                     <p><a href="${rlab}/page/server">用户服务协议</a></p>
                     <p><a href="${rlab}/page/equity">知识产权协议</a></p>
@@ -107,6 +108,6 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 </div>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 </html>

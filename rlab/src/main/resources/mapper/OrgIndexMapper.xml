@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.OrgIndexDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.OrgIndex">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_oid" jdbcType="BIGINT" property="orgOid" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="org_category_name" jdbcType="VARCHAR" property="orgCategoryName" />
+    <result column="org_logo" jdbcType="VARCHAR" property="orgLogo" />
+    <result column="org_ins_count" jdbcType="INTEGER" property="orgInsCount" />
+    <result column="org_service_count" jdbcType="INTEGER" property="orgServiceCount" />
+    <result column="org_addr_province" jdbcType="VARCHAR" property="orgAddrProvince" />
+    <result column="org_addr_city" jdbcType="VARCHAR" property="orgAddrCity" />
+    <result column="org_addr_district" jdbcType="VARCHAR" property="orgAddrDistrict" />
+    <result column="org_share_index" jdbcType="REAL" property="orgShareIndex" />
+    <result column="org_rank" jdbcType="INTEGER" property="orgRank" />
+    <result column="org_keyword" jdbcType="OTHER" property="orgKeyword" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="org_addr_longitude" jdbcType="NUMERIC" property="orgAddrLongitude" />
+    <result column="org_addr_latitude" jdbcType="NUMERIC" property="orgAddrLatitude" />
+    <result column="org_type" jdbcType="SMALLINT" property="orgType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, org_oid, org_name, org_category_name, org_logo, org_ins_count, org_service_count, 
+    org_addr_province, org_addr_city, org_addr_district, org_share_index, org_rank, org_keyword, 
+    create_time, modify_time, org_addr_longitude, org_addr_latitude, org_type
+  </sql>
+
+  <select id="selectByOid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_common_info.t_org_index
+    where org_oid = #{oid,jdbcType=BIGINT}
+  </select>
+
+  <!--按条件搜索索引表-->
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    <if test="(order = 0 or order = 1 ) and longitude!=null and latitude!=null">
+      ,earth_distance (
+      ll_to_earth (
+      ('${latitude}'),
+      ('${longitude}')
+      ),
+      ll_to_earth (
+      idx.org_addr_latitude,
+      idx.org_addr_longitude
+      )
+      ) AS dis
+    </if>
+    <if test="keyword != null">
+      ,ts_rank_cd(org_keyword, QUERY) AS RANK
+    </if>
+    FROM
+    rlab_common_info.t_org_index idx
+    <if test="keyword !=null ">
+      , to_tsquery('jiebacfg', #{keyword,jdbcType=VARCHAR} ) query
+    </if>
+    WHERE
+    TRUE
+    <if test="keyword != null">
+      AND org_keyword @@ QUERY
+      AND numnode(QUERY) > 0
+    </if>
+    <if test="province != null and province != '' and province != '全国'">
+      AND POSITION (#{province,jdbcType=VARCHAR} IN org_addr_province)>0
+    </if>
+    <if test="city !=null and city != '' ">
+      AND POSITION (#{city,jdbcType=VARCHAR} IN org_addr_city)>0
+    </if>
+    <if test="district !=null and district != '' ">
+      AND POSITION (#{district,jdbcType=VARCHAR} IN org_addr_district)>0
+    </if>
+    ORDER BY
+    <if test="keyword !=null ">
+      RANK DESC ,
+    </if>
+    <if test="order = 0 and longitude!=null and latitude!=null">
+      org_type DESC,
+    </if>
+    <if test="(order = 0 or order = 1 ) and longitude!=null and latitude!=null">
+      dis ASC,
+    </if>
+    <if test="order = 2 ">
+      org_share_index DESC,
+    </if>
+    org_rank DESC
+  </select>
+
+  <select id="searchOrgBaseInfoListTopK" resultType="com.renrenlab.rlab.vo.OrgInfo">
+  SELECT
+  org_oid,
+  org_name,
+  org_share_index,
+  org_rank,
+  org_addr_province, org_addr_city, org_addr_district,
+  org_logo
+  FROM  rlab_common_info.t_org_index  ORDER BY org_share_index DESC
+  LIMIT #{k, jdbcType=INTEGER}
+  </select>
+
+
+  <select id="IsExistedOrg" resultType="int" >
+    SELECT
+    COUNT(*)
+    FROM
+    rlab_common_info.t_org_index AS tii
+    <choose>
+      <when test="isCity">
+        WHERE tii.org_addr_city = #{location, jdbcType=VARCHAR}
+      </when>
+      <otherwise>
+        WHERE tii.org_addr_province = #{location, jdbcType=VARCHAR}
+      </otherwise>
+    </choose>
+  </select>
+
+  <select id="getDistrict" resultMap="BaseResultMap">
+    SELECT
+    DISTINCT
+    idx.org_addr_district
+    FROM
+    rlab_common_info.t_org_index idx
+    WHERE
+    TRUE
+    <if test="province != null">
+      AND POSITION (#{province,jdbcType=VARCHAR} IN org_addr_province)>0
+    </if>
+    <if test="city != null">
+      AND POSITION (#{city,jdbcType=VARCHAR} IN org_addr_city)>0
+    </if>
+    AND idx.org_addr_district is not null
+    ORDER BY
+    org_addr_district ASC
+  </select>
+
+
+  <delete id="deleteByOid" parameterType="java.lang.Long">
+    delete from rlab_common_info.t_org_index
+    where org_oid = #{oid,jdbcType=BIGINT}
+  </delete>
+
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.OrgIndex">
+    insert into rlab_common_info.t_org_index
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgOid != null">
+        org_oid,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="orgCategoryName != null">
+        org_category_name,
+      </if>
+      <if test="orgLogo != null">
+        org_logo,
+      </if>
+      <if test="orgInsCount != null">
+        org_ins_count,
+      </if>
+      <if test="orgServiceCount != null">
+        org_service_count,
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province,
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city,
+      </if>
+      <if test="orgAddrDistrict != null">
+        org_addr_district,
+      </if>
+      <if test="orgShareIndex != null">
+        org_share_index,
+      </if>
+      <if test="orgRank != null">
+        org_rank,
+      </if>
+      <if test="orgKeyword != null">
+        org_keyword,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="orgAddrLongitude != null">
+        org_addr_longitude,
+      </if>
+      <if test="orgAddrLatitude != null">
+        org_addr_latitude,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgOid != null">
+        #{orgOid,jdbcType=BIGINT},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCategoryName != null">
+        #{orgCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLogo != null">
+        #{orgLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInsCount != null">
+        #{orgInsCount,jdbcType=INTEGER},
+      </if>
+      <if test="orgServiceCount != null">
+        #{orgServiceCount,jdbcType=INTEGER},
+      </if>
+      <if test="orgAddrProvince != null">
+        #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrDistrict != null">
+        #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="orgShareIndex != null">
+        #{orgShareIndex,jdbcType=REAL},
+      </if>
+      <if test="orgRank != null">
+        #{orgRank,jdbcType=INTEGER},
+      </if>
+      <if test="orgKeyword != null">
+        #{orgKeyword,jdbcType=OTHER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAddrLongitude != null">
+        #{orgAddrLongitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgAddrLatitude != null">
+        #{orgAddrLatitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+
+  <insert id="insertSelectiveByOrgOid" parameterType="java.lang.Long">
+    INSERT INTO rlab_common_info.t_org_index (
+    org_oid,
+    org_name,
+    org_type,
+    org_category_name,
+    org_logo,
+    org_ins_count,
+    /*org_service_count,*/
+    org_addr_province,
+    org_addr_city,
+    org_addr_district,
+    org_share_index,
+    org_rank,
+    org_keyword,
+    org_addr_longitude,
+    org_addr_latitude
+    ) SELECT
+    org_oid,
+    org_name,
+    org_type,
+    org_category_name,
+    org_logo,
+    org_ins_count,
+    /*org_service_count,*/
+    org_addr_province,
+    org_addr_city,
+    org_addr_district,
+    org_share_index,
+    org_rank,
+    setweight(
+    to_tsvector(
+    'jiebacfg',
+    COALESCE (orginfo.org_name, '')
+    ),
+    'A'
+    ) || setweight(
+    to_tsvector(
+    'jiebacfg',
+    COALESCE (orginfo.org_name, '')
+    ),
+    'B'
+    ) AS org_keyword,
+    org_addr_longitude,
+    org_addr_latitude
+    FROM
+    rlab_org_info.t_org_base_info AS orginfo
+    JOIN rlab_org_info.t_org_address AS addr ON (
+    orginfo.org_oid = addr.org_id
+    AND addr.org_addr_state = 0
+    )
+    JOIN rlab_org_info.t_org_category category ON category.org_category_id = orginfo.org_category_id
+    where orginfo.org_oid = #{orgOid,jdbcType=BIGINT}
+  </insert>
+
+
+  <update id="updateByOidSelective" parameterType="com.renrenlab.rlab.model.OrgIndex">
+    update rlab_common_info.t_org_index
+    <set>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCategoryName != null">
+        org_category_name = #{orgCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLogo != null">
+        org_logo = #{orgLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="orgInsCount != null">
+        org_ins_count = #{orgInsCount,jdbcType=INTEGER},
+      </if>
+      <if test="orgServiceCount != null">
+        org_service_count = #{orgServiceCount,jdbcType=INTEGER},
+      </if>
+      <if test="orgAddrProvince != null">
+        org_addr_province = #{orgAddrProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrCity != null">
+        org_addr_city = #{orgAddrCity,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAddrDistrict != null">
+        org_addr_district = #{orgAddrDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="orgShareIndex != null">
+        org_share_index = #{orgShareIndex,jdbcType=REAL},
+      </if>
+      <if test="orgRank != null">
+        org_rank = #{orgRank,jdbcType=INTEGER},
+      </if>
+      <if test="orgKeyword != null">
+        org_keyword = #{orgKeyword,jdbcType=OTHER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orgAddrLongitude != null">
+        org_addr_longitude = #{orgAddrLongitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgAddrLatitude != null">
+        org_addr_latitude = #{orgAddrLatitude,jdbcType=NUMERIC},
+      </if>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where org_oid = #{orgOid,jdbcType=BIGINT}
+  </update>
+</mapper>

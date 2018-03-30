@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
     <classPathEntry
-            location="C:/Users/Administrator/Desktop/soft2/soft/postgresql-9.2-1003-jdbc4.jar"/>
+            location="/Users/renrenlab/Desktop/soft2/soft/postgresql-9.2-1003-jdbc4.jar"/>
     <context id="tts2" targetRuntime="MyBatis3" defaultModelType="flat">
 
         <!-- 关闭注释 -->
@@ -17,36 +17,40 @@
                                 userId="postgres" password="postgres">
                 </jdbcConnection>-->
         <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://rm.inc.renrenlab.com:5432/renrenlab"
+                        connectionURL="jdbc:postgresql://rm.inc.renrenlab.com:5432/renrenlab2_2"
                         userId="renrenlab" password="jKk>?FJ{BC6swDstPNRrTm*dVosaWkHc">
         </jdbcConnection>
 
         <javaModelGenerator targetPackage="com.renrenlab.rlab.model"
-                            targetProject="C:/Users/Administrator/Desktop/aaa">
+                            targetProject="/Users/renrenlab/Desktop/soft2">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="com.renrenlab.rlab.mapper"
-                         targetProject="C:/Users/Administrator/Desktop/aaa">
+                         targetProject="/Users/renrenlab/Desktop/soft2">
             <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.renrenlab.rlab.dao"
-                             targetProject="C:/Users/Administrator/Desktop/aaa">
+                             targetProject="/Users/renrenlab/Desktop/soft2">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-
         <!--        <table schema="rlab_instrument_info" tableName="t_instrument_base_info" domainObjectName="InstrumentBaseInfo"
                        enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                        enableSelectByExample="false" selectByExampleQueryId="false"></table>   -->
 
 
-        <table schema="rlab_org_info" tableName="t_org_license" domainObjectName="OrgLicense"
+        <table schema="rlab_message_info" tableName="t_message_info" domainObjectName="LeaveMessageInfo"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        <!--<table schema="rlab_service_info" tableName="t_service_aptitude" domainObjectName="ServiceAptitudeInfo"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+        <!--enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
     </context>
     <!-- 执行代码 注意配置文件的路径
-    java -jar C:/Users/user/Desktop/soft2/soft/mybatis-generator-core-1.3.2/lib/mybatis-generator-core-1.3.5.jar -configfile C:/Users/user/Desktop/elab-local/rlab/src/main/resources/generatorConfig.xml -overwrite
+    java -jar C:/Users/user/Desktop/renrenlab_dev/mybatis-generator/mybatis-generator-core-1.3.2/lib/mybatis-generator-core-1.3.5.jar -configfile C:/Users/user/Desktop/renrenlab_dev/rlab/src/main/resources/generatorConfig.xml -overwrite
+
+    java -jar /Users/renrenlab/Desktop/soft2/soft/mybatis-generator-core-1.3.2/lib/mybatis-generator-core-1.3.5.jar -configfile /Users/renrenlab/Desktop/renrenlab/src/main/resources/generatorConfig.xml -overwrite
     -->
 </generatorConfiguration>

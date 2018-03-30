@@ -16,7 +16,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+        <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170905">
     <link rel="stylesheet" href="${rlab}/front/css/login.css?v_=20170905">
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
@@ -138,7 +138,7 @@
                     <span>
                         <input id="imgVertify" type="text" placeholder="请输入验证码">
                     </span>
-                    <img id="vertifyImg" onclick="updateValidateImg(this)" src="${rlab}/front/user/validateCode"
+                    <img id="vertifyImg" onclick="updateValidateImg(this)" src="${rlab}/user/validateCode"
                          alt="图形校验码">
                 </p>
 
@@ -155,12 +155,12 @@
                         </div>
                     </div>
                     <div class="rt">
-                        <a href="${rlab}/front/user/reset">忘记密码？</a>
+                        <a href="${rlab}/user/reset">忘记密码？</a>
                     </div>
                 </div>
                 <button id="login" type="button">登录</button>
                 <div class="to_register" style="height: 70px">
-                    还没有账号，<a href="${rlab}/front/user/register">立即注册</a>
+                    还没有账号，<a href="${rlab}/user/register">立即注册</a>
                 </div>
 
                 <%--<div class="other_login">--%>
@@ -179,7 +179,7 @@
         /*background-color:red;*/
     }
 </style>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     //    function fill($this) {
     //        $("#pwdfill").val($($this).val());

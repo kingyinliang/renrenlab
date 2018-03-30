@@ -61,13 +61,13 @@
       AND t_org_project_tmp.org_pro_state = #{state}::INTEGER 
     </if>
     <if test="startTime != null and startTime !=''" >
-      AND t_org_project_tmp.create_time &gt;= #{startTime}::date
+        AND t_org_project_tmp.modify_time &gt;= #{startTime}::date
     </if>
     <if test="endTime != null and endTime !='' " >
-      AND t_org_project_tmp.create_time &lt;= date'${endTime}'+INTEGER '1'
+        AND t_org_project_tmp.modify_time &lt;= date'${endTime}'+INTEGER '1'
     </if>
 
-    ORDER by t_org_project_tmp.create_time
+      ORDER by t_org_project_tmp.modify_time
     <if test="order == null || order =='' ">
       DESC
     </if>

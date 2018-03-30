@@ -62,7 +62,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>

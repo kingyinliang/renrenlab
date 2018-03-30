@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>人人实验（renrenlab.com）官方网站-互联网+科技服务平台</title>
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_=20170608">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <script src="${rlab}/mobile/js/zeptojs.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
@@ -41,13 +41,10 @@
 </head>
 
 <body>
-<div id="main" class="wrapper" style="overflow: hidden;">
-
-    <div class="headers">
-        <i class="lab-back_1 lft_back" onclick="goBack()"></i>
-        <p class="homelogo"><a href="javascript:void (0)" onclick="toHome()" ><img src="${rlab}/mobile/imgs/home_logo.png" /></a></p>
-        <a class="lab-search" id="searchs" href="javascript:void (0)" onclick="showSearchModal(this)" data-main-id="main" ></a>
-    </div>
+<div id="main" class="wrapper" style="overflow: hidden;padding-bottom: 1.3rem">
+    <header>
+        <%@ include file="../template/header_three.jsp" %>
+    </header>
 
     <div class="main">
         <c:choose>
@@ -67,53 +64,42 @@
         </div>
     </div>
     <div class="foot">
-        <p class="code"><img src="${rlab}/mobile/imgs/m2.1/homecode.jpg" alt=""></p>
-        <p style="text-align: center;font-size: 0.3rem;color: #333;margin-top: 0.2rem">关注“人人实验”服务号，体验VIP定制服务</p>
         <p style="margin-top: 0.3rem">验小花温馨提示：</p>
         <p style="margin-top: 0.6rem;">如您需要修改个人资料（用户名、密码等）<br />请您使用电脑访问人人实验网站www.renrenlab.com</p>
     </div>
-    <div class="quit" onclick="logouts()">
+    <div class="quit" onclick="logouts()" style="position: fixed;bottom: 1.3rem;">
         <p>退 出 登 录</p>
     </div>
+    <footer>
+        <jsp:include page="../template/footer.jsp" flush="true">
+            <jsp:param name="active" value="4"/>
+        </jsp:include>
+    </footer>
 </div>
 <%--公用搜索部分--%>
 <%@ include file="../template/search.jsp" %>
 
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script type="text/javascript">
+
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
-    setCallbackUrl();// 设置登录时回跳路径
+    // setCallbackUrl();// 设置登录时回跳路径
 
     function logouts() {
-        setCallbackUrl();
-        window.location.href = BASE_URL + "/front/user/logout?curURI=" +  encodeURI(URL_CUR_CITY );
+//        setCallbackUrl();
+        window.location.href = BASE_URL + "/user/logout?curURI=" + encodeURI(URL_CUR_CITY);
     }
 
     function gomanage() {
-        window.location.href = BASE_URL+ "/front/user/req/tinylist?pageNo=1&pageSize=10&state=99&entrance=1";
+        window.location.href = BASE_URL + "/user/req/tinylist?pageNo=1&pageSize=10&state=99&entrance=1";
     }
+
 </script>
 </html>

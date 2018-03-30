@@ -54,6 +54,14 @@ public interface OrgContactsDao {
     List<OrgContacts> searchContactsByOrgId(@Param("orgOid") Long orgOid, @Param("conState") Integer conState);
 
     /**
+     * 根据电话姓名查询联系人信息
+     * @param conPhone
+     * @param conName
+     * @return
+     */
+    List<OrgContacts> searchContactsByPhoneAndName(@Param("conPhone") String conPhone, @Param("conName") String conName);
+
+    /**
      * 删除机构联系人
      * @param conId
      */

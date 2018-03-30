@@ -506,7 +506,7 @@
                 $("#instype2 .dldd dd").on("click", function () {
                     instype2 = $(this).data("cateId");
                     $.ajax({
-                        url: "/bg/baseins/category?level=3&code=" + instype2,
+                        url: "${rlab}/bg/baseins/category?level=3&code=" + instype2,
                         type: 'get',
                         async: true
 
@@ -812,6 +812,8 @@
         }).done(function (data) {
             if (data.code === 0) {
                 window.location.href = '${rlab}/bg/share/modify?mapId=${detail.mapId}';
+            } else {
+                alert(data.description);
             }
         }).fail(function (data) {
             layer.msg("失败");

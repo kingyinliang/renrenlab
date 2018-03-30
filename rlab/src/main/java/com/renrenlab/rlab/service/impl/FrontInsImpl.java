@@ -1,16 +1,15 @@
 package com.renrenlab.rlab.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.common.constant.Constant;
 import com.renrenlab.rlab.common.util.HttpClientUtils;
-import com.renrenlab.rlab.common.util.InsUtil;
-import com.renrenlab.rlab.common.util.PriceUtil;
+import com.renrenlab.rlab.common.util.SearchUtil;
 import com.renrenlab.rlab.dao.*;
 import com.renrenlab.rlab.model.*;
 import com.renrenlab.rlab.service.FrontInsService;
+import com.renrenlab.rlab.service.IComonService;
 import com.renrenlab.rlab.vo.OrgContacts;
 import net.sf.json.JSONArray;
 import org.apache.commons.lang3.StringUtils;
@@ -22,10 +21,11 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static com.renrenlab.rlab.common.util.SearchUtil.doHandleKeyword;
 
 /**
  * Created by guanjipeng on 2017/5/17.
@@ -50,9 +50,13 @@ public class FrontInsImpl implements FrontInsService {
     private InstrumentScopeDao instrumentScopeDao;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    IComonService comonService;
+
     @Resource(name = "taskExecutor")
     private TaskExecutor taskExecutor;
 
+    @Override
     public PageInfo<InsListInfo> searchInstrument(String keyword,
                                                   String insServiceType,
                                                   Integer scopeLowPrice,
@@ -65,7 +69,8 @@ public class FrontInsImpl implements FrontInsService {
                                                   Integer pageNo,
                                                   Integer pageSize,
                                                   boolean isDis,
-                                                  HttpServletRequest request) {
+                                                  HttpServletRequest request,
+                                                  String isSubscribe) {
         province = doHandleKeyword(province);
         city = doHandleKeyword(city);
         category1 = doHandleKeyword(category1);
@@ -73,28 +78,29 @@ public class FrontInsImpl implements FrontInsService {
 
         if (scopeHighPrice != null) scopeHighPrice *= 100;
         if (scopeLowPrice != null) scopeLowPrice *= 100;
+        if (pageNo == null) pageNo = 1;
+        if (pageSize == null) pageSize = 10;
 
         keyword = doHandleKeyword(keyword);
-        isDis = StringUtils.isNotEmpty(keyword);
         PageHelper.startPage(pageNo, pageSize);
         List<InsListInfo> infoList = null;
         //判断isDis 是否需要根据经纬度去查
         if (isDis) {
             //从session取出经纬度 经纬度有可能为空
             Double longitude = null, latitude = null;
-            try {
-                longitude = Double.parseDouble(request.getSession().getAttribute("lng") + "");
-                latitude = Double.parseDouble(request.getSession().getAttribute("lat") + "");
-            } catch (NumberFormatException e) {
-                logger.error("session 中获取经纬度失败");
+            Object o1, o2;
+            if ((o1 = request.getSession().getAttribute(Constant.Service.LONGITUDE)) != null && (o2 = request.getSession().getAttribute(Constant.Service.LATITUDE)) != null) {
+                longitude = Double.parseDouble(o1.toString());
+                latitude = Double.parseDouble(o2.toString());
             }
             infoList = insSearchDao.selectBykeyword(keyword, insServiceType, scopeLowPrice, scopeHighPrice,
-                    category1, category2, province, city, district, isDis, longitude, latitude);
+                    category1, category2, province, city, district, isDis, longitude, latitude, isSubscribe);
         } else {
             infoList = insSearchDao.selectBykeyword(keyword, insServiceType, scopeLowPrice, scopeHighPrice,
-                    category1, category2, province, city, district, isDis, null, null);
+                    category1, category2, province, city, district, isDis, null, null, isSubscribe);
         }
         infoList = doHandleResult(infoList);
+        comonService.saveSearchTerm(keyword);
        /* //线程池任务
         final String finalKeyword = keyword;
         try {
@@ -115,8 +121,10 @@ public class FrontInsImpl implements FrontInsService {
         return insSearchDao.getDistrict(province, city);
     }
 
+    @Override
     public InsDetailInfo search(Long mapId) {
         InsDetailInfo detailInfo = insSearchDao.searchDetail(mapId);
+        detailInfo = SearchUtil.handleInsDetail(detailInfo);
         if (detailInfo != null) {
             //检查mapDes是否含有mapNewIns字段
             if (detailInfo.getMapNewIns() != null) {
@@ -169,7 +177,12 @@ public class FrontInsImpl implements FrontInsService {
             for (int i = 0; i < insCategory.length; i++) {
                 if (insCategory[i] != null) {
                     insturmentCategory = instrumentCategoryDao.selectCategory(insCategory[i], (long) (i + 1));
-                    jsonArray.add(insturmentCategory.getCategoryName());
+                    if (insCategory != null) {
+                        String categoryName = insturmentCategory.getCategoryName();
+                        if (StringUtils.isNotBlank(categoryName)) {
+                            jsonArray.add(categoryName);
+                        }
+                    }
                 }
             }
             detailInfo.setInsCategory(jsonArray);
@@ -183,24 +196,25 @@ public class FrontInsImpl implements FrontInsService {
             }
             //价格处理
             if (detailInfo.getInsOrgPriceList() != null) {
-                detailInfo.setPrice(InsUtil.handlePrice(detailInfo.getInsOrgPriceList().toString()));
+                detailInfo.setPrice(SearchUtil.handlePrice(detailInfo.getInsOrgPriceList().toString()));
             }
             //处理核心参数
             if (detailInfo.getInsCoreParam() != null) {
-                detailInfo.setInsCoreParam(InsUtil.handelCoreParam(detailInfo.getInsCoreParam().toString()));
+                detailInfo.setInsCoreParam(SearchUtil.handelCoreParam(detailInfo.getInsCoreParam().toString()));
             }
             //图片处理
             if (detailInfo.getInsPic() != null) {
-                detailInfo.setInsPic(InsUtil.handlePic(detailInfo.getInsPic().toString()));
+                detailInfo.setInsPic(SearchUtil.handlePic(detailInfo.getInsPic().toString()));
             }
             //处理描述
             if (detailInfo.getInsDescription() != null) {
                 List<TitleContent> list = new ArrayList<>();
-                if (detailInfo.getInsDescription() != null)
-                    list.addAll(InsUtil.handleDes(detailInfo.getInsDescription().toString()));
-                if (detailInfo.getMapDescription() != null && !detailInfo.getMapDescription().toString().equals("[]"))
-                    list.addAll(InsUtil.handelCoreParam(detailInfo.getMapDescription().toString()));
-//            list.addAll(InsUtil.handelCoreParam(detailInfo.getInsCoreParam().toString()));
+                if (detailInfo.getInsDescription() != null) {
+                    list.addAll(SearchUtil.handleDes(detailInfo.getInsDescription().toString()));
+                }
+                if (detailInfo.getMapDescription() != null && !detailInfo.getMapDescription().toString().equals("[]")) {
+                    list.addAll(SearchUtil.handelCoreParam(detailInfo.getMapDescription().toString()));
+                }
                 detailInfo.setInsDescription(list);
             }
         }
@@ -224,63 +238,20 @@ public class FrontInsImpl implements FrontInsService {
         HttpClientUtils.doPost(url, stringEntity, mimeType);
     }
 
-    /**
-     * 处理关键词
-     *
-     * @param keyword
-     * @return
-     */
-    private String doHandleKeyword(String keyword) {
-        if (StringUtils.isEmpty(keyword)) return null;
-        keyword = keyword.trim();
-        //处理竖杠
-        keyword = keyword.replaceAll("\\|", "");
-        keyword = keyword.replaceAll("'", "");
-        //处理html标签
-        keyword = keyword.replaceAll("<", "");
-        keyword = keyword.replaceAll(">", "");
-        keyword = keyword.replaceAll("\\(", "");
-        keyword = keyword.replaceAll("\\)", "");
-        keyword = keyword.replaceAll("\\\\", "");
-        //处理特殊字符  select/*!*/`version`
-        keyword = keyword.replaceAll("`", "");
-        keyword = keyword.replaceAll("/", "");
-        keyword = keyword.replaceAll("\\*", "");
-        keyword = keyword.replaceAll("!", "");
-        keyword = keyword.replaceAll(":", "");
-        //处理空格
-        keyword = keyword.replaceAll("\\s+", "&");
-        return keyword;
-    }
-
     private List<InsListInfo> doHandleResult(List<InsListInfo> infos) {
         Price price;
         String insPicURL;
         for (InsListInfo info : infos) {
-            price = JSON.parseObject(info.getInsOrgPriceList().toString(), Price.class);
-            if (price.getFlag() == 1) {
-                //精准价格
-                price.setAccPrice(PriceUtil.handleListPrice(price.getAccPrice()));
-            }
-            if (price.getFlag() == 2) {
-                //价格范围
-                price.setScopeLowPrice(PriceUtil.handleListPrice(price.getScopeLowPrice()));
-                price.setScopeHighPrice(PriceUtil.handleListPrice(price.getScopeHighPrice()));
-            }
+            price = SearchUtil.handlePrice(info.getInsOrgPriceList());
             info.setPrice(price);
             insPicURL = info.getInsPic();
-            if (insPicURL != null && !insPicURL.startsWith("http")) {
-                info.setInsPic(Constant.UPLOADIMG + info.getInsPic() + Constant.XOSS);
-            } else if (insPicURL != null && insPicURL.startsWith("http://congye-spider")) {
-                info.setInsPic(insPicURL + Constant.XOSSCONG);
-            } else if (insPicURL != null && insPicURL.startsWith("http://renrenlab")) {
-                info.setInsPic(info.getInsPic() + Constant.XOSS);
-            }
+            info.setInsPic(SearchUtil.handlePicToStr(insPicURL));
             //仪器分类
             info.setInsCategory(JSONObject.parseObject(info.getInsCategory().toString(), String[].class));
             //仪器特点
-            if (info.getInsFeatureName() != null)
+            if (info.getInsFeatureName() != null) {
                 info.setInsFeatureName(JSONObject.parseObject(info.getInsFeatureName().toString(), List.class));
+            }
         }
         return infos;
     }

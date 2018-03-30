@@ -11,7 +11,8 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <context:property-placeholder location="classpath:redis.properties"/>
+    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
     <!-- 扫描除了controller外的所有使用注解的类型 -->
     <context:component-scan base-package="com.renrenlab.rlab">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
@@ -33,14 +34,16 @@
             <value>org.postgresql.Driver</value>
         </property>
         <property name="url">
-            <value>jdbc:postgresql://rm.inc.renrenlab.com:5432/renrenlab</value>
-            <!--<value>jdbc:postgresql://10.27.78.241:5432/renrenlab2</value>-->
+            <value>${jdbc_url}</value>
+            <!--<value>jdbc:postgresql://rm.inc.renrenlab.com:5432/renrenlab2_2</value>-->
+            <!--<value>jdbc:postgresql://10.27.78.241:5432/renrenlab2_2</value>-->
             <!--<value>jdbc:postgresql://47.93.84.169:5432/renrenlab2_2</value>-->
         </property>
         <property name="username">
             <value>renrenlab</value>
         </property>
-        <property name="password" value="jKk>?FJ{BC6swDstPNRrTm*dVosaWkHc"/>
+        <property name="password" value="${jdbc_password}"/>
+        <!--<property name="password" value="jKk>?FJ{BC6swDstPNRrTm*dVosaWkHc"/>-->
         <!--<property name="password" value="wVAWE)BRLnn(GLgyikDZozshLzqJ[8D("/>-->
         <!-- 配置初始化大小 -->
         <property name="initialSize" value="5"/>
@@ -132,4 +135,12 @@
                      pointcut-ref="druid-stat-pointcut"/>
     </aop:config>
     <!--6 end-->
+    <bean id="prop" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <!-- 这里是PropertiesFactoryBean类，它也有个locations属性，也是接收一个数组，跟上面一样 -->
+            <array>
+                <value>classpath:config.properties</value>
+            </array>
+        </property>
+    </bean>
 </beans>

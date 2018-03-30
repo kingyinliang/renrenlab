@@ -123,7 +123,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="2"/>
             </jsp:include>
         </div>
@@ -165,13 +165,13 @@
                     </c:if>
                 </div>
                 <div class="orgMessage">
-                    <p class="tit" style="margin-top: 20px;width: auto;float: none">机构信息：<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
-                        <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                    <p class="tit" style="margin-top: 20px;width: auto;float: none">机构信息：
+                        <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                             <c:if test="${orgInfo.orgBizUid==0||sessionScope.uid==orgInfo.orgBizUid}">
                                 <span style="float: right"><a href="${rlab}/bg/provider/modify/${orgInfo.orgOid}" ><button class="layui-btn">修改</button></a></span>
                             </c:if>
-                        </c:if>
-                    </c:if></p>
+                        <%--</c:if>--%>
+                    </p>
                     <p><span class="titinp">机构名称<em>**</em>：</span><span class="txt">${orgInfo.orgName}</span></p>
                     <p style="float: left"><span class="titinp">机构logo：</span><span class="txt"></span></p>
                     <c:if test="${!empty orgInfo.orgLogo}">
@@ -227,11 +227,11 @@
                         ${orgInfo.orgDescription}
                     </p>
                 </div>
-                <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                     <div class="save" style="display: ${orgInfo.orgIdentification eq 2?"block":"none" }">
                         <button class="layui-btn" onclick="gotan()">撤销</button>
                     </div>
-                </c:if>
+                <%--</c:if>--%>
             </div>
         </div>
     </div>
@@ -290,8 +290,10 @@
             }
         })
         .done(function (data) {
-            if (data.code==0){
+            if (data.code == 0) {
                 window.location.reload(true);
+            } else {
+                alert(data.description);
             }
         })
         .fail(function (data) {

@@ -29,10 +29,10 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20171108">
     <%--<link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170622">--%>
-    <link rel="stylesheet" href="${rlab}/front/css/ins_list.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/ins_list.css?v_=20180330">
 
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
@@ -150,7 +150,9 @@
         .super_sch > a:hover {
             text-decoration: underline;
         }
-
+        #head{
+            margin-bottom: 40px!important;
+        }
     </style>
 </head>
 <body>
@@ -158,21 +160,18 @@
     <!--右侧公用模块-->
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
-    <jsp:include page="../template/header.jsp"></jsp:include>
-    <div class="ins_tab">
-        <ul class="bar">
-            <li><a href="${rlab}/page/home">首页</a></li>
-            <li class="actived"><a onclick="toSearch()" href="javascript:void (0)">仪器共享</a></li>
-            <li><a href="${rlab}/page/req/listpage">微需求</a></li>
-        </ul>
-    </div>
+    <jsp:include page="../template/header.jsp" flush="true">
+        <jsp:param name="selected" value="4"/>
+    </jsp:include>
     <%-- START高级搜索--%>
     <c:if test="${interestArr.size() > 0}">
         <div class="super_sch">
             <h4>您可能感兴趣的内容</h4>
             <ul>
                 <c:forEach items="${interestArr}" var="item" varStatus="status">
-                    <li onclick="toSearchFromSuper('${item}')">${item}</li>
+                    <c:if test="${not empty item}">
+                        <li onclick="toSearchFromSuper('${item}',2)">${item}</li>
+                    </c:if>
                 </c:forEach>
             </ul>
             <a href="javascript:void(0);" target="_blank" onclick="toKejso()">
@@ -245,7 +244,7 @@
                     <span class="${district == null ? 'actived': ''}">不限</span>
                     <c:if test="${districts.size() > 0}">
                         <c:forEach items="${districts}" var="item">
-                            <span class="${district != null && district.equals(item.orgAddrDistrict)? 'actived': ''}">${item.orgAddrDistrict}</span>
+                            <span class="${district != null && district.equals(item)? 'actived': ''}">${item}</span>
                         </c:forEach>
                     </c:if>
 
@@ -341,14 +340,14 @@
     <%--SATRT搜索有结果--%>
 
     <c:if test="${other == 0 || other == 1 || other == 2 || other == 3}">
-        <div style="width: 1120px;margin: 0 auto;line-height: 28px;font-size: 12px;color: #4e4e4e;padding-left:5px;">
-            共<span style="color: #508df0;">${total}</span>条结果
-        </div>
+        <%--<div style="width: 1120px;margin: 0 auto;line-height: 28px;font-size: 12px;color: #4e4e4e;padding-left:5px;">--%>
+            <%--共<span style="color: #508df0;">${total}</span>条结果--%>
+        <%--</div>--%>
         <div id="listContent" class="list_wrapper">
                 <%-- 列表 --%>
             <div class="org_list">
                 <c:forEach items="${infos}" var="info">
-                    <div class="item" data-goods-id="${info.mapId}" onclick="toGoodsDetail(this)">
+                    <div class="item" data-goods-id="${info.mapId}" >
                         <div class="ins_img">
                             <c:if test="${info.insPic == null}">
                                 <img data-goods-id="${info.mapId}" onclick="toGoodsDetail(this)"
@@ -390,6 +389,7 @@
                                 <%--仪器标签特点--%>
                             <c:if test="${info.insFeatureName != null && info.insFeatureName != ''}">
                                 <div class="label">
+                                    <label>预约状态：</label><p></p>
                                     <%--<c:forEach items="${info.insFeatureName}" var="scope">
                                         <c:choose>
                                             <c:when test="${'CNAS'.equals(scope)}">
@@ -481,22 +481,64 @@
     <%-- END搜索结果页面（有结果）--%>
 
     <%-- START无结果--%>
+    <%--<c:if test="${other == 4}">--%>
+        <%--<div class="list_default" style="display: block;margin-bottom: 100px;">--%>
+            <%--<div class="default_icon">--%>
+                <%--<img src="${rlab}/front/imgs/icon/list_default.png" alt="没有检索到搜索结果">--%>
+            <%--</div>--%>
+            <%--<div class="default_txt">--%>
+                <%--<div>--%>
+                    <%--<h3>抱歉，没有找到与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'--%>
+                                        <%--escapeXml="true"/>”相关的仪器</h3>--%>
+                    <%--<p>1.您可以核对输入的文字是否正确；</p>--%>
+                    <%--<p>2.您可以更换一下关键词，或适当扩大您的搜索范围；</p>--%>
+                    <%--<p>3.您可以关注“人人实验服务号”，客服为您解决。</p>--%>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+    <%--</c:if>--%>
     <c:if test="${other == 4}">
-        <div class="list_default" style="display: block;margin-bottom: 100px;">
-            <div class="default_icon">
-                <img src="${rlab}/front/imgs/icon/list_default.png" alt="没有检索到搜索结果">
-            </div>
-            <div class="default_txt">
-                <div>
-                    <h3>抱歉，没有找到与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
-                                        escapeXml="true"/>”相关的仪器</h3>
-                    <p>1.您可以核对输入的文字是否正确；</p>
-                    <p>2.您可以更换一下关键词，或适当扩大您的搜索范围；</p>
-                    <p>3.您可以关注“人人实验服务号”，客服为您解决。</p>
-                </div>
-            </div>
+    <div class="list_default" style="display: block;margin-bottom: 100px;">
+        <div class="default_icon">
+            <img src="${rlab}/front/imgs/icon/list_default.png" alt="没有检索到搜索结果">
         </div>
-    </c:if>
+        <div class="default_txt">
+            <br><br><br>
+            <h3>抱歉，没有找到与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
+                                escapeXml="true"/>”相关的仪器</h3>
+            <p>1.您可以核对输入的文字是否正确；</p>
+            <p>2.您可以更换一下关键词，或适当扩大您的搜索范围；</p>
+            <p>3.您可以关注“人人实验服务号”，客服为您解决。</p>
+            <br>
+            <c:choose>
+                <c:when test="${orgSize != 0 && serviceSize != 0}">
+                    我们为您找到了与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
+                                    escapeXml="true"/>”相关的机构（<a href="javascript:void(0);" target="_blank" onclick="toSearchFromSuper('${keyword}',3)">
+                    ${orgSize}个</a>）和服务（<a href="javascript:void(0);" target="_blank" onclick="toSearchFromSuper('${keyword}',2)">
+                    ${serviceSize}个</a>）
+                    <br>
+                </c:when>
+                <c:when test="${orgSize != 0 && serviceSize == 0}">
+                    我们为您找到了与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
+                                    escapeXml="true"/>”相关的机构（<a href="javascript:void(0);" target="_blank" onclick="toSearchFromSuper('${keyword}',3)">
+                    ${orgSize}个</a>）
+                    <br>
+                </c:when>
+                <c:when test="${orgSize == 0 && serviceSize != 0}">
+                    我们为您找到了与“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
+                                    escapeXml="true"/>”相关的服务（<a href="javascript:void(0);" target="_blank" onclick="toSearchFromSuper('${keyword}',2)">
+                    ${serviceSize}个</a>）
+                    <br>
+                </c:when>
+            </c:choose>
+            </br>
+            <p>为您找到了“<c:out value='${keyword.length() > 8 ? keyword.substring(0,8).concat("..."):keyword}'
+                            escapeXml="true"/>”的相关知识,<a href="javascript:void(0);" target="_blank" onclick="toKejso()">
+                了解请点击</a></p>
+        </div>
+    </div>
+</div>
+</c:if>
     <%-- END无结果--%>
 
     <%--START分页--%>
@@ -508,15 +550,19 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
-<script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/util/pagination.js?v_=20171108"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     // 定义URL参数
     var PAGE_NO = '${pageNo}' || 1,// 初始化当前页数
         INS_TOTAL = '${total}',
         FROM_NO = (PAGE_NO - 1) * 10,
-        KEY_WORD = $("#serach").val();// 关键字
+        KEY_WORD = $("#search").val();// 关键字
 
+    var isSubscribe='${isSubscribe}';
+    if(isSubscribe) {
+        instag=true;
+    }
     // 初始化
     (function () {
         navDropDownList();
@@ -533,7 +579,15 @@
             wheelStep: 10, //滚轮滚动量
         });
     })();
-
+    var dates=new  Date();
+    var dateshtml='';
+    for (var i=0;i<7;i++){
+        dates.setDate(dates.getDate()+1);
+        var month=dates.getMonth()+1;
+        var day=dates.getDate();
+        dateshtml+='<i title="可预约">'+month+'.'+day+'</i>';
+    }
+    $(".label p").html(dateshtml);
     // 初始化筛选事件
     function initFilterEvent() {
 
@@ -574,6 +628,7 @@
             } else {
                 $("#checkedLabel").html('<span style="">不限</span>');
             }
+            SERCH_TYPE=1;
             toGoodsList();
         })
 
@@ -584,7 +639,7 @@
      */
     function dealUrlFilterParams() {
 
-        KEY_WORD = $("#serach").val();// 重新获取关键字
+        KEY_WORD = $("#search").val();// 重新获取关键字
         // 筛选：地区
         var district = $("#district").find("span.actived").text();
 
@@ -675,28 +730,35 @@
 
         return labelArr;
     }
+
     // 初始化页面分页
     showPages(INS_TOTAL, FROM_NO, 10, function (from, max) {
             PAGE_NO = from / 10 + 1;
             dealUrlFilterParams();
+            SERCH_TYPE=1;
             toGoodsList();
         }, "page_container"
     )
+    
+    function initCurAdd() {
+
+    }
 
     /**
      * 初始化城市下拉列表
      */
     function initDropdown() {
+
         var urlAddress = null, currentAddress = null;
         <c:choose>
         <c:when test='${("".equals(province) || province == null) && city !=null }'>
         urlAddress = "${city}";
         </c:when>
         <c:when test='${("".equals(city) || city == null) && province != null}'>
-        urlAddress = "${province}";
+         urlAddress = "${province}";
         </c:when>
         <c:otherwise>
-        urlAddress = null;
+          urlAddress = null;
         </c:otherwise>
         </c:choose>
 
@@ -764,6 +826,7 @@
             initDistrict();
             PAGE_NO = 1;// 查询条件变化，默认查第一页
             dealUrlFilterParams();
+            SERCH_TYPE=1;
             toGoodsList();
         }
 
@@ -861,6 +924,7 @@
         initCategory2();
         PAGE_NO = 1;
         dealUrlFilterParams();
+        SERCH_TYPE=1;
         toGoodsList();
     }
 
@@ -886,6 +950,7 @@
 
         PAGE_NO = 1;
         dealUrlFilterParams();
+        SERCH_TYPE=1;
         toGoodsList();
     }
 
@@ -894,7 +959,7 @@
      */
     function toKejso() {
 
-        var keyword = $("#serach").val();
+        var keyword = $("#search").val();
         if (keyword === "") {
             keyword = "仪器"
         }
@@ -906,13 +971,22 @@
         keyword = keyword.replace(/</g, "%3c");
         keyword = keyword.replace(/>/g, "%3e");
 
-        var URL = '${rlab}/front/superSearch/search?query=' + keyword;
+        var URL = '${rlab}/front/superSearch/search?flag=0&query=' + keyword;
         window.open(URL);
 
     }
-    function toSearchFromSuper(keywords) {
-
-       var URL = BASE_URL + "/front/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+    function toSearchFromSuper(keywords,flag) {
+        if(flag==1){
+            //1服务
+            var URL = BASE_URL + "/service/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }else if(flag==2){
+            //2仪器
+            var URL = BASE_URL + "/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }else{
+            //3机构
+            var URL = BASE_URL + "/org/query?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        }
+//       var URL = BASE_URL + "/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
 
         var address = getCurremtAdress();
         if (address !== -1) {

@@ -41,6 +41,22 @@
     );
   </select>
 
+
+  <select id="searchContactsByPhoneAndName" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    rlab_org_info.t_org_contacts oc
+    WHERE
+    1=1
+    <if test="conPhone != null">
+      and con_phone =#{conPhone,jdbcType=VARCHAR}
+    </if>
+    <if test="conName != null">
+      and con_name = #{conName,jdbcType=VARCHAR}
+    </if>
+  </select>
+
   <select id="searchOrgContactsByConId" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />

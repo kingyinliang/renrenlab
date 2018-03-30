@@ -33,8 +33,16 @@
             OR POSITION (#{keyword,jdbcType = VARCHAR} IN u_mobile)>0)
         </if>
         <if test="state != null">
-            AND (u_req_state = 3 OR u_req_state = 4)
+            <choose>
+                <when test="state == 99">
+                    AND (u_req_state = 3 OR u_req_state = 4)
+                </when>
+                <otherwise>
+                    AND u_req_state = #{state}
+                </otherwise>
+            </choose>
         </if>
+
         <if test="beginTime != null and endTime != null">
             AND req.create_time BETWEEN DATE '${beginTime}' AND DATE '${endTime}'+INTEGER '1'
         </if>
@@ -90,6 +98,22 @@
         WHERE u_req_state = 4
         ORDER BY req.create_time
         LIMIT 10
+    </select>
+    <select id="getNewRequirement" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE u_req_state = 4
+        ORDER BY req.create_time DESC
+    </select>
+    <select id="getNewRequirement2" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from rlab_user_info.t_user_requirement req
+        JOIN rlab_user_info.t_user_base_info base ON base.u_uid = req.u_uid
+        WHERE u_req_state = 3
+        ORDER BY req.create_time DESC
     </select>
 
     <delete id="deleteByUReqId" parameterType="java.lang.Long">

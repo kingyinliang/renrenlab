@@ -18,9 +18,9 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
-    <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
-    <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
+    <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20171108">
+    <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20171108">
 
     <%--导入字体样式--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
@@ -225,7 +225,8 @@
                                 <th>${item.orgIdentificationStr}</th>
                                 <th>${item.applicationTimeStr}</th>
                                 <th>${item.orgBizName}</th>
-                                <th><a class="look_detail" href="${rlab}/front/provider/search/${item.orgOid}" style="color: #508DF0">查看详情</a>
+                                <th><a class="look_detail" href="${rlab}/provider/search/${item.orgOid}"
+                                       style="color: #508DF0">查看详情</a>
                                 </th>
                             </tr>
                         </c:forEach>
@@ -248,10 +249,10 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
 function toAddCertify() {
-    location.href = BASE_URL + "/front/provider/add";
+    location.href = BASE_URL + "/provider/add";
 }
 </script>
 </body>

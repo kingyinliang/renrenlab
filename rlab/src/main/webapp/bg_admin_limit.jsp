@@ -52,20 +52,22 @@
 
         /*START是否确认修改弹窗*/
         .acceptModal {
-            -webkit-border-radius: 6px!important;
-            -moz-border-radius: 6px!important;
-            border-radius: 6px!important;
-            width:auto!important;
+            -webkit-border-radius: 6px !important;
+            -moz-border-radius: 6px !important;
+            border-radius: 6px !important;
+            width: auto !important;
         }
+
         .acceptModal button {
             cursor: pointer;
         }
+
         /*END是否确认修改弹窗*/
-        .admin{
+        .admin {
             text-align: center;
-            width: 100%!important;
+            width: 100% !important;
             position: relative;
-            padding-top:200px;
+            padding-top: 200px;
         }
     </style>
 </head>
@@ -84,7 +86,7 @@
                 <jsp:param name="secondMenu" value="0"/>
             </jsp:include>
         </div>
-        <div class="main" >
+        <div class="main">
             <%--头部面包屑导航标签--%>
             <div class="admin">
                 <img src="${rlab}/bg/img/limit_1.png" alt="" style="width: 180px;height: 180px;">

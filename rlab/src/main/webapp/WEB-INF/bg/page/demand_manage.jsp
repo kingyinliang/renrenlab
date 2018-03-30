@@ -150,7 +150,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="1"/>
-                <jsp:param name="firstMenu" value="6"/>
+                <jsp:param name="firstMenu" value="7"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>
@@ -219,7 +219,7 @@
 
 
                 <%--审核权限--%>
-                <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                     <div class="audit">
                         <button class="lab_btn_base lab_btn_base_2 bd_light_grn cl_light_grn" type="button" onclick="acceptDemand()">审核通过
                         </button>
@@ -229,7 +229,7 @@
                                     onclick="signDemand()">已解决需求
                             </button>--%>
                     </div>
-                </c:if>
+                <%--</c:if>--%>
 
             </div>
 
@@ -262,11 +262,11 @@
                             <tr>
                                 <td>
                                     <%--审核权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                                         <input name="reqNumber" class="checks" type="checkbox" disabled
                                                data-req-id="${info.uReqId}"
                                                data-req-state="${info.uReqState}">
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     ${info.uName}
                                 </td>
                                 <td>
@@ -284,13 +284,13 @@
 
                                 <td>
                                     <%--查看权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                         <a href="${rlab}/bg/req/detail?uReqId=${info.uReqId}">查看详情</a>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     <%--审核权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                                         <a href="javascript:void(0)" onclick="complet(this)" data-req-id="${info.uReqId}">已解决</a>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     <%--审核权限--%>
                                     <c:if test="${info.uHasDelay==0 && info.remainTime<=3 && '1'.equals(sessionScope.u_permission.substring(2,3))}">
                                         <a href="javascript:void(0)" onclick="addTime(this)" data-req-id="${info.uReqId}">延长有效期</a>
@@ -302,11 +302,11 @@
                             <tr>
                                 <td>
                                   <%--审核权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                                         <input name="reqNumber" class="checks"
                                                type="checkbox" ${info.uReqState != 0? 'disabled': ''}
                                                data-req-id="${info.uReqId}" data-req-state="${info.uReqState}">
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     ${info.uName}
                                 </td>
                                 <td>
@@ -335,9 +335,9 @@
 
                                 <td>
                                   <%--查看权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                         <a href="${rlab}/bg/req/detail?uReqId=${info.uReqId}">查看详情</a>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                 </td>
                             </tr>
                         </c:if>
@@ -541,7 +541,11 @@
             data: JSON.stringify(data),
             contentType: "application/json"
         }).done(function (data) {
-            window.location.reload(true);
+            if (data.code == 0) {
+                window.location.reload(true);
+            } else {
+                alert(data.description);
+            }
             <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
         }).fail(function (data) {
             alert("失败");
@@ -570,7 +574,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {
@@ -633,8 +641,10 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success:function (data) {
-                    if(data.code === 0) {
+                    if (data.code == 0) {
                         window.location.reload(true);
+                    } else {
+                        alert(data.description);
                     }
                 },
                 error:function () {
@@ -706,7 +716,11 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success:function () {
-                    window.location.reload(true);
+                    if (data.code == 0) {
+                        window.location.reload(true);
+                    } else {
+                        alert(data.description);
+                    }
                 },
                 error:function () {
                     console.error(BASE_URL + '/bg/req/auditing' + '请求失败');
@@ -744,7 +758,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {

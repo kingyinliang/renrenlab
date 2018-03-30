@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="${rlab}/mobile/assets/layer.mobile-v2.0/layer_mobile/need/layer.css">
 
     <!--my CSS start-->
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <style>
         body, html {
@@ -228,7 +228,7 @@
 <script src="${rlab}/mobile/assets/zepto/zepto.js"></script>
 <script src="${rlab}/mobile/assets/flexible/flexible.js"></script>
 <script src="${rlab}/mobile/assets/flexible/flexible_css.js"></script>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <%--layer--%>
 <script src="${rlab}/mobile/assets/layer.mobile-v2.0/layer_mobile/layer.js"></script>
 
@@ -237,29 +237,11 @@
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
-
     (function () {
-        setCallbackUrl();// 设置登录时回跳路径
 
 //        var curAd = localStorage.getItem("labCurAddress");
 
@@ -391,7 +373,7 @@
             pageSize: PAGE_SIZE
         }
 
-        var URL = BASE_URL + "/front/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        var URL = BASE_URL + "/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
 
         if (CUR_PROVINCE !== null) {
             // province

@@ -1,0 +1,282 @@
+.main {
+    width: 1000px;
+    margin: auto;
+    overflow: hidden;
+    padding-top: 30px;
+}
+.rlab_leftmain{
+    width: 711px;
+    float: left;
+}
+.rlab_rightmain{
+    width: 269px;
+    float: right;
+}
+.rlab_banner{
+    width: 711px;
+    height: 238px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+.rlab_tab{
+    margin: 15px 0;
+    line-height: 26px;
+}
+.rlab_tab a{
+    display: inline-block;
+    line-height: 26px;
+    font-size: 14px;
+    color: #999999;
+    letter-spacing: 1px;
+    margin: 0 38px;
+    cursor: pointer;
+}
+.rlab_tab .seleA{
+    border-bottom: 2px solid #588eff;
+    color: #588eff;
+}
+.rlab_list li{
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 15px 16px 13px 16px;
+    margin-bottom: 10px;
+}
+.rlab_list li img{
+    width: 191px;
+    height: 119px;
+    float: left;
+}
+.libox{
+    float: left;
+    margin-left: 23px;
+    max-width: 465px;
+}
+.titles{
+    color: #424242;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.txt{
+    font-size: 12px;
+    color: #9b9b9b;
+    margin: 10px 0 40px 0;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.titlab{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.titlab label{
+    color: #9b9b9b;
+    margin-right: 4px;
+    font-size: 12px;
+}
+.titlab span{
+    color: #8b8b8b;
+    font-size: 12px;
+    margin-right: 27px;
+}
+.Tlabel{
+    color: #8b8b8b;
+}
+.recommend,.messages,.hotlabel{
+    padding: 15px;
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.rightTit{
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: #424242;
+    margin-bottom: 11px;
+}
+.rightTxt a{
+    color: #3f464c;
+    display: block;
+}
+.rightTxt label{
+    font-size: 9px;
+    color: #588eff;
+    position: absolute;
+    left: 0;
+    line-height: 26px;
+}
+.rightTxt{
+    padding-left: 20px;
+    font-size: 12px;
+    line-height: 26px;
+    color: #424242;
+    position: relative;
+    cursor: pointer;
+
+}
+.rightTxt span{
+    color: #a5a5a5;
+    float: left;
+}
+.lableBox a{
+    display: inline-block;
+    padding: 0 8px;
+    font-size: 11px;
+    color: #ff9393;
+    line-height: 20px;
+    border: 1px solid;
+    margin: 0 5px 17px 5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.rlab_listbox{
+    padding: 20px  18px 8px 18px;
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 28px;
+}
+.box_tit .bi i{
+    display: block;
+    width: 4px;
+    height: 4px;
+    background: #a4c1fc;
+}
+.box_tit a i{
+    font-size: 11px;
+    line-height: 22px;
+    float: right;
+}
+.box_tit a{
+    font-size: 11px;
+    color: #979797;
+    float: right;
+    line-height: 22px;
+}
+.box_tit span{
+    font-size: 16px;
+    color: #588eff;
+    float: left;
+    line-height: 22px;
+    margin-left: 11px;
+}
+.box_tit{
+    margin-bottom: 20px;
+}
+.box_tit .bi{
+    width: 4px;
+    height: 15px;
+    float: left;
+    margin-top: 3px;
+    background: #588eff;
+}
+.box_tit_li span i{
+    margin-right: 4px;
+    color: #9b9b9b;
+}
+.box_tit_li span{
+    float: right;
+    color: #787878;
+}
+.box_tit_li a{
+    color: #424242;
+}
+.box_tit_li{
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #424242;
+}
+.resume{
+    margin: 10px 0 20px 0;
+    position: relative;
+    height: 32px;
+    font-size: 11px;
+    color: #424242;
+}
+.re_name{
+    float: left;
+}
+.go_detail a{
+    text-align: center;
+    width: 82px;
+    height: 29px;
+    line-height: 29px;
+    display: inline-block;
+    border-radius: 5px;
+    border: solid 1px #588eff;
+    color: #588eff;
+}
+.go_detail{
+    float: right;
+}
+.re_graduate{
+    position: absolute;
+    left: 221px;
+    top:0;
+}
+.ad{
+    margin-bottom: 23px;
+    padding: 10px 0;
+    background: #a5c2fc;
+    margin-right: 8px;
+}
+.ad p{
+    float: left;
+    font-size: 11px;
+    line-height: 16px;
+    letter-spacing: 1px;
+    color: white;
+}
+.ad span{
+    font-size: 14px;
+    line-height: 32px;
+    float: left;
+    margin-left: 18px;
+    margin-right: 37px;
+    letter-spacing: 1px;
+    color: white;
+}
+.adbg{
+    width: 701px;
+    height: 51px;
+    background-color: #a5c2fc;
+    opacity: 0.5;
+    margin-top: 8px;
+    margin-left: 8px;
+    position: absolute;
+    top: 0;
+    z-index: -1;
+}
+
+.libox .titles:hover{
+    color: #588eff;
+}
+.rightTxt a:hover{
+    color: #588eff;
+}
+img{
+    transition: all 0.6s;
+}
+.slides li img:hover{
+    transform: scale(1.1);
+}
+.rlab_list li img:hover{
+    transform: scale(1.1);
+}
+.rlab_tab a:hover{
+    color: #abc6ff;
+}
+.rlab_tab .seleA:hover{
+    color: #588eff;
+}
+.rlab_list_img{
+    width: 191px;
+    height: 119px;
+    overflow: hidden;
+    float: left;
+}
+.box_tit_li a:hover{
+    color: #588eff;
+}

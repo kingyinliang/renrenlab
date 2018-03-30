@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.renrenlab.rlab.dao.LeaveMessageInfoDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.LeaveMessageInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="message_id" jdbcType="INTEGER" property="messageId" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_type" jdbcType="SMALLINT" property="productType" />
+    <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="contact_phone" jdbcType="VARCHAR" property="contactPhone" />
+    <result column="contact_content" jdbcType="VARCHAR" property="contactContent" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="contact_state" jdbcType="SMALLINT" property="contactState" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, message_id, product_id, product_name, product_type, contact_name, contact_phone, 
+    contact_content, operator, create_time, modify_time, contact_state
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_message_info.t_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectInfoList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from rlab_message_info.t_message_info info
+    <where>
+      <if test="keyword != null and keyword != ''">
+        (POSITION (#{keyword,jdbcType=VARCHAR} IN message_id::TEXT) > 0 OR POSITION (#{keyword,jdbcType=VARCHAR} IN product_name) > 0 OR POSITION (#{keyword,jdbcType=VARCHAR} IN contact_name) > 0)
+      </if>
+      <if test="state != null and state == 99">
+        AND contact_state = #{state,jdbcType=VARCHAR}
+      </if>
+      <if test="beginTime != null">
+        AND modify_time >= '${beginTime}'
+      </if>
+      <if test="endTime != null">
+        AND modify_time &lt;= date'${endTime}'+INTEGER '1'
+      </if>
+    </where>
+    ORDER BY create_time
+    <if test="order != null">
+      ASC
+    </if>
+    <if test="order == null">
+      desc
+    </if>
+    ,message_id
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rlab_message_info.t_message_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.LeaveMessageInfo">
+    insert into rlab_message_info.t_message_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="messageId != null">
+        message_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="contactName != null">
+        contact_name,
+      </if>
+      <if test="contactPhone != null">
+        contact_phone,
+      </if>
+      <if test="contactContent != null">
+        contact_content,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="contactState != null">
+        contact_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="messageId != null">
+        #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=SMALLINT},
+      </if>
+      <if test="contactName != null">
+        #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactContent != null">
+        #{contactContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactState != null">
+        #{contactState,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateState">
+    update rlab_message_info.t_message_info
+    <set>
+      <if test="contactState != null">
+        contact_state = #{contactState,jdbcType=SMALLINT},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR}
+      </if>
+    </set>
+    <if test="messageId != null">
+      WHERE message_id = #{messageId,jdbcType=INTEGER}
+    </if>
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.LeaveMessageInfo">
+    update rlab_message_info.t_message_info
+    <set>
+      <if test="messageId != null">
+        message_id = #{messageId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=SMALLINT},
+      </if>
+      <if test="contactName != null">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null">
+        contact_phone = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="contactContent != null">
+        contact_content = #{contactContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contactState != null">
+        contact_state = #{contactState,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

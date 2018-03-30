@@ -162,6 +162,114 @@
         </if>
     </select>
 
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.ShareInsModel">
+        <selectKey keyProperty="mapId" resultType="java.lang.Long" order="AFTER">
+            select last_value as map_id from rlab_instrument_info.instrument_org_map_id_seq
+        </selectKey>
+        insert into rlab_instrument_info.t_instrument_org_map
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="mapId != null">
+                map_id,
+            </if>
+            <if test="insIid != null">
+                ins_iid,
+            </if>
+            <if test="orgOid != null">
+                org_oid,
+            </if>
+            <if test="mapState != null">
+                map_state,
+            </if>
+            <if test="insScope != null">
+                ins_scope,
+            </if>
+            <if test="insFeature != null">
+                ins_feature,
+            </if>
+            <if test="insOrgPriceList != null">
+                ins_org_price_list,
+            </if>
+            <if test="mapDescription != null">
+                map_description,
+            </if>
+            <if test="infoSource != null">
+                info_source,
+            </if>
+            <if test="orgAddrId != null">
+                org_addr_id,
+            </if>
+            <if test="conId != null">
+                con_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="serviceType != null">
+                service_type,
+            </if>
+            <if test="mapNewIns != null">
+                map_new_ins,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="mapId != null">
+                #{mapId,jdbcType=BIGINT},
+            </if>
+            <if test="insIid != null">
+                #{insIid,jdbcType=BIGINT},
+            </if>
+            <if test="orgOid != null">
+                #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="mapState != null">
+                #{mapState,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insScope != null">
+                #{insScope,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insFeature != null">
+                #{insFeature,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insOrgPriceList != null">
+                #{insOrgPriceList,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="mapDescription != null">
+                #{mapDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="infoSource != null">
+                #{infoSource,jdbcType=INTEGER},
+            </if>
+            <if test="orgAddrId != null">
+                #{orgAddrId,jdbcType=BIGINT},
+            </if>
+            <if test="conId != null">
+                #{conId,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceType != null">
+                #{serviceType,jdbcType=INTEGER},
+            </if>
+            <if test="mapNewIns != null">
+                #{mapNewIns,jdbcType=OTHER}::jsonb,
+            </if>
+        </trim>
+    </insert>
+
+
 
     <!--    <update id="updateShareInsParam" parameterType="com.renrenlab.rlab.model.ShareInsDetailInfo">
             update rlab_instrument_info.t_instrument_org_map
@@ -290,6 +398,9 @@
             </if>
             <if test="orgAddrId != null">
                 org_addr_id = #{orgAddrId,jdbcType=BIGINT},
+            </if>
+            <if test="insServiceType != null">
+                service_type = #{insServiceType},
             </if>
             map_state =json_build_array(map_state::json->0,map_state::json->1,1),
             modify_time = now()

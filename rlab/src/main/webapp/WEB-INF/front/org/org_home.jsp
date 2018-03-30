@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/org_home.css">
 
     <%--导入字体样式--%>
@@ -50,29 +50,34 @@
         }
         /*共享指数*/
         .org_title {
-            line-height: 104px;
-            background: #fff;
+            margin: 20px 0 15px 0;
             overflow: hidden;
         }
 
         .org_title > div {
-            height: 104px;
+            height: 80px;
             width: 1120px;
-            margin: 0 auto;
+            background: #fff;
+            margin: auto;
         }
 
         .org_title .org_info {
+            line-height: 80px;
             float: left;
             position: relative;
         }
 
         .org_title .org_info img.logo {
-            height: 40px;
+            margin-top: 17px;
+            margin-left: 28px;
+            float: left;
+            height: 46px;
             vertical-align: middle;
         }
 
         .org_title .org_info span {
             font-size: 20px;
+            line-height: 80px;
             color: #4E4E4E;
             position: relative;
         }
@@ -131,31 +136,36 @@
 
         /*机构tab栏*/
         .org_tab {
-            border-bottom: 2px solid #508DF0;
-            line-height: 44px;
-            height: 46px;
+            line-height: 37px;
+            height: 37px;
+            background: white;
+            width: 1120px;
+            margin: auto;
+            font-size: 14px;
         }
 
         .org_tab ul {
             list-style: none;
             width: 1120px;
             margin: 0 auto;
-            line-height: 44px;
+            line-height: 34px;
         }
 
         .org_tab li {
-            font-size: 16px;
+            text-align: center;
+            font-size: 14px;
             float: left;
-            margin-right: 45px;
         }
 
         .org_tab li a {
-            color: #4E4E4E;
-
+            padding: 0 15px;
+            display: block;
+            color: #a9a9a9;
         }
 
         .org_tab li.actived a {
-            color: #508DF0;
+            border-bottom: 3px solid #588eff;
+            color: #588eff;
         }
         .button {
             border-top-style: none;
@@ -170,7 +180,48 @@
             text-align: center;
             cursor: pointer;
         }
+        .ranking img{
+            width: 100%;
+        }
+        .ranking span{
+            display: block;
+        }
+        .orgmain .ranking{
+            width: 60px;
+            height: 60px;
+            float: right;
+            background: #f5a761;
+            font-size: 14px;
+            color: white;
+            text-align: center;
+        }
 
+        .orgmain .index{
+            background: #9bd468;
+            margin-left: 10px;
+            width: 83px;
+            margin-right:35px;
+
+        }
+        .stand{
+            width: 4px;
+            height: 14px;
+            line-height: 14px;
+            float: left;
+            background: #588eff;
+            display: block;
+            margin-left: -14px;
+        }
+        .aptitude p{
+            text-align: center;
+        }
+        .aptitude{
+            float: left;
+            margin-right: 15px;
+        }
+        #head{
+            margin-bottom: 100px!important;
+        }
     </style>
 </head>
 <body>
@@ -178,82 +229,96 @@
     <!--右侧公用模块-->
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
-    <jsp:include page="../template/header.jsp"></jsp:include>
+    <jsp:include page="../template/header.jsp" flush="true">
+        <jsp:param name="selected" value="2"/>
+    </jsp:include>
     <!--模块-->
-    <div class="user_center user_content clearfix" style="width: 100%; background-color: #f3f6f9; padding-bottom: 30px">
-        <%--机构标题--%>
-        <div class="org_title">
-            <div>
-                <div class="org_info">
-                    <c:if test="${orgInfo.orgLogo !=null && orgInfo.orgLogo != ''}">
-                        <img class="logo" src="${orgInfo.orgLogo}">
-                    </c:if>
-                    <span>
-                        ${orgInfo.orgName}
-                        <c:if test="${orgInfo.orgIdentification == 1}">
-                            <i class="lab-renzheng_1"
-                               style="color: #f4af71;font-size: 12px;position: absolute;top: 0;right: -16px;font-size: 16px;"></i>
-                        </c:if>
-                    </span>
-                </div>
-                <div class="exponent">
-                    <div class="share share_rank">
-                        <div>排名 | No.</div>
-                        <div class="num">
-                            <div>
-                                <c:forEach items="${orgInfo.orgRankList}" var="item" varStatus="status">
-                                    <c:choose>
-                                        <c:when test="${'.'.equals(item)}">
-                                            <img src='${rlab}/front/imgs/share/index_d.jpg'>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src='${rlab}/front/imgs/share/index_${item}.jpg'>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="share share_index">
-                        <div>共享指数 |</div>
-                        <div class="num">
-                            <div>
-                                <c:forEach items="${orgInfo.orgShareIndexList}" var="item" varStatus="status">
-                                    <c:choose>
-                                        <c:when test="${'.'.equals(item)}">
-                                            <img src='${rlab}/front/imgs/share/d.jpg'>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src='${rlab}/front/imgs/share/${item}.jpg'>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
+    <div class="user_center user_content clearfix orgmain" style="width: 100%; background-color: #f3f6f9; padding-bottom: 30px">
         <%--机构tab栏   --%>
         <div class="org_tab">
             <ul>
                 <li class="actived">
-                    <a href="${rlab}/front/org/${orgInfo.orgOid}">机构首页</a>
+                    <a href="${rlab}/org/${orgInfo.orgOid}">机构首页</a>
                 </li>
                 <li>
-                    <a href="${rlab}/front/org/${orgInfo.orgOid}/ins?pageNo=1&pageSize=10">持有仪器(${orgInfo.orgInsCount})</a>
+                    <a href="${rlab}/org/${orgInfo.orgOid}/ins?pageNo=1&pageSize=10">持有仪器(${orgInfo.orgInsCount})</a>
+                </li>
+                <li>
+                    <a href="${rlab}/org/${orgInfo.orgOid}/service?pageNo=1&pageSize=10">发布服务(${serviceCounts})</a>
                 </li>
             </ul>
         </div>
+        <%--机构标题--%>
+        <div class="org_title">
+            <div style="padding-left: 10px">
+                <div class="org_info">
+                    <c:if test="${orgInfo.orgLogo !=null && orgInfo.orgLogo != ''}">
+                        <img class="logo" src="${orgInfo.orgLogo}" style="width: 46px;height: 46px;border-radius: 50%;overflow: hidden">
+                    </c:if>
+                    <span style="margin-left: 15px">
+                        ${orgInfo.orgName}
+                        <c:if test="${orgInfo.orgType == 2}">
+                            <i class="lab-renzheng_1"
+                               style="color: #f4af71;font-size: 12px;position: absolute;top: 0;right: -40px;font-size: 16px;"title="认证服务商"></i>
+                        </c:if>
+                        <c:if test="${orgInfo.orgType == 1 }">
+                            <i class="lab-renzheng_1" title="服务商"
+                               style="color: #7b8da0;font-size: 12px;position: absolute;top: 0;right: -40px;font-size: 16px;"></i
+                        </c:if>
+                    </span>
+                </div>
+                <%--<div class="exponent">--%>
+                    <%--<p class="ranking index">--%>
+                        <%--<span style="font-size: 22px">${orgInfo.orgShareIndex}</span>--%>
+                        <%--<span>指数</span>--%>
+                        <%--<img src="${rlab}/front/imgs/icon/share_num_bg.jpg" alt="">--%>
+                    <%--</p>--%>
+                    <%--<p class="ranking">--%>
+                        <%--<span style="font-size: 22px">${orgInfo.orgRank}</span>--%>
+                        <%--<span>排名</span>--%>
+                        <%--<img src="${rlab}/front/imgs/icon/share_num_bg_yl.jpg" alt="">--%>
+                    <%--</p>--%>
+                <%--</div>--%>
+                <div class="exponent">
+<c:if test="${orgInfo.orgShareIndex != null}">
+                    <p class="ranking index">
+                        <span style="font-size: 22px">${orgInfo.orgShareIndexStr}</span>
+                        <span>指数</span>
+                        <img src="${rlab}/front/imgs/icon/share_num_bg.jpg" alt="">
+                    </p>
+</c:if>
+<c:if test="${orgInfo.orgRank != null}">
+                    <p class="ranking">
+                        <span style="font-size: 22px">${orgInfo.orgRank}</span>
+                        <span>排名</span>
+                        <img src="${rlab}/front/imgs/icon/share_num_bg_yl.jpg" alt="">
+                    </p>
+</c:if>
+                </div>
+            </div>
+<%--<div class="clearfix">
+                    <c:if test="${orgInfo.orgRank != null}">
+                        <div class="exponent" style="background: #f5a761;">
+                            <p class="num">${orgInfo.orgRank}</p>
+                            <p class="txt">排名</p>
+                            <img src="${rlab}/front/imgs/icon/share_num_bg_yl.jpg" alt="">
+                        </div>
+                    </c:if>
+                    <c:if test="${orgInfo.orgShareIndex != null}">
+                        <div class="exponent">
+                            <p class="num">${orgInfo.orgShareIndexStr}</p>
+                            <p class="txt">共享指数</p>
+                            <img src="${rlab}/front/imgs/icon/share_num_bg.jpg" alt="">
+                        </div>
+                    </c:if>
+                </div>--%>
+        </div>
         <div style="width: 1120px; margin: 0 auto">
             <div style="overflow: hidden">
-                <div style="width: 450px;  margin-top: 45px; overflow: hidden; float: left">
+                <div style="width: 450px; overflow: hidden; float: left">
                     <div class="radius" style="padding-bottom: 20px;background-color: white;  overflow: hidden">
                         <div class="org_info" style="margin-left: 30px">
-                            <h2 style="margin-top: 30px">机构信息</h2>
+                            <h2 style="margin-top: 30px;line-height: 14px"><span class="stand"></span>机构信息</h2>
                             <p style="margin-top: 30px">
                                 <i>机构性质：</i>
                                 <span>${orgInfo.orgCategory != null ? orgInfo.orgCategory:"其他"}</span>
@@ -286,7 +351,7 @@
                         <div class="radius"
                              style="height: 170px; background-color: white; margin-top: 30px; overflow: hidden;">
                             <div class="org_info" style="margin-left: 30px">
-                                <h2 style="margin-top: 30px">机构联系方式</h2>
+                                <h2 style="margin-top: 30px;pxline-height: 14px"><span class="stand"></span>机构联系方式</h2>
                                 <p style="margin-top: 20px">
                                     <i>机构传真：</i>
                                     <span>${orgInfo.orgContacts.conFax == null || ''.equals(orgInfo.orgContacts.conFax)?  "暂无"  :  orgInfo.orgContacts.conFax == null ? "暂无" : orgInfo.orgContacts.conFax}</span>
@@ -297,7 +362,7 @@
                                 </p>
                                 <p>
                                     <i>机构电话：</i>
-                                    <span>${orgInfo.orgContacts == null ?  "暂无"  :  orgInfo.orgContacts.conPhone == null ? "暂无" : orgInfo.orgContacts.conPhone}</span>
+                                    <span>${orgInfo.orgContacts == null ?  (orgInfo.orgContactsList==null? "暂无": orgInfo.orgContactsList[0].conPhone) :  orgInfo.orgContacts.conPhone == null ? "暂无" : orgInfo.orgContacts.conPhone}</span>
                                 </p>
                             </div>
                         </div>
@@ -308,9 +373,9 @@
                         </div>
                     </c:if>
                 </div>
-                <div style="width: 650px; float: right; margin-top: 45px">
+                <div style="width: 650px; float: right;">
                     <div class="radius" style=" background-color: white; overflow: hidden; padding: 0 30px 30px 30px">
-                        <h2 style="margin-top: 30px">机构简介</h2>
+                        <h2 style="margin-top: 30px;line-height: 14px"><span class="stand"></span>机构简介</h2>
                         <p style="font-size: 14px; margin-top: 20px">
                             <c:choose>
                                 <c:when test="${orgInfo.orgDescription != null && orgInfo.orgDescription != ''}">
@@ -326,10 +391,13 @@
                         <div class="radius"
                              style=" background-color: white; padding-bottom: 30px; margin-top: 30px; overflow: hidden">
                             <div style="margin-left: 30px; margin-top: 30px">
-                                <h2>机构资质</h2>
+                                <h2 style="line-height: 14px"><span class="stand"></span>机构资质</h2>
                                 <c:forEach var="orgCertificate" items="${orgInfo.orgCertificateList}">
-                                    <img src="${orgCertificate.orgCertificatePic == null ? '' : orgCertificate.orgCertificatePic}"
-                                         style="width: 190px; height: 250px; margin-top: 20px">
+                                    <div class="aptitude">
+                                        <img src="${orgCertificate.orgCertificatePic == null ? '' : orgCertificate.orgCertificatePic}"
+                                             style="width: 190px; height: 250px; margin-top: 20px">
+                                        <p>${orgCertificate.orgCertificateName}</p>
+                                    </div>
                                 </c:forEach>
                             </div>
                         </div>
@@ -343,7 +411,7 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
-<script type="text/javascript" src="${rlab}/front/js/common/main.js"></script>
+<script type="text/javascript" src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script src="${rlab}/front/js/util/baiduMap.js?v_=20170829"></script>
 
 <script type="text/javascript">
@@ -360,6 +428,7 @@
     function toLogin() {
         logins();
     }
+    console.log(11);
 </script>
 </body>
 </html>

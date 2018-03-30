@@ -4,10 +4,13 @@
 <%@ include file="../../config/taglibs.jsp" %>
 <head>
     <meta charset="UTF-8">
-    <title>人人实验（renrenlab.com）官方网站-互联网+科技服务平台</title>
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_=20170608">
+    <title>人人实验 让科技创新更简单 找仪器 做检测 科研众包</title>
+    <meta name="Keywords" content="生物医药,医疗器械,材料学,能源环保,智能制造,电子信息"/>
+    <meta name="Description" content="人人实验是一家专业的仪器共享与科研服务平台，整合各行业低频使用的仪器设备、实验场地、服务项目等科技资源，涵盖生物医药，医疗器械，智能制造，能源环保，电子信息，材料学等十几个领域，为企业在科技创新活动中提供高效便捷的资源信息和解决方案"/>
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
     <script src="${rlab}/mobile/js/zeptojs.js" type="text/javascript" charset="utf-8"></script>
+    <%--<script src="${rlab}/front/assets/jquery-1.12.4/jquery-1.8.3.min.js" type="text/javascript" charset="utf-8"></script>--%>
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
 
@@ -15,8 +18,14 @@
     <link rel="stylesheet" type="text/css" href="${rlab}/mobile/assets/mui/css/mui.min.css"/>
     <script src="${rlab}/mobile/assets/mui/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 
-    <link rel="stylesheet" href="${rlab}/mobile/css/home.css?v_=20170608">
+    <link rel="stylesheet" type="text/css" href="${rlab}/mobile/js/swiper-3.4.2.min.css"/>
+    <script src="${rlab}/mobile/js/swiper-3.4.2.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="${rlab}/mobile/css/home.css?v_=20171127">
     <style>
+        p{
+            margin: 0;
+        }
         .item2mobile-item{
             overflow: hidden;
         }
@@ -39,68 +48,299 @@
         .lab-yanjing{
             margin-right: 0.1rem;
         }
+        #item4mobile p,#item5mobile p{
+            width: 100%;
+            margin: 0;
+            overflow: initial;
+            font-size: 0.37rem;
+            color: #4e4e4e;
+            line-height: 0.4rem;
+            margin-bottom: 0.3rem
+        }
+        #item4mobile img{
+            width: 2.77rem;
+            height: 2.77rem;
+            float: left;
+        }
+        #item4mobile .tit h3{
+            font-size: 0.32rem;
+            color: #adadad;
+            margin-top: 0.4rem;
+            margin-bottom: 1.3rem;
+        }
+        #item4mobile{
+            border: none!important;
+        }
+        #item4mobile .tit h2{
+            font-size: 0.4rem;
+            color: #3f3f3f
+        }
+        #item4mobile .tit{
+            max-width: 5rem;
+            margin-left: 0.53rem;
+        }
+        #item4mobile p{
+            font-size: 0.32rem;
+        }
+        .tit_state{
+            color: #18c248;
+        }
+        .tit_timer{
+            color: #c0c0c0;
+            margin-left: 0.32rem;
+        }
+
+        #item5mobile .tit p{
+            width: 100%;
+            margin: 0;
+            overflow: hidden;
+            font-size: 0.32rem;
+            color: #c0c0c0;
+            line-height: 0.44rem;
+            max-height: 0.90rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        #item5mobile h2{
+            font-size: 0.35rem;
+            color: #4b4b4b;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        #item5mobile .tit{
+            width: 4.49rem;
+            margin-left: 0.7rem;
+        }
+        #item5mobile img{
+            width: 2.64rem!important;
+            height: 2.71rem!important;
+            float: left;
+        }
+        .tabLi h3 {
+            font-size: 0.32rem;
+            color: #4f8df0;
+            margin: 0.32rem 0;
+        }
+
+
+
+        .home-tab{
+            height: 2.907rem;
+            padding-top: 0.56rem;
+        }
+        .home-tab a{
+            display: inline-block;
+            width: 19%;
+            text-align: center;
+        }
+        .hometab-icon{
+            margin-bottom: 0.35rem;
+        }
+        .hometab-icon img{
+            width: 1.067rem;
+            height: 1.067rem;
+        }
+        .home-tab a span{
+            line-height: 0.6rem;
+            font-size: 0.293rem;
+            display: block;
+            color: #5d5d5d;
+        }
+        .demand{
+            margin: auto;
+            width: 9.147rem;
+            height: 1.173rem;
+            background-color: #ffffff;
+            box-shadow: 0rem 0.053rem 0.16rem 0rem
+            rgba(205, 205, 205, 0.5);
+            border-radius: 0.053rem;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+            padding: 0.187rem;
+        }
+        .demandbg img{
+            width: 100%;
+            height: 100%;
+        }
+        .demandbg{
+            float: left;
+            width: 1.786rem;
+            height: 0.64rem;
+            margin-top: 0.06rem;
+        }
+        .demandtxt li{
+            height: 0.747rem;
+            margin-bottom: 0.24rem;
+        }
+        .demandtxt p{
+            margin: 0;
+            font-size: 0.367rem;
+            line-height: 0.747rem;
+            letter-spacing: 0.009rem;
+            color: #7d7d7d;
+        }
+
+        .demandtxt{
+            width: 6.58rem;
+            height: 0.987rem;
+            float: left;
+            margin-left: 0.4rem;
+            position: relative;
+        }
+        .demandtxt ul{
+            position: absolute;
+
+        }
+
+        .itemtit a{
+            line-height: 0.667rem;
+            float: right;
+            color: #9a9696;
+            font-size: 0.293rem;
+        }
+        .home-item .itemtit,.home-item .itemtxt{
+            padding: 0 0.45rem;
+            margin-bottom: 0.1rem;
+        }
+        .itemtit span{
+            line-height: 0.667rem;
+            font-size: 0.48rem;
+            letter-spacing: 0.016rem;
+            color: #322d2d;
+        }
+        .itemtxt{
+            line-height: 0.427rem;
+            font-size: 0.293rem;
+            letter-spacing: 0.01rem;
+            color: #9a9696;
+        }
+        .itemimg{
+            height: 3.067rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 0.88rem;
+            margin-top: 0.48rem;
+        }
+        .itemimg .swiper-slide p{
+            padding-left: 0.347rem;
+            line-height: 0.5rem;
+            font-size: 0.293rem;
+            color: #ffffff;
+            position: absolute;
+            bottom: 0.3rem;
+            left: 0;
+        }
+        .itemimg .swiper-slide img{
+            overflow: hidden;
+            width: 5.067rem;
+            height: 3.067rem;
+            background-color: white;
+            border-radius: 0.15rem;
+        }
+        .home-item .swiper-slide{
+            margin-left: 0.45rem;
+            overflow: hidden;
+            width: 5.067rem;
+            height: 3.067rem;
+            background-color: #fff;
+            border-radius: 0.133rem;
+        }
+        .itemli ul li img{
+            width: 3.52rem;
+            height: 2.107rem;
+            float: left;
+            border-radius: 0.133rem;
+            margin-right: 0.58rem;
+            background: #000000;
+        }
+        .itemli ul{
+            padding: 0 0.45rem;
+        }
+        .itemli ul li{
+            padding: 0.56rem 0 0.48rem 0;
+            border-bottom: 0.053rem solid #dddddd;
+        }
+        .itemlitit{
+            font-size: 0.37rem;
+            line-height: 0.4rem;
+            letter-spacing: 0.011rem;
+            color: #322d2d;
+            margin-bottom: 0.9rem;
+        }
+        .itemlitxt{
+            width: 4.8rem;
+            float: left;
+        }
+        .history i{
+            margin-right: 0.2rem;
+        }
+        .history{
+            font-size: 0.24rem;
+            letter-spacing: 0.008rem;
+            color: #7f7f7f;
+        }
+        .records p{
+            font-size: 0.267rem;
+            line-height: 0.42rem;
+            color: white;
+            margin: 0;
+        }
+        .records{
+            width: 100%;
+            height: 2.56rem;
+            text-align: center;
+            background-color: #6aa0ff;
+            padding: 0.25rem 0 1.173rem 0;
+            margin-top: 0.3rem;
+        }
     </style>
 </head>
 
-<body>
-<div id="main" class="main">
-    <div class="headers">
-        <p class="homelogo"><a href="javascript:void(0)" onclick="showCodes()"><%--<img src="${rlab}/mobile/imgs/home_logo.png"/>--%><i class="lab-erweima weixin"></i>关注服务号</a></p>
-        <c:choose>
-            <%--登录--%>
-            <c:when test="${sessionScope.uid != null}">
-                <p class="user-img" onclick="toCenter()">
-                    <i>
-                        <c:choose>
-                            <c:when test="${sessionScope.avatar != null}">
-                                <img src="${sessionScope.avatar}" alt="用户头像">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/avatar/person_default.jpg" alt="用户头像">
-                            </c:otherwise>
-                        </c:choose>
-                    </i>
-                </p>
-            </c:when>
-            <%--未登录--%>
-            <c:otherwise>
-                <a class="users lab-user" id="gouser" href="javascript:void (0)" onclick="toCenter()"></a>
-            </c:otherwise>
-        </c:choose>
-
-
-    </div>
+<body style="background: white">
+<div id="main" class="main" style="background: white">
+    <header>
+        <%@ include file="../template/header_three.jsp" %>
+    </header>
     <div id="slider" class="mui-slider">
-       <%-- <div class="mui-slider-group mui-slider-loop">
-
+        <div class="mui-slider-group mui-slider-loop">
             <div class="mui-slider-item mui-slider-item-duplicate">
-                <a>
-                    <img src="${rlab}/mobile/imgs/m-banner3.png">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner05.png">
                 </a>
             </div>
-
             <div class="mui-slider-item">
-                <a>
-                    <img src="${rlab}/mobile/imgs/m-banner1.png">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner01.png" alt="">
                 </a>
             </div>
-
             <div class="mui-slider-item">
-                <a>
-                    <img src="${rlab}/mobile/imgs/m-banner2.png">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner02.png" alt="">
                 </a>
             </div>
-
             <div class="mui-slider-item">
-                <a>
-                    <img src="${rlab}/mobile/imgs/m-banner3.png">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner03.png" alt="">
                 </a>
             </div>
-
-
+            <div class="mui-slider-item">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner04.png" alt="">
+                </a>
+            </div>
+            <div class="mui-slider-item">
+                <a href="${rlab}/front/pv/statistics?day=30">
+                    <img src="${rlab}/mobile/imgs/banner/banner05.png" alt="">
+                </a>
+            </div>
             <div class="mui-slider-item mui-slider-item-duplicate">
-                <a>
-                    <img src="${rlab}/mobile/imgs/m-banner1.png">
+                <a href="javascript:void (0);">
+                    <img src="${rlab}/mobile/imgs/banner/banner01.png">
                 </a>
             </div>
         </div>
@@ -108,376 +348,270 @@
             <div class="mui-indicator mui-active"></div>
             <div class="mui-indicator"></div>
             <div class="mui-indicator"></div>
-        </div>--%>
-        <img src="${rlab}/mobile/imgs/banner.png" style="width: 100%;height: auto">
-        <div class="searchBox">
-            <%--<h1>让仪器共享起来</h1>--%>
-            <a class="search" href="javascript:void (0)" onclick="showSearchModal(this)" data-main-id="main" style="margin-top: 1.1467rem">&nbsp;&nbsp;&nbsp;&nbsp;仪器/服务机构<span class="lab-search"></span></a>
-        </div>
-
-    </div>
-    <div class="mui-slider" id="tab">
-        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted" id="tabHeard">
-            <a class="mui-control-item" href="#item1mobile">服务机构</a>
-            <a class="mui-control-item boder mui-active" href="#item3mobile">微需求</a>
-            <a class="mui-control-item" href="#item2mobile">热门仪器</a>
-        </div>
-        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
-        <div class="mui-slider-group" id="tabBox">
-            <div id="item1mobile" class="mui-slider-item mui-control-content tabLi">
-                <ul class="mui-table-view">
-                    <c:forEach items="${orgInfoList}" var="info">
-                        <li class="mui-table-view-cell">
-                            <a data-goods-id="${info.orgOid}" onclick="toOrgDetail(this)">
-                                <c:choose>
-                                    <c:when test="${info.orgLogo != null && info.orgLogo.trim()  != ''}">
-                                        <img class="liImg" src="${info.orgLogo}"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img class="liImg" src="${rlab}/front/imgs/icon/org_logo_default.png">
-                                    </c:otherwise>
-                                </c:choose>
-                                <c:if test="${info.orgIdentification==1}">
-                                    <i class="lab-renzheng_1" style="color: #f4af71;font-size: 0.4rem;position: absolute;top: -0.2rem;left: 1.9rem"></i>
-                                </c:if>
-                                <div class="tit">
-                                    <h2>${info.orgName}</h2>
-                                    <p><img src="${rlab}/mobile/imgs/m2.1/num.png" alt=""><span>No.${info.orgRank}</span></p>
-                                    <h3>共享指数 ${info.orgShareIndexStr}</h3>
-                                </div>
-                            </a>
-                        </li>
-                    </c:forEach>
-                    <%--<li class="mui-table-view-cell">
-                        <a data-goods-id="820915" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/77ed033e-5e56-488b-82e0-1efcca4498c6.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <i class="lab-renzheng_1" style="color: #f4af71;font-size: 0.4rem;position: absolute;top: -0.2rem;left: 1.9rem"></i>
-                            <div class="tit">
-                                <h2>北京市园林科学研究院</h2>
-                                <p><img src="${rlab}/mobile/imgs/m2.1/num.png" alt=""><span>No.1</span></p>
-                                <h3>共享指数 2200</h3>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="827467" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/0071bf77-c149-40d8-b7f6-6153cda3c791.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <i class="lab-renzheng_1" style="color: #f4af71;font-size: 0.4rem;position: absolute;top: -0.2rem;left: 1.9rem"></i>
-                            <div class="tit">
-                                <h2>北京市园林科学研究院</h2>
-                                <p><img src="${rlab}/mobile/imgs/m2.1/num.png" alt=""><span>No.9181</span></p>
-                                <h3>共享指数 2200</h3>
-                            </div>
-                        </a>
-
-                    </li>--%>
-                    <%--<li class="mui-table-view-cell">
-                        <a data-goods-id="827756" onclick="toGoodsDetail(this)">
-                            <img src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/869d2871-fd67-4f2b-b2fe-119fd8e9b104.JPG?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>气质联用仪</h2>
-                                <h3>型号：GCMS-QP2010</h3>
-                                <p><span class="tit_address">北京市海淀区</span><span class="tit_unit">元/样</span><span
-                                        class="tit_money">200</span></p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="820915" onclick="toGoodsDetail(this)">
-                            <img src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/77ed033e-5e56-488b-82e0-1efcca4498c6.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>电子舌</h2>
-                                <h3>型号：Astree</h3>
-                                <p><span class="tit_address">北京市海淀区</span><span class="tit_unit">元/次</span><span
-                                        class="tit_money">100</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="827467" onclick="toGoodsDetail(this)">
-                            <img src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/0071bf77-c149-40d8-b7f6-6153cda3c791.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>高效液相色谱仪</h2>
-                                <h3>型号：LC-20A</h3>
-                                <p><span class="tit_address">北京市海淀区</span><span class="tit_unit">元/样</span><span
-                                        class="tit_money">300</span></p>
-                            </div>
-                        </a>
-
-                    </li>--%>
-                </ul>
-            </div>
-            <div id="item3mobile" class="mui-slider-item mui-control-content tabLi mui-active">
-                <p class="clearfix"><a style="color: #4e4e4e;float: right;font-size: 0.32rem" onclick="godemandmanage()">更多 ></a></p>
-                <ul class="mui-table-view" id="demand">
-                    <%--<li class="mui-table-view-cell">
-                        <a data-goods-id="855" onclick="toDemandDetail(this)">
-                            <p><span style="color: #4f8df0;">匿名</span></p>
-                            <p>邹玄快给我通过这个需求，我去测试，速度的，麻溜的，！！！！！！！！！！啊啊啊！！！！！！啊！！！！！啊！！！！！啊！！！！啊！！！！啊！！！！！！啊！！！！</p>
-                            <p><i class="lab-checked-3"></i><s>56</s>人<span style="float: right">8天后过期</span></p>
-                        </a>
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="855" onclick="toDemandDetail(this)">
-                            <p><span style="color: #4f8df0;">匿名</span></p>
-                            <p>邹玄快给我通过这个需求，我去测试，速度的，麻溜的，！！！！！！！！！！啊啊啊！！！！！！啊！！！！！啊！！！！！啊！！！！啊！！！！啊！！！！！！啊！！！！</p>
-                            <p><i class="lab-checked-3"></i><s>56</s>人<span style="float: right">8天后过期</span></p>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="856" onclick="toDemandDetail(this)">
-                            <p><span style="color: #4f8df0;">匿名</span></p>
-                            <p>邹玄快给我通过这个需求，我去测试，速度的，麻溜的，！！！！！！！！！！啊啊啊！！！！！！啊！！！！！啊！！！！！啊！！！！啊！！！！啊！！！！！！啊！！！！</p>
-                            <p><i class="lab-checked-3"></i><s>56</s>人<span style="float: right">8天后过期</span></p>
-                        </a>
-
-                    </li>--%>
-                </ul>
-                <%--<ul class="mui-table-view">
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="786430" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/9dee0787-733b-4dc2-82b1-603d9fd27592.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>高内涵药物筛选系统</h2>
-                                <h3>型号：Operetta</h3>
-                                <p><span class="tit_address">上海市浦东新区</span><span class="tit_unit">元/次</span><span
-                                        class="tit_money">1000</span></p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="795679" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/b78354df-e385-4397-a280-95cd1daff0d6.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>流池法自动溶出度仪</h2>
-                                <h3>型号：DFZ 720</h3>
-                                <p><span class="tit_address">北京市海淀区</span><span class="tit_unit"></span><span
-                                        class="tit_money">面议</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="782593" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/21b119b6-05d8-4458-8679-e5200d59daf6.png?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>流式细胞仪</h2>
-                                <h3>型号：EPICS XL</h3>
-                                <p><span class="tit_address">北京市东城区</span><span class="tit_unit">元/小时</span><span
-                                        class="tit_money">300</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                </ul>--%>
-            </div>
-            <div id="item2mobile" class="mui-slider-item mui-control-content tabLi">
-                <div class="item2mobile">
-                    <div id="segmentedControl" class="item2mobile-tab" style="position: relative;z-index: 998">
-                        <div class="item2mobile-item" onclick="toSearch(this)"><a>食品安全</a></div>
-                        <div class="item2mobile-item"  onclick="toSearch(this)"><a>物性检测</a></div>
-                        <div class="item2mobile-item"  onclick="toSearch(this)"><a>药物研发</a></div>
-                    </div>
-                </div>
-                <ul class="mui-table-view" style="padding-left: 0.5rem;padding-right: 0.5rem;">
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="827467" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/0071bf77-c149-40d8-b7f6-6153cda3c791.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>高效液相色谱仪</h2>
-                                <h3>北京市海淀区</h3>
-                                <p><span class="tit_address">食品安全</span><span class="tit_unit">元/样</span><span
-                                        class="tit_money">300</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="798538" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/image/2016/07/21/d6495298-c8e2-41ba-84b0-93358fb50b52.png?x-oss-process=style/renrenlabpic500_500"/>
-                            <div class="tit">
-                                <h2>超声波探伤仪</h2>
-                                <h3>北京市朱辛庄</h3>
-                                <p><span class="tit_address">物性测试</span><span class="tit_unit"></span><span
-                                        class="tit_money">面议</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="786430" onclick="toGoodsDetail(this)">
-                            <img class="liImg" src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/9dee0787-733b-4dc2-82b1-603d9fd27592.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>高内涵药物筛选系统</h2>
-                                <h3>上海市浦东新区</h3>
-                                <p><span class="tit_address">药物研发</span><span class="tit_unit">元/次</span><span
-                                        class="tit_money">1000</span></p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <%--<ul class="mui-table-view" style="padding-left: 0.5rem;padding-right: 0.5rem;">
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="785492" onclick="toGoodsDetail(this)">
-                            <img src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/02acc8f9-7820-4b1b-b1e9-6eea3b36d1f5.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>Zetasizer电位及纳米粒度分析仪</h2>
-                                <h3>型号：Nano ZS</h3>
-                                <p><span class="tit_address">北京市丰台区</span><span class="tit_unit">元/样</span><span
-                                        class="tit_money">600</span></p>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="826505" onclick="toGoodsDetail(this)">
-                            <img src="http://congye-spider.oss-cn-shenzhen.aliyuncs.com/2017-06-01/e7dd90b3-af01-4f7d-836a-6d2bf8a35e3b.jpg?x-oss-process=style/renrenlab500_500"/>
-                            <div class="tit">
-                                <h2>热分析联用系统</h2>
-                                <h3>型号：X70</h3>
-                                <p><span class="tit_address">北京市海淀区</span><span class="tit_unit">元/样</span><span
-                                        class="tit_money">150</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                    <li class="mui-table-view-cell">
-                        <a data-goods-id="798538" onclick="toGoodsDetail(this)">
-                            <img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/image/2016/07/21/d6495298-c8e2-41ba-84b0-93358fb50b52.png?x-oss-process=style/renrenlabpic500_500"/>
-                            <div class="tit">
-                                <h2>超声波探伤仪</h2>
-                                <h3>型号：1090DAL</h3>
-                                <p><span class="tit_address">北京市朱辛庄</span><span class="tit_unit"></span><span
-                                        class="tit_money">面议</span></p>
-                            </div>
-                        </a>
-
-                    </li>
-                </ul>--%>
-            </div>
-
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
         </div>
     </div>
-    <%--<div id="org">
-        <h1>合作机构</h1>
-        <div id="orglist" class="mui-slider">
-            <div class="mui-slider-group mui-slider-loop">
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a><img src="${rlab}/mobile/imgs/21.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/22.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/23.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/24.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/25.jpg"/></a>
-                </div>
-                <div class="mui-slider-item">
-                    <a><img src="${rlab}/mobile/imgs/1.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/2.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/3.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/4.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/5.jpg"/></a>
-                </div>
-                <div class="mui-slider-item">
-                    <a><img src="${rlab}/mobile/imgs/6.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/7.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/8.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/9.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/10.jpg"/></a>
-                </div>
-                <div class="mui-slider-item">
-                    <a><img src="${rlab}/mobile/imgs/11.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/12.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/13.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/14.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/15.jpg"/></a>
-                </div>
-                <div class="mui-slider-item">
-                    <a><img src="${rlab}/mobile/imgs/16.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/17.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/18.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/19.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/20.jpg"/></a>
-                </div>
-                <div class="mui-slider-item">
-                    <a><img src="${rlab}/mobile/imgs/21.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/22.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/23.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/24.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/25.jpg"/></a>
-                </div>
-                <div class="mui-slider-item mui-slider-item-duplicate">
-                    <a><img src="${rlab}/mobile/imgs/1.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/2.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/3.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/4.jpg"/></a>
-                    <a><img src="${rlab}/mobile/imgs/5.jpg"/></a>
-                </div>
+    <div class="home-tab">
+        <a href="${rlab}/front/search/p4?searchKey=&all=3">
+            <span class="hometab-icon"><img src="${rlab}/mobile/imgs/m2.4/ins.png" alt=""></span>
+            <span>仪器共享</span>
+        </a>
+        <a href="${rlab}/front/search/p3?searchKey=&all=3">
+            <span class="hometab-icon"><img src="${rlab}/mobile/imgs/m2.4/detection.png" alt=""></span>
+            <span>检验检测</span>
+        </a>
+        <a href="${rlab}/front/search/p2?searchKey=&all=3">
+            <span class="hometab-icon"><img src="${rlab}/mobile/imgs/m2.4/scientific.png" alt=""></span>
+            <span>科研众包</span>
+        </a>
+        <a href="${rlab}/front/search/sciences_page">
+            <span class="hometab-icon"><img src="${rlab}/mobile/imgs/m2.4/message.png" alt=""></span>
+            <span>科创头条</span>
+        </a>
+        <a href="${rlab}/m_home/case_page">
+            <span class="hometab-icon"><img src="${rlab}/mobile/imgs/m2.4/case.png" alt=""></span>
+            <span>应用案例</span>
+        </a>
+    </div>
+    <div class="demand">
+        <div class="demandbg">
+            <a href="${rlab}/page/req/listpage">
+                <img src="${rlab}/mobile/imgs/m2.4/demandbg.png" alt="">
+            </a>
+        </div>
+        <div class="demandtxt">
+            <div class="swiper-wrapper">
             </div>
         </div>
     </div>
-    <div id="footer">
-        <img src="${rlab}/mobile/imgs/home_logo.png"/>
-        <p>关注“人人实验”服务号，体验VIP专业定制服务</p>
-        <p>长按识别二维码，或保存图片后用微信扫一扫打开</p>
-        <p><img src="${rlab}/mobile/imgs/two.jpg"></p>
-    </div>--%>
-    <div id="codes">
-        <i class="lab-close-1" onclick="closeCode()"></i>
-        <p style="margin-top: 0.67rem"><img src="${rlab}/mobile/imgs/m2.1/homecode.jpg" alt=""></p>
-        <p style="width: 4.27rem;margin: auto">保存二维码后可关注“人人实验”服务号</p>
-
+    <%--仪器预约--%>
+     <div class="home-item">
+         <p class="itemtit"><span>仪器预约</span><a href="${rlab}/front/search/more_ins_page">更多></a></p>
+         <p class="itemtxt">海量资源 触手可得</p>
+         <div class="itemimg itemimg1">
+             <div class="swiper-wrapper">
+             </div>
+         </div>
+     </div>
+    <%--临床前CRO服务--%>
+    <div class="home-item">
+        <p class="itemtit"><span>临床前CRO服务</span><a href="${rlab}/service/classify_list?classify=77&name=CRO研发服务">更多></a>
+        </p>
+        <p class="itemtxt">专业团队 高效服务</p>
+        <div class="itemimg itemimg2">
+            <div class="swiper-wrapper">
+            </div>
+        </div>
     </div>
+    <%--分析测试--%>
+    <div class="home-item">
+        <p class="itemtit"><span>分析测试</span><a href="${rlab}/service/classify_list?classify=100&name=分析测试">更多></a></p>
+        <p class="itemtxt">流程简捷 准确权威</p>
+        <div class="itemimg itemimg3">
+            <div class="swiper-wrapper">
+            </div>
+        </div>
+    </div>
+    <%--人人实验室--%>
+    <div class="home-item">
+        <p class="itemtit"><span>人人实验室</span><%--<a href="${rlab}/front/search/cro_page?tag=人人实验室">更多></a>--%></p>
+        <p class="itemtxt">聚焦领域 精准直达</p>
+        <div class="itemimg itemimg4">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><a href="${rlab}/front/search/renrenlab_page?name=理化测试中心"><img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E7%90%86%E5%8C%96%E6%B5%8B%E8%AF%95%E4%B8%AD%E5%BF%83.png" alt=""><p>理化测试中心</p></a></div>
+                <div class="swiper-slide"><a href="${rlab}/front/search/renrenlab_page?name=动物实验中心"><img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E5%8A%A8%E7%89%A9%E5%AE%9E%E9%AA%8C%E4%B8%AD%E5%BF%83.png" alt=""><p>动物实验中心</p></a></div>
+                <div class="swiper-slide"><a href="${rlab}/front/search/renrenlab_page?name=分子生物学中心"><img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/other/%E5%88%86%E5%AD%90%E7%94%9F%E7%89%A9%E4%B8%AD%E5%BF%83.png" alt=""><p>分子生物学中心</p></a></div>
+            </div>
+        </div>
+    </div>
+    <%--科创头条--%>
+    <div class="home-item">
+        <p class="itemtit"><span>科创头条</span><a href="${rlab}/front/search/sciences_page">更多></a></p>
+        <p class="itemtxt">前沿资讯 把握科技脉搏 </p>
+        <div class="itemli message">
+            <ul>
+            </ul>
+        </div>
+    </div>
+    <%--备案--%>
+    <div class="records">
+        <p>Copyright 2015-2017 人人实验（北京）科技有限公司</p>
+        <p>All Rights Reserved 京ICP备15058824</p>
+    </div>
+    <footer>
+        <jsp:include page="../template/footer.jsp" flush="true">
+            <jsp:param name="active" value="1"/>
+        </jsp:include>
+    </footer>
 </div>
 <%--公用搜索部分--%>
 <%@ include file="../template/search.jsp" %>
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script type="text/javascript">
+    setCallbackUrl();// 设置登录时回跳路径
+    demand();
+
+    $(".itemimg1 .swiper-wrapper").append(getIns(766527));
+    $(".itemimg1 .swiper-wrapper").append(getIns(805158));
+    $(".itemimg1 .swiper-wrapper").append(getIns(713095));
+    $(".itemimg1 .swiper-wrapper").append(getIns(808878));
+    $(".itemimg1 .swiper-wrapper").append(getIns(750204));
+
+    $(".itemimg2 .swiper-wrapper").append(getService(4247));
+    $(".itemimg2 .swiper-wrapper").append(getService(4203));
+    $(".itemimg2 .swiper-wrapper").append(getService(4193));
+    $(".itemimg2 .swiper-wrapper").append(getService(4223));
+    $(".itemimg2 .swiper-wrapper").append(getService(4227));
+    $(".itemimg2 .swiper-wrapper").append(getService(4195));
+
+    $(".itemimg3 .swiper-wrapper").append(getService(3953));
+    $(".itemimg3 .swiper-wrapper").append(getService(3523));
+    $(".itemimg3 .swiper-wrapper").append(getService(283));
+    $(".itemimg3 .swiper-wrapper").append(getService(3177));
+    $(".itemimg3 .swiper-wrapper").append(getService(2241));
+
+
+    getMessage();
+
+    var swiper = new Swiper('.demandtxt', {
+        direction: 'vertical',
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        autoplayDisableOnInteraction : false,
+        autoplay:2000
+    });
+    var swiper = new Swiper('.itemimg1', {
+        slidesPerView: 'auto',
+    });
+    var swiper = new Swiper('.itemimg2', {
+        slidesPerView: 'auto',
+    });
+    var swiper = new Swiper('.itemimg3', {
+        slidesPerView: 'auto',
+    });
+    var swiper = new Swiper('.itemimg4', {
+        slidesPerView: 'auto',
+    });
+
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
 
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
 
-    demand('904');
-    demand('906');
-    demand('907');
-    function demand(str) {
+
+    //    获取仪器
+    function getIns(id) {
+        var html='';
         $.ajax({
-            url:BASE_URL + '/page/req/detail/ajax?uReqId='+str,
+            url: BASE_URL + '/instrument/msearch/' + id,
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+                if(data.payload.insPic==''||data.payload.insPic==null){
+                    data.payload.insPic='${rlab}/common/common_img/default/ins_300X300.jpg';
+                }else{
+                    data.payload.insPic=data.payload.insPic+'264_158';
+                }
+                html = '<div class="swiper-slide"><a href="${rlab}/instrument/search/' + id + '"><img src="' + data.payload.insPic + '" alt=""><p>' + data.payload.insName + '</p></a></div>'
+            }
+        })
+        return html;
+    }
+    //    获取服务
+    function getService(id) {
+        var html='';
+        $.ajax({
+            url: BASE_URL + '/service/mdetail/' + id,
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+                if(data.payload.servicePic==''||data.payload.servicePic==null){
+                    data.payload.servicePic='${rlab}/common/common_img/default/ins_300X300.jpg';
+                }else{
+                    data.payload.servicePic=data.payload.servicePic+'264_158';
+                }
+                html = '<div class="swiper-slide"><a href="${rlab}/service/detail/' + id + '"><img src="' + data.payload.servicePic + '" alt=""><p>' + data.payload.serviceName.substring(0, 15) + '</p></a></div>'
+            },
+            error: function () {
+
+            }
+        })
+        return html;
+    }
+    //    获取科创头条
+    function getMessage() {
+        $.ajax({
+            url: BASE_URL + '/front/search/sciences?classifyName=最新文章&pageNo=1&pageSize=3',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            async: false,
+            success: function (data) {
+                for (var i = 0; i < data.payload.list.length; i++) {
+                    var hor="";
+                    var item=data.payload.list[i];
+                    if(item.hours>= 24){
+                        hor=item.createTimeStr;
+                    }else if(item.hours == 24) {
+                        hor='刚刚';
+                    }else {
+                        hor=item.hours+'小时前'
+                    }
+                    if(item.tInfoTitle.length>21){
+                        item.tInfoTitle=item.tInfoTitle.substring(0,21)+'...'
+                    }
+                    $(".message ul").append('<li class="clearfix" onclick="gomessagedetail(this)" data-mess-id="'+item.tInfoId+'">\
+                            <img src="'+ item.tInfoImage +'" alt="">\
+                            <div class="itemlitxt">\
+                                <p class="itemlitit">' + item.tInfoTitle + ' </p>\
+                                <span class="history"><i class="lab-history"></i>'+hor+'</span>\
+                            </div>\
+                            </li>');
+                }
+            }
+        })
+    }
+    function gomessagedetail($this) {
+        window.location.href = BASE_URL + '/news/get_article_detail?id=' + $($this).data("messId");
+    }
+
+
+    function demand() {
+        $.ajax({
+            url: BASE_URL + '/user/req/m_list',
             type: 'GET',
             dataType: "json",
             contentType: "application/json",
             async: false,
             success: function (data) {
                 if (data.code === 0) {
-                    var html='<li class="mui-table-view-cell">\
-                                <a data-goods-id="'+data.payload.uReqId+'" onclick="toDemandDetail(this)">\
-                                     <p><span style="color: #4f8df0;">'+data.payload.uName+'</span></p>\
-                                     <p>'+data.payload.uReqDescription+'</p>\
-                                     <p><i class="lab-yanjing"></i><s>'+data.payload.uChkCount+'</s>人<span style="float: right">'+data.payload.remainTime+'天后过期</span></p>\
-                                </a>\
-                            </li>';
-                    $("#demand").append(html);
+                    for (var i = 0; i < data.payload.length; i++) {
+                        if(data.payload[i].uReqDescription.length>16){
+                            data.payload[i].uReqDescription=data.payload[i].uReqDescription.substring(0,16)+"...";
+                        }
+                        if(data.payload[i].uName.length>10){
+                            data.payload[i].uName=data.payload[i].uName.substring(0,10)+"...";
+                        }
+                        if(data.payload[i].uReqState==3){
+                            var timespan='已解决';
+                        }else {
+                            var timespan=data.payload[i].remainTime + '天后过期';
+                        }
+                        var html='<div class="swiper-slide"><a href="${rlab}/page/req/detail?uReqId='+ data.payload[i].uReqId +'"><p>'+data.payload[i].uReqDescription+'</p></a></div>'
+                        $(".demandtxt .swiper-wrapper").append(html);
+                    }
                 }
             },
             error: function () {
@@ -485,25 +619,14 @@
 
         })
     }
-    function godemandmanage() {
-        window.location.href = BASE_URL +"/page/req/listpage";
-    }
-    function showCodes() {
-        mask.show();
-        $("#codes").show();
-    }
-    function closeCode() {
-        mask.close();
-        $("#codes").hide();
-    }
-    setCallbackUrl();// 设置登录时回跳路径
+
     function toDemandDetail($this) {
         $this=$($this);
         window.location.href=BASE_URL+'/page/req/detail?uReqId='+$this.data("goodsId");
     }
     function toOrgDetail($this) {
         $this=$($this);
-        window.location.href=BASE_URL+'/front/org/'+$this.data("goodsId");
+        window.location.href = BASE_URL + '/org/' + $this.data("goodsId");
     }
     mui.init({
         swipeBack: false //启用右滑关闭功能
@@ -519,13 +642,49 @@
         $("#codes").hide();
     });
     slider.slider({
-        interval: 2000
+        interval: 2500
     });
 
-    var orglist = mui("#orglist");
-    orglist.slider({
-        interval: 1000
-    });
+    var caseStore = [
+        {
+            index: 1,
+            type:1, // 0 微需求 1 创新券
+            casePic: BASE_URL + "/mobile/imgs/m2.3/case/huajiejiyin.png",
+            caseTitle: "华颉基因——实验仪器租赁",
+            caseType: "创新券",
+            caseDesc: "北京华颉基因医疗技术有限公司的高通量基因测序项目，通过人人实验平台成功入驻中关村科技园昌平园，并采用以租代买的模式解决了主要仪器设备的购置。该项目应用第二代基因测序技术，仅通过2毫升血液，便可检测包括亚型、耐药性在内的基因指纹，为病人绘制疾病指纹，提供全面的、敏感的、早期、无创及动态的疾病监控，实现疾病的早期诊断，并在治疗及随访过程中实现对病情变化的动态监控。该项目获得人人实验平台20万元创新券补贴支持。"
+        },
+        {
+            index: 3,
+            type:1, // 0 微需求 1 创新券
+            casePic: BASE_URL + "/mobile/imgs/m2.3/case/boyajiyin.png",
+            caseTitle: "博雅辑因——技术解决方案",
+            caseType: "创新券",
+            caseDesc: "博雅辑因（北京）生物科技有限公司委托人人实验平台服务方，对其提供的菌株、质粒、PCR产物等样本，采用sanger测序法进行测序，并对测序过程中所需的引物进行合成。人人实验平台对该项目给予50%创新券补贴支持。"
+        },
+        {
+            index: 8,
+            type:0, // 0 微需求 1 创新券
+            casePic: BASE_URL + "/mobile/imgs/m2.3/case/weituoshiyan.png",
+            caseTitle: "委托实验需求",
+            caseType: "微需求",
+            caseDesc: "中关村生命科学园内一家生物类企业，应业务需要委托技术服务方做40只大鼠CT及血管造影实验，找到人人实验平台帮助解决。人人实验根据服务项目要求，精准对接到中科院动物所生殖科老师，既优惠又高效。"
+        }
+    ];
 
+
+    /**
+     * 初始化案例列表
+     */
+    /*function createCaseItem(caseData) {
+
+        return '<li class="clearfix">\
+            <a href="${rlab}/m_home/case_detail?index='+ caseData.index + '&type=' + caseData.type + '">\
+            <img class="liImg" src="' + caseData.casePic + '"/>\
+            <div class="tit">\
+            <h2>' + caseData.caseTitle + '</h2>\
+            <h3>' + caseData.caseType + '</h3>\
+            <p>' + caseData.caseDesc + '</p></div></a></li>';
+    }*/
 </script>
 </html>

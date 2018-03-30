@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.ServiceInfoDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.vo.ServiceInfoCustom">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="service_id" jdbcType="BIGINT" property="serviceId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+        <result column="service_pics" jdbcType="OTHER" property="servicePics"/>
+        <result column="service_feature" jdbcType="OTHER" property="serviceFeature"/>
+        <result column="service_credit" jdbcType="OTHER" property="serviceCredit"/>
+        <result column="service_price" jdbcType="OTHER" property="servicePrice"/>
+        <result column="service_des" jdbcType="VARCHAR" property="serviceDes"/>
+        <result column="service_scope" jdbcType="OTHER" property="serviceScope"/>
+        <result column="service_machine" jdbcType="OTHER" property="serviceMachine"/>
+        <result column="service_method" jdbcType="VARCHAR" property="serviceMethod"/>
+        <result column="service_period" jdbcType="VARCHAR" property="servicePeriod"/>
+        <result column="service_note" jdbcType="VARCHAR" property="serviceNote"/>
+        <result column="service_contact_id" jdbcType="OTHER" property="serviceContactId"/>
+        <result column="service_province" jdbcType="VARCHAR" property="serviceProvince"/>
+        <result column="service_city" jdbcType="VARCHAR" property="serviceCity"/>
+        <result column="service_district" jdbcType="VARCHAR" property="serviceDistrict"/>
+        <result column="service_address" jdbcType="VARCHAR" property="serviceAddress"/>
+        <result column="service_lon" jdbcType="NUMERIC" property="serviceLon"/>
+        <result column="service_lat" jdbcType="NUMERIC" property="serviceLat"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="service_submiter" jdbcType="BIGINT" property="serviceSubmiter"/>
+        <result column="service_is_manager" jdbcType="INTEGER" property="serviceIsManager"/>
+        <result column="service_state" jdbcType="INTEGER" property="serviceState"/>
+        <result column="service_classify" jdbcType="OTHER" property="serviceClassify"/>
+        <result column="service_product_classify" jdbcType="OTHER" property="serviceProductClassify"/>
+        <result column="service_custom_tag" jdbcType="VARCHAR" property="serviceCustomTag"/>
+    </resultMap>
+
+    <resultMap id="serviceList" type="com.renrenlab.rlab.vo.ServiceListModel">
+        <id property="id" column="service_id"></id>
+        <result column="org_name" property="orgName"/>
+        <association property="serviceInfo" javaType="com.renrenlab.rlab.model.ServiceInfo">
+            <result column="service_id" jdbcType="BIGINT" property="serviceId"/>
+            <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+            <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+            <result column="service_pics" jdbcType="OTHER" property="servicePics"/>
+            <result column="service_feature" jdbcType="OTHER" property="serviceFeature"/>
+            <result column="service_credit" jdbcType="OTHER" property="serviceCredit"/>
+            <result column="service_price" jdbcType="OTHER" property="servicePrice"/>
+            <result column="service_des" jdbcType="VARCHAR" property="serviceDes"/>
+            <result column="service_scope" jdbcType="OTHER" property="serviceScope"/>
+            <result column="service_machine" jdbcType="OTHER" property="serviceMachine"/>
+            <result column="service_method" jdbcType="VARCHAR" property="serviceMethod"/>
+            <result column="service_period" jdbcType="VARCHAR" property="servicePeriod"/>
+            <result column="service_note" jdbcType="VARCHAR" property="serviceNote"/>
+            <result column="service_contact_id" jdbcType="OTHER" property="serviceContactId"/>
+            <result column="service_province" jdbcType="VARCHAR" property="serviceProvince"/>
+            <result column="service_city" jdbcType="VARCHAR" property="serviceCity"/>
+            <result column="service_district" jdbcType="VARCHAR" property="serviceDistrict"/>
+            <result column="service_address" jdbcType="VARCHAR" property="serviceAddress"/>
+            <result column="service_lon" jdbcType="NUMERIC" property="serviceLon"/>
+            <result column="service_lat" jdbcType="NUMERIC" property="serviceLat"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+            <result column="service_submiter" jdbcType="BIGINT" property="serviceSubmiter"/>
+            <result column="service_is_manager" jdbcType="INTEGER" property="serviceIsManager"/>
+            <result column="service_state" jdbcType="INTEGER" property="serviceState"/>
+            <result column="service_classify" jdbcType="OTHER" property="serviceClassify"/>
+            <result column="service_product_classify" jdbcType="OTHER" property="serviceProductClassify"/>
+            <result column="service_custom_tag" jdbcType="VARCHAR" property="serviceCustomTag"/>
+        </association>
+        <association property="userBaseInfo" javaType="com.renrenlab.rlab.model.UserBaseInfo">
+            <result column="u_uid" property="uUid" jdbcType="BIGINT"/>
+            <result column="u_name" property="uName" jdbcType="VARCHAR"/>
+            <result column="u_nickname" property="uNickname" jdbcType="VARCHAR"/>
+            <result column="u_password" property="uPassword" jdbcType="VARCHAR"/>
+            <result column="u_sex" property="uSex" jdbcType="BIT"/>
+            <result column="u_age" property="uAge" jdbcType="INTEGER"/>
+            <result column="u_birthday" property="uBirthday" jdbcType="DATE"/>
+            <result column="u_mobile" property="uMobile" jdbcType="VARCHAR"/>
+            <result column="u_email" property="uEmail" jdbcType="VARCHAR"/>
+            <result column="u_avatar" property="uAvatar" jdbcType="VARCHAR"/>
+            <result column="u_level" property="uLevel" jdbcType="INTEGER"/>
+            <result column="u_source" property="uSource" jdbcType="INTEGER"/>
+            <result column="u_state" property="uState" jdbcType="INTEGER"/>
+            <result column="u_login_count" property="uLoginCount" jdbcType="INTEGER"/>
+            <result column="u_last_login_time" property="uLastLoginTime" jdbcType="TIMESTAMP"/>
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+            <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="serviceDetail" type="com.renrenlab.rlab.vo.ServiceInfoCustom">
+        <result column="service_id" jdbcType="BIGINT" property="serviceId"/>
+        <result column="org_oid" jdbcType="BIGINT" property="orgOid"/>
+        <result column="service_name" jdbcType="VARCHAR" property="serviceName"/>
+        <result column="service_pics" jdbcType="OTHER" property="servicePics"/>
+        <result column="service_feature" jdbcType="OTHER" property="serviceFeature"/>
+        <result column="service_credit" jdbcType="OTHER" property="serviceCredit"/>
+        <result column="service_price" jdbcType="OTHER" property="servicePrice"/>
+        <result column="service_des" jdbcType="VARCHAR" property="serviceDes"/>
+        <result column="service_scope" jdbcType="OTHER" property="serviceScope"/>
+        <result column="service_machine" jdbcType="OTHER" property="serviceMachine"/>
+        <result column="service_method" jdbcType="VARCHAR" property="serviceMethod"/>
+        <result column="service_period" jdbcType="VARCHAR" property="servicePeriod"/>
+        <result column="service_note" jdbcType="VARCHAR" property="serviceNote"/>
+        <result column="service_contact_id" jdbcType="OTHER" property="serviceContactId"/>
+        <result column="service_province" jdbcType="VARCHAR" property="serviceProvince"/>
+        <result column="service_city" jdbcType="VARCHAR" property="serviceCity"/>
+        <result column="service_district" jdbcType="VARCHAR" property="serviceDistrict"/>
+        <result column="service_address" jdbcType="VARCHAR" property="serviceAddress"/>
+        <result column="service_lon" jdbcType="NUMERIC" property="serviceLon"/>
+        <result column="service_lat" jdbcType="NUMERIC" property="serviceLat"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="service_submiter" jdbcType="BIGINT" property="serviceSubmiter"/>
+        <result column="service_is_manager" jdbcType="INTEGER" property="serviceIsManager"/>
+        <result column="service_state" jdbcType="INTEGER" property="serviceState"/>
+        <result column="org_name" jdbcType="VARCHAR" property="orgName"/>
+        <result column="service_classify" jdbcType="OTHER" property="serviceClassify"/>
+        <result column="service_product_classify" jdbcType="OTHER" property="serviceProductClassify"/>
+        <result column="service_custom_tag" jdbcType="VARCHAR" property="serviceCustomTag"/>
+        <collection property="serviceContacts" ofType="com.renrenlab.rlab.vo.OrgContacts">
+            <!--<result column="con_id" property="conId"/>-->
+            <!--<result column="con_name" property="conName"/>-->
+            <!--<result column="con_phone" property="conPhone"/>-->
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="classifyDetail" type="com.renrenlab.rlab.model.ServiceClassify">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="classify_name" jdbcType="VARCHAR" property="classifyName"/>
+        <result column="classify_level" jdbcType="BIGINT" property="classifyLevel"/>
+        <result column="classify_map" jdbcType="BIGINT" property="classifyMap"/>
+        <result column="classify_pic" jdbcType="VARCHAR" property="classifyPic"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        service_id, ser.org_oid, service_name, service_pics, service_feature, service_credit,
+        service_price, service_des, service_scope, service_machine, service_method, service_period,
+        service_note, service_contact_id, service_province, service_city, service_district,
+        service_address, service_lon, service_lat, ser.create_time, ser.modify_time, service_submiter,
+        service_is_manager, service_state, service_classify, service_product_classify, service_custom_tag
+    </sql>
+
+    <sql id="user_Column">
+        u.u_uid, u_name, u_nickname, u_password, u_sex, u_age,
+        u_birthday, u_mobile, u_email,
+        u_avatar, u_level, u_type, u_source,
+        u_state, u_login_count, u_last_login_time
+    </sql>
+
+    <select id="selectByServiceId" parameterType="java.lang.Long" resultMap="serviceDetail">
+        select
+        <include refid="Base_Column_List"/>, ob.org_name
+        from rlab_service_info.t_service_info ser
+        JOIN rlab_org_info.t_org_contacts con
+        ON con.con_id IN(SELECT jsonb_array_elements_text(ser.service_contact_id)::INT)
+        JOIN rlab_org_info.t_org_base_info ob
+        ON ser.org_oid = ob.org_oid
+        where ser.service_id = #{serviceId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectByOrgIdAndServiceName" resultMap="BaseResultMap">
+        SELECT *
+        FROM rlab_service_info.t_service_info
+        WHERE org_oid = #{orgId}
+              AND service_name = #{serviceName}
+    </select>
+
+    <!--查询管理系统服务列表-->
+    <select id="selectServiceList" resultMap="serviceList">
+        SELECT
+        <include refid="Base_Column_List"/>,
+        <include refid="user_Column"/>, org.org_name
+        FROM rlab_service_info.t_service_info ser
+        JOIN rlab_user_info.t_user_base_info u
+        ON ser.service_submiter = u.u_uid
+        JOIN rlab_org_info.t_org_base_info org
+        ON ser.org_oid = org.org_oid
+        WHERE
+        true
+        <if test="uUid != null">
+            AND #{uUid} = ser.service_submiter
+        </if>
+        <if test="permission == 11">
+            AND (ser.service_submiter = #{managerId,jdbcType=BIGINT}
+            OR ser.service_is_manager = 0)
+        </if>
+        <if test="serviceId != null">
+            AND (ser.service_id = #{serviceId,jdbcType=BIGINT} OR (POSITION (#{keyword,jdbcType=VARCHAR} IN
+            ser.service_name) > 0))
+        </if>
+        <if test="keyword != null and serviceId == null">
+            AND POSITION (#{keyword,jdbcType=VARCHAR} IN ser.service_name) > 0
+        </if>
+        <if test="state != null and state != 99">
+            AND ser.service_state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="beginTime != null">
+            AND ser.modify_time >= '${beginTime}'
+        </if>
+        <if test="endTime != null">
+            AND ser.modify_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY ser.modify_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+        ,ser.service_id
+    </select>
+
+    <!--查询用户端服务列表-->
+    <select id="selectFrontList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>, org.org_name
+        FROM rlab_service_info.t_service_info ser
+        JOIN rlab_org_info.t_org_base_info org
+        ON ser.org_oid = org.org_oid
+        WHERE ser.org_oid IN (
+        SELECT org_oid
+        FROM rlab_org_info.t_org_manager
+        WHERE u_uid = #{uUid}
+        )
+        <if test="serviceId != null">
+            AND (ser.service_id = #{serviceId,jdbcType=BIGINT} OR (POSITION (#{keyword,jdbcType=VARCHAR} IN
+            ser.service_name) > 0))
+        </if>
+        <if test="keyword != null and serviceId == null">
+            AND POSITION (#{keyword,jdbcType=VARCHAR} IN ser.service_name) > 0
+        </if>
+        <if test="state != null and state != 99">
+            AND ser.service_state = #{state,jdbcType=INTEGER}
+        </if>
+        <if test="beginTime != null">
+            AND ser.modify_time >= '${beginTime}'
+        </if>
+        <if test="endTime != null">
+            AND ser.modify_time &lt;= date'${endTime}'+INTEGER '1'
+        </if>
+        ORDER BY ser.modify_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+        ,ser.service_id
+    </select>
+
+    <!--审核服务-->
+    <update id="auditService">
+        UPDATE rlab_service_info.t_service_info
+        SET service_state = #{state}
+        WHERE service_id IN
+        <foreach collection="serviceIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM rlab_service_info.t_service_info
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.ServiceInfo" keyProperty="serviceId"
+            keyColumn="service_id">
+        <selectKey keyProperty="serviceId" resultType="java.lang.Long" order="AFTER">
+            SELECT last_value as service_id
+            FROM rlab_service_info.t_service_s_id
+        </selectKey>
+        insert into rlab_service_info.t_service_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgOid != null">
+                org_oid,
+            </if>
+            <if test="serviceName != null">
+                service_name,
+            </if>
+            <if test="servicePics != null">
+                service_pics,
+            </if>
+            <if test="serviceFeature != null">
+                service_feature,
+            </if>
+            <if test="serviceCredit != null">
+                service_credit,
+            </if>
+            <if test="servicePrice != null">
+                service_price,
+            </if>
+            <if test="serviceDes != null">
+                service_des,
+            </if>
+            <if test="serviceScope != null">
+                service_scope,
+            </if>
+            <if test="serviceMachine != null">
+                service_machine,
+            </if>
+            <if test="serviceMethod != null">
+                service_method,
+            </if>
+            <if test="servicePeriod != null">
+                service_period,
+            </if>
+            <if test="serviceNote != null">
+                service_note,
+            </if>
+            <if test="serviceContactId != null">
+                service_contact_id,
+            </if>
+            <if test="serviceProvince != null">
+                service_province,
+            </if>
+            <if test="serviceCity != null">
+                service_city,
+            </if>
+            <if test="serviceDistrict != null">
+                service_district,
+            </if>
+            <if test="serviceAddress != null">
+                service_address,
+            </if>
+            <if test="serviceLon != null">
+                service_lon,
+            </if>
+            <if test="serviceLat != null">
+                service_lat,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="serviceSubmiter != null">
+                service_submiter,
+            </if>
+            <if test="serviceIsManager != null">
+                service_is_manager,
+            </if>
+            <if test="serviceState != null">
+                service_state,
+            </if>
+            <if test="serviceClassify != null">
+                service_classify,
+            </if>
+            <if test="serviceProductClassify != null">
+                service_product_classify
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgOid != null">
+                #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="serviceName != null">
+                #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePics != null">
+                #{servicePics,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceFeature != null">
+                #{serviceFeature,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceCredit != null">
+                #{serviceCredit,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="servicePrice != null">
+                #{servicePrice,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceDes != null">
+                #{serviceDes,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceScope != null">
+                #{serviceScope,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceMachine != null">
+                #{serviceMachine,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceMethod != null">
+                #{serviceMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null">
+                #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceNote != null">
+                #{serviceNote,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceContactId != null">
+                #{serviceContactId,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceProvince != null">
+                #{serviceProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null">
+                #{serviceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceDistrict != null">
+                #{serviceDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceAddress != null">
+                #{serviceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceLon != null">
+                #{serviceLon,jdbcType=NUMERIC},
+            </if>
+            <if test="serviceLat != null">
+                #{serviceLat,jdbcType=NUMERIC},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serviceSubmiter != null">
+                #{serviceSubmiter,jdbcType=BIGINT},
+            </if>
+            <if test="serviceIsManager != null">
+                #{serviceIsManager,jdbcType=INTEGER},
+            </if>
+            <if test="serviceState != null">
+                #{serviceState,jdbcType=INTEGER},
+            </if>
+            <if test="serviceClassify != null">
+                #{serviceClassify,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceProductClassify != null">
+                #{serviceProductClassify,jdbcType=OTHER}::jsonb,
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.ServiceInfo">
+        update rlab_service_info.t_service_info
+        <set>
+            <if test="orgOid != null">
+                org_oid = #{orgOid,jdbcType=BIGINT},
+            </if>
+            <if test="serviceName != null">
+                service_name = #{serviceName,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePics != null">
+                service_pics = #{servicePics,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceFeature != null">
+                service_feature = #{serviceFeature,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceCredit != null">
+                service_credit = #{serviceCredit,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="servicePrice != null">
+                service_price = #{servicePrice,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceDes != null">
+                service_des = #{serviceDes,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceScope != null">
+                service_scope = #{serviceScope,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceMachine != null">
+                service_machine = #{serviceMachine,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceMethod != null">
+                service_method = #{serviceMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="servicePeriod != null">
+                service_period = #{servicePeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceNote != null">
+                service_note = #{serviceNote,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceContactId != null">
+                service_contact_id = #{serviceContactId,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceProvince != null">
+                service_province = #{serviceProvince,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceCity != null">
+                service_city = #{serviceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceDistrict != null">
+                service_district = #{serviceDistrict,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceAddress != null">
+                service_address = #{serviceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceLon != null">
+                service_lon = #{serviceLon,jdbcType=NUMERIC},
+            </if>
+            <if test="serviceLat != null">
+                service_lat = #{serviceLat,jdbcType=NUMERIC},
+            </if>
+            modify_time = now(),
+            <if test="serviceSubmiter != null">
+                service_submiter = #{serviceSubmiter,jdbcType=BIGINT},
+            </if>
+            <if test="serviceIsManager != null">
+                service_is_manager = #{serviceIsManager,jdbcType=INTEGER},
+            </if>
+            <if test="serviceState != null">
+                service_state = #{serviceState,jdbcType=INTEGER},
+            </if>
+            <if test="serviceClassify != null">
+                service_classify = #{serviceClassify,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="serviceProductClassify != null">
+                service_product_classify = #{serviceProductClassify,jdbcType=OTHER}::jsonb,
+            </if>
+        </set>
+        where service_id = #{serviceId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectOrgNameByUid" resultType="map">
+        SELECT
+        org_name AS orgName,
+        org_oid AS orgOid
+        FROM rlab_org_info.t_org_base_info orginfo
+        WHERE orginfo.org_oid IN (SELECT org_oid
+        FROM rlab_org_info.t_org_manager orgmanager
+        <if test="uUid != null">
+            WHERE orgmanager.u_uid = #{uUid}
+        </if>
+        )
+        /*只展示认证服务商
+        AND org_type = 2 */
+
+    </select>
+    <select id="getOrgOids" resultType="long">
+        SELECT org_oid
+        FROM rlab_org_info.t_org_manager
+        WHERE u_uid = #{uUid}
+    </select>
+
+    <select id="mSize" resultType="long">
+        SELECT COUNT(*)
+        FROM
+            rlab_common_info.t_instrument_index
+        UNION ALL
+        SELECT COUNT(*)
+        FROM
+            rlab_common_info.t_org_index
+        UNION ALL
+        SELECT COUNT(*)
+        FROM
+            rlab_common_info.t_service_index
+    </select>
+
+    <insert id="insertIns">
+        INSERT INTO rlab_instrument_info.t_instrument_base_info_copy (ins_category, ins_name, ins_mode, ins_brand,
+                                                                      ins_origin, ins_maker, ins_description, ins_pic, ins_core_param, link_page, ins_passport, base_ins_iid, org_oid)
+            SELECT
+                ins_category,
+                ins_name,
+                ins_mode,
+                ins_brand,
+                ins_origin,
+                ins_maker,
+                ins_description,
+                ins_pic,
+                ins_core_param,
+                link_page,
+                ins_passport,
+                #{insId},
+                #{orgId}
+            FROM
+                rlab_instrument_info.t_instrument_base_info
+            WHERE
+                ins_iid = #{insId}
+    </insert>
+
+    <select id="selectClassify" resultMap="classifyDetail" parameterType="java.lang.Long">
+        SELECT
+            id,
+            parent_id,
+            classify_name,
+            classify_level,
+            classify_pic
+        FROM
+            rlab_service_info.t_service_classify
+        WHERE
+            parent_id = #{id}
+    </select>
+
+    <select id="selectProductClassify" resultMap="classifyDetail" parameterType="java.lang.Long">
+        SELECT
+            id,
+            parent_id,
+            classify_name,
+            classify_level,
+            classify_map
+        FROM
+            rlab_service_info.t_service_product_classify
+        WHERE
+            parent_id = #{id}
+        ORDER BY id
+    </select>
+
+    <select id="selectFrontProductClassify" resultMap="classifyDetail" parameterType="java.lang.Long">
+        SELECT
+        id, parent_id, classify_name, classify_level, classify_pic
+        FROM
+        rlab_service_info.t_service_classify
+        WHERE
+        parent_id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+        ORDER BY
+        id
+    </select>
+
+</mapper>

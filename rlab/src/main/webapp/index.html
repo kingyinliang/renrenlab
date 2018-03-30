@@ -6,8 +6,10 @@
 </head>
 <body>
 <script>
-    location.href = "http://localhost:8080/page/home"
-//        location.href = "http://fix.renrenlab.com/rlab/page/home"  //测试发版放开这个,记得修改config.properties文件中的env=3
+    location.href = window.location.protocol + '//' + window.location.host
+    //location.href = "http://192.168.20.32:8080/page/home"
+    // location.href = "http://fix.renrenlab.com"
+    // location.href = "http://www.renrenlab.com"  //测试发版放开这个,记得修改config.properties文件中的env=3
 </script>
 </body>
 </html>

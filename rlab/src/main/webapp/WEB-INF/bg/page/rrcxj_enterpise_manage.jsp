@@ -138,7 +138,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="7"/>
+                <jsp:param name="firstMenu" value="8"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>
@@ -210,11 +210,12 @@
                 <table class="layui-table">
                     <colgroup>
                         <col width="12%">
-                        <col width="27%">
+                        <col width="26%">
                         <col width="10%">
-                        <col width="18%">
+                        <col width="17%">
+                        <col width="10%">
+                        <col width="10%">
                         <col width="15%">
-                        <col>
                     </colgroup>
                     <thead>
                     <tr>
@@ -224,6 +225,7 @@
                         <th style="cursor: pointer" onclick="listSort(this)" data-sort="${order}" class="sorts">申请时间<i class="${order==null? 'lab-down' : 'lab-top' }"></i></th>
                         <th>审核状态</th>
                         <th>操作</th>
+                        <th>修改时间</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -239,7 +241,7 @@
                                     ${info.orgCerSource eq 0? "人人实验":"天使助"}
                             </td>
                             <td>
-                                <fmt:formatDate value="${info.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                <fmt:formatDate value="${info.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </td>
                             <td>
                                 <c:if test="${info.orgCerState eq 0}">
@@ -254,9 +256,12 @@
                             </td>
                             <td>
                                 <%--查看权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                     <a href="${rlab}/bg/coupon/detail?id=${info.orgCerId}">查看详情</a>
-                                </c:if>
+                                <%--</c:if>--%>
+                            </td>
+                            <td>
+                                <fmt:formatDate value="${info.modifyTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                             </td>
                         </tr>
                     </c:forEach>

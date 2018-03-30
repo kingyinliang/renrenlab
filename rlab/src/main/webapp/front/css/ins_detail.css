@@ -127,12 +127,27 @@ body, .wrapper {
 
 
 .ins_txt div.refer {
-    position: absolute;
-    bottom: 0;
-    right: 0;
     font-size: 14px;
     color: #999;
-    text-align: right;
+}
+.label p{
+    float: left;
+    background: #ace183;
+    border-radius: 2px;
+    line-height: 12px;
+    padding: 5px 5px;
+    font-size: 12px;
+    color: white;
+    margin-right: 25px;
+}
+.label i{
+    padding: 0 8px;
+    text-align: center;
+    display: inline-block;
+    border-right: 1px solid white;
+}
+.label i:last-child{
+    border-right: none;
 }
 
 .ins_txt div.refer span {
@@ -524,3 +539,97 @@ body, .wrapper {
     overflow: hidden;
 }
 /*=E 查看机构信息弹窗 [2017-08-17]*/
+.maapp{
+    float: left;
+    color: white;
+    background: #588eff;
+    width: 106px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.maappCmp img{
+    width: 100%;
+}
+.maappCmp{
+    width: 630px;
+    height: 660px;
+    background-color: white;
+    border-radius: 5px;
+}
+.maappCmp label{
+    font-size: 12px;
+    position: absolute;
+    right: 12px;
+    top:12px;
+    cursor: pointer;
+    color: white;
+}
+.maappCmp h3{
+    color: white;
+    font-size: 20px;
+    letter-spacing: 5px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    top:50px;
+}
+.maappCmp p i{
+    color: #ff5f73;
+}
+.maappCmp p{
+    color: #7e8792;
+    font-size: 14px;
+    padding: 0 50px;
+    line-height: 30px;
+}
+.maappCmp textarea{
+    width: 514px;
+    height: 100px;
+    margin: 0 50px;
+    background-color: #f4f7ff;
+    border: 0;
+    padding: 8px;
+}
+.maappCmp input{
+    width: 515px;
+    height: 43px;
+    margin: 0 50px;
+    padding-left: 15px;
+    background: #f4f7ff;
+    border: 0;
+}
+.maappCmp a{
+    display: inline-block;
+    width: 530px;
+    height: 46px;
+    margin: 0 50px;
+    margin-top: 45px;
+    background-color: #588eff;
+    border-radius: 3px;
+    text-align: center;
+    line-height: 46px;
+    font-size: 14px;
+    color: white;
+}
+.maappCmp span{
+    font-size: 12px;
+    color: #8b8b8c;
+    margin-left: 50px;
+    line-height: 25px;
+    margin-top: 15px;
+    display: inline-block;
+}
+.maappCmp div p{
+    display: inline-block;
+    padding: 0 80px 0 15px;
+    line-height: 25px;
+}
+.maappCmp div{
+    margin: 15px 50px 0 50px;
+}
+.maappCmp div img{
+    width: 20px;
+}

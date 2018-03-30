@@ -86,4 +86,6 @@ public interface RequirementService {
     Requirement getDetailById(Long uReqId);
 
     int addCount(Long uRedId);
+
+    List<Requirement> mGetTinyList();
 }

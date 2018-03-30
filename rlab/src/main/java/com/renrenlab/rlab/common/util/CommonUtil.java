@@ -7,6 +7,9 @@ import java.util.Date;
  * Created by guanjipeng on 2017/7/20.
  */
 public class CommonUtil {
+
+    private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
      * 判断字符串是否为纯数字
      *
@@ -14,11 +17,13 @@ public class CommonUtil {
      * @return
      */
     public static boolean isNum(String string) {
-        if (null == string || string.equals(""))
+        if (null == string || string.equals("")) {
             return false;
+        }
         for (int i = 0; i < string.length(); i++) {
-            if (!Character.isDigit(string.charAt(i)))
+            if (!Character.isDigit(string.charAt(i))) {
                 return false;
+            }
         }
         return true;
     }
@@ -30,7 +35,6 @@ public class CommonUtil {
      * @return
      */
     public static String formatTime(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return format.format(date);
     }
 }

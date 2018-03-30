@@ -13,5 +13,7 @@ public interface InstrumentUploadService {
 
     Map<String, Object> uploadInstruments(Long uId, Long orgId, MultipartFile file);
 
+    Map<String, Object> uploadInstrumentsNew(Long uId, Long orgId, MultipartFile file);
+
     PageInfo<InsturmentUploadHistoryInfo> searchHistory(Integer pageNo, Integer pageSize);
 }

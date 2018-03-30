@@ -68,12 +68,12 @@ public interface OrgDao {
      */
     List<OrgInfo> searchOrgBaseInfoList(@Param("oci") Integer orgCategoryId, @Param("order") String order);
 
-    /**
-     * 查询排名前k的机构
-     * @param k
-     * @return
-     */
-    List<OrgInfo> searchOrgBaseInfoListTopK(@Param("k") Integer k);
+//    /**
+//     * 查询排名前k的机构
+//     * @param k
+//     * @return
+//     */
+//    List<OrgInfo> searchOrgBaseInfoListTopK(@Param("k") Integer k);
 
     /**
      * 更新机构详细信息

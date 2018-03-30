@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${rlab}/common/assets/layui/css/layui.css">
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
 
@@ -601,7 +601,7 @@
         }
 
         .zz_modal > .zz_main {
-            height: 200px;
+            height: 222px;
             overflow: hidden;
             position: relative;
         }
@@ -610,7 +610,7 @@
             height: 230px;
             overflow: auto;
             position: absolute;
-            top: -12px;
+            /*top: -12px;*/
             right: -8px;
         }
 
@@ -620,20 +620,21 @@
         }
 
         .zz_modal > .zz_main ul > li {
-            height: 44px;
-            line-height: 44px;
+            /*height: 44px;*/
+            /*line-height: 44px;*/
             position: relative;
             padding-left: 20px;
-            width: 150px;
+            /*width: 150px;*/
             float: left;
             margin-bottom: 20px;
+            margin-right: 10px;
         }
 
         .zz_modal > .zz_main ul > li > label {
             position: absolute;
             left: 0;
-            top: 50%;
-            margin-top: -7px;
+            /*top: 50%;*/
+            margin-top: 5px;
         }
 
         .zz_modal > .zz_add {
@@ -1152,7 +1153,7 @@
 </div>
 <script src="${rlab}/common/assets/layui/layui.js"></script>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <%--<script src="${rlab}/front/js/view/facilitator_prove.js"></script>--%>
 <script type="text/javascript">
     var layer, layedit, ditIndex;
@@ -1289,7 +1290,6 @@
         });
         if (isLtIE9) {
             JPlaceHolder.init();
-
         }
 
     });
@@ -1702,6 +1702,10 @@
      ** 添加一条资质到资质库
      */
     function addIdentify(name, success, error) {
+        if(name.length>50){
+            layer.msg("资质字数超过50字，请重新填写");
+            return
+        }
         $.ajax({
             url: BASE_URL + "/bg/org/OrgcertificateTmp/add?name=" + name,
             type: 'post',
@@ -1715,6 +1719,7 @@
             }
         })
     }
+
     $("input").on("focus", function () {
         var errTag = $(this).next("s.error_tip");
         var flag = errTag.length >= 1 ? true : false;
@@ -1951,12 +1956,14 @@
         }
 
     }
+
     // 清除资质tip
     function clearErrorZZ($_this) {
         if ($($_this).data("loadType") == 0) {
             $("#zzTip").hide();
         }
     }
+
     // 大表单提交
     function putFormToService() {
         var REG = {
@@ -2336,7 +2343,7 @@
 
         if (FLAG) {
             postPutForm(formData, function (data) {
-                location.href = BASE_URL + "/front/provider/search/" + data.payload.orgOid;
+                location.href = BASE_URL + "/provider/search/" + data.payload.orgOid;
             })
         } else {
             layer.msg("添加失败，请检查表单");
@@ -2351,7 +2358,7 @@
     function postPutForm(formData, cb) {
         if(FLAG_PUT) {
             $.ajax({
-                url: BASE_URL + '/front/provider/application',
+                url: BASE_URL + '/provider/application',
                 type: 'POST',
                 data: JSON.stringify(formData),
                 dataType: "json",
@@ -2374,7 +2381,7 @@
                     } else if (data.code === 1000) {
                         layer.msg("用户超时，即将跳转认证申请记录界面");
                         setTimeout(function () {
-                            location.href = BASE_URL + "/front/provider/search?pageNo=1&pageSize=49";
+                            location.href = BASE_URL + "/provider/search?pageNo=1&pageSize=49";
                         }, 1000);
                     }else if(data.code === 2001){
                         layer.msg("组织机构代码重复，请查看表单");

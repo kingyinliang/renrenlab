@@ -13,6 +13,12 @@ var CATEGORY_2 = null;
 var PRICE_FLAG = false;
 var SLIDE_FLAG = false;
 var CODE = null;// 仪器大类ID
+var SERCH_TYPE=$(".pitchTab").data("searchType");//搜索类型；1为仪器，2为服务，3为机构
+var SORT_TYPE=null;
+var classify='',name='';
+var instag=false;//仪器预约
+
+
 // if (!BASE_URL) {
 //     BASE_URL = "http://www.renrenlab.com/rlab";
 // }
@@ -46,8 +52,9 @@ window._dgt = _dgt;
 function initLocation() {
 
     $.ajax({
-        url: BASE_URL + "/front/instrument/location",
+        url: BASE_URL + "/instrument/location",
         type: 'GET',
+        async:false,
         dataType: 'json',
         contentType: 'application/json',
     })
@@ -119,7 +126,7 @@ function getCurremtAdress() {
  */
 function logouts() {
     setCallbackUrl();
-    window.location.href = BASE_URL + "/front/user/logout";
+    window.location.href = TOKEN1 + "/user/logout";
 }
 /**
  * 点击登录
@@ -147,7 +154,7 @@ function moveToTop() {
  * 跳转登录页面
  */
 function toLoginPage() {
-    window.location.href = BASE_URL + "/front/user/login";
+    window.location.href = TOKEN1 + "/user/login";
     // return false;
     if (window.event) {
         window.event.returnValue = false;
@@ -159,27 +166,27 @@ function toLoginPage() {
  * 跳转注册页面
  */
 function toRegisterPage() {
-    window.location.href = BASE_URL + "/front/user/register";
+    window.location.href = TOKEN1 + "/user/register";
 }
 
 /**
  * 跳转用户中心页面
  */
 function toCenter() {
-    window.location.href = BASE_URL + "/front/user/center";
+    window.location.href = TOKEN1 + "/user/center";
 }
 
 /**
  * 跳转主页
  */
 function toHomePage() {
-    window.location.href = BASE_URL + "/page/home";
+    window.location.href = TOKEN1;
 }
 
 //  搜索事件触发
-$("#serach").on("keyup", function (e) {
+$("#search").on("keyup", function (e) {
 
-    var searchText = $("#serach").val();
+    var searchText = $("#search").val();
     if (e.keyCode !== 13) {
         return false;
     }
@@ -189,7 +196,7 @@ $("#serach").on("keyup", function (e) {
 });
 
 
-$("#serachBtn").on("click", function (e) {
+$("#gosearch").on("click", function (e) {
     toSearch(e);
 });
 
@@ -198,7 +205,7 @@ function toSearch(e) {
     // var address = $("#adCurrent").text();
     // 处理参数
     PAGE_NO = 1;
-    KEY_WORD = $("#serach").val() === undefined ? '' : $("#serach").val();
+    KEY_WORD = $("#search").val() === undefined ? '' : $("#search").val();
     var address = getCurremtAdress();
     if (address === -1) {
         toGoodsList();
@@ -251,8 +258,21 @@ function toGoodsList() {
         pageNo: PAGE_NO,
         pageSize: PAGE_SIZE
     }
-
-    var URL = BASE_URL + "/front/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+    if (SERCH_TYPE==1) {
+        if(instag){
+            var URL = BASE_URL + "/instrument/search?isSubscribe=仪器预约&keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        }else {
+            var URL = BASE_URL + "/instrument/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        }
+    }else if (SERCH_TYPE==2){
+        if(flags){
+            var URL = BASE_URL + flags +"&keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        }else {
+            var URL = BASE_URL + "/service/search?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+        }
+    }else if (SERCH_TYPE==3){
+        var URL = BASE_URL + "/front/org/query?keyword=" + formData.keyword + "&pageNo=" + formData.pageNo + "&pageSize=" + formData.pageSize;
+    }
     // 2，添加地址参数
     if (CUR_PROVINCE !== null) {
         // province
@@ -265,11 +285,17 @@ function toGoodsList() {
         // formData.city = CUR_CITY;
         URL = URL + "&city=" + CUR_CITY
     }
+    //if(keyword==null){
+        if (SORT_TYPE !== null) {
+            URL = URL + "&order=" + SORT_TYPE
+        }
+    //}
+
 
     // 定位地址
     if (CUR_PROVINCE == null && CUR_CITY == null && IS_COUNTRY != "1") {
         $.ajax({
-            url: BASE_URL + "/front/instrument/location",
+            url: BASE_URL + "/instrument/location",
             type: "GET",
             async: false,
             cache: true,
@@ -341,8 +367,8 @@ function toGoodsDetail($this) {
 
     $this = $($this);
     var goodsInfo = $this.data("goodsId");
-    // location.href = BASE_URL + "/front/instrument/search/" + goodsInfo;
-    window.open(BASE_URL + "/front/instrument/search/" + goodsInfo)
+    // location.href = BASE_URL + "/instrument/search/" + goodsInfo;
+    window.open(BASE_URL + "/instrument/search/" + goodsInfo)
 }
 
 /**
@@ -374,11 +400,11 @@ function strlen(str) {
 //     // $($_this).attr("src","/front/imgs/icon/default-.jpg")
 // }
 
-
 /**
  * 下拉
  * @domBox
  */
+
 function dropDownFn(domBox) {
     domBox.box.stop().on('mouseover', function () {
         domBox.list.removeClass('dn');
@@ -417,7 +443,7 @@ var JPlaceHolder = {
     fix: function () {
         jQuery(':input[placeholder]').each(function (index, element) {
 
-            if ($(this).attr("id") !== "serach" && $(this).attr("type") != "file" && $(this).data("addPlace") != "no") {
+            if ($(this).attr("id") !== "search" && $(this).attr("type") != "file" && $(this).data("addPlace") != "no") {
 
                 var self = $(this), txt = self.attr('placeholder');
                 self.wrap($('<div></div>').css({
@@ -481,7 +507,7 @@ var searchHolder = {
 
         $(':input[placeholder]').each(function (index, element) {
 
-            if ($(this).attr("id") == "serach") {
+            if ($(this).attr("id") == "search") {
 
                 var self = $(this),
                     txt = self.attr('placeholder');
@@ -562,15 +588,17 @@ function userSideClick(event, $_this) {
     }
 }
 
-$(".userName").hover(function () {
-    $(".userUl").show();
-}, function () {
-    $(".userUl").hide();
-    $(".userUl").hover(function () {
-        $(".userUl").show();
-    }, function () {
-        $(".userUl").hide();
-    })
+$("#userMain").hover(function () {
+    $(this).find("label").attr("class","lab-top");
+    $(this).find(".usersele").show();
+},function () {
+    $(this).find("label").attr("class","lab-down");
+    $(this).find(".usersele").hide();
+})
+$(".code").hover(function () {
+    $(".codeimg").show();
+},function () {
+    $(".codeimg").hide();
 })
 
 $(".userUl").hover(function () {
@@ -578,3 +606,151 @@ $(".userUl").hover(function () {
 }, function () {
     $(".userUl").hide();
 })
+
+//导航栏吸顶
+var a = $('#headTab'),
+    b =a.offset();
+$(window).on('scroll',function(){
+    var c = $(document).scrollTop();
+    if(b.top<=c){
+        a.css({'position':'fixed','top':'0px'})
+    }else{
+        a.css({'position':'absolute','top':'153px'})
+    }
+    if(c>500){
+        $("#rightBar").show();
+    }else {
+        $("#rightBar").hide();
+    }
+})
+//导航动画
+// $(".tab").hover(function () {
+//     if (!/selectedTab/.test($(this).attr("class"))){
+//         $(this).find(".tabStrip").stop();
+//         $(this).find(".tabStrip").animate({width:'113px'},200);
+//     }
+// },function () {
+//     if (!/selectedTab/.test($(this).attr("class"))){
+//         $(this).find(".tabStrip").stop();
+//         $(this).find(".tabStrip").animate({width:'0px'},200);
+//     }
+// })
+$(".tab").hover(function () {
+    $(this).find(".reclassify").show();
+},function () {
+    $(this).find(".reclassify").hide();
+})
+//tab搜索
+$(".searchTab a").on("click",function () {
+    $(".searchTab a").attr("class","")
+    $(this).attr("class","pitchTab");
+    SERCH_TYPE=$(this).data("searchType")-0;
+    if(SERCH_TYPE==2){
+        $("#search").attr("placeholder","请输入服务名称");
+    }else if(SERCH_TYPE==3){
+        $("#search").attr("placeholder","请输入机构名称");
+    }else {
+        $("#search").attr("placeholder","请输入仪器名称");
+    }
+})
+//导航下拉
+$(".tabSelect").hover(function () {
+    $(this).find("label").attr("class","lab-top");
+    $(this).find(".reel").show();
+},function () {
+    $(this).find("label").attr("class","lab-down");
+    $(this).find(".reel").hide();
+})
+$(".userMain").hover(function () {
+    $(this).find("label").attr("class","lab-top");
+    $(this).find(".usersele").show();
+},function () {
+    $(this).find("label").attr("class","lab-down");
+    $(this).find(".usersele").hide();
+})
+//返回顶部
+$(".gotop").on("click",function () {
+    $('body,html').animate({scrollTop:0},1000);
+})
+//call
+$(".gocall").on("click",function () {
+    $(".call").show();
+    $(".erweima").hide();
+})
+$(".callHead label").on("click",function () {
+    $(".call").hide();
+})
+$(".goerweima").on("click",function () {
+    $(".erweima").show();
+})
+$(document).bind('click', function(e) {
+    var e = e || window.event;
+    var elem = e.target || e.srcElement;
+    while (elem) {
+        if (elem.id && elem.id == 'rightBar') {
+            return;
+        }
+        elem = elem.parentNode;
+    }
+    $('#rightBar .call').hide();
+    $('#rightBar .erweima').hide();
+});
+function gohome() {
+    window.location.href=TOKEN1;
+}
+function goorghome() {
+    if(getCurremtAdress()==-1){
+        initLocation()
+    }
+    window.location.href=BASE_URL+"/front/org/query?order=2&province="+getCurremtAdress();
+}
+function goserverhome() {
+
+    if(getCurremtAdress()==-1){
+        initLocation()
+    }
+    window.location.href = TOKEN2 + "/service/keyan?classify=18&name=科研服务"+"&province=" + getCurremtAdress();;
+}
+function goQuality() {
+    if(getCurremtAdress()==-1){
+        initLocation()
+    }
+    window.location.href = TOKEN3 + "/service/zhiliang?classify=99&name=质量服务"+"&province=" + getCurremtAdress();
+}
+function goinshome() {
+    if(getCurremtAdress()==-1){
+        initLocation()
+    }
+    window.location.href = BASE_URL + "/instrument/search?province=" + getCurremtAdress();
+}
+function goreqhome() {
+    window.location.href=TOKEN1+"/page/req/listpage";
+}
+function goorg($this) {
+    $this=$($this);
+    window.location.href=BASE_URL+"/front/org/"+$this.data("mapId");
+}
+function gorenrenlab($this) {
+    $this=$($this);
+    window.location.href=TOKEN1+"/front/search/renrenlab_page?name="+$this.data("mapId");
+}
+function goins($this) {
+    $this=$($this);
+    window.location.href = BASE_URL + "/instrument/search/" + $this.data("mapId");
+}
+function goserver($this) {
+    $this=$($this);
+    window.location.href = TOKEN2 + "/service/detail/" + $this.data("mapId");
+}
+function gomessagehome($this) {
+    $this=$($this);
+    window.location.href = TOKEN1 + "/news/get_articles_page";
+}
+function golablogin() {
+    // $this=$($this);
+    window.location.href = BASE_URL + "/page/lablogin";
+}
+function gocasehome($this) {
+    $this=$($this);
+    window.location.href=BASE_URL+"/page/case/home";
+}

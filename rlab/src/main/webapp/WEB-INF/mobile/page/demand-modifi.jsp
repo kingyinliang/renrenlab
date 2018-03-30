@@ -16,8 +16,8 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202 ">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
@@ -215,7 +215,7 @@
 <div id="main" class="sp_main">
 
 
-    <div class="headers">
+    <div class="headers" style="background: white">
         <i class="lab-back_1 lft_back" onclick="goBack()"></i>
         <p class="homelogo"><a href="javascript:void (0)" onclick="toHome()" ><img src="${rlab}/mobile/imgs/home_logo.png" /></a></p>
         <c:choose>
@@ -272,32 +272,17 @@
 </div>
 
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script type="text/javascript">
+    setCallbackUrl();// 设置登录时回跳路径
 
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
-    setCallbackUrl();// 设置登录时回跳路径
 
     var text = $("#text").val();
     $("#textNums").text(text.length);
@@ -355,7 +340,7 @@
 
 
             $.ajax({
-                url: '${rlab}/front/user/req/modify',
+                url: '${rlab}/user/req/modify',
                 type: 'POST',
                 dataType: "json",
                 data: JSON.stringify(data),
@@ -364,7 +349,7 @@
                     if(data.code === 0){
                         mui.toast("需求修改成功,即将跳转");
                         setTimeout(function () {
-                            window.location.href = '${rlab}/front/user/req/tinylist?pageNo=1&pageSize=10&state=0';
+                            window.location.href = '${rlab}/user/req/tinylist?pageNo=1&pageSize=10&state=0';
                         },1000)
                     }
                 },

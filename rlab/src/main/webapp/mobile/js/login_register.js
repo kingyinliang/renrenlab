@@ -119,17 +119,17 @@ function getFormData(){
 function updateValidateImg ($this) {
 
     if ($this === undefined) {
-        $("#vertifyImg").attr("src",BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+        $("#vertifyImg").attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
     }
     $this = $($this);
-    $this.attr("src",BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+    $this.attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
 }
 //登陆函数
 function sendLogin() {
     var formData = getFormData();
     $.ajax({
-        url: BASE_URL + "/front/user/login",
+        url: BASE_URL + "/user/login",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',

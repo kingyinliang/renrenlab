@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
 <%
     boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
-    if(isMobileDevice){
+    if (isMobileDevice) {
         request.getRequestDispatcher("/m_500Error.jsp").forward(request, response);
     }
 %>
@@ -59,9 +60,9 @@
     <!--底部底边栏-->
     <jsp:include page="./WEB-INF/front/template/footer.jsp"></jsp:include>
     <%--公用搜索部分--%>
-    <%@ include file="./WEB-INF/mobile/template/search.jsp"%>
+    <%@ include file="./WEB-INF/mobile/template/search.jsp" %>
 </div>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/front/js/common/main.js"></script>
 <script>
     function moveToTop() {
         $('body,html').animate({scrollTop: 0}, 500);

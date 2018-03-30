@@ -46,33 +46,30 @@
                 <p style="font-size: 14px; color: #7b8da0; margin-top: 5px">统计数据均为截止至前一天数据</p>
                 <div></div>
             </div>
-            <div class="chart_container">
-                <div style="width: 48%; height: 100%; background-color: white; float: left">
-                    <div style="width: 100%; height: 20%">
-                        <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">用户数量统计</p>
-                        <div style="background-color: #dce3ea; height: 1px"></div>
-                        <div style="width: 100%; text-align: center; margin-top: 15px">
-                            <p style="display: inline-block;  font-size: 18px; color: #4c5e70">用户总数:</p>
-                            <p style="display: inline-block; color: #40a6ff; font-size: 18px">${userCounts}</p>
-                        </div>
-                    </div>
-                    <div id="user" style="width: 80%; height: 80%; margin: 0 auto"></div>
-                </div>
 
-                <div style="width: 48%; height: 100%; background-color: white; float: right">
-                    <div style="width: 100%; height: 20%">
-                        <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">机构数量统计</p>
-                        <div style="background-color: #dce3ea; height: 1px"></div>
-                        <div style="width: 100%; text-align: center; margin-top: 15px">
-                            <p style="display: inline-block;  font-size: 18px; color: #4c5e70">机构总数:</p>
-                            <p style="display: inline-block; color: #fba45f; font-size: 18px">${orgCounts}</p>
-                        </div>
+            <div class="chart_container" style="width: 100%; height: 490px; background-color: white; margin-bottom: 50px">
+                <div style="width: 100%; height: 20%">
+                    <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">用户数量统计</p>
+                    <div style="background-color: #dce3ea; height: 1px"></div>
+                    <div style="width: 100%; text-align: center; margin-top: 15px">
+                        <p style="display: inline-block;  font-size: 18px; color: #4c5e70">用户总数:</p>
+                        <p style="display: inline-block; color: #40a6ff; font-size: 18px">${userCounts}</p>
                     </div>
-                    <div id="org" style="width: 80%; height: 80%; margin: 0 auto"></div>
                 </div>
+                <div id="user" style="width: 80%; height: 80%; margin: 0 auto"></div>
             </div>
-
-            <div class="chart_container" ; style="background-color: white; height: 490px; margin-bottom: 150px">
+            <div class="chart_container" ; style="background-color: white; height: 490px; margin-bottom: 50px;margin-top: 54px">
+                <div style="width: 100%; height: 20%">
+                    <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">机构数量统计</p>
+                    <div style="background-color: #dce3ea; height: 1px"></div>
+                    <div style="width: 100%; text-align: center; margin-top: 15px">
+                        <p style="display: inline-block;  font-size: 18px; color: #4c5e70">机构总数:</p>
+                        <p style="display: inline-block; color: #5bcdd1; font-size: 18px">${orgCounts}</p>
+                    </div>
+                </div>
+                <div id="org" style="width: 80%; height: 80%; margin: 0 auto"></div>
+            </div>
+            <div class="chart_container" ; style="background-color: white; height: 490px; margin-bottom: 50px">
                 <div style="width: 100%; height: 20%">
                     <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">仪器数量统计</p>
                     <div style="background-color: #dce3ea; height: 1px"></div>
@@ -82,6 +79,17 @@
                     </div>
                 </div>
                 <div id="machine" style="width: 80%; height: 80%; margin: 0 auto"></div>
+            </div>
+            <div class="chart_container" ; style="background-color: white; height: 490px; margin-bottom: 150px">
+                <div style="width: 100%; height: 20%">
+                    <p style="margin-left: 40px;  font-size: 16px; color: #4c5e70; line-height: 50px">服务数量统计</p>
+                    <div style="background-color: #dce3ea; height: 1px"></div>
+                    <div style="width: 100%; text-align: center; margin-top: 15px">
+                        <p style="display: inline-block;  font-size: 18px; color: #4c5e70">服务总数:</p>
+                        <p style="display: inline-block; color: #58c2ff; font-size: 18px">${serviceCounts}</p>
+                    </div>
+                </div>
+                <div id="service" style="width: 80%; height: 80%; margin: 0 auto"></div>
             </div>
 
             <%--<div class="chart_container" style="background-color: white; height: 490px">--%>
@@ -169,7 +177,9 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ${days}
+            data:${month}
+            <%--data: [<c:forEach var="month" items="${month}">'${month.time}', </c:forEach>]--%>
+//            data:['01', '02', '03', '04', '05', '06', '07'],
         },
         yAxis: {
             show: 'false',
@@ -198,7 +208,7 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ${days}
+            data: ${month}
         },
         yAxis: {
             type: 'value'
@@ -226,17 +236,46 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ${days}
+            data: ${month}
         },
         yAxis: {
             type: 'value'
         },
         series: [{
-            name: '仪器量',
+            name: '仪器增长量',
             type: 'line',
             smooth: true,
 //            data: [500, 550, 600, 700, 800, 1000, 1500],
             data: [<c:forEach var="ins" items="${insInfo}">${ins}, </c:forEach>],
+            lineStyle: {
+                normal: {
+                    width: 3
+                }
+            }
+        }]
+    });
+
+
+    var fuwueChart = echarts.init(document.getElementById('service'));
+    fuwueChart.setOption({
+        color: ['#58c2ff'],
+        tooltip: {
+            trigger: 'axis'
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ${month}
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            name: '服务量',
+            type: 'line',
+            smooth: true,
+//            data: [500, 550, 600, 700, 800, 1000, 1500],
+            data: [<c:forEach var="service" items="${serviceInfo}">${service}, </c:forEach>],
             lineStyle: {
                 normal: {
                     width: 3

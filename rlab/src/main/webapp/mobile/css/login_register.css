@@ -1,6 +1,5 @@
 *{margin: 0;padding: 0;}html,body{width: 100%;height: 100%;background: #f5f6fa;}input{padding: 0;margin: 0;}a:hover{text-decoration: none !important;}a:link{text-decoration: none !important;}input{margin: 0 !important;padding: 0 !important;line-height: normal !important;}
 #main{text-align: center;width: 100%;height: 100%;background: #f5f6fa;}button{padding: 0 !important;}button:disabled{opacity: 1;}#go:disabled{background: #ddd;color: #999}#code:disabled{color: #999}
-#main img{width: 2.96rem;height: 0.773rem;margin-top: 1.68rem;}
 .login_head{height: 1.175rem;width: 100%;background: white}.login_head i{margin-left: 0.5rem;float: left;font-size: 0.4rem;line-height: 1.175rem;}.login_head span{float: left;line-height: 1.175rem;color: #999;font-size: 0.4rem}
 .logos{margin-top: 1rem;}.item label{display: block;float: left;font-size: 0.4rem;line-height: 1.013rem;width: 1rem;color: #7A7A7A;position: absolute;}
 .item{width: 6.93rem;height: 1.013rem;background: white;margin: auto;}.item input{border: none;width: 5.73rem;height: 100%;font-size: 0.32rem;float: left;padding-left: 1rem !important;box-sizing: content-box;margin-left: 0.2rem !important;}
@@ -75,3 +74,34 @@
 #imgBox{margin-top: 0.5rem;}
 #imgInfo{font-size: 0.32rem;color: #a94442;text-align: center;line-height: 0.8rem;height: 0.8rem}
 .mui-toast-container{font-size: 0.32rem!important;bottom: 60%;line-height: 0.5rem}.mui-toast-container div{font-size: 0.32rem !important;padding: 0.2rem 0.6rem;}
+.login_head p{
+    line-height: 1.175rem;
+    font-size: 0.4267rem;
+    color: #4e4e4e;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    margin-left: -0.94rem;
+}
+.logintab{
+    width: 6.93rem;
+    margin: auto;
+    margin-top: 0.5rem;
+}
+.logintab a{
+    line-height: 0.73rem;
+    font-size: 0.32rem;
+    display: inline-block;
+    color: #9c9c9c;
+}
+.gologin{
+    width: 2rem;
+    float: right;
+}
+.gologin_note{
+    float: left;
+}
+.logintab .selectTab{
+    color: #398df8;
+    border-bottom: 0.03rem solid #398df8;
+}

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>人人实验（renrenlab.com）官方网站-互联网+科技服务平台</title>
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170608">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_20180202">
     <script src="${rlab}/mobile/js/zeptojs.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
@@ -17,9 +17,9 @@
     <%--<script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
     <script src="${rlab}/front/assets/md5/jquery.md5.js"></script>--%>
     <script src="${rlab}/mobile/assets/zepto-md5/zepto.md5.js"></script>
-    <script src="${rlab}/mobile/js/main.js"></script>
-    <link rel="stylesheet" href="${rlab}/mobile/css/login_register.css?v_=20170608">
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
+    <script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
+    <link rel="stylesheet" href="${rlab}/mobile/css/login_register.css?v_=20171127">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202">
     <style>
         input{margin: 0 !important;padding: 0 !important;line-height: normal !important;}
     </style>
@@ -29,10 +29,11 @@
 <div id="main" class="mui-content">
     <div class="login_head">
         <div  onclick="goBack()">
-            <i class="lab-back_1"></i><span>返回</span>
+            <i class="lab-back_1"></i>
         </div>
+        <p>更改密码</p>
     </div>
-    <a href="javascript:void(0)" onclick="toHome()"><img src="${rlab}/mobile/imgs/logos.png"/></a>
+    <%--<a href="javascript:void(0)" onclick="toHome()"><img src="${rlab}/mobile/imgs/logos.png"/></a>--%>
     <div class="logos">
         <p class="item">
             <label for="user" class="lab-phone-type-2"></label>
@@ -50,14 +51,14 @@
             <button id="code" disabled>获取验证码</button>
         </p>
         <p class="item_tip" id="codeError"></p>
-        <button id="go" disabled>重置密码</button>
-        <p class="logosHref" style="text-align: center"><span>遇到问题？关注【人人实验】服务号联系客服</span></p>
+        <button id="go" disabled>确认</button>
+       <%--<p class="logosHref" style="text-align: center"><span>遇到问题？关注【人人实验】服务号联系客服</span></p>--%>
 
-        <%--<p class="logosHref"><span>已有账号？</span><a id="to_register" href="${rlab}/front/user/register">立即注册</a></p>
+        <%--<p class="logosHref"><span>已有账号？</span><a id="to_register" href="${rlab}/user/register">立即注册</a></p>
         <div class="other_login">
             <div class="top_line">or</div>
             <div class="btm_login">
-                <a href="${rlab}/front/user/text/login" class="lab-im" id="note"></a>
+                <a href="${rlab}/user/text/login" class="lab-im" id="note"></a>
                 <p class="login_tit">验证码登陆</p>
             </div>
         </div>--%>
@@ -75,27 +76,12 @@
 <script src="${rlab}/mobile/js/mobile-datect.js" type="text/javascript" charset="utf-8"></script>
 <script src="${rlab}/mobile/js/registers.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
 

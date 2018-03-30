@@ -94,7 +94,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="7"/>
+                <jsp:param name="firstMenu" value="8"/>
                 <jsp:param name="secondMenu" value="1"/>
             </jsp:include>
         </div>
@@ -177,14 +177,14 @@
             </div>
             <%--操作按钮--%>
             <%--审核权限--%>
-            <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+            <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                 <div style="margin-bottom: 150px;text-align: center;display: ${detail.orgCerState ne 0 ?"none":"block"}">
                     <button class="lab_btn_base  lab_btn_type1" onclick="acceptStatus()" type="button">审核通过</button>
                     <button class="lab_btn_base  lab_btn_type5" onclick="rejectStatus()" type="button"
                             style="margin-left: 26px;">审核不通过
                     </button>
                 </div>
-            </c:if>
+            <%--</c:if>--%>
         </div>
     </div>
     <div id="delete" class="shade">
@@ -228,6 +228,8 @@
             success: function (data) {
                 if (data.code == 200) {
                     window.location.href = '${rlab}/bg/coupon/detail?id=${detail.orgCerId}';
+                } else {
+                    alert(data.description);
                 }
             },
             complete: function () {
@@ -258,6 +260,8 @@
                     success: function (data) {
                         if (data.code == 200) {
                             window.location.href = '${rlab}/bg/coupon/detail?id=${detail.orgCerId}';
+                        } else {
+                            alert(data.description);
                         }
                     },
                     complete: function () {

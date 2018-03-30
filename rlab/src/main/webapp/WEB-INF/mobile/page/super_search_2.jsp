@@ -9,8 +9,8 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
 
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202 ">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
@@ -222,10 +222,12 @@
 <div id="main" class="sp_main">
 
     <%--START 头部公用部分引入--%>
-    <%@ include file="../template/header_one.jsp" %>
+        <header>
+            <%@ include file="../template/header_four.jsp" %>
+        </header>
     <%--END 头部公用部分引入--%>
 
-    <div class="sp_ctnt">
+    <div class="sp_ctnt" style="margin-top: 1.475rem;">
         <%--tip提示部分开始--%>
         <div id="tip" class="tip">
             <p>电脑访问人人实验网站www.renrenlab.com查看更多信息
@@ -237,11 +239,11 @@
         <%--tip提示部分结束--%>
 
         <%--感兴趣的内容开始--%>
-        <div class="funny">
+        <div class="funny" style="display: ${interestWords != null && interestWords.size() > 0 ? 'block':'none'};">
             <h3>可能感兴趣的内容</h3>
             <div class="fn_list">
                 <c:forEach items="${interestWords}" var="word" varStatus="st">
-                    <span onclick="toSearch(this)" >${word.text}</span>
+                    <span onclick="backSearch(this)">${word.text}</span>
                 </c:forEach>
                 <%--<span>碳水化合物</span>--%>
             </div>
@@ -300,45 +302,61 @@
 <%@ include file="../template/search.jsp" %>
 
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
 <script src="${rlab}/front/assets/echarts/echarts-plain.js" type="text/javascript" charset="utf-8"></script>
 <script>
     /**
      * 返回历史上一页
      */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
-
     setCallbackUrl();// 设置登录时回跳路径
+
+    // 回跳搜索结果
+    function backSearch() {
+        console.log($.getUrlParam("origin"));
+    }
 
     function closeTip() {
         $("#tip").hide();
     }
     function eConsole(param) {
+        console.log($.getUrlParam("origin"));
+//
+//        if (typeof param.seriesIndex == 'undefined') {
+//            return;
+//        }
+//        if (param.type == 'click') {
+//            toSearch(null, param.name);
+//        }
+        var origin = $.getUrlParam("origin");
+        console.log(origin);
         if (typeof param.seriesIndex == 'undefined') {
-            return;
+            return false;
         }
+
         if (param.type == 'click') {
-            toSearch(null, param.name);
+            window.location.href=BASE_URL+'/front/superSearch/search?flag=0&query='+param.name;
+//            if(origin === 'ins'){
+//                toSearch(null, param.name);
+//            }else if(origin === 'service'){
+//                // 通过科搜推荐结果跳转
+//                getAddressToUrl();
+//                KEY_WORD = param.name;
+//                PAGE_NO = 1;
+//                toServiceList();
+//            }else if(origin === 'org'){
+//                // 通过科搜推荐结果跳转
+//                getAddressToUrl();
+//                    KEY_WORD = param.name;
+//                    PAGE_NO = 1;
+//                    toOrgList();
+//            }
+
         }
+
     }
 
     var myChart = echarts.init(document.getElementById('echart'));
@@ -441,12 +459,10 @@
             nodes: [<c:forEach items="${relatedField.nodes}" var="nodes" varStatus="st">
                 {"category": "${nodes.category}", "name": "${nodes.name}", "value": ${nodes.value}},
                 </c:forEach>
-
             ],
             links: [<c:forEach items="${relatedField.links}" var="links" varStatus="st">
                 {"source": ${links.source}, "target": ${links.target}, "weight": ${links.weight}},
                 </c:forEach>
-
             ],
 
         }]

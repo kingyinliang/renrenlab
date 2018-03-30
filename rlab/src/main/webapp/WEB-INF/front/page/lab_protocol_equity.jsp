@@ -12,8 +12,9 @@
     <script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
-    <link rel="stylesheet" href="${rlab}/front/css/footpage.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20171108">
+    <link rel="stylesheet" href="${rlab}/front/css/footpage.css?v_=20180129">
 
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
@@ -45,7 +46,8 @@
 
     <style type="text/css">
         .intro{
-            color: #333333;
+            color: #404252;
+            line-height: 30px;
         }
         .big{
             font-size: 16px;
@@ -79,14 +81,14 @@
     <div id="content">
         <div class="main clearfix">
             <div class="lef">
-                <div class="tab">
+                <div class="tabs">
                     <p style="font-size: 20px;color: #508df0;">人人实验</p>
                     <p><a href="${rlab}/page/aboutus">关于我们</a></p>
                     <p><a href="${rlab}/page/ournews">媒体报道</a></p>
                     <p><a href="${rlab}/page/joinus">加入我们</a></p>
                     <p><a href="${rlab}/page/callus">联系我们</a></p>
                 </div>
-                <div class="tab protocol">
+                <div class="tabs protocol">
                     <p style="font-size: 20px;color: #508df0;">服务条款</p>
                     <p><a href="${rlab}/page/server">用户服务协议</a></p>
                     <p class="select"><a href="${rlab}/page/equity">知识产权协议</a></p>
@@ -95,7 +97,7 @@
             <div class="content">
                 <div class="bigtit" style="margin-bottom: 43px">知识产权协议</div>
                 <div class="intro">
-                    <p class="sm">人人实验对网站内的所有信息内容（除特别注明信息来源或由他方输入的信息外）包括但不限于文字表述及其组合、图标、图饰、图表、色彩、版面设计、数据等均享有完整的著作权、专利权或商标权等相关权利，并受《中华人民共和国著作权法》《中华人民共和国专利法》等相关法律法规和中国加入的所有知识产权方面的国际条约、国际公约等的保护。本条中的“他方”包含平台用户和服务商。</p>
+                    <p class="sm" style="font-size: 16px;">人人实验对网站内的所有信息内容（除特别注明信息来源或由他方输入的信息外）包括但不限于文字表述及其组合、图标、图饰、图表、色彩、版面设计、数据等均享有完整的著作权、专利权或商标权等相关权利，并受《中华人民共和国著作权法》《中华人民共和国专利法》等相关法律法规和中国加入的所有知识产权方面的国际条约、国际公约等的保护。本条中的“他方”包含平台用户和服务商。</p>
                     <p class="big clearfix"><span class="blo">第一条</span><span class="bloh">人人实验一直秉承尊重知识产权的理念，站内所使用的文字作品、美术作品、摄影作品、软件作品等均是通过合法途径取得授权或者原创。</span></p>
                     <p class="big clearfix"><span class="blo">第二条</span><span class="bloh">凡在人人实验平台上传信息即视为作者已免费授权人人实验，人人实验对该信息享有一定的权利，包括但不限于发表权、信息网络传播权、复制权、发行权。</span></p>
                     <p class="big clearfix"><span class="blo">第三条</span><span class="bloh">人人实验对用户自行上传的资料不承担任何法律责任，任何第三方均可对人人实验平台的内容进行监督，若发现存在侵犯任何第三人著作权等合法权益的内容，请及时告知人人实验，一经查实将在第一时间予以删除，并做相应的处理。</span></p>
@@ -139,6 +141,6 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 </div>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 </html>

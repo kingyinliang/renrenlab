@@ -2,7 +2,6 @@ package com.renrenlab.rlab.service;
 
 import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.model.UserBaseInfo;
-import com.renrenlab.rlab.model.UserRole;
 import com.renrenlab.rlab.vo.Result;
 import com.renrenlab.rlab.vo.UserSimpleInfo;
 
@@ -36,6 +35,11 @@ public interface UserBaseInfoService {
      */
     Result<UserBaseInfo> register(UserSimpleInfo userSimpleInfo, HttpSession session);
 
+
+
+    /*
+            * 用户使用验证码注册*/
+    Result<UserBaseInfo> newRegister(UserSimpleInfo userSimpleInfo, HttpSession session);
     /**
      * 绑定手机号
      *
@@ -74,6 +78,14 @@ public interface UserBaseInfoService {
      * @param session
      */
     void sendVerifyCode(UserSimpleInfo userSimpleInfo, HttpSession session);
+
+    /**
+     * 发送快速登录/注册手机验证码
+     *
+     * @param userSimpleInfo
+     * @param session
+     */
+    void sendRegisterVerifyCode(UserSimpleInfo userSimpleInfo, HttpSession session);
 
     /**
      * 微信登录
@@ -119,74 +131,4 @@ public interface UserBaseInfoService {
      * @return
      */
     UserBaseInfo searchUserBaseInfoByMobile(String mobile);
-
-    /**
-     * 获取管理员列表
-     *
-     *
-     * @param session
-     * @param keyword
-     * @param rName
-     * @return
-     */
-    PageInfo<UserBaseInfo> getRoleList(HttpSession session, String keyword, String rName, Integer pageNo, Integer pageSize);
-
-    UserBaseInfo getRoleByUuid(Long uUid);
-
-    /**
-     * 添加管理员
-     *
-     * @param userBaseInfo
-     * @return
-     */
-    int addManager(UserBaseInfo userBaseInfo);
-
-    /**
-     * 获取用户角色权限
-     *
-     * @param rName
-     * @return
-     */
-    UserRole getRolePermission(String rName);
-
-    /**
-     * 移除管理员
-     *
-     * @param uUid
-     * @return
-     */
-    int removeManager(Long uUid);
-
-    /**
-     * 停用管理员
-     *
-     * @param uUid
-     * @return
-     */
-    int disableManager(Long[] uUid);
-
-    /**
-     * 启用管理员
-     *
-     * @param uUid
-     * @return
-     */
-
-    int enableManager(Long[] uUid);
-
-    /**
-     * 更新管理员信息
-     *
-     * @param baseInfo
-     * @return
-     */
-    int updateManager(UserBaseInfo baseInfo);
-
-    /**
-     * 更新角色权限
-     *
-     * @param userRole
-     * @return
-     */
-    int updateRolePermission(UserRole userRole);
 }

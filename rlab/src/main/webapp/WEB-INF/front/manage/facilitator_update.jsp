@@ -21,7 +21,7 @@
 
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <%--<link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">--%>
 
@@ -1324,7 +1324,7 @@
 </div>
 <script src="${rlab}/common/assets/layui/layui.js"></script>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     /* ------------------------------  第一段代码区域块(START)  ---------------------------------- */
     var layer, layedit, ditIndex;
@@ -2539,7 +2539,7 @@
 
         if (FLAG) {
             postPutForm(formData, function (data) {
-                location.href = BASE_URL + "/front/provider/search/${orgInfo.orgOid}";
+                location.href = BASE_URL + "/provider/search/${orgInfo.orgOid}";
             })
         } else {
             layer.msg("修改失败，请检查表单");
@@ -2555,7 +2555,7 @@
     function postPutForm(formData, cb) {
         if (FLAG_PUT) {
             $.ajax({
-                url: BASE_URL + '/front/provider/application',
+                url: BASE_URL + '/provider/application',
                 type: 'PUT',
                 data: JSON.stringify(formData),
                 dataType: "json",
@@ -2579,7 +2579,7 @@
                     } else if (data.code === 1000) {
                         layer.msg("用户超时，即将跳转认证申请记录界面");
 //                        setTimeout(function () {
-//                            location.href = BASE_URL + "/front/provider/search?pageNo=1&pageSize=49";
+//                            location.href = BASE_URL + "/provider/search?pageNo=1&pageSize=49";
 //                        }, 1000);
                     }else if(data.code === 2001){
                         layer.msg("组织机构代码重复，请查看表单");

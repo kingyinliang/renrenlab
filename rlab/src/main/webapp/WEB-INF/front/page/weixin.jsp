@@ -25,6 +25,6 @@
     </div>
 </div>
 <script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 </body>
 </html>

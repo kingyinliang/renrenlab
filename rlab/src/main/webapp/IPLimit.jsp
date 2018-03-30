@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         import="com.renrenlab.rlab.common.util.HttpRequestDeviceUtil" pageEncoding="UTF-8" %>
 <%
     boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
-    if(isMobileDevice){
+    if (isMobileDevice) {
         request.getRequestDispatcher("/m_IPLimit.jsp").forward(request, response);
     }
 %>
@@ -55,7 +56,8 @@
             </div>
             <div style="float: left; width: 600px; margin: 0 auto; margin-top: 25px; margin-left: 25px">
                 <p style="margin-top: 10px; color: #666666; font-size: 20px">抱歉, 此网站仅限中国大陆使用</p>
-                <p style="margin-top: 10px; color: #666666; font-size: 20px">Sorry, this website can only be used within Mainland China</p>
+                <p style="margin-top: 10px; color: #666666; font-size: 20px">Sorry, this website can only be used within
+                    Mainland China</p>
             </div>
         </div>
     </div>
@@ -76,7 +78,7 @@
         $('body,html').animate({scrollTop: 0}, 500);
     }
 
-    function toGoodsDetail(){
+    function toGoodsDetail() {
 
     }
 

@@ -1,14 +1,12 @@
 package com.renrenlab.rlab.vo;
 
-import java.util.Date;
-
 /**
  * 后台首页统计信息VO
  */
 public class BgHomeInfo {
 
     private Integer count;
-    private Date time;
+    private String time;
     private String before;
 
     public Integer getCount() {
@@ -19,11 +17,11 @@ public class BgHomeInfo {
         this.count = count;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

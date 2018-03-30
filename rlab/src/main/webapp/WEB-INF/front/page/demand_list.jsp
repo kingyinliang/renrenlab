@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
 
     <%--导入字体样式--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
@@ -347,15 +347,17 @@
     <!--右侧公用模块-->
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
-    <jsp:include page="../template/header.jsp"></jsp:include>
-    <%--首页、仪器共享、微需求切换tab--%>
-    <div class="ins_tab">
+    <jsp:include page="../template/header.jsp" flush="true">
+        <jsp:param name="selected" value="5"/>
+    </jsp:include>
+
+    <%--<div class="ins_tab">
         <ul class="bar">
             <li><a href="${rlab}/page/home">首页</a></li>
             <li><a onclick="toSearch()" href="javascript:void (0)">仪器共享</a></li>
             <li class="actived"><a href="${rlab}/page/req/listpage">微需求</a></li>
         </ul>
-    </div>
+    </div>--%>
     <!--模块-->
     <div class="main" style="margin-bottom: 100px">
         <div class="banner">
@@ -438,7 +440,7 @@
         </button>
     </div>
 </div>
-<script src="${rlab}/front/js/common/main.js?v_="></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     var uId = '${sessionScope.uid}';
     var pageNumber = 1;
@@ -862,7 +864,7 @@
             };
 
             $.ajax({
-                url: '${rlab}/front/user/req/pub',
+                url: '${rlab}/user/req/pub',
                 type: 'POST',
                 dataType: "json",
                 data: JSON.stringify(data),
@@ -871,7 +873,7 @@
                     if (data.code === 0) {
                         layer.msg("需求发布成功，即将跳转");
                         setTimeout(function () {
-                            window.location.href = '${rlab}/front/user/req/tinylist?pageNo=1&pageSize=10&state=0';
+                            window.location.href = '${rlab}/user/req/tinylist?pageNo=1&pageSize=10&state=0';
                         }, 1000)
                     }
                 },

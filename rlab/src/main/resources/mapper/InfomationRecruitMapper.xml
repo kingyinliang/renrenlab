@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.InfomationRecruitDao">
+  <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InfomationRecruit">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="recruit_id" jdbcType="BIGINT" property="recruitId" />
+    <result column="recruit_title" jdbcType="VARCHAR" property="recruitTitle" />
+    <result column="recruit_description" jdbcType="VARCHAR" property="recruitDescription" />
+    <result column="recruit_requirement" jdbcType="VARCHAR" property="recruitRequirement" />
+    <result column="recruit_reward" jdbcType="VARCHAR" property="recruitReward" />
+    <result column="recruit_age_requirement" jdbcType="VARCHAR" property="recruitAgeRequirement" />
+    <result column="recruit_educational" jdbcType="VARCHAR" property="recruitEducational" />
+    <result column="recruit_validity_date" jdbcType="VARCHAR" property="recruitValidityDate" />
+    <result column="recruit_email" jdbcType="VARCHAR" property="recruitEmail" />
+    <result column="recruit_contact_phone" jdbcType="VARCHAR" property="recruitContactPhone" />
+    <result column="recruit_contact_name" jdbcType="VARCHAR" property="recruitContactName" />
+    <result column="recruit_read_count" jdbcType="BIGINT" property="recruitReadCount" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="recruit_state" jdbcType="SMALLINT" property="recruitState" />
+    <result column="recruit_place" jdbcType="VARCHAR" property="recruitPlace" />
+    <result column="recruit_welfare" jdbcType="VARCHAR" property="recruitWelfare" />
+    <result column="recruit_company_des" jdbcType="VARCHAR" property="recruitCompanyDes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, recruit_id, recruit_title, recruit_description, recruit_requirement, recruit_reward, 
+    recruit_age_requirement, recruit_educational, recruit_validity_date, recruit_email, 
+    recruit_contact_phone, recruit_contact_name, recruit_read_count, create_time, modify_time, 
+    recruit_state, recruit_place, recruit_welfare, recruit_company_des
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rlab_infomation_info.t_infomation_recruit
+    where recruit_id = #{id,jdbcType=BIGINT};
+
+    UPDATE rlab_infomation_info.t_infomation_recruit
+    SET recruit_read_count = recruit_read_count + 1
+    WHERE recruit_id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rlab_infomation_info.t_infomation_recruit
+    where recruit_id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insert" parameterType="com.renrenlab.rlab.model.InfomationRecruit">
+    insert into rlab_infomation_info.t_infomation_recruit (id, recruit_id, recruit_title, 
+      recruit_description, recruit_requirement, 
+      recruit_reward, recruit_age_requirement, recruit_educational, 
+      recruit_validity_date, recruit_email, recruit_contact_phone, 
+      recruit_contact_name, recruit_read_count, create_time, 
+      modify_time, recruit_state)
+    values (#{id,jdbcType=BIGINT}, #{recruitId,jdbcType=BIGINT}, #{recruitTitle,jdbcType=VARCHAR}, 
+      #{recruitDescription,jdbcType=VARCHAR}, #{recruitRequirement,jdbcType=VARCHAR}, 
+      #{recruitReward,jdbcType=VARCHAR}, #{recruitAgeRequirement,jdbcType=VARCHAR}, #{recruitEducational,jdbcType=VARCHAR}, 
+      #{recruitValidityDate,jdbcType=VARCHAR}, #{recruitEmail,jdbcType=VARCHAR}, #{recruitContactPhone,jdbcType=VARCHAR}, 
+      #{recruitContactName,jdbcType=VARCHAR}, #{recruitReadCount,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{recruitState,jdbcType=SMALLINT})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InfomationRecruit">
+    insert into rlab_infomation_info.t_infomation_recruit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="recruitId != null">
+        recruit_id,
+      </if>
+      <if test="recruitTitle != null">
+        recruit_title,
+      </if>
+      <if test="recruitDescription != null">
+        recruit_description,
+      </if>
+      <if test="recruitRequirement != null">
+        recruit_requirement,
+      </if>
+      <if test="recruitReward != null">
+        recruit_reward,
+      </if>
+      <if test="recruitAgeRequirement != null">
+        recruit_age_requirement,
+      </if>
+      <if test="recruitEducational != null">
+        recruit_educational,
+      </if>
+      <if test="recruitValidityDate != null">
+        recruit_validity_date,
+      </if>
+      <if test="recruitEmail != null">
+        recruit_email,
+      </if>
+      <if test="recruitContactPhone != null">
+        recruit_contact_phone,
+      </if>
+      <if test="recruitContactName != null">
+        recruit_contact_name,
+      </if>
+      <if test="recruitReadCount != null">
+        recruit_read_count,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="recruitState != null">
+        recruit_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="recruitId != null">
+        #{recruitId,jdbcType=BIGINT},
+      </if>
+      <if test="recruitTitle != null">
+        #{recruitTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDescription != null">
+        #{recruitDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitRequirement != null">
+        #{recruitRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitReward != null">
+        #{recruitReward,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitAgeRequirement != null">
+        #{recruitAgeRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitEducational != null">
+        #{recruitEducational,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitValidityDate != null">
+        #{recruitValidityDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitEmail != null">
+        #{recruitEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitContactPhone != null">
+        #{recruitContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitContactName != null">
+        #{recruitContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitReadCount != null">
+        #{recruitReadCount,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruitState != null">
+        #{recruitState,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.InfomationRecruit">
+    update rlab_infomation_info.t_infomation_recruit
+    <set>
+      <if test="recruitId != null">
+        recruit_id = #{recruitId,jdbcType=BIGINT},
+      </if>
+      <if test="recruitTitle != null">
+        recruit_title = #{recruitTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitDescription != null">
+        recruit_description = #{recruitDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitRequirement != null">
+        recruit_requirement = #{recruitRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitReward != null">
+        recruit_reward = #{recruitReward,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitAgeRequirement != null">
+        recruit_age_requirement = #{recruitAgeRequirement,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitEducational != null">
+        recruit_educational = #{recruitEducational,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitValidityDate != null">
+        recruit_validity_date = #{recruitValidityDate,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitEmail != null">
+        recruit_email = #{recruitEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitContactPhone != null">
+        recruit_contact_phone = #{recruitContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitContactName != null">
+        recruit_contact_name = #{recruitContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="recruitReadCount != null">
+        recruit_read_count = #{recruitReadCount,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recruitState != null">
+        recruit_state = #{recruitState,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.InfomationRecruit">
+    update rlab_infomation_info.t_infomation_recruit
+    set recruit_id = #{recruitId,jdbcType=BIGINT},
+      recruit_title = #{recruitTitle,jdbcType=VARCHAR},
+      recruit_description = #{recruitDescription,jdbcType=VARCHAR},
+      recruit_requirement = #{recruitRequirement,jdbcType=VARCHAR},
+      recruit_reward = #{recruitReward,jdbcType=VARCHAR},
+      recruit_age_requirement = #{recruitAgeRequirement,jdbcType=VARCHAR},
+      recruit_educational = #{recruitEducational,jdbcType=VARCHAR},
+      recruit_validity_date = #{recruitValidityDate,jdbcType=VARCHAR},
+      recruit_email = #{recruitEmail,jdbcType=VARCHAR},
+      recruit_contact_phone = #{recruitContactPhone,jdbcType=VARCHAR},
+      recruit_contact_name = #{recruitContactName,jdbcType=VARCHAR},
+      recruit_read_count = #{recruitReadCount,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      recruit_state = #{recruitState,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM rlab_infomation_info.t_infomation_recruit
+    WHERE recruit_state = 0
+    ORDER BY create_time DESC
+    <if test="limit != 0">
+      LIMIT #{limit,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

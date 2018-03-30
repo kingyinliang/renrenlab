@@ -1,5 +1,7 @@
 package com.renrenlab.rlab.model;
 
+import java.util.List;
+
 /**
  * 仪器分类
  */
@@ -17,6 +19,16 @@ public class InstrumentCategory {
     private String parentCode;
 
     private Short com;
+
+    private List<InstrumentCategory> categoryList;
+
+    public List<InstrumentCategory> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<InstrumentCategory> categoryList) {
+        this.categoryList = categoryList;
+    }
 
     @Override
     public String toString() {

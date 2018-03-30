@@ -3,7 +3,6 @@ package com.renrenlab.rlab.service;
 import com.github.pagehelper.PageInfo;
 import com.renrenlab.rlab.model.InsDetailInfo;
 import com.renrenlab.rlab.model.InsListInfo;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.List;
  * 前端仪器模块
  * Created by guanjipeng on 2017/5/15.
  */
-@Service
 public interface FrontInsService {
 
     /**
@@ -35,7 +33,8 @@ public interface FrontInsService {
                                            Integer pageNo,
                                            Integer pageSize,
                                            boolean isDis,
-                                           HttpServletRequest request);
+                                           HttpServletRequest request,
+                                           String isSubscribe);
 
     /**
      * 获取省市下的区

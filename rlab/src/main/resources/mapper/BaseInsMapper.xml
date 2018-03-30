@@ -138,4 +138,75 @@
 
     </update>
 
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.BaseInsInfo">
+        <selectKey keyProperty="insIid" resultType="java.lang.Long" order="AFTER">
+            select last_value as ins_iid from rlab_instrument_info.instrument_iid_seq
+        </selectKey>
+        insert into rlab_instrument_info.t_instrument_base_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="insIid != null">
+                ins_iid,
+            </if>
+            <if test="insCategory != null">
+                ins_category,
+            </if>
+            <if test="insName != null">
+                ins_name,
+            </if>
+            <if test="insMode != null">
+                ins_mode,
+            </if>
+            <if test="insBrand != null">
+                ins_brand,
+            </if>
+            <if test="insOrigin != null">
+                ins_origin,
+            </if>
+            <if test="insMaker != null">
+                ins_maker,
+            </if>
+            <if test="insDescription != null">
+                ins_description,
+            </if>
+            <if test="insPic != null">
+                ins_pic,
+            </if>
+            <if test="insCoreParam != null">
+                ins_core_param,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="insIid != null">
+                #{insIid,jdbcType=BIGINT},
+            </if>
+            <if test="insCategory != null">
+                #{insCategory,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insName != null">
+                #{insName,jdbcType=VARCHAR},
+            </if>
+            <if test="insMode != null">
+                #{insMode,jdbcType=VARCHAR},
+            </if>
+            <if test="insBrand != null">
+                #{insBrand,jdbcType=VARCHAR},
+            </if>
+            <if test="insOrigin != null">
+                #{insOrigin,jdbcType=VARCHAR},
+            </if>
+            <if test="insMaker != null">
+                #{insMaker,jdbcType=VARCHAR},
+            </if>
+            <if test="insDescription != null">
+                #{insDescription,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insPic != null">
+                #{insPic,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="insCoreParam != null">
+                #{insCoreParam,jdbcType=OTHER}::jsonb,
+            </if>
+        </trim>
+    </insert>
+
 </mapper>

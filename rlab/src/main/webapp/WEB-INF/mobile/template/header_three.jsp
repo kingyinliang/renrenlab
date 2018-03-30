@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%--公用头部(第一种头部)--%>
 <div class="header_three">
-    <i class="lab-back_1 lft_back" onclick="goBack()"></i>
     <p class="homelogo"><a href="javascript:void (0)" onclick="toHome()" ><img src="${rlab}/mobile/imgs/home_logo.png" /></a></p>
     <c:choose>
         <%--登录--%>
@@ -24,4 +23,5 @@
             <a class="users lab-user" id="gouser" href="javascript:void (0)" onclick="toCenter()"></a>
         </c:otherwise>
     </c:choose>
+    <a class="searchs lab-search" onclick="showSearchModal(this)" data-main-id="main"></a>
 </div>

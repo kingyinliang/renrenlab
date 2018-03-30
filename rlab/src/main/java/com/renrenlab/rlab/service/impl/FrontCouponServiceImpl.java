@@ -85,6 +85,10 @@ public class FrontCouponServiceImpl implements FrontCouponService {
         }
         orgCertifyTmp.setuMobile(mobile);
         if("apply".equals(operate)){
+            OrgCertifyTmp certifyTmp = orgCertifyTmpDao.selectByUId(orgCertifyTmp.getuUid());
+            if(certifyTmp!=null){
+                return map;
+            }
             int i = orgCertifyTmpDao.insertSelective(orgCertifyTmp);
             if(i==1){
                 return map;

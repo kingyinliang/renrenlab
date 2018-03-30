@@ -16,7 +16,7 @@
 
     <%--     <script src="${rlab}/front/assets/echarts/echarts.min.js" type="text/javascript" charset="utf-8"></script> --%>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170905">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/scientific_search.css?v_=20170905"/>
 
@@ -98,9 +98,9 @@
                 </div>
                 <div id="correlation">
                 	<c:forEach items="${result.relatedFields_word2vec}" var="word"  varStatus="st">
-                        <%--<a onclick="toSearchFromSuper(${word })" href="JavaScript:location.href='${rlab}/front/instrument/search?pageNo=1&pageSize=10&keyword='+encodeURI('${word }');" target="_blank">${word }</a>--%>
+                        <%--<a onclick="toSearchFromSuper(${word })" href="JavaScript:location.href='${rlab}/instrument/search?pageNo=1&pageSize=10&keyword='+encodeURI('${word }');" target="_blank">${word }</a>--%>
                         <a onclick="toSearchFromSuper('${word }')" href="javascript:void (0)" >${word}</a>
-                        <%-- <a href="${rlab}/front/instrument/search?pageNo=1&pageSize=10&keyword=${word}" target="_blank">${word }</a> --%>
+                        <%-- <a href="${rlab}/instrument/search?pageNo=1&pageSize=10&keyword=${word}" target="_blank">${word }</a> --%>
                     </c:forEach>
                 </div>
             </div>
@@ -219,7 +219,7 @@
 </div>
 
 <script src="${rlab}/front/js/util/pagination.js"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 
 <script src="${rlab}/front/assets/echarts/echarts-plain.js" type="text/javascript" charset="utf-8"></script>
 <%-- <script src="${rlab}/front/js/view/echarts_database.js" type="text/javascript" charset="utf-8"></script> --%>
@@ -392,7 +392,7 @@
     // 跳转到相关项目
     function toProject() {
 
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
         keyword=keyword.replace(/\+/g, "%2B");
         keyword=keyword.replace(/#/g, "%23");
         keyword=keyword.replace(/&/g, "%26");
@@ -407,7 +407,7 @@
     // 跳转到论文页面
     function toThesis() {
 
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
 
         keyword=keyword.replace(/\+/g, "%2B");
         keyword=keyword.replace(/#/g, "%23");
@@ -421,7 +421,7 @@
     }
 
     function toInformation() {
-        var keyword = encodeURI($("#serach").val());
+        var keyword = encodeURI($("#search").val());
 
         keyword=keyword.replace(/\+/g, "%2B");
         keyword=keyword.replace(/#/g, "%23");
@@ -438,7 +438,7 @@
 
     function toSearchFromSuper(keywords) {
 
-        var URL = BASE_URL + "/front/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
+        var URL = BASE_URL + "/instrument/search?keyword=" + encodeURI(keywords) + "&pageNo=1&pageSize=10";
 
         var address = getCurremtAdress();
 

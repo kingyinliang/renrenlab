@@ -10,7 +10,7 @@ body{
     float: left;
     width: 152px;
 }
-.tab{
+.tabs{
     width: 152px;
     height: 367px;
     border-top: 3px solid #508df0;
@@ -58,7 +58,7 @@ body{
     margin: 40px 0 36px 0;
 }
 .text{
-    padding-left: 40px;
+    /*padding-left: 40px;*/
     padding-right: 50px;
     position: relative;
 }
@@ -68,7 +68,7 @@ body{
     line-height: 28px;
 }
 .textP{
-    width: 366px;
+    width: 406px;
     margin-bottom: 41px;
 }
 .aboutimg{
@@ -121,6 +121,7 @@ body{
 }
 .righttext{
     float: left;
+    max-width: 671px;
 }
 .righttext a{
     color: #333333;

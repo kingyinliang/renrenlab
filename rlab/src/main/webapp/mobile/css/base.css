@@ -11,6 +11,7 @@ tbody, tfoot, thead, tr, th, td {
     font-family: 'PingFang SC', '微软雅黑', '黑体' !important;
     box-sizing: border-box !important;
 }
+*{margin: 0;padding: 0}
 
 body, html {
     height: 100%;
@@ -47,9 +48,9 @@ button,input {
 a, a:link, a:visited, a:hover, a:active {
     text-decoration: none
 }
-/*END  RESET code [徐志响，2017-06-22]*/
+/*END  RESET code [kingyinliang，2017-06-22]*/
 
-/*START 公共样式 [徐志响，2017-06-22]*/
+/*START 公共样式 [kingyinliang，2017-06-22]*/
 input.lab_isError {
     border: 1px solid red;
 }
@@ -337,13 +338,21 @@ body .clear_modal .layui-m-layercont {
     width: 100%;
     height: 100%;
 }
+header{
+    width: 100%;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index: 999999;
+}
+/*END 头部公用样式1 (header_one.jsp)  [kingyinliang，2017-09-08]*/
 
-/*END 头部公用样式1 (header_one.jsp)  [徐志响，2017-09-08]*/
-
-/*START 头部公用样式2 (header_two.jsp) [徐志响，2017-09-08]*/
+/*START 头部公用样式2 (header_two.jsp) [kingyinliang，2017-09-08]*/
 .header_two {
-    background: #f5f6f7;
+    background: #ffffff;
     color: #777;
+    box-shadow: 0rem 0.053rem 0.107rem 0rem
+    rgba(228, 228, 228, 0.5);
 }
 
 .header_two .ipt {
@@ -450,34 +459,40 @@ body .clear_modal .layui-m-layercont {
     width: 100%;
     height: 100%;
 }
-/*END 头部公用样式2 (header_two.jsp) [徐志响，2017-09-08]*/
+/*END 头部公用样式2 (header_two.jsp) [kingyinliang，2017-09-08]*/
 
 
-/*START 头部公用样式3 (header_three.jsp) [徐志响，2017-09-08]*/
+/*START 头部公用样式3 (header_three.jsp) [kingyinliang，2017-09-08]*/
 .header_three {
     width: 100%;
-    background: #F5F6FA;
+    background: white;
     overflow: hidden;
+    box-shadow: 0rem 0.053rem 0.107rem 0rem
+    rgba(228, 228, 228, 0.5);
 }
-
+.header_three .searchs{
+    float: right;
+    color: #4E4E4E;
+    font-size: 0.56rem;
+    line-height: 1.173rem;
+    margin-right: 0.6rem;
+}
 .header_three  .users {
     float: right;
     color: #4E4E4E;
     font-size: 0.56rem;
     line-height: 1.173rem;
     margin-right: 0.3067rem;
-    position: absolute;
-    top:0;
-    right: 0;
+
 }
 .header_three .user-img{
     width: 0.8267rem;
     height: 1.173rem;
     line-height:1.173rem;
     text-align: center;
-    position: absolute;
-    top:0;
-    right: 0.3rem;
+    float: right;
+    margin: 0;
+    margin-right: 0.3rem;
 }
 .header_three .user-img img{
     overflow: hidden;
@@ -490,10 +505,12 @@ body .clear_modal .layui-m-layercont {
     display: block;
     margin: 0.3067rem;
     text-align: center;
+    float: left;
 }
 
 .header_three .homelogo img {
     height: 100%;
+    width: auto;
 }
 .header_three .lft_back {
     width: 1rem;
@@ -505,4 +522,181 @@ body .clear_modal .layui-m-layercont {
     top:0;
     left: 0;
 }
-/*END 头部公用样式3 (header_three.jsp) [徐志响，2017-09-08]*/
+.headtitle{
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2.5rem;
+    margin-left: -1.25rem;
+    text-align: center;
+    font-size: 0.32rem;
+    color: black;
+    line-height: 1.175rem;
+}
+/*END 头部公用样式3 (header_three.jsp) [kingyinliang，2017-09-08]*/
+
+/*START 头部公用样式3 (header_three.jsp) [kingyinliang，2017-09-08]*/
+.header_four {
+    background: #ffffff;
+    color: #777;
+    box-shadow: 0rem 0.053rem 0.107rem 0rem
+    rgba(228, 228, 228, 0.5);
+}
+
+.header_four  .ipt {
+    height: 1.175rem;
+    position: relative;
+}
+
+.header_four  .ipt .ipt_content {
+    width: 100%;
+    height: 0.8rem;
+    padding-left: 1.05rem;
+    padding-right: 1.18rem;
+    position: absolute;
+    top: 50%;
+    margin-top: -0.4rem;
+    color: #777;
+}
+
+.header_four  .ipt_content .lft_back {
+    width: 1rem;
+    line-height: 0.7rem;
+    text-align: center;
+    font-size: 0.45rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.header_four  .ipt_content .rt_user {
+    width: 1.175rem;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 0.7rem;
+    height:0.7rem;
+    font-size: 0.56rem;
+}
+
+.header_four  .ipt_content .searchs {
+    width: 1rem;
+    text-align: right;
+    position: absolute;
+    right: 1.175rem;
+    top: 0;
+    line-height: 0.7rem;
+    font-size: 0.56rem;
+    padding-right: 0.15rem;
+}
+
+.header_four  .ipt_content .ct_ipt {
+    height: 100%;
+    width: 100%;
+    line-height: 0.8rem;
+    background: #f5f6fa;
+    padding-right: 1.1rem;
+    position: relative;
+    -webkit-border-radius: 0.15rem;
+    -moz-border-radius: 0.15rem;
+    border-radius: 0.15rem;
+}
+
+.header_four  .ipt_content .ct_ipt input {
+    width: 100%;
+    height: 100%;
+    padding-left: 0.3rem;
+    outline: 0 none;
+    border: 0 none;
+    background: #f5f6fa;
+}
+
+.header_four  .ipt_content .ct_ipt i {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    float: right;
+    text-align: center;
+    font-size: 0.4rem;
+    color: #777;
+}
+
+
+.header_four  .avatar {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    margin-left: -0.4rem;
+    margin-top: -0.4rem;
+    height:0.8rem;
+    line-height: 0.8rem;
+    width: 0.8rem;
+    -webkit-border-radius:0.35rem;
+    -moz-border-radius:0.35rem;
+    border-radius:0.35rem;
+    overflow: hidden;
+}
+
+.header_four  .avatar > img{
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+.header_four .homelogo {
+    height: 0.56rem;
+    display: block;
+    text-align: center;
+    margin-top: 0.17rem;
+}
+
+.header_four .homelogo img {
+    height: 100%;
+    width: auto;
+}
+/*END 头部公用样式3 (header_three.jsp) [kingyinliang，2017-09-08]*/
+
+/*START 底部公用样式2 (footer.jsp) [kingyinliang，2018-01-08]*/
+footer{
+    background: white;
+    width: 100%;
+    position: fixed;
+    z-index: 999999999;
+    bottom: 0;
+    left: 0;
+}
+.footer{
+    width: 100%;
+    height: 1.2rem;
+    box-shadow: 0rem -0.187rem 0.347rem 0rem
+    rgba(0, 0, 0, 0.04);
+}
+.footer a .lab-icon{
+    color: #D2D7DB;
+}
+.footer a{
+    padding-top: 0.25rem;
+    display: inline-block;
+    width: 24%;
+    height: 1.2rem;
+    text-align: center;
+    color: #574f4f;
+}
+.footer a span{
+    display: block;
+    line-height: 0.4rem;
+    font-size: 0.267rem;
+}
+.footer a .lab-icon{
+    font-size: 0.4rem;
+}
+.footer .foot-active .lab-icon{
+    color: #6aa0ff;
+}
+
+/*END 底部公用样式1 (footer.jsp)  [kingyinliang，2018-01-08]*/

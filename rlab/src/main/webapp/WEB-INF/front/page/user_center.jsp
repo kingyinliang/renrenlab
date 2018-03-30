@@ -23,7 +23,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170905">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170905">
 
@@ -229,7 +229,7 @@
                 </div>
             </div>
             <div class="control_center">
-                <span>关注<a href="${rlab}/front/instrument/qr" target="_blank" style="color: #508df0">人人实验服务号</a>，体验更多VIP个性化定制服务和专业化解决方案</span>
+                <span>关注<a href="${rlab}/instrument/qr" target="_blank" style="color: #508df0">人人实验服务号</a>，体验更多VIP个性化定制服务和专业化解决方案</span>
                     <button id="cgPwd" onclick="changePwd()" type="button">修改密码</button>
             </div>
         </div>
@@ -238,7 +238,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     function userSideClick(event, $_this) {
         e = event || window.event;
@@ -330,7 +330,7 @@
                         <span>\
                             <input id="imgVertify" type="text" placeholder="请输入验证码">\
                         </span>\
-                        <img id="vertifyImg"  data-include-img="1"  onclick="updateValidateImg(this)" src="${rlab}/front/user/validateCode" alt="图形校验码">\
+                        <img id="vertifyImg"  data-include-img="1"  onclick="updateValidateImg(this)" src="${rlab}/user/validateCode" alt="图形校验码">\
                     </p>\
                     <p id="imgInfo" class="item_tip" style="color: darkred"></p>\
                     <p class="item item_msg">\
@@ -893,7 +893,7 @@
         }
 
         $.ajax({
-            url: BASE_URL + "/front/user/modify/password",
+            url: BASE_URL + "/user/modify/password",
             type: 'PUT',
             dataType: 'json',
             contentType: 'application/json',
@@ -905,10 +905,10 @@
                     layer.close(layer_cg_pwd);//　关闭弹窗
                     // 用户未登录
                     layer.msg("密码修改成功");
-                    window.location.href = BASE_URL + "/front/user/login";
+                    window.location.href = BASE_URL + "/user/login";
                 } else if (data.code === 1012) {
                     // 用户未登录
-                    window.location.href = BASE_URL + "/front/user/login";
+                    window.location.href = BASE_URL + "/user/login";
 
                 } else if (data.code === 1010) {
                     // 旧密码输入错误
@@ -930,10 +930,10 @@
     function updateValidateImg($this) {
         console.log($this);
         if ($this === undefined) {
-            $("#vertifyImg").attr("src", BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+            $("#vertifyImg").attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
         }
         $this = $($this);
-        $this.attr("src", BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+        $this.attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
     }
 
@@ -966,7 +966,7 @@
         $("#saveStatus").hide();
 
         $.ajax({
-            url: BASE_URL + "/front/user/modify/user",
+            url: BASE_URL + "/user/modify/user",
             type: 'PUT',
             dataType: 'json',
             contentType: 'application/json',
@@ -980,7 +980,7 @@
 
                 } else if (data.code === 1012) {
                     // 用户未登录
-                    window.location.href = BASE_URL + "/front/user/login";
+                    window.location.href = BASE_URL + "/user/login";
 
                 } else {
                     layer.msg("网络繁忙,请重新操作");

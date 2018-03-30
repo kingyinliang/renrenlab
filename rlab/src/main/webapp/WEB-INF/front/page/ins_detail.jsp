@@ -26,10 +26,10 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_=20171108">
     <%--<link rel="stylesheet" href="${rlab}/front/css/goods_detail.css?v_=20170622">--%>
-    <link rel="stylesheet" href="${rlab}/front/css/ins_detail.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/ins_detail.css?v_=20180319">
 
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
@@ -55,7 +55,6 @@
         isLtIE9 = true;
     </script>
     <![endif]-->
-
 </head>
 <body>
 
@@ -63,16 +62,17 @@
     <!--右侧公用模块-->
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
-    <jsp:include page="../template/header.jsp"></jsp:include>
+    <jsp:include page="../template/header.jsp" flush="true">
+        <jsp:param name="selected" value="4"/>
+    </jsp:include>
     <!--详情模块-->
     <div class="ins_detail">
         <%--仪器和机构信息--%>
         <div class="info clearfix">
             <div class="ins_info br_4">
                 <p>
-                    <span class="ins_num left"><i class="lab-dian_small"
-                                                  style="position: absolute;left: -10px;top: 0;font-size: 28px;"></i>编号：<c:out
-                            value="${detail.mapId}"
+                    <span class="ins_num left">
+                        <i class="lab-dian_small" style="position: absolute;left: -10px;top: -7px;font-size: 28px;"></i>编号：<c:out value="${detail.mapId}"
                             escapeXml="true"/></span>
                     <span class="ins_service right" style="padding-left: 20px;"><i
                             class="lab-biaoqian_1"></i>${detail.insServiceName}</span>
@@ -212,9 +212,17 @@
                                 </c:choose>
                             </div>
                         </div>
-                        <div class="refer">
-                            参考价格：
-                            <span>
+
+                        <div class="p" style="margin-top: 10px">
+                            <span>预约状态：</span>
+                            <div class="label">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;">
+                            <a class="maapp" onclick="maapp()">立即预约</a>
+                            <div class="refer" style="float: left;margin-left: 20px">
+                                <span>
                                    <c:choose>
                                        <c:when test="${detail.price.flag == 1}">
                                            <c:if test='${"无".equals(detail.price.unit)}'>
@@ -246,8 +254,9 @@
                                            面议
                                        </c:when>
                                    </c:choose>
-                            </span>
-                            <p>${detail.price.remark}</p>
+                                </span>
+                                <p>${detail.price.remark}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -290,7 +299,7 @@
 
                 </p>
                 <p class="org_name">
-                    <a href="${rlab}/front/org/${orgInfo.orgOid}" target="_blank">
+                    <a href="${rlab}/org/${orgInfo.orgOid}" target="_blank">
                         ${orgInfo.orgName.length() > 20? orgInfo.orgName.substring(0,18).concat('...') :orgInfo.orgName}
                     </a>
                 </p>
@@ -388,8 +397,8 @@
 </div>
 
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js??v_=20170905"></script>
-<script src="${rlab}/front/js/util/baiduMap.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
+<script src="${rlab}/front/js/util/baiduMap.js?v_=20171108"></script>
 <%--<script src="http://api.map.baidu.com/api?v=2.0&ak=A4nolGZjoPlGYMl42qD6csYeDHKRdG8h" type="text/javascript"></script>--%>
 <script>
 
@@ -492,6 +501,17 @@
 
 
     }
+
+    var dates=new  Date();
+    var dateshtml='';
+    for (var i=0;i<7;i++){
+        dates.setDate(dates.getDate()+1);
+        var month=dates.getMonth()+1;
+        var day=dates.getDate();
+        dateshtml+='<i title="可预约">'+month+'.'+day+'</i>';
+    }
+    $(".label p").html(dateshtml);
+
     // 设置百度地图
     function setBaiduMap(adress) {
         loadJScriptMove(adress, 0, 0);
@@ -533,8 +553,7 @@
                         <div class="org_phone">\
                         <i class="lab-phone"></i>\
                         <span >\
-                        <s>办公电话</s>' + data.orgPhone + '\
-                        </span>\
+                        <s>办公电话</s>400-102-9559</span>\
                         <p id="userPhone" style="overflow: hidden;">\
                         </p>\
                     </div>\
@@ -546,7 +565,7 @@
                     </div>\
                     <div class="compay_infos bg-blue">\
                     <div class="about_me">\
-                    <img src="http://www.renrenlab.com/rlab/front/imgs/icon/qr_code_wx_renrenlab_300_300.jpg" alt="人人实验服务号二维码">\
+                    <img src="http://www.renrenlab.com/front/imgs/icon/qr_code_wx_renrenlab_300_300.jpg" alt="人人实验服务号二维码">\
                     </div>\
                     <div class="txt">\
                     <p>如您有其他需要，您可以关注</p>\
@@ -574,12 +593,12 @@
 //        var map = initMap();
 //        searchByStationName(map, data.orgStreet);
 
-        for (var i = 0; i < data.orgInsPhone.length; i++) {
-            $("#userPhone").append('<span style="float: left;">\
-                                <s>' + data.orgInsPhone[i].name + '</s>\
-                                <em>' + data.orgInsPhone[i].phone + '</em>\
-                            </span>');
-        }
+//        for (var i = 0; i < data.orgInsPhone.length; i++) {
+//            $("#userPhone").append('<span style="float: left;">\
+//                                <s>' + data.orgInsPhone[i].name + '</s>\
+//                                <em>' + data.orgInsPhone[i].phone + '</em>\
+//                            </span>');
+//        }
 
         $("#closeLayerInfo").off("click").on("click", function () {
             layer.close(layer_info);
@@ -587,6 +606,78 @@
 
     }
 
+    /**
+     * 立即预约
+     */
+
+    function maapp() {
+        var html= '<div class="maappCmp">\
+                        <img src="${rlab}/front/imgs/3.0/maapp.png" alt="">\
+                        <label class="lab-close-1"></label>\
+                        <p style="margin-top: 25px;">联系人<i>*</i></p>\
+                        <input type="text" id="contactName">\
+                        <p>联系电话<i>*</i></p>\
+                        <input type="text" id="contactPhone">\
+                        <p>留言备注<i>*</i></p>\
+                        <textarea name="" id="contactContent" cols="30" rows="10" placeholder="150字之内" maxlength="150"></textarea>\
+                        <a onclick="subtext()">提交信息</a>\
+                        <span>温馨提示：成功提交留言信息后，客服人员会第一时间给您满意答复，感谢您对人人实验的信赖！</span>\
+                    </div>';
+        //页面层-自定义
+        var layer_info1 = layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            shadeClose: true,
+            skin: 'company_info_layer',
+            content: html
+        });
+        $(".maappCmp label").off("click").on("click", function () {
+            layer.close(layer_info1);
+        })
+    }
+    function subtext() {
+        if($("#contactName").val()==''){
+            alert("联系人不能为空");
+            return;
+        }
+        if($("#contactPhone").val()==''){
+            alert("联系电话不能为空");
+            return;
+        }
+        if($("#contactContent").val()==''){
+            alert("留言备注不能为空");
+            return;
+        }
+        var contactContent=$("#contactContent").val()
+        var data={
+            productId:${detail.mapId},
+            productName : '${detail.insName}',
+            productType : 0,
+            contactName : $("#contactName").val(),
+            contactPhone : $("#contactPhone").val(),
+            contactContent: contactContent,
+        }
+        data= JSON.stringify(data);
+        $.ajax({
+            url: BASE_URL + '/front/leavemessage/addMessage',
+            type: 'POST',
+            dataType: "json",
+            data:data,
+            contentType: "application/json",
+            async: true,
+            beforeSend: function () {
+                GET_AJAX_FLAG = false;
+            },
+            success: function (data) {
+                alert("提交成功");
+                location.reload();
+            },
+            error: function () {
+                GET_AJAX_FLAG = true;
+            }
+        })
+    }
 
 </script>
 </body>

@@ -204,13 +204,13 @@
                                 <td>
                                     <a class="check" style="color: #6693c8;" href="${rlab}/bg/user/detail?uuid=${item.uUid}">查看详情</a>
                                     <%--审核权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                                         <a class="forbidden" onclick="openshade(this)" data-user-state="${item.uState}" data-user-id="${item.uUid}" >${item.uState == 0 ? '禁用': '开启'}</a>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     <%--撤销权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                                         <a class="remove" onclick="deleteshade(this)"  data-user-state="${item.uState}" data-user-id="${item.uUid}">删除</a>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -393,7 +393,13 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                console.log(data);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
+
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {
@@ -415,7 +421,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {

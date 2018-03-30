@@ -190,7 +190,7 @@
                     </div>
                 </div>
                 <%--审核权限--%>
-                <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                     <div class="audit">
                         <button class="lab_btn_base lab_btn_base_2 lab_btn_base_2_blue" type="button"
                                 onclick="acceptShareInfo()">审核通过
@@ -199,7 +199,7 @@
                                 onclick="rejectShareInfo()">审核拒绝
                         </button>
                     </div>
-                </c:if>
+                <%--</c:if>--%>
 
             </div>
 
@@ -234,10 +234,10 @@
                             <td>
                                 <div class="td_ins_number clearfix">
                                     <%--审核权限--%>
-                                    <c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">
+                                    <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(2,3))}">--%>
                                         <input name="insNumber" type="checkbox" data-map-id="${item.mapId}"
                                                value="" ${item.mapState[2] == 1? '': 'disabled'}/>
-                                    </c:if>
+                                    <%--</c:if>--%>
                                     <span>${item.mapId}</span>
                                 </div>
                             </td>
@@ -253,7 +253,7 @@
                                             ￥${item.insOrgPriceList.scopeLowPrice}/${item.insOrgPriceList.unit}起
                                         </c:when>
                                         <c:otherwise>
-                                            ￥${item.insOrgPriceList.scopeLowPrice} - ￥${item.insOrgPriceList.scopeHighPrice} / ${instrumentInfo.insOrgPriceList.unit}
+                                            ￥${item.insOrgPriceList.scopeLowPrice} - ￥${item.insOrgPriceList.scopeHighPrice} / ${item.insOrgPriceList.unit}
                                         </c:otherwise>
                                     </c:choose>
                                 </c:if>
@@ -271,17 +271,17 @@
                             </td>
                             <td width="">
                                 <%--查看权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(0,1))}">--%>
                                     <a href="${rlab}/bg/share/detail?mapId=${item.mapId}">查看详情</a>
-                                </c:if>
+                                <%--</c:if>--%>
                                     <%--修改权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(1,2))}">--%>
                                     <a href="${rlab}/bg/share/modify?mapId=${item.mapId}">修改</a>
-                                </c:if>
+                                <%--</c:if>--%>
                                 <%--撤销权限--%>
-                                <c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">
+                                <%--<c:if test="${'1'.equals(sessionScope.u_permission.substring(3,4))}">--%>
                                     <a onclick="dropAlert(this)" data-map-id="${item.mapId}" data-tr-fal="${item.mapState[2] == 3? '2':"1" }">${item.mapState[2] == 3? '开启':"下架" }</a>
-                                </c:if>
+                                <%--</c:if>--%>
                             </td>
                         </tr>
 
@@ -386,7 +386,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("下架失败");
@@ -407,7 +411,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
             })
             .fail(function (data) {
                 alert("开启失败");
@@ -447,7 +455,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {
@@ -474,7 +486,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {

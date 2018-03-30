@@ -12,7 +12,7 @@ import java.text.DecimalFormat;
 public class PriceUtil {
     private static final Logger logger = LoggerFactory.getLogger(PriceUtil.class);
 
-    public static String handlePrice(String priceString) {
+    static String handlePrice(String priceString) {
         if (priceString == null || priceString.length() == 0) return "";
         int endIndex = priceString.indexOf(".");
         if (endIndex > 0)
@@ -31,7 +31,7 @@ public class PriceUtil {
         return priceString;
     }
 
-    public static String handleListPrice(String priceString) {
+    static String handleListPrice(String priceString) {
         if (priceString == null || priceString.length() == 0) return "";
         int endIndex = priceString.indexOf(".");
         if (endIndex > 0)

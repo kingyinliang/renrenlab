@@ -1,0 +1,398 @@
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none
+}
+p{margin-bottom: 0}
+
+/*START下拉地址样式*/
+.select_address {
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #B5B5B5;
+    font-size: 0.37rem;
+    background: #fff;
+}
+
+.select_address > span {
+    position: absolute;
+    display: block;
+    left: 50%;
+    height: 1rem;
+    line-height: 1rem;
+    /*transform: translateX(-50%);*/
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    margin-left: -0.2rem;
+}
+
+.select_address > span > i {
+    position: absolute;
+    display: block;
+    top: 0;
+    right: -0.5rem;
+    height: 1rem;
+    line-height: 0.98rem;
+    font-size: 0.28rem;
+    color: #4E4E4E;
+}
+
+/*END 下拉地址样式*/
+/*城市下拉*/
+/*选择城市*/
+.ad_header {
+    height: 1.175rem;
+    background: #fff;
+    line-height: 1.175rem;
+    text-align: center;
+    color: #4e4e4e;
+}
+
+.ad_header i {
+    float: left;
+    display: block;
+    height: 1.175rem;
+    line-height: 1.175rem;
+    margin-left: 0.3rem;
+    color: #4e4e4e;
+}
+
+.ad_header div.hm > i {
+    font-size: 0.45rem;
+}
+
+.ad_header div.hm {
+    float: right;
+    vertical-align: middle;
+    padding-right: 0.26rem;
+}
+
+.ad_header div > img {
+    width: 0.4rem;
+    margin-right: 0.266rem;
+    vertical-align: middle;
+}
+
+/*右下角固定提示栏*/
+.fixed_tip {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 0.32rem;
+
+}
+
+.fixed_tip .super_search {
+    width: 1.36rem;
+    height: 1.36rem;
+    border-radius: 0.7rem;
+    background: rgba(0, 0, 0, 0.5);
+    /*background: #000;*/
+    /*opacity: 0.5;*/
+    padding: 0.21rem 0;
+}
+
+.fixed_tip .super_search p {
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    /*opacity: 1;*/
+}
+/*=START 城市下拉 [徐志响，2017-06-27]*/
+/*下拉标题*/
+.ls_t {
+    color: #b9b9b9;
+    background: #f5f6fa;
+    height: 0.86rem;
+    line-height: 0.86rem;
+    font-size: 0.35rem;
+    padding-left: 0.75rem;
+}
+
+/*当前定城市*/
+.cur_city {
+    background: #fff;
+    height: 0.94rem;
+    line-height: 0.94rem;
+    font-size: 0.34rem;
+    padding-left: 0.85rem;
+}
+
+/*热门城市*/
+.hot_city {
+    background: #fff;
+
+}
+
+.hot_city ul {
+    width: 100%;
+    overflow: hidden;
+    padding-top: 0.32rem;
+}
+
+.hot_city ul > li {
+    float: left;
+    margin-left: 0.75rem;
+    height: 0.666rem;
+    line-height: 0.666rem;
+    padding: 0 0.45rem;
+    background: #f5f6fa;
+    color: #000;
+    margin-bottom: 0.32rem;
+    -webkit-border-radius: 0.1rem;
+    -moz-border-radius: 0.1rem;
+    border-radius: 0.1rem;
+    border: 1px solid #f2f3f6;
+}
+
+/*城市字母导航*/
+
+.city_nav {
+    background: #fff;
+}
+
+.city_nav ul {
+    width: 100%;
+}
+
+.city_nav ul > li {
+    float: left;
+    width: 16.66666666666667%;
+}
+
+.city_nav li > a {
+    display: block;
+    text-align: center;
+    height: 1rem;
+    line-height: 1rem;
+    color: #6c6c6c;
+    font-size: 0.4rem;
+}
+
+.city_nav li > a:link {
+    text-decoration: none !important;
+}
+
+/*.city_nav li > a:active {*/
+/*background: #f5f6fa;*/
+/*text-decoration: none;*/
+/*}*/
+/**/
+/*城市分类列表*/
+.city_type {
+    background: #fff;
+}
+
+.city_type ul {
+
+}
+
+.city_type ul > li {
+    float: left;
+    width: 25%;
+    padding: 0.16rem 0;
+}
+
+.city_type ul > li > a {
+    display: block;
+    height: 0.64rem;
+    line-height: 0.64rem;
+    font-size: 0.43rem;
+    color: #6c6c6c;
+    text-align: center;
+    border-right: 1px solid #e7e9ee;
+}
+
+.city_type li:nth-child(4n) > a, .city_type li:last-child > a {
+    border: 0 none !important;
+}
+
+/*=END 城市下拉 [徐志响，2017-06-27]*/
+
+/*返回顶部*/
+.moveTotop {
+    /*width: 1.06rem;*/
+    /*height: 1.06rem;*/
+    background: #fff;
+    -webkit-border-radius: 0.6rem;
+    -moz-border-radius: 0.6rem;
+    border-radius: 0.6rem;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 0.32rem;
+    z-index: 1000;
+}
+
+.moveTotop i {
+    font-size: 1.06rem;
+    color: rgba(0, 0, 0, 0.7);
+    opacity: 0.7;
+}
+
+.moveTotop a:link {
+    text-decoration: none;
+}
+
+
+
+
+
+
+#listmain{
+    margin-top: 3.345rem;
+}
+#listmain ul{
+    padding: 0 0.347rem;
+}
+#listmain li{
+    padding: 0.347rem 0 0.267rem 0;
+    border: none;
+    border-bottom: 0.01rem solid #dddddd;
+}
+#listmain li img{
+    float: left;
+    width: 3.52rem;
+    height: 2.107rem;
+    border-radius: 0.133rem;
+}
+.itemlitxt{
+    float: left;
+    margin-left: 0.587rem;
+    width: 5.1rem;
+    max-width: 5.1rem;
+}
+.itemlitxt div{
+    line-height: 0.9rem;
+}
+.itemlitxt div p{
+    font-size: 0.32rem;
+    letter-spacing: 0.013rem;
+    color: #6c6c6c;
+    float: right;
+    line-height: 0.64rem;
+}
+.itemlitxt p span i{
+    font-size: 0.64rem;
+}
+.itemlitxt p span{
+    color: #e6566b;
+}
+.itemtit{
+    font-size: 0.347rem;
+    letter-spacing: 0.011rem;
+    color: #322d2d;
+    height: 1.2rem;
+    line-height: 0.5rem;
+}
+.mui-pull-loading,.mui-pull-caption{
+    font-size: 0.32rem!important;
+}
+.instab div{
+    width: 4.9rem;
+    float: left;
+    cursor: pointer;
+
+}
+.instab{
+    position: fixed;
+    width: 100%;
+    top:2.245rem;
+    z-index: 9999;
+    height: 1.1rem;
+    text-align: center;
+    box-shadow: 0rem 0.053rem 0.107rem 0rem
+    rgba(228, 228, 228, 0.5);
+    background: white;
+}
+.instab p{
+    font-size: 0.293rem;
+    color: #555f69;
+    height: 0.4rem;
+    margin-top: 0.37rem;
+    line-height: 0.4rem;
+}
+
+.typebox{
+    position: fixed;
+    top:3.345rem;
+    width: 100%;
+    height: 11.173rem;
+    background-color: #ffffff;
+    z-index: 9999;
+    border-top: 0.01rem solid #dddddd;
+    border-bottom: 0.01rem solid #dddddd;
+    display: none;
+}
+.stairType{
+    border-right: 0.01rem solid #dddddd;
+}
+.stairType,.secondtype{
+    width: 4.9rem;
+    height: 11.173rem;
+    float: left;
+    position: relative;
+    overflow: scroll;
+}
+.stairType{
+    overflow: inherit;
+}
+.lab-top{
+    font-size: 0.32rem;
+    background: white;
+    position: absolute;
+    top:-0.22rem;
+    left: 50%;
+    margin-left: -0.16rem;
+    z-index: 9999;
+}
+.stairType p:hover,.typebox .seledType,.secondtype p:hover{
+    color: #6aa0ff;
+    border-bottom: 0.01rem solid #6aa0ff;
+}
+.stairType p,.secondtype p{
+    line-height: 0.747rem;
+    font-size: 0.32rem;
+    color: #322d2d;
+    margin-left: 0.347rem;
+    display: inline-block;
+}
+.fixedTab a{
+    color: #000000;
+    display: inline-block;
+    margin-right: 0.55rem;
+}
+.seledTab{
+    border-bottom: 0.05rem solid #6aa0ff;
+}
+.fixedTab{
+    width: 100%;
+    background: white;
+    z-index: 9999;
+    position: fixed;
+    top:1.175rem;
+    height: 1.07rem;
+    line-height: 1.02rem;
+    font-size: 0.32rem;
+    letter-spacing: 0.011rem;
+    color: #000000;
+    padding: 0 0.347rem;
+}
+.message .itemtit{
+    height: 1.5rem;
+}
+.message div{
+    line-height: 0.5rem;
+}
+.message span{
+    color: #7f7f7f;
+}
+.nomore{
+    display: none;
+}
+.mui-pull-bottom-tips,.nomore{
+    text-align: center;
+    color: #777;
+    height: 1rem;
+    line-height: 1rem;
+    font-size:0.32rem!important;
+}

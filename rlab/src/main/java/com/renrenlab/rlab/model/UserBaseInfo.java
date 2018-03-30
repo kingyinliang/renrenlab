@@ -56,65 +56,6 @@ public class UserBaseInfo {
 
     private String identifyNo;
 
-    //管理员工号
-    private String uJobNumber;
-    //拥有的权限
-    private String rName;
-    private Long rRid;
-    private String rPermisssion;
-    //所属的部门
-    private String uDepartment;
-    //管理员是否停用，1：停用，0：正常
-    private Integer state;
-
-    public String getrPermisssion() {
-        return rPermisssion;
-    }
-
-    public void setrPermisssion(String rPermisssion) {
-        this.rPermisssion = rPermisssion;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Long getrRid() {
-        return rRid;
-    }
-
-    public void setrRid(Long rRid) {
-        this.rRid = rRid;
-    }
-
-    public String getuJobNumber() {
-        return uJobNumber;
-    }
-
-    public void setuJobNumber(String uJobNumber) {
-        this.uJobNumber = uJobNumber;
-    }
-
-    public String getrName() {
-        return rName;
-    }
-
-    public void setrName(String rName) {
-        this.rName = rName;
-    }
-
-    public String getuDepartment() {
-        return uDepartment;
-    }
-
-    public void setuDepartment(String uDepartment) {
-        this.uDepartment = uDepartment;
-    }
-
     public Long getId() {
         return id;
     }

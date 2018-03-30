@@ -159,7 +159,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="1"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="0"/>
             </jsp:include>
         </div>
@@ -408,7 +408,11 @@
             contentType: "application/json"
         })
             .done(function (data) {
-                window.location.reload(true);
+                if (data.code == 0) {
+                    window.location.reload(true);
+                } else {
+                    alert(data.description);
+                }
                 <%--//$(this).text("${state==1 ? "关闭" : "开启"}");--%>
             })
             .fail(function (data) {

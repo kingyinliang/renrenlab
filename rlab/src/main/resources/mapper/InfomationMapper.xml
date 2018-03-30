@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.renrenlab.rlab.dao.InfomationDao">
+    <resultMap id="tagMap" type="com.renrenlab.rlab.model.InfomationTag">
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="tag_name" jdbcType="VARCHAR" property="tTagName"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.Infomation">
+        <result column="t_info_id" jdbcType="BIGINT" property="tInfoId"/>
+        <result column="t_info_title" jdbcType="VARCHAR" property="tInfoTitle"/>
+        <result column="t_info_sub_title" jdbcType="VARCHAR" property="tInfoSubTitle"/>
+        <result column="t_info_image" jdbcType="VARCHAR" property="tInfoImage"/>
+        <result column="t_info_tags" jdbcType="OTHER" property="tInfoTags"/>
+        <result column="t_info_content" jdbcType="VARCHAR" property="tInfoContent"/>
+        <result column="t_uid" jdbcType="BIGINT" property="tUid"/>
+        <result column="t_read_count" jdbcType="BIGINT" property="tReadCount"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="t_info_classify" jdbcType="INTEGER" property="tInfoClassify"/>
+        <result column="t_info_state" jdbcType="INTEGER" property="tInfoState"/>
+        <result column="t_uname" jdbcType="VARCHAR" property="tUname"/>
+        <result column="t_info_from" jdbcType="VARCHAR" property="tInfoFrom"/>
+        <result column="source" jdbcType="INTEGER" property="source"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags, t_info_content,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+    </sql>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        UPDATE rlab_infomation_info.t_infomation_article
+        SET t_info_state = 1
+        WHERE t_info_id = #{infoId,jdbcType=BIGINT}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.Infomation">
+        insert into rlab_infomation_info.t_infomation_article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tInfoTitle != null">
+                t_info_title,
+            </if>
+            <if test="tInfoSubTitle != null">
+                t_info_sub_title,
+            </if>
+            <if test="tInfoImage != null">
+                t_info_image,
+            </if>
+            <if test="tInfoTags != null">
+                t_info_tags,
+            </if>
+            <if test="tInfoContent != null">
+                t_info_content,
+            </if>
+            <if test="tUid != null">
+                t_uid,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+            <if test="tInfoClassify != null">
+                t_info_classify,
+            </if>
+            <if test="tUname != null">
+                t_uname,
+            </if>
+            <if test="tInfoClassifyHot != null">
+                t_info_classify_hot,
+            </if>
+            <if test="tInfoFrom != null">
+                t_info_from
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tInfoTitle != null">
+                #{tInfoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoSubTitle != null">
+                #{tInfoSubTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoImage != null">
+                #{tInfoImage,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoTags != null">
+                #{tInfoTags,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="tInfoContent != null">
+                #{tInfoContent,jdbcType=VARCHAR},
+            </if>
+            <if test="tUid != null">
+                #{tUid,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=DATE},
+            </if>
+            <if test="tInfoClassify != null">
+                #{tInfoClassify,jdbcType=VARCHAR}::INT,
+            </if>
+            <if test="tUname != null">
+                #{tUname,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoClassifyHot != null">
+                #{tInfoClassifyHot,jdbcType=INTEGER},
+            </if>
+            <if test="tInfoFrom != null">
+                #{tInfoFrom,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.Infomation">
+        update rlab_infomation_info.t_infomation_article
+        <set>
+            <if test="tInfoTitle != null">
+                t_info_title = #{tInfoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoSubTitle != null">
+                t_info_sub_title = #{tInfoSubTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoImage != null">
+                t_info_image = #{tInfoImage,jdbcType=VARCHAR},
+            </if>
+            <if test="tInfoTags != null">
+                t_info_tags = #{tInfoTags,jdbcType=OTHER}::jsonb,
+            </if>
+            <if test="tInfoContent != null">
+                t_info_content = #{tInfoContent,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=DATE},
+            </if>
+            <if test="tInfoClassify != null">
+                t_info_classify = #{tInfoClassify,jdbcType=VARCHAR}::INT,
+            </if>
+            <if test="tInfoClassifyHot != null">
+                t_info_classify_hot = #{tInfoClassifyHot,jdbcType=INTEGER},
+            </if>
+            <if test="tInfoFrom != null">
+                t_info_from = #{tInfoFrom,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where t_info_id = #{tInfoId,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectInfoList" resultMap="BaseResultMap">
+        select
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+        from rlab_infomation_info.t_infomation_article article
+        <where>
+            <if test="title != null and title != ''">
+                AND POSITION (#{title,jdbcType=VARCHAR} IN t_info_title) > 0
+            </if>
+            <if test="uname != null and uname != ''">
+                AND position(#{uname,jdbcType=VARCHAR} in t_uname::TEXT) > 0
+            </if>
+            <if test="tag != null">
+                AND position(#{tag,jdbcType=VARCHAR} in t_info_tags::TEXT) > 0
+            </if>
+            <if test="classify != null">
+                AND t_info_classify = #{classify,jdbcType=INTEGER}
+            </if>
+            <if test="beginTime != null">
+                AND modify_time >= '${beginTime}'
+            </if>
+            <if test="endTime != null">
+                AND modify_time &lt;= date'${endTime}'+INTEGER '1'
+            </if>
+            <if test="source != null">
+                AND source = #{source}
+            </if>
+            AND t_info_state != 1
+        </where>
+        ORDER BY create_time
+        <if test="order != null">
+            ASC
+        </if>
+        <if test="order == null">
+            desc
+        </if>
+        ,t_info_id
+    </select>
+
+    <select id="getArticles" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rlab_infomation_info.t_infomation_article article
+        <if test="classifyName != null">
+            JOIN rlab_infomation_info.t_infomation_classify classify ON (classify.t_classify_name = #{classifyName} and
+            classify.classify_id = article.t_info_classify )
+        </if>
+        WHERE
+        t_info_state = 0
+        order by
+        article.create_time desc
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+    </select>
+    <select id="getArticlesByKeyword" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rlab_infomation_info.t_infomation_article article
+        <if test="classifyName != null">
+            JOIN rlab_infomation_info.t_infomation_classify classify ON (classify.t_classify_name = #{classifyName} and
+            classify.classify_id = article.t_info_classify )
+        </if>
+        WHERE
+        t_info_state = 0
+        <if test="keyword != null">
+            AND (position(#{keyword} IN article.t_info_title)>0
+            OR position(#{keyword} IN article.t_info_sub_title) >0 )
+        </if>
+        order by
+        article.create_time desc
+        <if test="limit != null">
+            limit #{limit}
+        </if>
+    </select>
+
+    <!--添加标签-->
+    <insert id="addInfomationTag">
+        INSERT INTO rlab_infomation_info.t_infomation_tag (t_tag_name) VALUES (#{tag,jdbcType=VARCHAR})
+    </insert>
+
+    <!--查询标签-->
+    <select id="selectTagByName" resultType="com.renrenlab.rlab.model.InfomationTag">
+        SELECT t_tag_name
+        FROM
+        rlab_infomation_info.t_infomation_tag
+        <where>
+            <if test="tag != null">
+                and t_tag_name = #{tag,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!--标签文章列表-->
+    <select id="getTagArticles" resultMap="BaseResultMap">
+        SELECT
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+        FROM
+        rlab_infomation_info.t_infomation_article article
+        WHERE
+        #{tagName,jdbcType=VARCHAR} IN (SELECT t_tag_name FROM rlab_infomation_info.t_infomation_tag)
+        AND position(#{tagName,jdbcType=VARCHAR} in t_info_tags::TEXT) > 0
+        AND t_info_state = 0
+        ORDER BY article.create_time DESC
+    </select>
+
+    <select id="selectArticleById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        rlab_infomation_info.t_infomation_article article
+        WHERE
+        article.t_info_id = #{id, jdbcType=BIGINT};
+
+        UPDATE rlab_infomation_info.t_infomation_article
+        SET t_read_count = t_read_count + 1
+        WHERE t_info_id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectArticlesByTag" resultMap="BaseResultMap">
+        SELECT
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+        FROM
+        rlab_infomation_info.t_infomation_article article
+        WHERE string_to_array(regexp_replace(t_info_tags::text, '(\[)|(\])|(")', '', 'g'), ', ') &amp;&amp; ARRAY
+        <foreach collection="tags" item="tag" separator="," open="[" close="]">
+            #{tag}::text
+        </foreach>
+        AND t_info_id != #{currentId, jdbcType=BIGINT}
+        AND t_info_state = 0
+        ORDER BY jsonb_array_length(t_info_tags) DESC
+        LIMIT 5
+    </select>
+
+    <!--查询热门推荐和人人实验-->
+    <select id="selectHots" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM((
+        SELECT
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+        FROM
+        rlab_infomation_info.t_infomation_article article
+        WHERE
+        t_info_classify_hot = 1
+        AND
+        t_info_state = 0
+        ORDER BY create_time DESC
+        LIMIT 6)
+        UNION ALL (
+        SELECT
+        t_info_id, t_info_title, t_info_sub_title, t_info_image, t_info_tags,
+        t_uid, t_read_count, article.create_time, article.modify_time, t_info_classify, t_uname, t_info_state, t_info_classify_hot, t_info_from, source
+        FROM
+        rlab_infomation_info.t_infomation_article article
+        WHERE
+        t_info_classify_hot = 2
+        AND
+        t_info_state = 0
+        ORDER BY create_time DESC
+        LIMIT 6
+        )) t
+    </select>
+
+    <select id="selectTopTags" resultMap="tagMap">
+        SELECT
+            count(tag_name),
+            tag_name
+        FROM
+            rlab_infomation_info.tags_name
+        GROUP BY
+            tag_name
+        ORDER BY
+            count(tag_name) DESC
+        LIMIT 12
+    </select>
+
+    <update id="changeState">
+        update rlab_infomation_info.t_infomation_article
+        <set>
+            <if test="state != null">
+                t_info_state = #{state,jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE t_info_id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

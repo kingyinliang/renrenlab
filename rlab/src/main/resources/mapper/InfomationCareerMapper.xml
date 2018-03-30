@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.InfomationCareerDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.InfomationCareer">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="career_id" jdbcType="BIGINT" property="careerId"/>
+        <result column="career_title" jdbcType="VARCHAR" property="careerTitle"/>
+        <result column="career_image" jdbcType="VARCHAR" property="careerImage"/>
+        <result column="career_tag" jdbcType="BIGINT" property="careerTag"/>
+        <result column="career_content" jdbcType="VARCHAR" property="careerContent"/>
+        <result column="career_read_count" jdbcType="BIGINT" property="careerReadCount"/>
+        <result column="career_publish_name" jdbcType="VARCHAR" property="careerPublishName"/>
+        <result column="career_state" jdbcType="SMALLINT" property="careerState"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, career_id, career_title, career_image, career_tag, career_content, career_read_count,
+        career_publish_name, career_state, create_time, modify_time
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_infomation_info.t_infomation_career
+        where career_id = #{id,jdbcType=BIGINT};
+
+        UPDATE rlab_infomation_info.t_infomation_career
+        SET career_read_count = career_read_count + 1
+        WHERE career_id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM rlab_infomation_info.t_infomation_career
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insert" parameterType="com.renrenlab.rlab.model.InfomationCareer">
+        INSERT INTO rlab_infomation_info.t_infomation_career (id, career_id, career_title,
+                                                              career_image, career_tag, career_content,
+                                                              career_read_count, career_publish_name, career_state,
+                                                              create_time, modify_time)
+        VALUES (#{id,jdbcType=BIGINT}, #{careerId,jdbcType=BIGINT}, #{careerTitle,jdbcType=VARCHAR},
+                                       #{careerImage,jdbcType=VARCHAR}, #{careerTag,jdbcType=BIGINT},
+                                       #{careerContent,jdbcType=VARCHAR},
+                                       #{careerReadCount,jdbcType=BIGINT}, #{careerPublishName,jdbcType=VARCHAR},
+                                       #{careerState,jdbcType=SMALLINT},
+                                       #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.InfomationCareer">
+        insert into rlab_infomation_info.t_infomation_career
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="careerId != null">
+                career_id,
+            </if>
+            <if test="careerTitle != null">
+                career_title,
+            </if>
+            <if test="careerImage != null">
+                career_image,
+            </if>
+            <if test="careerTag != null">
+                career_tag,
+            </if>
+            <if test="careerContent != null">
+                career_content,
+            </if>
+            <if test="careerReadCount != null">
+                career_read_count,
+            </if>
+            <if test="careerPublishName != null">
+                career_publish_name,
+            </if>
+            <if test="careerState != null">
+                career_state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="modifyTime != null">
+                modify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="careerId != null">
+                #{careerId,jdbcType=BIGINT},
+            </if>
+            <if test="careerTitle != null">
+                #{careerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="careerImage != null">
+                #{careerImage,jdbcType=VARCHAR},
+            </if>
+            <if test="careerTag != null">
+                #{careerTag,jdbcType=BIGINT},
+            </if>
+            <if test="careerContent != null">
+                #{careerContent,jdbcType=VARCHAR},
+            </if>
+            <if test="careerReadCount != null">
+                #{careerReadCount,jdbcType=BIGINT},
+            </if>
+            <if test="careerPublishName != null">
+                #{careerPublishName,jdbcType=VARCHAR},
+            </if>
+            <if test="careerState != null">
+                #{careerState,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.InfomationCareer">
+        update rlab_infomation_info.t_infomation_career
+        <set>
+            <if test="careerId != null">
+                career_id = #{careerId,jdbcType=BIGINT},
+            </if>
+            <if test="careerTitle != null">
+                career_title = #{careerTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="careerImage != null">
+                career_image = #{careerImage,jdbcType=VARCHAR},
+            </if>
+            <if test="careerTag != null">
+                career_tag = #{careerTag,jdbcType=BIGINT},
+            </if>
+            <if test="careerContent != null">
+                career_content = #{careerContent,jdbcType=VARCHAR},
+            </if>
+            <if test="careerReadCount != null">
+                career_read_count = #{careerReadCount,jdbcType=BIGINT},
+            </if>
+            <if test="careerPublishName != null">
+                career_publish_name = #{careerPublishName,jdbcType=VARCHAR},
+            </if>
+            <if test="careerState != null">
+                career_state = #{careerState,jdbcType=SMALLINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyTime != null">
+                modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.renrenlab.rlab.model.InfomationCareer">
+        UPDATE rlab_infomation_info.t_infomation_career
+        SET career_id           = #{careerId,jdbcType=BIGINT},
+            career_title        = #{careerTitle,jdbcType=VARCHAR},
+            career_image        = #{careerImage,jdbcType=VARCHAR},
+            career_tag          = #{careerTag,jdbcType=BIGINT},
+            career_content      = #{careerContent,jdbcType=VARCHAR},
+            career_read_count   = #{careerReadCount,jdbcType=BIGINT},
+            career_publish_name = #{careerPublishName,jdbcType=VARCHAR},
+            career_state        = #{careerState,jdbcType=SMALLINT},
+            create_time         = #{createTime,jdbcType=TIMESTAMP},
+            modify_time         = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT
+        id, career_id, career_title, career_image, career_tag, career_read_count,
+        career_publish_name, career_state, create_time, modify_time
+        FROM rlab_infomation_info.t_infomation_career
+        WHERE career_state = 0
+        ORDER BY create_time DESC
+        <if test="limit != 0">
+            LIMIT #{limit,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

@@ -15,8 +15,8 @@
 
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 
-    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
-    <link rel="stylesheet" href="${rlab}/mobile/css/base.css">
+    <link rel="stylesheet" href="${rlab}/common/icomoon/style.css?v_20180202 ">
+    <link rel="stylesheet" href="${rlab}/mobile/css/base.css?v_20180202">
 
     <script src="${rlab}/mobile/js/flexible_css.js" type="text/javascript" charset="utf-8"></script>
     <script src="${rlab}/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
@@ -26,6 +26,11 @@
     <script src="${rlab}/mobile/assets/layer.mobile-v2.0/layer_mobile/layer.js"></script>
     <link rel="stylesheet" href="${rlab}/mobile/assets/layer.mobile-v2.0/layer_mobile/need/layer.css">
     <%--layer--%>
+
+    <%--mui--%>
+    <link rel="stylesheet" type="text/css" href="${rlab}/mobile/assets/mui/css/mui.min.css"/>
+    <script src="${rlab}/mobile/assets/mui/js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+
     <style type="text/css">
         /*头部样式在base.css*/
 
@@ -39,61 +44,6 @@
 
         .content{
             margin-top: 1.173rem;
-        }
-        .headers {
-            height: 1.173rem;
-            width: 100%;
-            background: #F5F6FA;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 9999999;
-        }
-
-        .users {
-            float: right;
-            color: #4E4E4E;
-            font-size: 0.56rem;
-            line-height: 1.173rem;
-            margin-right: 0.3067rem;
-            position: absolute;
-            top:0;
-            right: 0;
-        }
-        .user-img{
-            width: 0.8267rem;
-            height: 1.173rem;
-            line-height:1.173rem;
-            text-align: center;
-            position: absolute;
-            top:0;
-            right: 0.3rem;
-        }
-        .user-img img{
-            overflow: hidden;
-            border-radius: 50%;
-            width: 0.8267rem;
-            height: 0.8267rem;
-        }
-        .homelogo {
-            height: 0.56rem;
-            display: block;
-            margin: 0.3067rem;
-            text-align: center;
-        }
-
-        .homelogo img {
-            height: 100%;
-        }
-        .headers .lft_back {
-            width: 1rem;
-            line-height: 1.173rem;
-            text-align: center;
-            font-size: 0.45rem;
-            float: left;
-            position: absolute;
-            top:0;
-            left: 0;
         }
         .banner img{
             width: 100%;
@@ -114,7 +64,9 @@
             font-size: 0.45rem;
             background: white;
         }
-        .list{
+        .list ul{
+            overflow: hidden;
+            background: #f5f6fa;
             padding: 0 0.32rem;
         }
         .list li{
@@ -304,37 +256,26 @@
         .lab-yanjing{
             margin-right: 0.1rem;
         }
+        .nomore{
+            display: none;
+        }
+        .mui-pull-bottom-tips,.nomore{
+            text-align: center;
+            color: #777;
+            height: 1rem;
+            line-height: 1rem;
+            font-size:0.32rem!important;
+        }
+        .mui-pull-loading,.mui-pull-caption{
+            font-size: 0.32rem!important;
+        }
     </style>
 </head>
 <body>
 <div id="main" class="sp_main">
-
-
-    <div class="headers">
-        <i class="lab-back_1 lft_back" onclick="goBack()"></i>
-        <p class="homelogo"><a href="javascript:void (0)" onclick="toHome()" ><img src="${rlab}/mobile/imgs/home_logo.png" /></a></p>
-        <c:choose>
-            <%--登录--%>
-            <c:when test="${sessionScope.uid != null}">
-                <p class="user-img" onclick="toCenter()">
-                    <i>
-                        <c:choose>
-                            <c:when test="${sessionScope.avatar != null}">
-                                <img src="${sessionScope.avatar}" alt="用户头像">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="http://renrenlab.oss-cn-shanghai.aliyuncs.com/avatar/person_default.jpg" alt="用户头像">
-                            </c:otherwise>
-                        </c:choose>
-                    </i>
-                </p>
-            </c:when>
-            <%--未登录--%>
-            <c:otherwise>
-                <a class="users lab-user" id="gouser" href="javascript:void (0)" onclick="toCenter()"></a>
-            </c:otherwise>
-        </c:choose>
-    </div>
+    <header>
+        <%@ include file="../template/header_three.jsp" %>
+    </header>
     
     <div class="content" style="padding-bottom: 1rem">
         <div class="banner"><img src="${rlab}/mobile/imgs/m2.1/demandhome.png" alt=""></div>
@@ -351,57 +292,51 @@
                 </c:otherwise>
             </c:choose>
         </div>
-        <div class="list">
-            <ul>
-
-            </ul>
+        <div id="listmain" class="mui-content mui-scroll-wrapper list" style="margin-top: 7.245rem;padding-bottom: 1.2rem">
+            <div class="mui-scroll">
+                <ul class="mui-table-view mui-table-view-chevron"  data-page-no="2">
+                </ul>
+                <div class="nomore" style="display: none">
+                    <p>没有更多数据了</p>
+                </div>
+            </div>
         </div>
         <%-- START分页--%>
         <div class="paging" style="display: none;">
             <div id="page_container" class="page_list"></div>
         </div>
         <%-- END分页--%>
+
     </div>
-<div class="box"></div>
+    <div class="box"></div>
+    <footer>
+        <jsp:include page="../template/footer.jsp" flush="true">
+            <jsp:param name="active" value="3"/>
+        </jsp:include>
+    </footer>
 </div>
+<%--公用搜索部分--%>
+<%@ include file="../template/search.jsp" %>
 </body>
-<script src="${rlab}/mobile/js/main.js"></script>
-<script src="${rlab}/mobile/assets/fenye/pagination.js"></script>
+<script src="${rlab}/mobile/js/main.js?v_=20180207"></script>
+<script src="${rlab}/mobile/js/mui.pullToRefresh.js"></script>
+<script src="${rlab}/mobile/js/mui.pullToRefresh.material.js"></script>
 <script type="text/javascript">
 
-    /**
-     * 返回历史上一页
-     */
-    var HISTORY_URL = null;
-    var HAS_PARAMS = null;
-    <c:if test="${sessionScope.urlHistory.size() > 1}">
-    HISTORY_URL = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).url}";
-    HAS_PARAMS = "${sessionScope.urlHistory.get(sessionScope.urlHistory.size() - 2).params}";
-    </c:if>
-
     function goBack() {
-        IS_BACK = 1;
-        if(HISTORY_URL != null) {
-            if(HAS_PARAMS == null || HAS_PARAMS == ""){
-                window.location.href = HISTORY_URL+ "?isback=" + IS_BACK;
-            }else{
-                window.location.href = HISTORY_URL+ "&isback=" + IS_BACK;
-            }
-        }else {
-            window.location.href = BASE_URL + "/page/home";
-        }
+        history.go(-1);
     }
 
     setCallbackUrl();// 设置登录时回跳路径
-    var PAGE_NO;//当前页码
-    var total;//总页数
-    var pageNumber=1;//当前页码
-    //如果有页码获取出来
-    if(GetQueryString("pageNo")){
-        pageNumber=GetQueryString("pageNo")*1;
-    }
-
-    initialPage();//初始化页面
+//    var PAGE_NO;//当前页码
+//    var total;//总页数
+//    var pageNumber=1;//当前页码
+//    //如果有页码获取出来
+//    if(GetQueryString("pageNo")){
+//        pageNumber=GetQueryString("pageNo")*1;
+//    }
+    $("#listmain ul").append(getlist(1));//初始化列表
+//    initialPage();//初始化页面
 
     //去发布需求页面
     function gopubpage() {
@@ -409,13 +344,7 @@
     }
     //去我的需求页面
     function goreqtinylist() {
-        window.location.href = BASE_URL + "/front/user/req/tinylist?pageNo=1&pageSize=10&state=99&entrance=0";
-    }
-    //获取URL值函数
-    function GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+        window.location.href = BASE_URL + "/user/req/tinylist?pageNo=1&pageSize=10&state=99&entrance=0";
     }
     //登录弹窗
     function showModalToLogin() {
@@ -446,68 +375,146 @@
             toLogin();
         });
     }
-    //初始化页面函数
-    function initialPage() {
+    <%--//获取URL值函数--%>
+    <%--function GetQueryString(name) {--%>
+        <%--var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");--%>
+        <%--var r = window.location.search.substr(1).match(reg);--%>
+        <%--if (r != null) return unescape(r[2]); return null;--%>
+    <%--}--%>
+    <%----%>
+    <%--//初始化页面函数--%>
+    <%--function initialPage() {--%>
+        <%--$.ajax({--%>
+            <%--url: BASE_URL + '/page/req/listinfo?pageSize=10&pageNo=' + pageNumber,--%>
+            <%--type: 'GET',--%>
+            <%--dataType: "json",--%>
+            <%--contentType: "application/json",--%>
+            <%--async: false,--%>
+            <%--success: function (data) {--%>
+                <%--if (data.code === 0) {--%>
+                    <%--total=data.payload.total;--%>
+                    <%--PAGE_NO=data.payload.pageNum;--%>
+                    <%--var datas = data.payload.list;--%>
+
+                    <%--loadMeinv(datas);--%>
+                <%--}--%>
+            <%--},--%>
+            <%--error: function () {--%>
+            <%--}--%>
+        <%--})--%>
+    <%--}--%>
+    <%--//循环生成节点--%>
+    <%--function loadMeinv(itemList) {--%>
+
+        <%--for (var i = 0; i < itemList.length; i++) {//每次加载时模拟随机加载图片--%>
+            <%--var item = createItem(itemList[i]);--%>
+            <%--$(".list ul").append(item);--%>
+            <%--if($(".litext").eq($(".litext").length-1).height()>$(".box").height()){--%>
+                <%--$(".litext").eq($(".litext").length-1).addClass("beyond");--%>
+            <%--}--%>
+            <%--item = null;--%>
+        <%--}--%>
+
+    <%--}--%>
+    <%--//具体节点生成--%>
+    <%--function createItem(data) {--%>
+        <%--if (data.uReqState==3){--%>
+            <%--var sp='已解决';--%>
+        <%--}else {--%>
+            <%--var sp=data.remainTime+'天后过期';--%>
+        <%--}--%>
+
+        <%--var html =--%>
+            <%--'<li data-u-id="'+data.uReqId+'">\--%>
+            <%--<p><span >'+ data.uName +'</span></p>\--%>
+            <%--<p class="litext">'+ data.uReqDescription +'</p>\--%>
+            <%--<p style="color: #7a7a7a"><i class="lab-yanjing"></i><s>' + data.uChkCount + '</s>人<span style="float: right;color: #4f8df0;">' + sp + '</span></p>\--%>
+            <%--</li>';--%>
+        <%--return $(html);--%>
+    <%--}--%>
+
+
+    <%--// 初始化页面分页--%>
+    <%--showPages(total, (PAGE_NO -1) * 10, 10, function (from, max) {--%>
+        <%--PAGE_NO = from / 10 + 1;--%>
+        <%--toDemandList();--%>
+    <%--}, "page_container");--%>
+    <%--//分页跳转--%>
+    <%--function toDemandList() {--%>
+        <%--window.location.href = BASE_URL + '/page/req/listpage?pageNo=' + PAGE_NO;--%>
+    <%--}--%>
+    <%--//总条数超过10显示分页--%>
+    <%--if (total>10){--%>
+        <%--$(".paging").show();--%>
+    <%--}--%>
+    <%--//跳转详情页--%>
+    <%--$(".list li").on("click",function () {--%>
+        <%--var id=$(this).data("uId");--%>
+        <%--window.location.href="${rlab}/page/req/detail?uReqId="+id;--%>
+    <%--})--%>
+
+    function getlist(num,ul) {
+        if(ul){
+            num=$(ul).data('pageNo')*1;
+            $(ul).data('pageNo',num+1);
+        }
+        var fragment = document.createDocumentFragment();
+        var li;
         $.ajax({
-            url: BASE_URL + '/page/req/listinfo?pageSize=10&pageNo=' + pageNumber,
+            url: BASE_URL + '/page/req/listinfo?pageSize=10&pageNo=' + num ,
             type: 'GET',
             dataType: "json",
             contentType: "application/json",
             async: false,
             success: function (data) {
-                if (data.code === 0) {
-                    total=data.payload.total;
-                    PAGE_NO=data.payload.pageNum;
-                    var datas = data.payload.list;
-                    loadMeinv(datas);
+                console.log(data);
+                if(data.payload.list.length==0){
+                    $(".nomore").show();
+                    $(ul).data('pageNo',num);
+                }else {
+                    $(".nomore").hide();
+                }
+                for (var i = 0; i < data.payload.list.length; i++) {
+                    var item=data.payload.list[i];
+                    if (item.uReqState==3){
+                        var sp='已解决';
+                    }else {
+                        var sp=item.remainTime+'天后过期';
+                    }
+                    li = $("<li></li>");
+                    li.data("uId",item.uReqId);
+                    li.html( '<p><span >'+ item.uName +'</span></p>\
+                                <p class="litext">'+ item.uReqDescription +'</p>\
+                                <p style="color: #7a7a7a"><i class="lab-yanjing"></i><s>' + item.uChkCount + '</s>人<span style="float: right;color: #4f8df0;">' + sp + '</span></p>');
+                    li=li.get(0);
+                    fragment.appendChild(li);
                 }
             },
             error: function () {
+
             }
         })
-    }
-    //循环生成节点
-    function loadMeinv(itemList) {
 
-        for (var i = 0; i < itemList.length; i++) {//每次加载时模拟随机加载图片
-            var item = createItem(itemList[i]);
-            $(".list ul").append(item);
-            if($(".litext").eq($(".litext").length-1).height()>$(".box").height()){
-                $(".litext").eq($(".litext").length-1).addClass("beyond");
+        return fragment;
+    }
+    mui.init({
+        pullRefresh: {
+            container: '#listmain',
+            up: {
+                contentrefresh: '正在加载...',
+                callback: function() {
+                    setTimeout(function () {
+                        var ul = document.body.querySelector('.mui-table-view');
+                        ul.appendChild(getlist(2,ul));
+                        mui('#listmain').pullRefresh().endPullupToRefresh();
+                    }, 1000);
+                }
             }
-            item = null;
         }
-
-    }
-    //具体节点生成
-    function createItem(data) {
-        var html =
-            '<li data-u-id="'+data.uReqId+'">\
-            <p><span >'+ data.uName +'</span></p>\
-            <p class="litext">'+ data.uReqDescription +'</p>\
-            <p style="color: #7a7a7a"><i class="lab-yanjing"></i><s>' + data.uChkCount + '</s>人<span style="float: right;color: #4f8df0;">' + data.remainTime + '天后过期</span></p>\
-            </li>';
-        return $(html);
-    }
-
-
-    // 初始化页面分页
-    showPages(total, (PAGE_NO -1) * 10, 10, function (from, max) {
-        PAGE_NO = from / 10 + 1;
-        toDemandList();
-    }, "page_container");
-    //分页跳转
-    function toDemandList() {
-        window.location.href = BASE_URL + '/page/req/listpage?pageNo=' + PAGE_NO;
-    }
-    //总条数超过10显示分页
-    if (total>10){
-        $(".paging").show();
-    }
-    //跳转详情页
-    $(".list li").on("click",function () {
+    });
+    mui("#listmain").on("tap","li",function(){
         var id=$(this).data("uId");
         window.location.href="${rlab}/page/req/detail?uReqId="+id;
-    })
+    });
 </script>
 </html>

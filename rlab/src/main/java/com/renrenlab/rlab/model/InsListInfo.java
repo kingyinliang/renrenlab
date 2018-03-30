@@ -47,6 +47,16 @@ public class InsListInfo {
 
     private Long orgOid;
 
+    private String insCustomTag;
+
+    public String getInsCustomTag() {
+        return insCustomTag;
+    }
+
+    public void setInsCustomTag(String insCustomTag) {
+        this.insCustomTag = insCustomTag;
+    }
+
     public Price getPrice() {
         return price;
     }

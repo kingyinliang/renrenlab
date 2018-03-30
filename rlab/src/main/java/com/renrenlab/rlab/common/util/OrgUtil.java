@@ -84,9 +84,20 @@ public class OrgUtil {
         if((oldOrgInfo == null && newOrgInfo != null) || (oldOrgInfo != null && newOrgInfo == null))return false;
         if(!compareString(oldOrgInfo.getOrgName(), newOrgInfo.getOrgName()))return false;
         if(!compareString(oldOrgInfo.getOrgCode(), newOrgInfo.getOrgCode()))return false;
-        if(!compareString(oldOrgInfo.getOrgCodeObject().getOrgCodePic(), newOrgInfo.getOrgCodeObject().getOrgCodePic()))return false;
-        if(!compareOrgLicense(oldOrgInfo.getOrgLicense(), newOrgInfo.getOrgLicense()))return false;
-        if(!compareInteger(oldOrgInfo.getOrgSource(), newOrgInfo.getOrgSource()))return false;
+        ////修改机构入口没有组织机构代码证照片修改 此处不作判断
+        if(newOrgInfo.getOrgCodeObject()!=null){
+            if(!compareString(oldOrgInfo.getOrgCodeObject().getOrgCodePic(), newOrgInfo.getOrgCodeObject().getOrgCodePic()))return false;
+        }
+        //修改机构入口只有图片比较
+        if(newOrgInfo.getOrgLicense()==null){
+            if(!compareString(oldOrgInfo.getOrgLicensePic(), newOrgInfo.getOrgLicensePic()))return false;
+        }else{
+            if(!compareOrgLicense(oldOrgInfo.getOrgLicense(), newOrgInfo.getOrgLicense()))return false;
+        }
+        //修改机构入口没有来源修改 此处不作判断
+        if(newOrgInfo.getOrgSource()!=null){
+            if(!compareInteger(oldOrgInfo.getOrgSource(), newOrgInfo.getOrgSource()))return false;
+        }
         return true;
     }
 

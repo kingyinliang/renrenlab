@@ -17,7 +17,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+	<link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css?v_=20170905">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/scientific_search.css"/>
 
@@ -136,7 +136,7 @@
     <jsp:include page="../template/footer.jsp" ></jsp:include>
 
 </div>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
 <script type="text/javascript">
 

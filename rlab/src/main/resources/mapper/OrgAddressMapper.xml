@@ -32,6 +32,13 @@
     where org_id = #{orgOid,jdbcType=BIGINT} AND org_addr_state = '0'
   </select>
 
+  <select id="searchOrgAddressListByOrgId" parameterType="java.lang.Long" resultType="com.renrenlab.rlab.vo.OrgAddress">
+    select
+    <include refid="Base_Column_List" />
+    from rlab_org_info.t_org_address
+    where org_id = #{orgOid,jdbcType=BIGINT}
+  </select>
+
   <select id="searchOrgAddressByOrgAddrId" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -40,6 +47,9 @@
   </select>
 
   <insert id="insertOrgAddress" parameterType="com.renrenlab.rlab.vo.OrgAddress">
+    <selectKey keyProperty="orgAddrId" resultType="java.lang.Long" order="AFTER">
+      select last_value as org_addr_id from rlab_org_info.instrument_address_aid_seq
+    </selectKey>
     insert into rlab_org_info.t_org_address
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orgId != null">

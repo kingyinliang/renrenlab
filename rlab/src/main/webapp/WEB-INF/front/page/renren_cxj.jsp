@@ -21,7 +21,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170905">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
 
     <!--[if lt IE 8]>
     <link rel="stylesheet" href="${rlab}/front/fonts/ie7/ie7.css">
@@ -558,7 +558,7 @@
         <%--banner开始--%>
         <div class="banner">
             <div class="img_content">
-                <img src="${rlab}/front/imgs/cxj/banner.png" alt="人人实验创新券海报">
+                <img src="${rlab}/front/imgs/cxj/banner-1.png" alt="人人实验创新券海报">
             </div>
         </div>
         <%--banner结束--%>
@@ -633,7 +633,7 @@
                     <span class="td btm_last">昌平区外</span>
                     <span class="td btm_last">昌平区外</span>
                     <span class="td btm_last">20%</span>
-                    <span class="td btm_last rt_last">10万元</span>
+                    <span class="td btm_last rt_last">5万元</span>
                 </p>
             </div>
             <div class="describe">
@@ -812,7 +812,7 @@
                     注：以上材料均需提供原件或复印件，并加盖公章。
                 </div>
                 <div style="font-size: 18px;color: #808080;line-height: 30px;padding-left: 48px;">
-                    <p>邮寄地址：北京市昌平区回龙观东大街创客广场A座501室</p>
+                    <p>邮寄地址：北京市昌平区回龙观东大街创客广场A座530</p>
                     <p>人人创新券工作小组（收）：010-81708556 &nbsp;&nbsp;&nbsp;13810645981</p>
                 </div>
             </div>
@@ -839,11 +839,11 @@
 <%--<h6>请您登录后下载文件</h6>--%>
 <%--<p><span id="timer">3s</span>后自动跳转至登录页</p>--%>
 <%--</div>--%>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script>
 
     function toCouponPage() {
-            location.href = BASE_URL + '/front/coupon/page?source=${source}';
+        location.href = BASE_URL + '/coupon/page?source=${source}';
     }
 
     // 跳转：Notice页面

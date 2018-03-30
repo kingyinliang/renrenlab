@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css">
     <%--导入字体样式--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
@@ -334,7 +334,7 @@
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
-<script src="${rlab}/front/js/common/main.js"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script>
     // 初始化页面分页
 
@@ -524,7 +524,7 @@
                 if(data.code === 0){
                     layer.msg("提交成功,请等待审核");
                     setTimeout(function () {
-                        location.href = BASE_URL + '/front/org/upload';
+                        location.href = BASE_URL + '/org/upload';
                     },3000)
                 }else{
                     console.log("请重新操作");

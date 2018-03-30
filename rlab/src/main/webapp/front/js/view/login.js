@@ -73,7 +73,7 @@ function validatePhone () {
  * 跳转主页
  */
 function toHomePage() {
-    window.location.href = BASE_URL + "/page/home";
+    window.location.href = BASE_URL;
 }
 
 /**
@@ -136,7 +136,7 @@ function sendLogin() {
     var formData = getFormData();
     phoneNumber = $("#user").val();
     $.ajax({
-        url: BASE_URL + "/front/user/login",
+        url: BASE_URL + "/user/login",
         type: 'post',
         dataType: 'json',
         contentType: 'application/json',
@@ -242,10 +242,10 @@ function getFormData(){
 function updateValidateImg ($this) {
 
     if ($this === undefined) {
-        $("#vertifyImg").attr("src",BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+        $("#vertifyImg").attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
     }
     $this = $($this);
-    $this.attr("src",BASE_URL + "/front/user/validateCode?_=" + new Date().getTime());
+    $this.attr("src", BASE_URL + "/user/validateCode?_=" + new Date().getTime());
 
 }
 
@@ -372,7 +372,7 @@ function toFrontHome() {
     // 成功后调整回调
     var callBackURL = sessionStorage.getItem("labcallBackURL");
     if(!callBackURL) {
-        location.href = BASE_URL +  "/page/home";
+        location.href = BASE_URL;
     } else {
         location.href = callBackURL;
     }

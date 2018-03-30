@@ -379,7 +379,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value="3"/>
             </jsp:include>
         </div>
@@ -1384,6 +1384,8 @@
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });
+                } else {
+                    alert(data.description);
                 }
 
             },
@@ -1397,7 +1399,36 @@
      ** 搜索回写
      */
     function writeBack(data) {
-        conId=data.orgContacts.conId;
+        if(data.orgContacts==null||data.orgContacts==''){
+            conId='';
+            $("#conFax").val("");
+            $("#conEmail").val("")
+
+        }else {
+            conId=data.orgContacts.conId;
+            if(data.orgContacts.conFax!=null){
+                $("#conFax").val(data.orgContacts.conFax);//机构传真
+            }else{
+                $("#conFax").val("")
+            }
+            if(data.orgContacts.conEmail!=null){
+                $("#conEmail").val(data.orgContacts.conEmail);//机构邮箱
+            }else{
+                $("#conEmail").val("")
+            }
+            //机构固话
+            if(data.orgContacts.conPhoneList){
+                $("#orgPhone").html("");
+                for (var i=0;i<data.orgContacts.conPhoneList.length;i++){
+
+                    $("#orgPhone").append('<div class="phone_row" style="margin-bottom: 10px">\
+                    <input value="'+data.orgContacts.conPhoneList[i]+'" class="lab_input_base lab_input_middle" type="text"\
+                placeholder="电话...">\
+                    <button onclick="removePhoneRow(this)"><i class="layui-icon">&#xe640;</i> 删除</button>\
+                </div>')
+                }
+            }
+        }
         orgOid=data.orgOid;
         orgAddrId=data.orgAddress.orgAddrId;
         if(data.orgName!=null){
@@ -1435,16 +1466,8 @@
         }else{
             $("#orgWeb").val("")
         }
-        if(data.orgContacts.conFax!=null){
-            $("#conFax").val(data.orgContacts.conFax);//机构传真
-        }else{
-            $("#conFax").val("")
-        }
-        if(data.orgContacts.conEmail!=null){
-            $("#conEmail").val(data.orgContacts.conEmail);//机构邮箱
-        }else{
-            $("#conEmail").val("")
-        }
+
+
         if(data.orgDescription!=null){
             $("#LAY_demo1").val(data.orgDescription);//机构简介
         }
@@ -1505,14 +1528,22 @@
                     form.render();
                 })
             }
-            if(data.orgLicense.orgAddrProvince==null||data.orgLicense.orgAddrCity==null||data.orgLicense.orgAddrDistrict==null){
-
+            if(data.orgLicense.orgAddrProvince==null||data.orgLicense.orgAddrCity==null){
+                $("#city1").find("option").each(function () {
+                    $(this).attr("selected", false);
+                    form.render();
+                })
+                $("#county1").find("option").each(function () {
+                    $(this).attr("selected", false);
+                    form.render();
+                })
             }else{
                 var ADDRESS_CONFIG1 = {
                     INIT_PROVINCE: data.orgLicense.orgAddrProvince,
                     INIT_CITY: data.orgLicense.orgAddrCity,
                     INIT_CONUNTY: data.orgLicense.orgAddrDistrict
                 }
+
                 // 初始化默认地址
                 $("#province1").find("option").each(function () {
 
@@ -1536,6 +1567,9 @@
                                                 $(this).attr("selected", true);
                                                 form.render();
                                                 return false;
+                                            }else {
+                                                $(this).attr("selected", false);
+                                                form.render();
                                             }
                                         })
                                     })
@@ -1553,6 +1587,9 @@
                                                     $(this).attr("selected", true);
                                                     form.render();
                                                     return false;
+                                                }else {
+                                                    $(this).attr("selected", false);
+                                                    form.render();
                                                 }
                                             })
 
@@ -1573,13 +1610,38 @@
             }else{
                 $("#addressDetail1").val("")
             }
+        }else {
+            $("#userName").val("");
+            $("#userNum").val("");
+            $(".businessLicense img").attr("src",'/bg/img/add_status_default.png');
+            $(".businessLicense input").data("imgSrc","");
+            $(".orgTax img").attr("src",'/bg/img/add_status_default.png');
+            $(".orgTax input").data("imgSrc","");
+            $("#identity1").parent().find("img").attr("src","${rlab}/bg/img/usercard1.png");
+            $("#identity1").data("imgSrc","");
+            $("#identity2").parent().find("img").attr("src","${rlab}/bg/img/usercard1.png");
+            $("#identity2").data("imgSrc","");
+            $("#province1").find("option").each(function () {
+                $(this).attr("selected", false);
+                form.render();
+            })
+            $("#city1").find("option").each(function () {
+                $(this).attr("selected", false);
+                form.render();
+            })
+            $("#county1").find("option").each(function () {
+                $(this).attr("selected", false);
+                form.render();
+            })
+            $("#addressDetail1").val("");
         }
 
 
 
 
         //机构logo
-        if(data.orgLogo!=null){
+        console.log(data.orgLogo);
+        if(data.orgLogo!=null && data.orgLogo!=""){
             $("#logoInp").parent().find("img").attr("src",data.orgLogo);
             $("#logoInp").data("imgSrc",data.orgLogo);
         }else {
@@ -1628,20 +1690,16 @@
                 form.render();
             })
         }
-        //机构固话
-        if(data.orgContacts.conPhoneList){
-            $("#orgPhone").html("");
-            for (var i=0;i<data.orgContacts.conPhoneList.length;i++){
 
-                $("#orgPhone").append('<div class="phone_row" style="margin-bottom: 10px">\
-                    <input value="'+data.orgContacts.conPhoneList[i]+'" class="lab_input_base lab_input_middle" type="text"\
-                placeholder="电话...">\
-                    <button onclick="removePhoneRow(this)"><i class="layui-icon">&#xe640;</i> 删除</button>\
-                </div>')
-            }
-        }
-        if(data.orgAddress.orgAddrProvince==null||data.orgAddress.orgAddrCity==null||data.orgAddress.orgAddrDistrict==null){
-
+        if(data.orgAddress.orgAddrProvince==null||data.orgAddress.orgAddrCity==null){
+            $("#city").find("option").each(function () {
+                $(this).attr("selected", false);
+                form.render();
+            })
+            $("#count").find("option").each(function () {
+                $(this).attr("selected", false);
+                form.render();
+            })
         }else{
             var ADDRESS_CONFIG = {
                 INIT_PROVINCE: data.orgAddress.orgAddrProvince,
@@ -1671,6 +1729,9 @@
                                             $(this).attr("selected", true);
                                             form.render();
                                             return false;
+                                        }else{
+                                            $(this).attr("selected", false);
+                                            form.render();
                                         }
                                     })
                                 })
@@ -1688,6 +1749,9 @@
                                                 $(this).attr("selected", true);
                                                 form.render();
                                                 return false;
+                                            }else {
+                                                $(this).attr("selected", false);
+                                                form.render();
                                             }
                                         })
 
@@ -1779,7 +1843,7 @@
 
         //三证回写
         if(data.orgCodeObject!=null){
-            if(data.orgCodeObject.orgCodePic!==null){
+            if(data.orgCodeObject.orgCodePic!==null&&data.orgCodeObject.orgCodePic.length!=0){
                 $(".orgCodes img").attr("src",data.orgCodeObject.orgCodePic);
                 $(".orgCodes input").data("imgSrc",data.orgCodeObject.orgCodePic);
             }else{
@@ -1789,8 +1853,9 @@
             }
         }
         if(data.orgCodeObject!=null&&data.orgLicense!=null){
-            if(!data.orgLicense.taxEnrolCertificatePic&&!data.orgCode){
+            if((!data.orgLicense.taxEnrolCertificatePic&&!data.orgCodeObject.orgCodePic)||(data.orgLicense.taxEnrolCertificatePic.length==0&&data.orgCodeObject.orgCodePic.length==0)){
                 $("#syncretic").attr("checked", true);
+                check=true;
                 form.render();
             }
         }

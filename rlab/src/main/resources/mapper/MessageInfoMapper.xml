@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.MessageInfoDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.MessageInfo">
+        <id column="m_id" jdbcType="BIGINT" property="mId"/>
+        <result column="m_phone" jdbcType="VARCHAR" property="mPhone"/>
+        <result column="m_message" jdbcType="VARCHAR" property="mMessage"/>
+        <result column="m_from" jdbcType="SMALLINT" property="mFrom"/>
+        <result column="m_send_by" jdbcType="VARCHAR" property="mSendBy"/>
+        <result column="m_ip" jdbcType="VARCHAR" property="mIp"/>
+        <result column="m_callback" jdbcType="VARCHAR" property="mCallback"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        m_id, m_phone, m_message, m_from, m_send_by, m_ip, m_callback, create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from rlab_common_info.t_message_info
+        where m_id = #{mId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        DELETE FROM rlab_common_info.t_message_info
+        WHERE m_id = #{mId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.renrenlab.rlab.model.MessageInfo">
+        insert into rlab_common_info.t_message_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mId != null">
+                m_id,
+            </if>
+            <if test="mPhone != null">
+                m_phone,
+            </if>
+            <if test="mMessage != null">
+                m_message,
+            </if>
+            <if test="mFrom != null">
+                m_from,
+            </if>
+            <if test="mSendBy != null">
+                m_send_by,
+            </if>
+            <if test="mIp != null">
+                m_ip,
+            </if>
+            <if test="mCallback != null">
+                m_callback,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mId != null">
+                #{mId,jdbcType=BIGINT},
+            </if>
+            <if test="mPhone != null">
+                #{mPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="mMessage != null">
+                #{mMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="mFrom != null">
+                #{mFrom,jdbcType=SMALLINT},
+            </if>
+            <if test="mSendBy != null">
+                #{mSendBy,jdbcType=SMALLINT},
+            </if>
+            <if test="mIp != null">
+                #{mIp,jdbcType=VARCHAR},
+            </if>
+            <if test="mCallback != null">
+                #{mCallback,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.renrenlab.rlab.model.MessageInfo">
+        update rlab_common_info.t_message_info
+        <set>
+            <if test="mPhone != null">
+                m_phone = #{mPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="mMessage != null">
+                m_message = #{mMessage,jdbcType=VARCHAR},
+            </if>
+            <if test="mFrom != null">
+                m_from = #{mFrom,jdbcType=SMALLINT},
+            </if>
+            <if test="mSendBy != null">
+                m_send_by = #{mSendBy,jdbcType=SMALLINT},
+            </if>
+            <if test="mIp != null">
+                m_ip = #{mIp,jdbcType=VARCHAR},
+            </if>
+            <if test="mCallback != null">
+                m_callback = #{mCallback,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where m_id = #{mId,jdbcType=BIGINT}
+    </update>
+</mapper>

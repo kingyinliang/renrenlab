@@ -9,7 +9,7 @@
     <%--<jsp:include page="../template/shujike.jsp" flush="true"/>--%>
     <%--<%@ include file="../../config/shujike.jsp" %>--%>
     <%@ include file="../../config/taglibs.jsp" %>
-    <link rel="stylesheet" type="text/css" href="${rlab}/front/css/base.css?v_=20170905"/>
+    <link rel="stylesheet" type="text/css" href="${rlab}/front/css/base.css?v_=20180330"/>
     <link rel="stylesheet" type="text/css" href="${rlab}/front/css/home.css?v_=20170905"/>
     <link rel="shortcut icon" href="${rlab}/front/imgs/favicon.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="${rlab}/front/assets/jquery-1.12.4/jquery.fullPage.css"/>
@@ -492,7 +492,7 @@
     </div>
 </div>
 </body>
-<script src="${rlab}/front/js/common/main.js?v_=20170905"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     $(function() {
 

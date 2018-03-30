@@ -7,7 +7,9 @@ import com.renrenlab.rlab.model.OrgCertificateTmp;
 import com.renrenlab.rlab.vo.*;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wanshou on 2017/5/15.
@@ -118,4 +120,20 @@ public interface OrgService {
      * @return
      */
     OrgManager searchOrgManagerInfo(Long orgOid);
+
+    /**
+     * web端搜索服务机构列表（索引表）
+     * @param keyword
+     * @param province
+     * @param city
+     * @param district
+     * @param order 排序规则 0 默认（认证状态和距离） 1 距离排序 2 共享指数
+     * @param pageNo
+     * @param pageSize
+     * @param session
+     * @return
+     */
+    Map<String, Object> searchFrontOrgList(String keyword, String province, String city, String district, Integer order, Integer pageNo, Integer pageSize, HttpSession session);
+
+    List<String> getDistrict(String province, String city);
 }

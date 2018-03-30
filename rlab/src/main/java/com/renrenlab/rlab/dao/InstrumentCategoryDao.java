@@ -9,14 +9,6 @@ import java.util.List;
 @Repository
 public interface InstrumentCategoryDao {
 
-    int deleteByPrimaryKey(Long id);
-
-    int insert(InstrumentCategory record);
-
-    int insertSelective(InstrumentCategory record);
-
-    InstrumentCategory selectByPrimaryKey(Long id);
-
     List<InstrumentCategory> selectByLevelAndCode(@Param("level") Integer level, @Param("code") String code);
 
     InstrumentCategory selectById(String categoryId);
@@ -28,4 +20,12 @@ public interface InstrumentCategoryDao {
      * @return
      */
     InstrumentCategory selectCategory(@Param("insCategory") String insCategory, @Param("level") Long level);
+
+    /**
+     * 递归查询仪器分类,数据量太大了，不要直接查所有
+     *
+     * @return
+     */
+    @Deprecated
+    List<InstrumentCategory> selectRecursive();
 }

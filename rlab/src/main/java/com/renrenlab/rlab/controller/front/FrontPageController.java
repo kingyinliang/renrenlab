@@ -1,0 +1,295 @@
+package com.renrenlab.rlab.controller.front;
+
+import com.github.pagehelper.PageInfo;
+import com.renrenlab.rlab.common.response.Response;
+import com.renrenlab.rlab.common.response.ResponseHelper;
+import com.renrenlab.rlab.common.util.HttpRequestDeviceUtil;
+import com.renrenlab.rlab.common.util.SearchUtil;
+import com.renrenlab.rlab.model.Requirement;
+import com.renrenlab.rlab.service.RequirementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+
+/**
+ * Created by Administrator on 2017/5/24.
+ */
+@Controller
+@RequestMapping("/page")
+public class FrontPageController {
+
+    @Autowired
+    private RequirementService requirementService;
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String toHome() {
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String toSearchHome(HttpServletRequest request) {
+
+        boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
+        log.debug("是否手机端登陆,{}", isMobileDevice);
+        if (isMobileDevice) {
+            return "/mobile/page/search";
+        } else {
+            return "/mobile/page/search";
+        }
+    }
+
+    /**
+     * 获取最新的已解决的需求
+     *
+     * @return
+     */
+    @RequestMapping(value = "/req/top", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<?> getTop10(HttpServletRequest request) {
+        return ResponseHelper.createSuccessResponse(requirementService.getTop10(request));
+    }
+
+    @RequestMapping(value = "/req/detail", method = RequestMethod.GET)
+    public String getDetail(HttpServletRequest request, @RequestParam Long uReqId, Model model) {
+        Requirement requirement = requirementService.getDetailById(uReqId);
+        if (requirement != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+            requirement.setEndTime(format.format(requirement.getuReqEndTime()));
+            requirement.setBeginTime(format.format(requirement.getCreateTime()));
+            requirement.setModifyTimes(requirement.getModifyTime().getTime());
+            requirement.setRemainTime(SearchUtil.getRemainTime(requirement.getuReqEndTime()));
+        }
+        model.addAttribute("detail", requirement);
+        boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
+        if (isMobileDevice) {
+            return "/mobile/page/demand-detail";
+        }
+        return "/front/manage/demand_to_alter";
+    }
+
+    @RequestMapping(value = "/req/detail/ajax", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<?> getDetailByAjax(@RequestParam Long uReqId) {
+        Requirement requirement = requirementService.getDetailById(uReqId);
+        if (requirement != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yy-MM-dd");
+            requirement.setEndTime(format.format(requirement.getuReqEndTime()));
+            requirement.setBeginTime(format.format(requirement.getCreateTime()));
+            requirement.setModifyTimes(requirement.getModifyTime().getTime());
+            requirement.setRemainTime(SearchUtil.getRemainTime(requirement.getuReqEndTime()));
+            return ResponseHelper.createSuccessResponse(requirement);
+        }
+        return ResponseHelper.createErrorResponse("未获取到需求");
+    }
+
+
+    @RequestMapping(value = "/req/listpage", method = RequestMethod.GET)
+    public String getPage(HttpServletRequest request) {
+        boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
+        if (isMobileDevice) {
+            return "/mobile/page/demand-home";
+        }
+        return "/front/page/demand_list";
+    }
+
+    @RequestMapping(value = "/req/listinfo", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<?> toDemandList(@RequestParam(required = false) Integer pageNo,
+                                    @RequestParam(required = false) Integer pageSize) throws IOException {
+        //只检索状态为'未解决' 或者'已解决'的需求
+        PageInfo<Requirement> reqs = requirementService.getList(null, 99, null, null, pageNo, pageSize, null);
+        return ResponseHelper.createSuccessResponse(reqs);
+    }
+
+    @RequestMapping(value = "/req/addcount", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<?> addCount(Long uReqId) {
+        int result = requirementService.addCount(uReqId);
+        if (result > 0)
+            return ResponseHelper.createSuccessResponse();
+        else return ResponseHelper.createErrorResponse("增加查看人数失败");
+    }
+
+    /**
+     * 发布需求的页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/req/pubpage", method = RequestMethod.GET)
+    public String pub(HttpServletRequest request) {
+        boolean isMobileDevice = HttpRequestDeviceUtil.isMobileDevice(request);
+        if (isMobileDevice) {
+            return "/mobile/page/demand-release";
+        }
+        return "/front/page/demand_to_create";
+    }
+
+
+    //优惠券紧急需求处理
+    @RequestMapping(value = "/coupon", method = RequestMethod.GET)
+    public String toCoupon(HttpServletRequest request) {
+        return "/front/page/renren_cxj";
+    }
+
+    @RequestMapping(value = "/aboutus", method = RequestMethod.GET)
+    public String toAboutUs() {
+        return "/front/page/lab_about_us";
+    }
+
+    @RequestMapping(value = "/joinus", method = RequestMethod.GET)
+    public String toJoinUs() {
+        return "/front/page/lab_join_us";
+    }
+
+    @RequestMapping(value = "/callus", method = RequestMethod.GET)
+    public String toCallUs() {
+        return "/front/page/lab_call_us";
+    }
+
+    @RequestMapping(value = "/ournews", method = RequestMethod.GET)
+    public String toOurNews() {
+        return "/front/page/lab_our_news";
+    }
+
+    @RequestMapping(value = "/equity", method = RequestMethod.GET)
+    public String toEquity() {
+        return "/front/page/lab_protocol_equity";
+    }
+
+    @RequestMapping(value = "/server", method = RequestMethod.GET)
+    public String toServerProto(HttpServletRequest request) {
+        if (HttpRequestDeviceUtil.isMobileDevice(request)) {
+            return "/mobile/page/server_xieyi";
+        }
+        return "/front/page/lab_protocol_server";
+    }
+
+    @RequestMapping(value = "/dxscxj/home", method = RequestMethod.GET)
+    public String toDxscxjHome() {
+        return "/front/activity/dxscxj_home";
+    }
+
+    @RequestMapping(value = "/hdxtcxj", method = RequestMethod.GET)
+    public String toHdxtcxj() {
+        return "/front/manage/hdxtcxj_home";
+    }
+
+    @RequestMapping(value = "/sdkjcxj", method = RequestMethod.GET)
+    public String toSdkjcxj() {
+        return "/front/manage/sdkjcxj_home";
+    }
+
+    // 发布需求
+    @RequestMapping(value = "/demand/create", method = RequestMethod.GET)
+    public String toPublishDemand() {
+        return "/front/page/demand_to_create";
+    }
+
+
+    /**
+     * 创新券申领活动页
+     *
+     * @param model
+     * @param source 0人人实验 1天使助
+     * @return
+     */
+    @RequestMapping(value = "/activity", method = RequestMethod.GET)
+    public String activity(Model model, @RequestParam(value = "source", required = true) String source) {
+        model.addAttribute("source", source);
+        return "/front/page/renren_cxj";
+    }
+
+
+    // 跳转人人创新券公示页（详情页）
+    @RequestMapping(value = "/activity/details", method = RequestMethod.GET)
+    public String torrcxqdetails(@RequestParam Integer noticeId, Model model) {
+        if (noticeId != null && noticeId == 1) {
+            return "/front/activity/rrcxq_notice_detail";
+        } else if (noticeId != null && noticeId == 2) {
+            return "/front/activity/rrcxq_notice_detail2";
+        } else if (noticeId != null && noticeId == 3) {
+            return "/front/activity/rrcxq_notice_detail3";
+        } else if (noticeId != null && noticeId == 4) {
+            return "/front/activity/rrcxq_notice_detail4";
+        } else if (noticeId != null && noticeId == 5) {
+            return "/front/activity/rrcxq_notice_detail5";
+        } else if (noticeId != null && noticeId == 6) {
+            return "/front/activity/rrcxq_notice_detail6";
+        }
+        model.addAttribute("noticeId", noticeId);
+        return "/front/activity/rrcxq_notice_detail";
+    }
+
+    // 跳转人人创新券公示页(公示列表页)
+    @RequestMapping(value = "/activity/notice", method = RequestMethod.GET)
+    public String torrcxqlist() {
+        return "/front/activity/rrcxq_notice";
+    }
+
+    // 用户端：应用案例
+    @RequestMapping(value = "/case/home", method = RequestMethod.GET)
+    public String tocase() {
+        return "/front/page/case_list";
+    }
+
+    // m站：活动列表
+    @RequestMapping(value = "/activityList", method = RequestMethod.GET)
+    public String toactivitylist() {
+        return "/mobile/page/activity_list";
+    }
+
+    // m站：海淀协同创新券
+    @RequestMapping(value = "/activity/hdxt", method = RequestMethod.GET)
+    public String tohdxt() {
+        return "/mobile/page/hdxt_cxq";
+    }
+
+    // m站：人人创新券
+    @RequestMapping(value = "/activity/rrcxq", method = RequestMethod.GET)
+    public String torrcxq() {
+        return "/mobile/page/rlab_cxq";
+    }
+
+    // m站：首都科技创新券
+    @RequestMapping(value = "/activity/sdkj", method = RequestMethod.GET)
+    public String tosdkj() {
+        return "/mobile/page/sdkj_cxq";
+    }
+
+    // m站：table
+    @RequestMapping(value = "/table", method = RequestMethod.GET)
+    public String table() {
+        return "/mobile/page/report";
+    }
+
+    // m站：table2
+    @RequestMapping(value = "/table/table2", method = RequestMethod.GET)
+    public String table2() {
+        return "/mobile/page/report2";
+    }
+
+    // m站：table2
+    @RequestMapping(value = "/renrenlab", method = RequestMethod.GET)
+    public String rrlab() {
+        return "/front/page/renrenlab_detail";
+    }
+
+    // （临时）pc实验室登录
+    @RequestMapping(value = "/lablogin", method = RequestMethod.GET)
+    public String lablogin() {
+        return "/front/page/lab-login";
+    }
+
+}

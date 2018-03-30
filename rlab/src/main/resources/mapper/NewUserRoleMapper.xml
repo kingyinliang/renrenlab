@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.renrenlab.rlab.dao.NewUserRoleDao">
+    <resultMap id="BaseResultMap" type="com.renrenlab.rlab.model.ManagerInfo">
+        <result column="u_uid" jdbcType="BIGINT" property="uUid"/>
+        <result column="role_id" jdbcType="OTHER" property="roleIds"/>
+        <result column="job_num" jdbcType="VARCHAR" property="jobNum"/>
+        <result column="department" jdbcType="VARCHAR" property="department"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+        <result column="modify_time" jdbcType="VARCHAR" property="modifyTime"/>
+    </resultMap>
+    <resultMap id="BaseResultMap2" type="com.renrenlab.rlab.model.NewRoleInfo">
+        <result column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_des" jdbcType="VARCHAR" property="roleDes"/>
+    </resultMap>
+
+    <select id="getUserRoleByUuid" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+            u_uid,
+            userrole.role_id
+        FROM rlab_role_permission.t_user_role userrole
+            JOIN rlab_role_permission.t_role trole ON userrole.role_id @> array_to_json(ARRAY [trole.role_id]) :: JSONB
+        WHERE u_uid = #{uUid,jdbcType=BIGINT}
+        LIMIT 1
+    </select>
+    <select id="getPermissionIds" parameterType="long" resultType="string">
+        SELECT permission_id
+        FROM
+            rlab_role_permission.t_role_permissions
+        WHERE
+            array_to_json(ARRAY [role_id]) :: JSONB &lt;@ (SELECT role_id
+                                                           FROM rlab_role_permission.t_user_role
+                                                           WHERE u_uid = #{uUid})
+    </select>
+
+    <select id="getPermissionByRoleIds" resultType="string" parameterType="java.util.Set">
+        SELECT permission_id
+        FROM rlab_role_permission.t_role_permissions
+        WHERE
+        t_role_permissions.role_id in
+        <foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+    <select id="getPermissionNames" resultType="string" parameterType="java.util.Set">
+        SELECT url_des
+        FROM rlab_role_permission.t_url_permission
+        WHERE t_url_permission.permission_id in
+        <foreach collection="permissionIds" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>;
+    </select>
+    <select id="getRoleInfoByRoleIds" resultMap="BaseResultMap2">
+        SELECT role_id,role_name,role_des
+        FROM rlab_role_permission.t_role
+        <if test="roleIds != null">
+            WHERE role_id in
+            <foreach collection="roleIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>;
+        </if>
+    </select>
+    <select id="getAllRoles" resultMap="BaseResultMap2">
+        SELECT
+            role_id,
+            role_name,
+            role_des
+        FROM rlab_role_permission.t_role
+        WHERE level >= 0
+    </select>
+
+    <select id="getManagerInfo" resultMap="BaseResultMap" parameterType="string">
+        SELECT base.u_uid,job_num,userrole.role_id,u_name,u_nickname,u_mobile,department,u_email
+        FROM rlab_role_permission.t_user_role userrole
+        JOIN rlab_user_info.t_user_base_info base ON userrole.u_uid = base.u_uid
+        <where>
+            TRUE
+            <if test="keyword != null">
+                AND (position (#{keyword} IN job_num)>0
+                OR position(#{keyword} IN u_name) > 0
+                OR position(#{keyword} IN u_mobile) > 0 )
+            </if>
+            <if test="roleId != null">
+                and role_id @> (array_to_json(ARRAY [${roleId}]) :: JSONB)
+            </if>
+            and userrole.role_id @> '[2]'::jsonb = false
+            order by base.u_uid desc
+        </where>
+    </select>
+    <select id="getManagerDetail" resultMap="BaseResultMap">
+        <if test="uUid != null">SELECT base.u_uid,job_num,role_id,u_name,u_nickname,u_mobile,department,u_email
+            FROM rlab_role_permission.t_user_role userrole
+            JOIN rlab_user_info.t_user_base_info base ON userrole.u_uid = base.u_uid
+            <where>
+                base.u_uid = #{uUid}
+            </where>
+        </if>
+    </select>
+
+    <select id="rolePermissionCount" resultType="int">
+        SELECT count(0)
+        FROM rlab_role_permission.t_role_permissions
+        WHERE role_id = #{roleId}
+    </select>
+    <select id="isExist" resultType="int">
+        SELECT count(0)
+        FROM rlab_role_permission.t_user_role
+        <where>
+            <if test="jobNum != null">
+                job_num = #{jobNum}
+            </if>
+            <if test="uUid != null">
+                u_uid = #{uUid}
+            </if>
+        </where>
+    </select>
+
+
+    <insert id="addManager" parameterType="com.renrenlab.rlab.model.ManagerInfo">
+        insert into rlab_role_permission.t_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleIds != null">
+                role_id,
+            </if>
+            <if test="uUid != null">
+                u_uid,
+            </if>
+            <if test="jobNum != null">
+                job_num,
+            </if>
+            <if test="department != null">
+                department,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleIds != null">
+                #{roleIds}::jsonb,
+            </if>
+            <if test="uUid != null">
+                #{uUid,jdbcType=BIGINT},
+            </if>
+            <if test="jobNum != null">
+                #{jobNum,jdbcType=VARCHAR},
+            </if>
+            <if test="department !=null">
+                #{department,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="addRole" parameterType="com.renrenlab.rlab.model.NewRoleInfo">
+        INSERT INTO rlab_role_permission.t_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleName !=null">role_name,</if>
+            <if test="roleDes !=null">role_des,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleName != null">#{roleName,jdbcType=VARCHAR},</if>
+            <if test="roleDes != null">#{roleDes,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <delete id="delRole" parameterType="java.lang.Long">
+        DELETE FROM rlab_role_permission.t_role
+        WHERE role_id = #{roleId,jdbcType=BIGINT};
+
+        DELETE FROM rlab_role_permission.t_role_permissions
+        WHERE role_id = #{roleId,jdbcType=BIGINT};
+    </delete>
+    <update id="modifyRolePermission">
+        UPDATE rlab_role_permission.t_role_permissions
+        <set>
+            permission_id = #{permissionIds}::jsonb,
+            modify_time = now()
+        </set>
+        WHERE role_id = #{roleId}
+    </update>
+    <insert id="insertRolePermission">
+        INSERT INTO rlab_role_permission.t_role_permissions
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId !=null">role_id,</if>
+            <if test="permissionIds !=null">permission_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">#{roleId,jdbcType=BIGINT},</if>
+            <if test="permissionIds != null">#{permissionIds,jdbcType=OTHER}::jsonb,</if>
+        </trim>
+    </insert>
+    <update id="modifyManager" parameterType="com.renrenlab.rlab.model.ManagerInfo">
+        update rlab_role_permission.t_user_role
+        <set>
+            <if test="jobNum != null">
+                job_num = #{jobNum},
+            </if>
+            <if test="department != null">
+                department = #{department},
+            </if>
+            <if test="roleIds != null">
+                role_id = #{roleIds}::jsonb,
+            </if>
+            modify_time = now()
+        </set>
+        where u_uid = #{uUid,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteManager" parameterType="java.lang.Long">
+        DELETE FROM rlab_role_permission.t_user_role
+        WHERE u_uid = #{uUid,jdbcType=BIGINT}
+    </delete>
+</mapper>

@@ -9,7 +9,7 @@
     <%--<jsp:include page="../template/shujike.jsp" flush="true"/>--%>
     <%@ include file="../../config/taglibs.jsp" %>
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
 
     <%--<link rel="shortcut icon" href="${rlab}/front/imgs/favicon.png" type="image/x-icon">--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css ">
@@ -241,14 +241,35 @@
             <ul class="list">
                 <li>
                     <i class="lab-arrow-right"></i>
-                    <a href="${rlab}/page/activity/details?noticeId=2">人人创新券项目管理办法</a>
-                    <s>2017-09-25</s>
+                    <a href="${rlab}/page/activity/details?noticeId=6">关于人人创新券2017年第五批支持项目公示的公告</a>
+                    <s>2018-1-8</s>
+                </li>
+                <li>
+                    <i class="lab-arrow-right"></i>
+                    <a href="${rlab}/page/activity/details?noticeId=5">关于人人创新券2017年第四批支持项目公示的公告</a>
+                    <s>2017-12-22</s>
+                </li>
+                <li>
+                    <i class="lab-arrow-right"></i>
+                    <a href="${rlab}/page/activity/details?noticeId=4">关于人人创新券2017年第三批支持项目公示的公告</a>
+                    <s>2017-12-20</s>
+                </li>
+                <li>
+                    <i class="lab-arrow-right"></i>
+                    <a href="${rlab}/page/activity/details?noticeId=3">关于人人创新券2017年第二批支持项目公示的公告</a>
+                    <s>2017-12-08</s>
                 </li>
                 <li>
                     <i class="lab-arrow-right"></i>
                     <a href="${rlab}/page/activity/details?noticeId=1">关于人人创新券2017年第一批支持项目公示的公告</a>
                     <s>2017-09-28</s>
                 </li>
+                <li>
+                    <i class="lab-arrow-right"></i>
+                    <a href="${rlab}/page/activity/details?noticeId=2">人人创新券项目管理办法</a>
+                    <s>2017-09-25</s>
+                </li>
+
             </ul>
             <%--START分页--%>
             <%--<div class="paging" style="display:block">--%>
@@ -266,7 +287,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170905"></script>
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
     // 初始化页面分页
     showPages(40, 0, 10, function (from, max) {

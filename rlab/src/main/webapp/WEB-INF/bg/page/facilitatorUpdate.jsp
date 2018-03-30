@@ -379,7 +379,7 @@
             <%--参数注解：1.firstMenu 一级目录 2.secondMenu 二级目录--%>
             <jsp:include page="../common/sideBar.jsp" flush="true">
                 <jsp:param name="levelNum" value="2"/>
-                <jsp:param name="firstMenu" value="5"/>
+                <jsp:param name="firstMenu" value="6"/>
                 <jsp:param name="secondMenu" value=""/>
             </jsp:include>
         </div>
@@ -1421,7 +1421,7 @@
                 orgZipcode: orgZipcode//机构邮编
             },
             orgContacts: {
-                conId:${orgInfo.orgContacts.conId},
+                conId: "${orgInfo.orgContacts.conId}",
                 conPhone: conPhone,// 机构联系人电话
                 conEmail: conEmail,// 机构联系人邮箱
                 conFax: conFax// 机构联系人传真
@@ -1580,6 +1580,8 @@
                         skin: 'layui-layer-molv' //样式类名
                         , closeBtn: 0
                     });
+                } else {
+                    alert(data.description);
                 }
 
             },

@@ -392,7 +392,7 @@
     }
     //一级分类
     $.ajax({
-        url: "${rlab}/bg/baseins/category?level=1",
+        url:BASE_URL + "${rlab}/bg/baseins/category?level=1",
         type: 'get',
         async: false
     }).done(function (data) {
@@ -442,7 +442,7 @@
     });
 
     $.ajax({
-        url: "${rlab}/bg/baseins/category?level=2&code=" + instype1,
+        url: BASE_URL + "${rlab}/bg/baseins/category?level=2&code=" + instype1,
         type: 'get',
         async: true
     }).done(function (data) {
@@ -456,7 +456,7 @@
             instype2=$(this).data("cateId");
             instype3="";
             $.ajax({
-                url: "/bg/baseins/category?level=3&code="+instype2,
+                url:BASE_URL + "${rlab}/bg/baseins/category?level=3&code="+instype2,
                 type: 'get',
                 async: true
             }).done(function (data) {
@@ -478,7 +478,7 @@
         layer.msg("系统繁忙 , 请稍后再试");
     });
     $.ajax({
-            url: "/bg/baseins/category?level=3&code="+instype2,
+            url: BASE_URL + "${rlab}/bg/baseins/category?level=3&code="+instype2,
             type: 'get',
             async: true
         }).done(function (data) {
@@ -503,7 +503,7 @@
             instype2="";
             instype3="";
             $.ajax({
-                url: "${rlab}/bg/baseins/category?level=2&code=" + instype1,
+                url: BASE_URL + "${rlab}/bg/baseins/category?level=2&code=" + instype1,
                 type: 'get',
                 async: true
             }).done(function (data) {
@@ -520,7 +520,7 @@
                     instype2=$(this).data("cateId");
                     instype3="";
                     $.ajax({
-                        url: "/bg/baseins/category?level=3&code="+instype2,
+                        url:BASE_URL + "${rlab}/bg/baseins/category?level=3&code="+instype2,
                         type: 'get',
                         async: true
                     }).done(function (data) {
@@ -591,7 +591,7 @@
                     var fd = new FormData();
                     fd.append("file", file);
                     $.ajax({
-                        url: '${rlab}/bg/file/upload/image',
+                        url: BASE_URL + '/bg/file/upload/image',
                         type: 'POST',
                         data: fd,
                         contentType: false,
@@ -804,7 +804,7 @@
         console.log(data);
        /*return;*/
         $.ajax({
-            url: "${rlab}/bg/baseins/modify",
+            url: BASE_URL + "/bg/baseins/modify",
             type: 'post',
             dataType: "json",
             contentType: "application/json",
@@ -813,6 +813,8 @@
         }).done(function (data) {
             if (data.code == 200) {
                 window.location.href = '${rlab}/bg/baseins/detail?insIid=${baseInfo.insIid}';
+            } else {
+                alert(data.description);
             }
         }).fail(function (data) {
             layer.msg("失败");

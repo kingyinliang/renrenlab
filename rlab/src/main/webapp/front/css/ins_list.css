@@ -554,3 +554,29 @@ body, .wrapper {
 .ins_filter button.disables {
     background: #ddd;
 }
+.label p{
+    float: left;
+    background: #ace183;
+    border-radius: 2px;
+    line-height: 12px;
+    padding: 5px 5px;
+    font-size: 12px;
+    color: white;
+    margin-right: 25px;
+}
+.label i{
+    padding: 0 8px;
+    text-align: center;
+    display: inline-block;
+    border-right: 1px solid white;
+}
+.label i:last-child{
+    border-right: none;
+}
+.label label{
+    float: left;
+    font-size: 12px;
+    color: #999;
+    margin-right: 5px;
+    line-height: 22px;
+}

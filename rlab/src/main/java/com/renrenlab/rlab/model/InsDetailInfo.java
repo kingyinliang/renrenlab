@@ -39,6 +39,16 @@ public class InsDetailInfo {
 
     private String linkPage;
 
+    private String insCustomTag;
+
+    public String getInsCustomTag() {
+        return insCustomTag;
+    }
+
+    public void setInsCustomTag(String insCustomTag) {
+        this.insCustomTag = insCustomTag;
+    }
+
     public Object getMapDescription() {
         return mapDescription;
     }

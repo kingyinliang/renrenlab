@@ -30,4 +30,11 @@ public interface BaseInsDao {
 
     int updateBaseInfo(BaseInsInfo insInfo);
 
+    /**
+     * 插入
+     * @param baseInsInfo
+     * @return
+     */
+    Long insertSelective(BaseInsInfo baseInsInfo);
+
 }

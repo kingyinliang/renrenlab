@@ -33,17 +33,6 @@ body {
     margin-right: 0.3067rem;
 }
 
-.homelogo {
-    float: left;
-    height: 0.56rem;
-    margin: 0.3067rem;
-}
-
-.homelogo img {
-    width: 100%;
-    height: 100%;
-}
-
 #slider {
     width: 100%;
     height: 100%;
@@ -341,19 +330,6 @@ body {
     color: #4e4e4e;
     font-size: 0.37rem;
     line-height: 0.56rem;
-}
-.homelogo{
-    font-size: 0.37rem;
-    line-height: 0.56rem;
-}
-.user-img{
-    width: 0.8267rem;
-    height: 1.173rem;
-    line-height:1.173rem;
-    text-align: center;
-    position: absolute;
-    top:0;
-    right: 0.3rem;
 }
 .user-img img{
     overflow: hidden;

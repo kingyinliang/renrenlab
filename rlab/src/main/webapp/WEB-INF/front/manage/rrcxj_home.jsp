@@ -11,14 +11,16 @@
 
     <!--bootstrapValidator-->
     <script src="${rlab}/front/assets/jquery-1.12.4/jquery.js"></script>
-    <script src="${rlab}/front/assets/md5/jquery.md5.js"></script>
+    <%--<script src="${rlab}/front/assets/md5/jquery.md5.js"></script>--%>
+    <script src="${rlab}/front/js/view/jq.form.js"></script>
+
 
     <!--layer-->
     <link rel="stylesheet" href="${rlab}/front/assets/layer-v3.0.3/layer/skin/default/layer.css">
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/user_center.css?v_=20170622">
     <link rel="stylesheet" href="${rlab}/front/css/form_common.css?v_=20170622">
 
@@ -177,9 +179,12 @@
 
                 <%--首次进入--%>
                 <div class="first" style="display: ${flag eq 3?'block':'none'}">
-                    <img src="${rlab}/front/imgs/rrcxj/not-img.png" alt="" class="rrcxj_notImg">
-                    <p class="rrcxj_notTit">哎呦，您还没有领创新券，快去领取吧！</p>
-                    <a href="${rlab}/front/coupon/toApplyCertify?source=${source}&operate=apply" class="goapply">申请认证</a>
+                    <img src="${rlab}/front/imgs/icon/qr_code_wx_renrenlab_300_300.jpg" alt="" class="rrcxj_notImg" style="height: 169px">
+                    <p class="rrcxj_notTit">2018年创新券正在路上，快去报名吧！<br></p>
+                    <p class="rrcxj_notTit" style="font-weight: bold;">关注人人实验公众号，报名申领2018年人人创新券，详情请咨询010-81708556</p>
+                    <%--<img src="${rlab}/front/imgs/rrcxj/not-img.png" alt="" class="rrcxj_notImg">--%>
+                    <%--<p class="rrcxj_notTit">哎呦，您还没有领创新券，快去领取吧！</p>--%>
+                    <%--<a href="${rlab}/coupon/toApplyCertify?source=${source}&operate=apply" class="goapply">申请认证</a>--%>
                 </div>
                 <%--首次进入--%>
 
@@ -199,7 +204,7 @@
                     <p class="rrcxj_Tit">
                         您有任何疑问可联系客服人员</br>或提交材料重新认证
                     </p>
-                    <a href="${rlab}/front/coupon/toApplyCertify?source=0&operate=modify" class="goapply">重新认证</a>
+                    <a href="${rlab}/coupon/toApplyCertify?source=0&operate=modify" class="goapply">重新认证</a>
                 </div>
                 <%--审核失败--%>
 
@@ -207,7 +212,7 @@
                 <div class="win" style="display: ${flag eq 1?'block':'none'}">
                     <p class="winimg" style="margin-top: 135px"><label class="lab-stick"></label><span>已通过认证资格</span></p>
                     <p style="font-size: 16px; color: #767676; text-align: center; margin-top: 20px">提交项目申请即可获得创新券</p>
-                    <a href="${rlab}/front/coupon/toProject/${cerId}" class="goapply" style=" margin-top: 20px">申请创新券</a>
+                    <a href="${rlab}/coupon/toProject/${cerId}" class="goapply" style=" margin-top: 20px">申请创新券</a>
                 </div>
                 <%--审核成功--%>
 
@@ -425,7 +430,7 @@
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <!--my common js-->
-<script src="${rlab}/front/js/common/main.js?v_=20170706"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
 
     //检查文件后缀
@@ -498,7 +503,7 @@
         }
         console.log(data);
         $.ajax({
-            url: '${rlab}/front/coupon/applyProject?operate=modify',
+            url: '${rlab}/coupon/applyProject?operate=modify',
             type: 'POST',
             data: JSON.stringify(data),
             dataType: "json",
@@ -513,7 +518,7 @@
             if(data.code==200){
                 layer.msg("提交成功");
                 setTimeout(function () {
-                    window.location.href="${rlab}/front/coupon/page"
+                    window.location.href = "${rlab}/coupon/page"
                 },800)
             }else{
                 layer.msg(data.payload);
@@ -574,14 +579,14 @@
         if(!document.getElementById(str1).files){
             var filenames=document.getElementById(str1).value;
             var filename=filenames.substring( filenames.lastIndexOf('\\')+1 );
-            if (!verifyFileSuffx("pdf",filename)){
+            if (!verifyFileSuffx("pdf",filename.toLowerCase())){
                 layer.msg("文件格式不正确");
                 return;
             }
             $(str).find(".course span").html(filename);
         }else {
             var file = document.getElementById(str1).files[0];
-            if (!verifyFileSuffx("pdf",file.name)){
+            if (!verifyFileSuffx("pdf",file.name.toLowerCase())){
                 layer.msg("文件格式不正确");
                 return;
             }

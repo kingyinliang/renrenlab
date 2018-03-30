@@ -10,7 +10,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:applicationContext.xml
+            classpath:applicationContext.xml,classpath:spring-shiro.xml
         </param-value>
     </context-param>
     <listener>
@@ -19,6 +19,22 @@
         </listener-class>
     </listener>
     <!-- Spring配置文件结束 -->
+
+    <!-- 添加shiro过滤器 -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <!-- 该值缺省为false，表示声明周期由SpringApplicationContext管理，设置为true表示ServletContainer管理 -->
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!-- 设置servlet编码开始 -->
     <filter>
@@ -48,6 +64,7 @@
         <url-pattern>*.jpeg</url-pattern>
         <url-pattern>*.gif</url-pattern>
     </servlet-mapping>
+
     <!--springmvc-->
     <servlet>
         <servlet-name>springmvc</servlet-name>
@@ -62,6 +79,8 @@
         <servlet-name>springmvc</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+
     <!-- 400错误 -->
     <error-page>
         <error-code>400</error-code>

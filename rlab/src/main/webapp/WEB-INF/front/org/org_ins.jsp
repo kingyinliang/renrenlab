@@ -18,7 +18,7 @@
     <script src="${rlab}/front/assets/layer-v3.0.3/layer/layer.js"></script>
 
     <!--my css-->
-    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20170622">
+    <link rel="stylesheet" href="${rlab}/front/css/base.css?v_=20180330">
     <link rel="stylesheet" href="${rlab}/front/css/goods_list.css">
     <%--导入字体样式--%>
     <link rel="stylesheet" href="${rlab}/common/icomoon/style.css">
@@ -82,7 +82,9 @@
             height: 40px;
             vertical-align: middle;
         }
-
+        #head{
+            margin-bottom: 100px!important;
+        }
         .org_title .org_info span {
             font-size: 20px;
             color: #4E4E4E;
@@ -143,31 +145,36 @@
 
         /*机构tab栏*/
         .org_tab {
-            border-bottom: 2px solid #508DF0;
-            line-height: 44px;
-            height: 46px;
+            line-height: 37px;
+            height: 37px;
+            background: white;
+            width: 1120px;
+            margin: auto;
+            font-size: 14px;
         }
 
         .org_tab ul {
             list-style: none;
             width: 1120px;
             margin: 0 auto;
-            line-height: 44px;
+            line-height: 34px;
         }
 
         .org_tab li {
-            font-size: 16px;
+            text-align: center;
+            font-size: 14px;
             float: left;
-            margin-right: 45px;
         }
 
         .org_tab li a {
-            color: #4E4E4E;
-
+            padding: 0 15px;
+            display: block;
+            color: #a9a9a9;
         }
 
         .org_tab li.actived a {
-            color: #508DF0;
+            border-bottom: 3px solid #588eff;
+            color: #588eff;
         }
 
         /*结果记录*/
@@ -201,12 +208,14 @@
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
+            border: 1px solid #e6e6e6;
         }
 
         .org_list .item:hover {
             -webkit-box-shadow: 0 6px 16px 0 #d6e0e8;
             -moz-box-shadow: 0 6px 16px 0 #d6e0e8;
             box-shadow: 0 6px 16px 0 #d6e0e8;
+            border: 1px solid #fff;
         }
 
         /*左侧图片*/
@@ -340,79 +349,27 @@
     <!--右侧公用模块-->
     <jsp:include page="../template/right_bar.jsp"></jsp:include>
     <!--头部公用模块-->
-    <jsp:include page="../template/header.jsp"></jsp:include>
+    <jsp:include page="../template/header.jsp" flush="true">
+        <jsp:param name="selected" value="2"/>
+    </jsp:include>
     <!--模块-->
     <div class="org_main clearfix">
-        <%--机构标题--%>
-        <%--机构标题--%>
-        <div class="org_title">
-            <div>
-                <div class="org_info">
-                    <c:if test="${orgInfo.orgLicensePic !=null && orgInfo.orgLicensePic != ''}">
-                        <img class="logo" src="${orgInfo.orgLicensePic}">
-                    </c:if>
-                    <span>
-                        ${orgInfo.orgName}
-                        <%--<img class="approve" src="${rlab}/front/imgs/labbang.png">--%>
-                    </span>
-                </div>
-                <div class="exponent">
-                    <div class="share share_rank">
-                        <div>排名 | No.</div>
-                        <div class="num">
-                            <div>
-                                <c:forEach items="${orgInfo.orgRankList}" var="item" varStatus="status">
-                                    <c:choose>
-                                        <c:when test="${'.'.equals(item)}">
-                                            <img src='${rlab}/front/imgs/share/index_d.jpg'>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src='${rlab}/front/imgs/share/index_${item}.jpg'>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="share share_index">
-                        <div>共享指数 |</div>
-                        <div class="num">
-                            <div>
-                                <c:forEach items="${orgInfo.orgShareIndexList}" var="item" varStatus="status">
-                                    <c:choose>
-                                        <c:when test="${'.'.equals(item)}">
-                                            <img src='${rlab}/front/imgs/share/d.jpg'>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <img src='${rlab}/front/imgs/share/${item}.jpg'>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
         <%--机构tab栏   --%>
         <div class="org_tab">
             <ul>
                 <li>
-                    <a href="${rlab}/front/org/${oid}">机构首页</a>
+                    <a href="${rlab}/org/${orgInfo.orgOid}">机构首页</a>
                 </li>
                 <li class="actived">
-                    <a href="${rlab}/front/org/${orgInfo.orgOid}/ins?pageNo=1&pageSize=10">持有仪器(${total})</a>
+                    <a href="${rlab}/org/${orgInfo.orgOid}/ins?pageNo=1&pageSize=10">持有仪器(${orgInfo.orgInsCount})</a>
+                </li>
+                <li>
+                    <a href="${rlab}/org/${orgInfo.orgOid}/service?pageNo=1&pageSize=10">发布服务(${serviceCounts})</a>
                 </li>
             </ul>
         </div>
-        <%--tip--%>
-        <div class="org_result">
-            共<span style="color: #508DF0;">${total}</span>条结果
-        </div>
         <%-- 列表 --%>
-        <div class="org_list">
+        <div class="org_list" style="margin-top: 17px">
             <c:if test="${InsListInfoList != null}">
                 <c:forEach items="${InsListInfoList}" var="info">
                     <div class="item">
@@ -497,19 +454,32 @@
         <div class="paging" style="display: ${total > 10?'block':'none'}">
             <div id="page_container" class="page_list"></div>
         </div>
+        <%-- START无结果--%>
+        <c:if test='${orgInfo.orgInsCount==0}'>
+            <div class="list_default" style="width:1120px;display: block;margin: auto;margin-bottom: 100px;margin-top: 50px">
+                <div class="default_icon">
+                    <img src="${rlab}/front/imgs/icon/list_default.png" alt="没有检索到搜索结果">
+                </div>
+                <div class="default_txt">
+                    <div>
+                        <h3>抱歉，该机构还没有共享过仪器</h3>
+                    </div>
+                </div>
+            </div>
+        </c:if>
     </div>
     <!--底部底边栏-->
     <jsp:include page="../template/footer.jsp"></jsp:include>
 </div>
 <script src="${rlab}/front/js/util/pagination.js?v_=20170622"></script>
-<script src="${rlab}/front/js/common/main.js"></script>
+<script src="${rlab}/front/js/common/main.js?v_=20180330"></script>
 <script type="text/javascript">
 
     // 初始化页面分页
     showPages('${total}', ('${pageNo}' - 1) * 10, 10, function (from, max) {
 
             PAGE_NO = from / 10 + 1;
-            window.location.href = '${rlab}/front/org/${oid}/ins?pageNo=' + PAGE_NO + '&pageSize=10'
+        window.location.href = '${rlab}/org/${oid}/ins?pageNo=' + PAGE_NO + '&pageSize=10'
 
         }, "page_container"
     )
